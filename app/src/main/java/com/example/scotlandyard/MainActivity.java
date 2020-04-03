@@ -1,4 +1,3 @@
-//Initial Commit
 package com.example.scotlandyard;
 
 import androidx.appcompat.app.AppCompatActivity;
