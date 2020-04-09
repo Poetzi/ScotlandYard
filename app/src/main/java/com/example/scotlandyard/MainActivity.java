@@ -1,12 +1,12 @@
 package com.example.scotlandyard;
-//Test2
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Kommentar1
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
