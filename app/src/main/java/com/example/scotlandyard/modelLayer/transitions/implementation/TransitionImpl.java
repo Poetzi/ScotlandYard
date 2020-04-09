@@ -1,6 +1,6 @@
-package com.example.scotlandyard.modelLayer.players.implementation;
+package com.example.scotlandyard.modelLayer.transitions.implementation;
 
-import com.example.scotlandyard.modelLayer.players.interfaces.Transition;
+import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
 
 public class TransitionImpl implements Transition {
 

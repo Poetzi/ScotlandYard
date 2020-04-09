@@ -1,4 +1,4 @@
-package com.example.scotlandyard.modelLayer.players.interfaces;
+package com.example.scotlandyard.modelLayer.transitions.interfaces;
 
 public interface Transition {
     void setName(String name);

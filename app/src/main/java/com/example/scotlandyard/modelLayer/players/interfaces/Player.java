@@ -1,5 +1,7 @@
 package com.example.scotlandyard.modelLayer.players.interfaces;
 
+import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
+
 import java.util.ArrayList;
 
 public interface Player {
