@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ScotlandYard</string>
+    <string name="playButton">Play</string>
+    <string name="logo">logo</string>
+    <string name="wifi">WiFi</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="playText">PLAY</string>
+    <string name="test">Test</string>
 </resources>
