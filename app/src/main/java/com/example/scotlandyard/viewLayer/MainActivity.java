@@ -1,8 +1,10 @@
-package com.example.scotlandyard;
+package com.example.scotlandyard.viewLayer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.scotlandyard.R;
 
 public class MainActivity extends AppCompatActivity {
 
