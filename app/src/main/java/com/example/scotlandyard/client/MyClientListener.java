@@ -5,9 +5,11 @@ import android.util.Log;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.example.scotlandyard.modelLayer.boardGameEngine.interfaces.BoardGameEngine;
 
 public class MyClientListener extends Listener {
     private Client client;
+    private BoardGameEngine clientEngine;
 
     public void init(Client client)
     {

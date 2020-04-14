@@ -2,6 +2,7 @@ package com.example.scotlandyard.client;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
+import com.example.scotlandyard.modelLayer.boardGameEngine.interfaces.BoardGameEngine;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -10,6 +11,7 @@ public class MyKryoClient {
     private Client client;
     private MyClientListener listener;
     private Kryo kryo;
+    private BoardGameEngine clientEngine;
 
     public MyKryoClient() {
         client = new Client();
