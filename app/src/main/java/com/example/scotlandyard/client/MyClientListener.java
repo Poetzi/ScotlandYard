@@ -18,12 +18,12 @@ public class MyClientListener extends Listener {
 
     public void connected(Connection connection)
     {
-        Log.d("Client: ", "Verbunden mit dem Server");
+        Log.d("Client: ", "Verbunden mit dem main.java.Server");
     }
 
     public void disconnected(Connection connection)
     {
-        Log.d("Client: ", "Verbindung mit dem Server wurde getrennt");
+        Log.d("Client: ", "Verbindung mit dem main.java.Server wurde getrennt");
     }
 
     public void received(Connection connection, Object object)

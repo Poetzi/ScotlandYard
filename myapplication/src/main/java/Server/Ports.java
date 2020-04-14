@@ -1,4 +1,4 @@
-package Server;
+package main.java.Server;
 
 public class Ports {
     public static final int TCP = 54555;
