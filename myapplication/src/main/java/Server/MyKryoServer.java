@@ -1,4 +1,4 @@
-package Server;
+package main.java.Server;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
