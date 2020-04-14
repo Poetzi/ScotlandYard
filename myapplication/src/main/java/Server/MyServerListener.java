@@ -4,7 +4,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
 public class MyServerListener extends Listener {
-    //Kommentar
+
     public void connected(Connection connection)
     {
         System.out.println("main.java.Server: Jemand ist dem main.java.Server beigetreten");
