@@ -22,10 +22,13 @@ public class MyKryoClient {
         registerMessages();
     }
 
+    public void startClient()
+    {
+        new Thread(client).start();
+    }
 
     public void connectToServer(String host) throws IOException {
-        client.start();
-        client.connect(5000, host, Ports.TCP);
+        client.connect(5000, host, Ports.TCP, Ports.UDP);
     }
 
     public void stopClient() {
