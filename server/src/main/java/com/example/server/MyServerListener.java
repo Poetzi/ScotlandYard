@@ -1,6 +1,7 @@
-package main.java.Server;
+package com.example.server;
 
 import com.esotericsoftware.kryonet.Connection;
+
 import com.esotericsoftware.kryonet.Listener;
 
 public class MyServerListener extends Listener {
