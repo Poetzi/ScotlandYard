@@ -5,7 +5,7 @@ plugins {
 
 jar {
     manifest {
-        attributes "Main-Class": "Main"
+        attributes "Main-Class": "com.example.server.Main"
     }
 
     from {
