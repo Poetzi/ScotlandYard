@@ -19,7 +19,7 @@ public class MyKryoServer {
 
     public void startServer() throws IOException {
         server.start();
-        server.bind(Ports.TCP,Ports.UDP);
+        server.bind(Ports.TCP);
         server.addListener(listener);
     }
 
