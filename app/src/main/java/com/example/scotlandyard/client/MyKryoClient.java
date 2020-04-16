@@ -8,12 +8,13 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 public class MyKryoClient {
+    //Client objekt
     private Client client;
     private MyClientListener listener;
     private Kryo kryo;
-    private BoardGameEngine clientEngine;
 
-    public MyKryoClient() {
+
+    public MyKryoClient(){
         client = new Client();
         listener = new MyClientListener();
         client.addListener(listener);
@@ -28,7 +29,7 @@ public class MyKryoClient {
     }
 
     public void connectToServer(String host) throws IOException {
-        client.connect(5000, host, Ports.TCP, Ports.UDP);
+        client.connect(5000, host, Ports.TCP);
     }
 
     public void stopClient() {
@@ -36,7 +37,7 @@ public class MyKryoClient {
     }
 
     private void registerMessages() {
-
+        kryo.register(Message.class);
     }
 
 }

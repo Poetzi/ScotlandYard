@@ -1,3 +1,2 @@
 rootProject.name='ScotlandYard'
-include ':app'
-include ':server'
+include ':app', ':server'
