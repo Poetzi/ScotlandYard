@@ -1,5 +1,7 @@
 package com.example.scotlandyard.client;
 
+import android.widget.TextView;
+
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.example.scotlandyard.modelLayer.boardGameEngine.interfaces.BoardGameEngine;
@@ -12,11 +14,14 @@ public class MyKryoClient {
     private Client client;
     private MyClientListener listener;
     private Kryo kryo;
+    private TextView textView;
 
 
-    public MyKryoClient(){
+    public MyKryoClient(TextView textView){
+        this.textView = textView;
         client = new Client();
         listener = new MyClientListener();
+        listener.setTextView(textView);
         client.addListener(listener);
         listener.init(client);
         kryo = client.getKryo();

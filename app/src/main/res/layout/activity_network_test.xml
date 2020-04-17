@@ -10,7 +10,6 @@
         android:id="@+id/textViewMessagesFromServer"
         android:layout_width="282dp"
         android:layout_height="320dp"
-        android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
