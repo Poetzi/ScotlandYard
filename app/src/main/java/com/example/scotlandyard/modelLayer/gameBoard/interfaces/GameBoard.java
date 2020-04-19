@@ -10,7 +10,7 @@ public interface GameBoard {
 
     void removeField(int field);
 
-    boolean movePlayer(int fromField, int toField);
+    boolean movePlayer(int fromField, int toField, Transition Rule);
 
     void setStartField(int playerId, int field);
 
