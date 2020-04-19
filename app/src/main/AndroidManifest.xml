@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.scotlandyard">
+    package="com.example.scotlandyard"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -14,7 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".viewLayer.NetworkTestActivity"></activity>
-        <activity android:name=".viewLayer.MainActivity">
+        <activity android:name=".playActivity"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity"></activity>
+        <activity
+            android:name=".viewLayer.MainActivity"
+            android:screenOrientation="landscape"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

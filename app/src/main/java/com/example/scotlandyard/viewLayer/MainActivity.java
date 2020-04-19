@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.playActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, NetworkTestActivity.class);
 
+        startActivity(intent);
+    }
+
+    public void play(View view){
+        Intent intent = new Intent(this, playActivity.class);
         startActivity(intent);
     }
 }
