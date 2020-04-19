@@ -18,12 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void goToNetworkTest(View view)
-    {
-        Intent intent = new Intent(this, NetworkTestActivity.class);
 
-        startActivity(intent);
-    }
 
     public void play(View view){
         Intent intent = new Intent(this, playActivity.class);

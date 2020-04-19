@@ -2,7 +2,11 @@ package com.example.scotlandyard;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
+import com.example.scotlandyard.viewLayer.NetworkTestActivity;
 
 public class playActivity extends AppCompatActivity {
 
@@ -10,5 +14,12 @@ public class playActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+    }
+
+    public void goToNetworkTest(View view)
+    {
+        Intent intent = new Intent(this, NetworkTestActivity.class);
+
+        startActivity(intent);
     }
 }

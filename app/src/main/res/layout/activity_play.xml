@@ -51,6 +51,7 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="322dp"
         android:drawableEnd="@drawable/wifiicon"
+        android:onClick="goToNetworkTest"
         android:text="@string/wifi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
