@@ -56,8 +56,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public void drawForPlayer(Player player) {
-        String card;
-        int fieldToGo;
+        String card = "Bus";    // Beispielwert
+        int fieldToGo = 0;
         boolean drawValide = false;
 
         // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
@@ -65,7 +65,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         {
             /*
                TODO
-               Der Server holt sich vom Spieler die Karte die er einsetzen will
+               Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                und die Position zu der er ziehen möchte
             */
 
@@ -76,6 +76,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                ob der Zug gültig ist.
                Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
             */
+            if (gamBoard.checkDraw(player.getId(),fieldToGo,card))
+            {
+                drawValide = true;
+            }
         }
 
 

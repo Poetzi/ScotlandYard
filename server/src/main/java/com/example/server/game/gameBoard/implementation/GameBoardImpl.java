@@ -60,7 +60,12 @@ public class GameBoardImpl implements GameBoard {
     }
 
     @Override
-    public int getPositionOffPlayer(int playerId) {
+    public int getPositionOfPlayer(int playerId) {
         return playersPositions[playerId];
+    }
+
+    @Override
+    public void setPositionOfPlayer(int playerID, int toField) {
+        playersPositions[playerID] = toField;
     }
 }
