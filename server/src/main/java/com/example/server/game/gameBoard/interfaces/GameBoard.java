@@ -11,7 +11,7 @@ public interface GameBoard {
 
     void removeField(int field);
 
-    boolean movePlayer(int fromField, int toField, Transition Rule);
+    boolean checkDraw(int playerID, int toField, String card);
 
     void setStartField(int playerId, int field);
 

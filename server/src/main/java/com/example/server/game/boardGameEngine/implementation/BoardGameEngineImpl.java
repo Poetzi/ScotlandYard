@@ -56,16 +56,30 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public void drawForPlayer(Player player) {
-        /*
-           Der Server holt sich vom Spieler die Karte die er einsetzen will
-           und die Position zu der er ziehen möchte
-         */
+        String card;
+        int fieldToGo;
+        boolean drawValide = false;
 
-        /*
-            Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
-            ob der Zug gültig ist.
-            Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
-         */
+        // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
+        while (drawValide = false)
+        {
+            /*
+               TODO
+               Der Server holt sich vom Spieler die Karte die er einsetzen will
+               und die Position zu der er ziehen möchte
+            */
+
+
+
+            /*
+               Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
+               ob der Zug gültig ist.
+               Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
+            */
+        }
+
+
+
 
         /*
             Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt

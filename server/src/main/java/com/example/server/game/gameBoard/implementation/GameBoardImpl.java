@@ -45,13 +45,13 @@ public class GameBoardImpl implements GameBoard {
     }
 
     @Override
-    public boolean movePlayer(int fromField, int toField, Transition Rule) {
-        Transition check = new TransitionImpl();
-        check.setFromField(fromField);
-        check.setToField(toField);
-        check.setName(Rule.getName());
-
-        return transitions.contains(check);
+    public boolean checkDraw(int playerID, int toField, String card) {
+        Transition toCheck = new TransitionImpl(card, playersPositions[playerID], toField);
+        if (transitions.contains(toCheck))
+        {
+            return true;
+        }
+        return false;
     }
 
     @Override
