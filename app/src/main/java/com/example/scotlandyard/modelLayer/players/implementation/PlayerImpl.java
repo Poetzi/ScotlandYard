@@ -9,6 +9,7 @@ public class PlayerImpl implements Player {
 
     private String name;
     private int id;
+    private int currentPosition;
     private ArrayList<Transition> availableTransitions = new ArrayList<>();
 
     @Override
@@ -41,5 +42,15 @@ public class PlayerImpl implements Player {
         if (this.availableTransitions.contains(transition)) {
             this.availableTransitions.remove(transition);
         }
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    @Override
+    public void setCurrentPosition(int field) {
+        currentPosition=field;
     }
 }
