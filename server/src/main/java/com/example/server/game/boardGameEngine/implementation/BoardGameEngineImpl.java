@@ -82,13 +82,27 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             }
         }
 
+        /*
+            TODO
+            Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
+         */
+
 
 
 
         /*
             Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
-            und an die anderen Spieler weitergegeben
+            und an die anderen Spieler Clients weitergegeben
          */
+        if (drawValide)
+        {
+            gamBoard.setPositionOfPlayer(player.getId(), fieldToGo);
+
+            /*
+                TODO
+                Die Position an die anderen Spieler clients weitergeben
+             */
+        }
 
     }
 
@@ -96,6 +110,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public boolean checkWinningCondition() {
+        /*
+            TODO
+            überprüfen ob die Detective gewonnen haben
+         */
         return false;
     }
 
