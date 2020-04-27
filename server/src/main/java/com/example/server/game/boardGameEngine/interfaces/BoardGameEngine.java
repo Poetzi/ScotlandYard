@@ -32,10 +32,6 @@ public interface BoardGameEngine {
      */
     void drawForPlayer(Player player);
 
-    /*
-        Bewegt einen Spieler auf dem Spielbrett
-     */
-    void movePlayer(int playerId, Transition withTransition, int tofield);
 
     /*
         Überprüft ob die Bedingungen für einen Sieg erfüllt sind

@@ -15,8 +15,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     private int numberOfPlayers;
     private int maxRounds;
     private int actualRound;
-    private Player adminPlayer;
     private GameBoard gamBoard;
+
 
 
 
@@ -33,22 +33,48 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void startGame() {
 
+        // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
+        for (int i = 0; i < maxRounds ; i++) {
+            playOneRound();
+
+            // Wenn die Detektive gewonnen haben wird der Spielablauf beendet
+            if (checkWinningCondition())
+            {
+                break;
+            }
+        }
+
     }
 
     @Override
     public void playOneRound() {
+        for (Player p:players) {
+            drawForPlayer(p);
+        }
 
     }
 
     @Override
     public void drawForPlayer(Player player) {
+        /*
+           Der Server holt sich vom Spieler die Karte die er einsetzen will
+           und die Position zu der er ziehen möchte
+         */
+
+        /*
+            Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
+            ob der Zug gültig ist.
+            Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
+         */
+
+        /*
+            Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
+            und an die anderen Spieler weitergegeben
+         */
 
     }
 
-    @Override
-    public void movePlayer(int playerId, Transition withTransition, int tofield) {
 
-    }
 
     @Override
     public boolean checkWinningCondition() {
