@@ -7,6 +7,19 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
     private int busTickets;
     private int undergroundTickets;
 
+    public DetectiveImpl(){
+        taxiTickets=11;
+        busTickets=8;
+        undergroundTickets=4;
+    }
+
+    public DetectiveImpl(String name, int id){
+        super(name, id);
+        taxiTickets=11;
+        busTickets=8;
+        undergroundTickets=4;
+    }
+
     @Override
     public int getTaxiTickets() {
         return taxiTickets;
