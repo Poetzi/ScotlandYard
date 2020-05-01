@@ -15,8 +15,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     private int numberOfPlayers;
     private int maxRounds;
     private int actualRound;
-    private Player adminPlayer;
     private GameBoard gamBoard;
+
 
 
 
@@ -33,25 +33,87 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void startGame() {
 
+        // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
+        for (int i = 0; i < maxRounds ; i++) {
+            playOneRound();
+
+            // Wenn die Detektive gewonnen haben wird der Spielablauf beendet
+            if (checkWinningCondition())
+            {
+                break;
+            }
+        }
+
     }
 
     @Override
     public void playOneRound() {
+        for (Player p:players) {
+            drawForPlayer(p);
+        }
 
     }
 
     @Override
     public void drawForPlayer(Player player) {
+        String card = "Bus";    // Beispielwert
+        int fieldToGo = 0;
+        boolean drawValide = false;
+
+        // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
+        while (drawValide = false)
+        {
+            /*
+               TODO
+               Der Server holt sich vom Spieler Client die Karte die er einsetzen will
+               und die Position zu der er ziehen möchte
+            */
+
+
+
+            /*
+               Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
+               ob der Zug gültig ist.
+               Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
+            */
+            if (gamBoard.checkDraw(player.getId(),fieldToGo,card))
+            {
+                drawValide = true;
+            }
+        }
+
+        /*
+            TODO
+            Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
+         */
+
+
+
+
+        /*
+            Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
+            und an die anderen Spieler Clients weitergegeben
+         */
+        if (drawValide)
+        {
+            gamBoard.setPositionOfPlayer(player.getId(), fieldToGo);
+
+            /*
+                TODO
+                Die Position an die anderen Spieler clients weitergeben
+             */
+        }
 
     }
 
-    @Override
-    public void movePlayer(int playerId, Transition withTransition, int tofield) {
 
-    }
 
     @Override
     public boolean checkWinningCondition() {
+        /*
+            TODO
+            überprüfen ob die Detective gewonnen haben
+         */
         return false;
     }
 

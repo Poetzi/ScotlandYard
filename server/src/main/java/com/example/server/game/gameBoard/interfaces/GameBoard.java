@@ -11,10 +11,12 @@ public interface GameBoard {
 
     void removeField(int field);
 
-    boolean movePlayer(int fromField, int toField, Transition Rule);
+    boolean checkDraw(int playerID, int toField, String card);
 
     void setStartField(int playerId, int field);
 
-    int getPositionOffPlayer(int playerId);
+    void setPositionOfPlayer(int playerID, int toField);
+
+    int getPositionOfPlayer(int playerId);
 
 }
