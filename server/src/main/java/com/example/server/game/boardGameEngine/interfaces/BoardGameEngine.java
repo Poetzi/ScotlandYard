@@ -9,7 +9,7 @@ public interface BoardGameEngine {
     /*
         Methode, um einen neuen Spieler hinzuzufügen
      */
-    void addPlayer(String name);
+    void addPlayer(String name, int field);
 
     /*
         Einstellungen für ein neues Spiel werden hier festgelegt,
