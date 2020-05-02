@@ -16,10 +16,14 @@ public class playActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
     }
 
-    public void goToNetworkTest(View view)
-    {
+    public void goToNetworkTest(View view) {
         Intent intent = new Intent(this, NetworkTestActivity.class);
 
         startActivity(intent);
+    }
+
+    public void chat(View view){
+        Intent newIntent = new Intent(this, chatfeature.class);
+        startActivity(newIntent);
     }
 }

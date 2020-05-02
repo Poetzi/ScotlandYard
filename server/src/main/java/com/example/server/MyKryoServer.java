@@ -4,12 +4,14 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MyKryoServer {
     //Server Objekt
     private Server server;
     private MyServerListener listener;
     private Kryo kryo;
+
 
     public MyKryoServer() {
         System.out.println("Server is starting...");
