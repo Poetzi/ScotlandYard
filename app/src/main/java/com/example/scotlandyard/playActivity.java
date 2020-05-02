@@ -22,4 +22,11 @@ public class playActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
+
+    public void goToGameBoardTest(View view)
+    {
+        Intent intent = new Intent(this, GameBoardActivity.class);
+
+        startActivity(intent);
+    }
 }

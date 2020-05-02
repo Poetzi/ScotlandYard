@@ -6,4 +6,9 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="playText">PLAY</string>
     <string name="test">Test</string>
+    <string name="round">Runde %s</string>
+    <string name="currentPosition">aktuelle Position: %s</string>
+    <string name="ticket_dialog_title">Wollen Sie dieses Ticket einsetzen?</string>
+    <string name="gameboard_activity_test">Game Board Test</string>
+
 </resources>
