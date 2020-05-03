@@ -13,6 +13,7 @@ public class MyClientListener extends Listener {
     private BoardGameEngine clientEngine;
     private boolean messageReceived = false;
     private TextView textView;
+    private ID id;
 
 
     public void init(Client client)
@@ -45,6 +46,10 @@ public class MyClientListener extends Listener {
             buffer = buffer +"\nServer: " +message.message;
             textView.setText(buffer);
         }
+        if(object instanceof ID){
+            this.id = (ID)object;
+        }
+
     }
 
     public void setTextView(TextView textView) {
