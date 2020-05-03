@@ -29,9 +29,7 @@ public class LobbyImpl implements Lobby {
     public void startGame() {
         Runnable runnable =    new Runnable(){
             public void run(){
-                for(ID id : players){
 
-                }
             }
         };
         Thread t = new Thread(runnable);
