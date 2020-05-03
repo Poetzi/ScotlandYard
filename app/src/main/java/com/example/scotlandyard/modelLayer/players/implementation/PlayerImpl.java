@@ -9,7 +9,13 @@ public class PlayerImpl implements Player {
 
     private String name;
     private int id;
+    private int currentPosition;
     private ArrayList<Transition> availableTransitions = new ArrayList<>();
+
+    public PlayerImpl(String name, int id){
+        this.name=name;
+        this.id=id;
+    }
 
     @Override
     public String getName() {
@@ -41,5 +47,20 @@ public class PlayerImpl implements Player {
         if (this.availableTransitions.contains(transition)) {
             this.availableTransitions.remove(transition);
         }
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    @Override
+    public void setCurrentPosition(int field) {
+        currentPosition=field;
+    }
+
+    @Override
+    public ArrayList<Transition> getAvailableTransitions() {
+        return availableTransitions;
     }
 }

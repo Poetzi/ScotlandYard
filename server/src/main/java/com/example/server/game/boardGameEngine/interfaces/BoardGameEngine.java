@@ -9,7 +9,7 @@ public interface BoardGameEngine {
     /*
         Methode, um einen neuen Spieler hinzuzufügen
      */
-    void addPlayer(String name);
+    void addPlayer(String name, int field);
 
     /*
         Einstellungen für ein neues Spiel werden hier festgelegt,
@@ -32,10 +32,6 @@ public interface BoardGameEngine {
      */
     void drawForPlayer(Player player);
 
-    /*
-        Bewegt einen Spieler auf dem Spielbrett
-     */
-    void movePlayer(int playerId, Transition withTransition, int tofield);
 
     /*
         Überprüft ob die Bedingungen für einen Sieg erfüllt sind
