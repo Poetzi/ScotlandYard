@@ -7,6 +7,7 @@ import com.example.server.game.gameBoard.implementation.GameBoardImpl;
 import com.example.server.game.gameBoard.interfaces.GameBoard;
 import com.example.server.game.players.implementation.PlayerImpl;
 import com.example.server.game.players.interfaces.Player;
+import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
 
 import java.util.ArrayList;
@@ -52,8 +53,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
         for (int i = 0; i < numberOfFields/2 ; i++) {
             int random = rnd.nextInt(20);
-
-            gameBoard.addFieldWithTransition(random,random,);
+Transition x = new TransitionImpl();
+            gameBoard.addFieldWithTransition(random,random,x);
         }
     }
 
@@ -145,7 +146,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         }
 
         for (int i = 0; i <numberOfPlayers ; i++) {
-            if(players.get(misterX) == players.get(i).currentPosition){ //Missing field from Player CLass
+            if(players.get(misterX) == players.get(i)){ //Missing field from Player CLass
                 System.out.println("Mister X lost");
                 return true;
             }
