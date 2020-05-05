@@ -9,14 +9,14 @@ public interface MrX extends Player {
 
     int getTicketOfRound(int round);
 
+    boolean isDoubleMoveAtRound(int round);
+
     void setBlackTickets(int ticketNumber);
 
     void setDoubleMoveTickets(int ticketNumber);
 
-    void setPositionOfRound(int position, int ticket, int round);
+    void setPositionOfRound(int position, int ticket, int round, boolean isDoubleMove);
 
-    void validateBlackTicket();
-
-    void validateDoubleMove();
+    void validateTicket(int round, int ticketType, int newPosition);
 
 }

@@ -7,7 +7,7 @@ import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
 
 import java.util.ArrayList;
 
-    public class DetectiveImpl extends PlayerImpl implements Detective {
+public class DetectiveImpl extends PlayerImpl implements Detective {
         private int taxiTickets;
         private int busTickets;
         private int undergroundTickets;

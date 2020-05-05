@@ -33,6 +33,30 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
         }
     }
 
+    public void validateTicket(int ticketType){
+        if (ticketType==1){
+            if (taxiTickets>0){
+                taxiTickets--;
+            }else {
+                throw new IllegalArgumentException("No Taxi Tickets left.");
+            }
+        }else if (ticketType==2){
+            if (busTickets>0){
+                busTickets--;
+            }else {
+                throw new IllegalArgumentException("No Bus Tickets left.");
+            }
+        }else if(ticketType==3){
+            if (undergroundTickets>0){
+                undergroundTickets--;
+            }else {
+                throw new IllegalArgumentException("No Metro Tickets left.");
+            }
+        }else {
+            throw new IllegalArgumentException("Ticket type "+ticketType+" not allowed here.");
+        }
+    }
+
     @Override
     public int getTaxiTickets() {
         return taxiTickets;
