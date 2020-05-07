@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.scotlandyard.viewLayer.NetworkTestActivity;
+import com.example.scotlandyard.viewLayer.gameActivity;
 
 public class playActivity extends AppCompatActivity {
 
@@ -23,9 +24,11 @@ public class playActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToGameBoardTest(View view)
+
+    public void goToGameActivity(View view)
     {
-        Intent intent = new Intent(this, GameBoardActivity.class);
+        Intent intent = new Intent(this, gameActivity.class);
+
 
         startActivity(intent);
     }
