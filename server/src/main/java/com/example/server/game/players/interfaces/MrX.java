@@ -19,4 +19,5 @@ public interface MrX extends Player {
 
     void validateTicket(int round, int ticketType, int newPosition);
 
+    void validateDoubleMoveTicket(int round, int ticketType, int newPosition);
 }

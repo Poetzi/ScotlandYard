@@ -90,7 +90,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         boolean drawValide = false;
 
         // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
-        while (drawValide = false)
+        while (drawValide == false)
         {
             /*
                TODO
@@ -115,25 +115,28 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             TODO
             Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
          */
-            if (player instanceof Detective){
-                int ticketType;
-                switch (card){
-                    case "Taxi":
-                        ticketType=1;
-                        break;
-                    case "Bus":
-                        ticketType=2;
-                        break;
-                    case "U-Bahn":
-                        ticketType=3;
-                        break;
-                    default:
-                        ticketType=0;
-                        break;
-                }
-                ((Detective) player).validateTicket(ticketType);
-            }else if (player instanceof MrX){
-                int ticketType;
+        if (player instanceof Detective){
+            int ticketType;
+            switch (card){
+                case "Taxi":
+                    ticketType=1;
+                    break;
+                case "Bus":
+                    ticketType=2;
+                    break;
+                case "U-Bahn":
+                    ticketType=3;
+                    break;
+                default:
+                    ticketType=0;
+                    break;
+            }
+            ((Detective) player).validateTicket(ticketType);
+        }else if (player instanceof MrX){
+            int ticketType=0;   //Beispielwert
+
+
+            if (card!="Double"){
                 switch (card){
                     case "Taxi":
                         ticketType=1;
@@ -147,15 +150,28 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                     case "Black":
                         ticketType=4;
                         break;
-                    case "Double":
-                        ticketType=5;
-                        break;
                     default:
                         ticketType=0;
                         break;
                 }
                 ((MrX) player).validateTicket(actualRound,ticketType,fieldToGo);
+            }else {
+                /**
+                 *      TODO
+                 *      Warten bis Spieler den ersten Zug des Doppelzugs macht.
+                 */
+                ((MrX) player).validateDoubleMoveTicket(actualRound, ticketType , fieldToGo);
+
+                /**
+                 *      TODO
+                 *      Warten auf den zweiten Zug des Doppelzugs.
+                 */
+
+                ((MrX) player).validateTicket(actualRound, ticketType, fieldToGo);
             }
+
+        }
+        player.setCurrentPosition(fieldToGo);
 
 
 

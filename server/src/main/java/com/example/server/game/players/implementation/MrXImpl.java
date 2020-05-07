@@ -23,7 +23,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
     /**
      * Löst ein Ticket ein.
      * @param round Spielrunde (Runde 1-24)
-     * @param ticketType Ticket, welches zu gegebener Runde eingelöst wurde (1=Taxi, 2=Bus, 3=U-Bahn, 4=Black Ticket, 5=Double Move)
+     * @param ticketType Ticket, welches zu gegebener Runde eingelöst wurde (1=Taxi, 2=Bus, 3=U-Bahn, 4=Black Ticket)
      * @param newPosition Position
      */
     @Override
@@ -35,15 +35,24 @@ public class MrXImpl extends PlayerImpl implements MrX {
             }else {
                 throw new IllegalArgumentException("No Black Tickets left.");
             }
-        }else if (ticketType==5){
-            if(doubleMoveTickets>0){
-                doubleMoveTickets--;
-                setPositionOfRound(newPosition, ticketType, round, true);
-            }else {
-                throw new IllegalArgumentException("No Double Move Tickets left.");
-            }
         }else {
             setPositionOfRound(newPosition, ticketType, round, false);
+        }
+    }
+
+    /**
+     * Löst ein Double Move Ticket ein und speichert den ERSTEN Zug des Doppelzugs.
+     *Zweiter Zug wird normal mit {@link #validateTicket(int, int, int)} Methode im Travel Log gespeichert.
+     * @param round Spielrunde (Runde 1-24)
+     * @param ticketType Ticket, welches zu gegebener Runde eingelöst wurde (1=Taxi, 2=Bus, 3=U-Bahn, 4=Black Ticket)
+     * @param newPosition Position
+     */
+    public void validateDoubleMoveTicket(int round, int ticketType, int newPosition){
+        if(doubleMoveTickets>0){
+            doubleMoveTickets--;
+            setPositionOfRound(newPosition, ticketType, round, true);
+        }else {
+            throw new IllegalArgumentException("No Double Move Tickets left.");
         }
     }
 
