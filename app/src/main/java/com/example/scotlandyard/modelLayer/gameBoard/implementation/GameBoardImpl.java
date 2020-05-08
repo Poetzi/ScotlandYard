@@ -24,10 +24,7 @@ public class GameBoardImpl implements GameBoard {
 
     @Override
     public void addFieldWithTransition(int fromField, int toField, Transition Rule) {
-        Transition newTransition = new TransitionImpl();
-        newTransition.setFromField(fromField);
-        newTransition.setToField(toField);
-        newTransition.setName(Rule.getName());
+        Transition newTransition = new TransitionImpl(Rule.getName(),toField,fromField);
 
         transitions.add(newTransition);
     }
@@ -44,10 +41,7 @@ public class GameBoardImpl implements GameBoard {
 
     @Override
     public boolean movePlayer(int fromField, int toField, Transition Rule) {
-        Transition check = new TransitionImpl();
-        check.setFromField(fromField);
-        check.setToField(toField);
-        check.setName(Rule.getName());
+        Transition check = new TransitionImpl(Rule.getName(),toField,fromField);
 
         return transitions.contains(check);
     }

@@ -1,18 +1,25 @@
 package com.example.scotlandyard.viewLayer;
 
+import com.example.scotlandyard.R;
+
 public class Points {
     int x;
     int y;
     int img;
+    int field;
+    String strField;
 
+    public Points[] allPoints = {
+            new Points(635,347, R.drawable.f1,"Field1",1),
+            new Points(892,344,R.drawable.f2,"Field2",2),
+            new Points(635,574,R.drawable.f3,"Field3",3)
+    };
 
-
-    String field;
-
-    public Points(int x, int y, int img, String field){
+    public Points(int x, int y, int img, String strField, int field){
         this.x = x;
         this.y = y;
         this.img = img;
+        this.strField = strField;
         this.field = field;
     }
 
@@ -39,11 +46,28 @@ public class Points {
     public void setImg(int img) {
         this.img = img;
     }
-    public String getField() {
+
+    public int getField() {
         return field;
     }
 
-    public void setField(String field) {
+    public void setField(int field) {
         this.field = field;
+    }
+
+    public String getStrField() {
+        return strField;
+    }
+
+    public void setStrField(String strField) {
+        this.strField = strField;
+    }
+
+    public Points[] getAllPoints() {
+        return allPoints;
+    }
+
+    public void setAllPoints(Points[] allPoints) {
+        this.allPoints = allPoints;
     }
 }

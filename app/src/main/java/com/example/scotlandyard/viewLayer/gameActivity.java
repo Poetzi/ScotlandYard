@@ -10,10 +10,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
+import com.example.scotlandyard.modelLayer.transitions.implementation.TransitionImpl;
+import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
 
 public class gameActivity extends AppCompatActivity {
 
-    public Button taxi, bus, ubahn, blackTicket, doubleMove;
+    private Button taxi, bus, ubahn, blackTicket, doubleMove;
+    private GameBoard gameBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,20 @@ public class gameActivity extends AppCompatActivity {
         ubahn = findViewById(R.id.ubahn);
         blackTicket = findViewById(R.id.blackTicket);
         doubleMove = findViewById(R.id.doubleMove);
+        setUpFields();
+    }
+
+
+    public void setUpFields(){
+        Transition tr = new TransitionImpl("bus",2,1);
+        gameBoard.addFieldWithTransition(1,2,tr);
+
+        tr = new TransitionImpl("ubahn",3,2);
+        gameBoard.addFieldWithTransition(2,3,tr);
+
+        tr = new TransitionImpl("taxi",1,3);
+        gameBoard.addFieldWithTransition(3,1,tr);
+
     }
 
 
