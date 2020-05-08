@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImpl;
 import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
 import com.example.scotlandyard.modelLayer.transitions.implementation.TransitionImpl;
 import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
@@ -33,6 +34,7 @@ public class gameActivity extends AppCompatActivity {
 
 
     public void setUpFields(){
+        gameBoard = new GameBoardImpl();
         Transition tr = new TransitionImpl("bus",2,1);
         gameBoard.addFieldWithTransition(1,2,tr);
 

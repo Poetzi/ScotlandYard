@@ -15,11 +15,11 @@ public class GameBoardImpl implements GameBoard {
     /*
         Speichert die Anzahl der Spielfelder
      */
-    HashSet<Integer> fields; //(Liste oder Set von Field)
+    HashSet<Integer> fields = new HashSet<>(); //(Liste oder Set von Field)
     /*
         Speichert die Wege von einem Spielfeld zum anderen
      */
-    HashSet<Transition> transitions; //(Liste oder Set)
+    HashSet<Transition> transitions = new HashSet<>(); //(Liste oder Set)
 
 
     @Override
