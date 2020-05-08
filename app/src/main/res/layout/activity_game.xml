@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".viewLayer.gameActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/proto" />
+
+    <com.example.scotlandyard.viewLayer.mapView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></com.example.scotlandyard.viewLayer.mapView>
+
+    <Button
+        android:id="@+id/doubleMove"
+        android:layout_width="72dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="40dp"
+        android:background="#28BF06"
+        android:onClick="onClick"
+        android:text="@string/_2x_move"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="2x Move" />
+
+    <Button
+        android:id="@+id/bus"
+        android:layout_width="72dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="#0656C5"
+        android:onClick="onClick"
+        android:text="@string/bus"
+        app:layout_constraintBottom_toTopOf="@+id/ubahn"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Bus" />
+
+    <Button
+        android:id="@+id/taxi"
+        android:layout_width="72dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="27dp"
+        android:background="#FFEB3B"
+        android:onClick="onClick"
+        android:text="@string/taxi"
+        app:layout_constraintBottom_toTopOf="@+id/bus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.44"
+        tools:text="Taxi" />
+
+    <Button
+        android:id="@+id/blackTicket"
+        android:layout_width="72dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:background="#000000"
+        android:onClick="onClick"
+        android:text="@string/black_ticket"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/doubleMove"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Black Ticket" />
+
+    <Button
+        android:id="@+id/ubahn"
+        android:layout_width="72dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="#E4082A"
+        android:onClick="onClick"
+        android:text="@string/u_bahn"
+        app:layout_constraintBottom_toTopOf="@+id/blackTicket"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="U-Bahn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
