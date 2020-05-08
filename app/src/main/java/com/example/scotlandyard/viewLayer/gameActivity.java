@@ -15,18 +15,5 @@ public class gameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
     }
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-            float x = event.getX();
-            float y = event.getY();
-
-
-            Log.i("Coordinate", "X-" + x + "===Y=" + y);
-        }
-        return false;
-    }
 
 }
