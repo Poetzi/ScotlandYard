@@ -63,6 +63,26 @@ public class MrXImpl extends PlayerImpl implements MrX {
     }
 
     /**
+     * Wenn Mr. X schummelt wird Variable hasCheated in {@link TravelLog} true gesetzt.
+     * @param round Zu welcher Runde geschummelt wurde.
+     * @param newPosition Die neue Position von Mr. X nachdem er geschummelt hat.
+     */
+    public void setHasCheated(int round, int newPosition){
+        travelLog[round-1].setHasCheated(true);
+        int[] newMove={newPosition, travelLog[round-1].getTicket()};
+        travelLog[round-1].setMove(newMove);
+    }
+
+    /**
+     * Liefert Boolean Wert ob zur gegebenen Runde geschummelt wurde.
+     * @param round Integerwerte von 1 bis 24.
+     * @return Boolean Wert (true = Mr. X hat in dieser Runde geschummelt).
+     */
+    public boolean getHasCheatedInRound(int round){
+        return travelLog[round-1].isHasCheated();
+    }
+
+    /**
      * Speichert die Position und das eingelöste Ticket zu einer Spielrunde.
      * @param position Position von Mr.X zu gegebener Runde
      * @param ticket Ticket, welches zu gegebener Runde eingelöst wurde (1=Taxi, 2=Bus, 3=U-Bahn, 4=Black Ticket, 5=Double Move)

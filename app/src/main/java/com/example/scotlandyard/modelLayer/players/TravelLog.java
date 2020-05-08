@@ -2,6 +2,7 @@ package com.example.scotlandyard.modelLayer.players;
 
 public class TravelLog {
 
+    private boolean hasCheated;
     private int[] move; //move[0]=Position, move[1]=Ticket Typ
     private boolean isDoubleMove;
 
@@ -32,5 +33,13 @@ public class TravelLog {
 
     public int getTicket(){
         return move[1];
+    }
+
+    public boolean isHasCheated() {
+        return hasCheated;
+    }
+
+    public void setHasCheated(boolean hasCheated) {
+        this.hasCheated = hasCheated;
     }
 }

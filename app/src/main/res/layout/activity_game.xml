@@ -90,5 +90,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="U-Bahn" />
 
+    <Button
+        android:id="@+id/btn_cheat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="288dp"
+        android:text="@string/cheat"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

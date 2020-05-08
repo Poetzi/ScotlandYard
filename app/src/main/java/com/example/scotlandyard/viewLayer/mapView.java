@@ -20,6 +20,8 @@ public class mapView extends View {
 
     Bitmap small;
     Paint paint = new Paint();
+    private float xPos=0;
+    private float yPos=0;
 
     public mapView(Context context) {
         super(context);

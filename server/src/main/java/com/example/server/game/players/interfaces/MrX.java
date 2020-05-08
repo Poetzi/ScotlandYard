@@ -11,6 +11,10 @@ public interface MrX extends Player {
 
     boolean isDoubleMoveAtRound(int round);
 
+    void setHasCheated(int round, int newPosition);
+
+    boolean getHasCheatedInRound(int round);
+
     void setBlackTickets(int ticketNumber);
 
     void setDoubleMoveTickets(int ticketNumber);
