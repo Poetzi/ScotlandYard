@@ -91,10 +91,10 @@ public class mapView extends View {
         paint.setAntiAlias(true);
         canvas.drawLine(635,347,892,344,paint);
 
-        paint.setColor(Color.RED);
+        paint.setColor(Color.YELLOW);
         canvas.drawLine(635,347,635,574,paint);
 
-        paint.setColor(Color.GREEN);
+        paint.setColor(Color.RED);
         canvas.drawLine(635,574,892,344,paint);
 
     }
