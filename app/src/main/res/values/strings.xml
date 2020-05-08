@@ -6,4 +6,9 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="playText">PLAY</string>
     <string name="test">Test</string>
+    <string name="_2x_move">2x Move</string>
+    <string name="black_ticket">Black Ticket</string>
+    <string name="bus">Bus</string>
+    <string name="taxi">Taxi</string>
+    <string name="u_bahn">U-bahn</string>
 </resources>
