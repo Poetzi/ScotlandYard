@@ -2,6 +2,7 @@ package com.example.server.lobby.implementation;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.example.server.TurnMessage;
+import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.game.gameBoard.interfaces.GameBoard;
 import com.example.server.lobby.interfaces.Lobby;
@@ -13,6 +14,7 @@ public class LobbyImpl implements Lobby {
     private boolean isOpen = false;
     public int playerCount =0;
     private BoardGameEngine boardGame;
+
 
 
     @Override
@@ -33,6 +35,8 @@ public class LobbyImpl implements Lobby {
     public void startGame() {
         Runnable runnable =    new Runnable(){
             public void run(){
+                boardGame = new BoardGameEngineImpl();
+
 
             }
         };

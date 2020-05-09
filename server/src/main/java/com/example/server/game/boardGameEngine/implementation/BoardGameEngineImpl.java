@@ -2,6 +2,7 @@ package com.example.server.game.boardGameEngine.implementation;
 
 
 
+import com.example.server.TurnMessage;
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.game.gameBoard.implementation.GameBoardImpl;
 import com.example.server.game.gameBoard.interfaces.GameBoard;
@@ -9,6 +10,7 @@ import com.example.server.game.players.implementation.PlayerImpl;
 import com.example.server.game.players.interfaces.Player;
 import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
+import com.example.server.lobby.interfaces.Lobby;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,6 +23,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     private int actualRound;
     private GameBoard gameBoard;
     private int numberOfFields;
+    private Lobby lobby;
 
 
     @Override
@@ -87,16 +90,18 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         String card = "Bus";    // Beispielwert
         int fieldToGo = 0;
         boolean drawValide = false;
+        TurnMessage turnMessage = new TurnMessage();
 
         // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
         while (drawValide = false)
         {
             /*
-               TODO
                Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                und die Position zu der er ziehen möchte
             */
-
+            turnMessage = lobby.askPlayerforTurn(player.getId());
+            card = turnMessage.getCard();
+            fieldToGo = turnMessage.getToField();
 
 
             /*
@@ -158,5 +163,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         return false;
     }
 
-    
+
+    public void initLobby(Lobby lobby) {
+        this.lobby = lobby;
+    }
 }
