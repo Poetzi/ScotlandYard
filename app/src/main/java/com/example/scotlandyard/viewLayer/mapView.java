@@ -27,6 +27,7 @@ public class mapView extends View {
     int numb =200;
     int x = 0;
     int y = 0;
+    Position touchedPoint = new Position();
 
     //Fields
     Bitmap f1 = BitmapFactory.decodeResource(getResources(),R.drawable.f1);
@@ -127,6 +128,8 @@ public class mapView extends View {
                     {
                         //Bitmap touched
                         String name = points.get(i).getStrField();
+                        touchedPoint.setX(points.get(i).x);
+                        touchedPoint.setY(points.get(i).y);
                         Log.i("Point ",name+" got touched");
                         return true;
 

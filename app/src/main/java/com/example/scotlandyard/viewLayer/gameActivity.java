@@ -58,17 +58,22 @@ public class gameActivity extends AppCompatActivity {
         switch (v.getId()){
             case R.id.taxi:
                 Toast.makeText(getApplicationContext(),"Taxi Pressed",Toast.LENGTH_SHORT).show();
-                player.drawPlayer(892,344);
+
+
+                player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+
                 break;
             case R.id.bus:
                 Toast.makeText(getApplicationContext(),"Bus Pressed",Toast.LENGTH_SHORT).show();
-                player.drawPlayer(635,574);
+                player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
                 break;
             case R.id.ubahn:
                 Toast.makeText(getApplicationContext(),"U-Bahn Pressed",Toast.LENGTH_SHORT).show();
+                player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
                 break;
             case R.id.blackTicket:
                 Toast.makeText(getApplicationContext(),"Black Ticket Pressed",Toast.LENGTH_SHORT).show();
+                player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
                 break;
             case R.id.doubleMove:
                 Toast.makeText(getApplicationContext(),"Double Move Pressed",Toast.LENGTH_SHORT).show();
