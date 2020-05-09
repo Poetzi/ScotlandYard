@@ -7,6 +7,7 @@ import com.example.server.game.gameBoard.implementation.GameBoardImpl;
 import com.example.server.game.gameBoard.interfaces.GameBoard;
 import com.example.server.game.players.implementation.PlayerImpl;
 import com.example.server.game.players.interfaces.Player;
+import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         for (int i = 0; i < numberOfFields/2 ; i++) {
             int random = rnd.nextInt(20);
 
-            gameBoard.addFieldWithTransition(random,random,);
+            //gameBoard.addFieldWithTransition(random,random,);
         }
     }
 
@@ -110,9 +111,11 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         }
 
         /*
-            TODO
             Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
          */
+        Transition toRemove = new TransitionImpl();
+        toRemove.setName(card);
+        player.removeTransitionFromAvailable(toRemove);
 
 
 
