@@ -2,6 +2,9 @@ package com.example.scotlandyard.viewLayer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -19,6 +22,8 @@ public class gameActivity extends AppCompatActivity {
 
     private Button taxi, bus, ubahn, blackTicket, doubleMove;
     private GameBoard gameBoard;
+    private mapView map;
+    private playerView player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,8 @@ public class gameActivity extends AppCompatActivity {
         ubahn = findViewById(R.id.ubahn);
         blackTicket = findViewById(R.id.blackTicket);
         doubleMove = findViewById(R.id.doubleMove);
+        map = (mapView) findViewById(R.id.mapView);
+        player = new playerView(this);
         setUpFields();
     }
 
@@ -51,9 +58,11 @@ public class gameActivity extends AppCompatActivity {
         switch (v.getId()){
             case R.id.taxi:
                 Toast.makeText(getApplicationContext(),"Taxi Pressed",Toast.LENGTH_SHORT).show();
+                map.drawPlayer(892,344);
                 break;
             case R.id.bus:
                 Toast.makeText(getApplicationContext(),"Bus Pressed",Toast.LENGTH_SHORT).show();
+                player.drawPlayer(635,574);
                 break;
             case R.id.ubahn:
                 Toast.makeText(getApplicationContext(),"U-Bahn Pressed",Toast.LENGTH_SHORT).show();

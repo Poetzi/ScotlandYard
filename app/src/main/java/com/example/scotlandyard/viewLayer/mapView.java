@@ -14,6 +14,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.modelLayer.players.interfaces.Player;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,10 @@ public class mapView extends View {
     Bitmap small;
     ArrayList<Points> points = new ArrayList<>();
     int imgOffset = 26;
+    Canvas player;
+    int numb =200;
+    int x = 0;
+    int y = 0;
 
     //Fields
     Bitmap f1 = BitmapFactory.decodeResource(getResources(),R.drawable.f1);
@@ -30,24 +35,20 @@ public class mapView extends View {
 
     public mapView(Context context) {
         super(context);
-
     }
 
     //Needed for relative Layout
     public mapView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-       // init(context);
+        //player = new Canvas();
+        // init(context);
     }
 
-
-    private void init(Context context){
-        small = BitmapFactory.decodeResource(getResources(), R.drawable.smallmap);
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+        player = canvas;
 
         //drawing lines
         printLines(canvas);
@@ -57,12 +58,25 @@ public class mapView extends View {
         canvas.drawBitmap(f2,892- imgOffset,344- imgOffset,null);
         canvas.drawBitmap(f3,635- imgOffset,574- imgOffset,null);
 
+        //numb+=50;
+        canvas.drawBitmap(f1,x - imgOffset,y- imgOffset,null);
+
 
         //adding points to the list
         points.add(new Points(635,347,R.drawable.f1,"Field1",1));
         points.add(new Points(892,344,R.drawable.f2,"Field2",2));
         points.add(new Points(635,574,R.drawable.f3,"Field3",3));
 
+
+    }
+
+    public void drawPlayer(int x, int y ){
+        this.x = x;
+        this.y = y;
+        //Log.i("test","test");
+        player.drawBitmap(f1,200 - imgOffset,200- imgOffset,null);
+        invalidate();
+        player.drawBitmap(f1,200 - imgOffset,200- imgOffset,null);
 
     }
 

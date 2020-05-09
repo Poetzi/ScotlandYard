@@ -16,10 +16,12 @@
         app:srcCompat="@drawable/proto" />
 
     <com.example.scotlandyard.viewLayer.mapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></com.example.scotlandyard.viewLayer.mapView>
+
 
     <Button
         android:id="@+id/doubleMove"
