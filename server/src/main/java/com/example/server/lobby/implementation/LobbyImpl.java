@@ -37,6 +37,12 @@ public class LobbyImpl implements Lobby {
             public void run(){
                 boardGame = new BoardGameEngineImpl();
 
+                /*
+                ToDo
+                Dem Board Game muss noch die Lobby Übergeben werden
+                 */
+
+
 
             }
         };
@@ -63,5 +69,14 @@ public class LobbyImpl implements Lobby {
         Ask Player over Client for a Turn
          */
         return null;
+    }
+
+
+    @Override
+    public void updatePlayerPositionsToAllClients(int playerId, int toField) {
+        /*
+        ToDo
+        Send a Message with the updated Position from a player to all Clients
+         */
     }
 }

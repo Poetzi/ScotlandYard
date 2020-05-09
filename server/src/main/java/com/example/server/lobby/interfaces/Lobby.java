@@ -13,4 +13,6 @@ public interface Lobby {
     boolean isLobbyOpen();
 
     TurnMessage askPlayerforTurn(int playerId);
+
+    void updatePlayerPositionsToAllClients(int playerId, int toField);
 }

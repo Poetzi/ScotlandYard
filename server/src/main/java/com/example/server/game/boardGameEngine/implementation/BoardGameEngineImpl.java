@@ -134,9 +134,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
 
             /*
-                TODO
                 Die Position an die anderen Spieler clients weitergeben
              */
+            lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
         }
 
     }
