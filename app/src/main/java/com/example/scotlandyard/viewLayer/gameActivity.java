@@ -35,7 +35,7 @@ public class gameActivity extends AppCompatActivity {
         blackTicket = findViewById(R.id.blackTicket);
         doubleMove = findViewById(R.id.doubleMove);
         map = (mapView) findViewById(R.id.mapView);
-        player = new playerView(this);
+        player = findViewById(R.id.playerView);
         setUpFields();
     }
 
@@ -58,7 +58,7 @@ public class gameActivity extends AppCompatActivity {
         switch (v.getId()){
             case R.id.taxi:
                 Toast.makeText(getApplicationContext(),"Taxi Pressed",Toast.LENGTH_SHORT).show();
-                map.drawPlayer(892,344);
+                player.drawPlayer(892,344);
                 break;
             case R.id.bus:
                 Toast.makeText(getApplicationContext(),"Bus Pressed",Toast.LENGTH_SHORT).show();

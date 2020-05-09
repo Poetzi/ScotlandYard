@@ -59,7 +59,7 @@ public class mapView extends View {
         canvas.drawBitmap(f3,635- imgOffset,574- imgOffset,null);
 
         //numb+=50;
-        canvas.drawBitmap(f1,x - imgOffset,y- imgOffset,null);
+        //canvas.drawBitmap(f1,x - imgOffset,y- imgOffset,null);
 
 
         //adding points to the list

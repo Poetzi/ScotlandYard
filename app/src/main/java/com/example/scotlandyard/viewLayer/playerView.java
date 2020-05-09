@@ -13,8 +13,10 @@ import com.example.scotlandyard.R;
 
 public class playerView extends View {
     Bitmap f1 = BitmapFactory.decodeResource(getResources(), R.drawable.f1);
-    int x = 0;
-    int y = 0;
+    int x = -100;
+    int y = -100;
+    int imgOffset = 26;
+
 
     public playerView(Context context) {
         super(context);
@@ -28,10 +30,12 @@ public class playerView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawBitmap(f1,x,y,null);
+        canvas.drawBitmap(f1,x - imgOffset,y- imgOffset,null);
     }
 
     public void drawPlayer(int x, int y){
+        this.x = x;
+        this.y = y;
         invalidate();
     }
 }
