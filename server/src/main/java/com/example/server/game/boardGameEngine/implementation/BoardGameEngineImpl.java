@@ -2,7 +2,7 @@ package com.example.server.game.boardGameEngine.implementation;
 
 
 
-import com.example.server.TurnMessage;
+import com.example.server.messages.TurnMessage;
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.game.gameBoard.implementation.GameBoardImpl;
 import com.example.server.game.gameBoard.interfaces.GameBoard;

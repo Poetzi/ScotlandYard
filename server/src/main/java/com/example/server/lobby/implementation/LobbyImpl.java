@@ -1,10 +1,8 @@
 package com.example.server.lobby.implementation;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.example.server.TurnMessage;
+import com.example.server.messages.TurnMessage;
 import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
-import com.example.server.game.gameBoard.interfaces.GameBoard;
 import com.example.server.lobby.interfaces.Lobby;
 
 import java.util.ArrayList;

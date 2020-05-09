@@ -1,7 +1,6 @@
 package com.example.server.lobby.interfaces;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.example.server.TurnMessage;
+import com.example.server.messages.TurnMessage;
 import com.example.server.lobby.implementation.ID;
 
 public interface Lobby {

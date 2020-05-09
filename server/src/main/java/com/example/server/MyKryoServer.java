@@ -3,8 +3,8 @@ package com.example.server;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Server;
 import com.example.server.lobby.implementation.ID;
-import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
+import com.example.server.messages.Message;
 
 import java.io.IOException;
 import java.util.ArrayList;

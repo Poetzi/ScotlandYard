@@ -1,4 +1,4 @@
-package com.example.server;
+package com.example.scotlandyard.client;
 
 public class TurnMessage {
     private int playerId;
