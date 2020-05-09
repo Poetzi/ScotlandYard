@@ -148,10 +148,12 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         }
 
         for (int i = 0; i <numberOfPlayers ; i++) {
-            if(players.get(misterX) == players.get(i).currentPosition){ //Missing field from Player CLass
+            /*if(players.get(misterX) == players.get(i).currentPosition){ //Missing field from Player CLass
                 System.out.println("Mister X lost");
                 return true;
             }
+
+             */
         }
         return false;
     }

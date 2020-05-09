@@ -1,6 +1,9 @@
 package com.example.server.lobby.implementation;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.example.server.TurnMessage;
+import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
+import com.example.server.game.gameBoard.interfaces.GameBoard;
 import com.example.server.lobby.interfaces.Lobby;
 
 import java.util.ArrayList;
@@ -9,6 +12,7 @@ public class LobbyImpl implements Lobby {
     private ArrayList<ID> players = new ArrayList<ID>();
     private boolean isOpen = false;
     public int playerCount =0;
+    private BoardGameEngine boardGame;
 
 
     @Override
@@ -45,5 +49,15 @@ public class LobbyImpl implements Lobby {
     @Override
     public boolean isLobbyOpen(){
         return isOpen;
+    }
+
+
+    @Override
+    public TurnMessage askPlayerforTurn(int playerId) {
+        /*
+        ToDo
+        Ask Player over Client for a Turn
+         */
+        return null;
     }
 }
