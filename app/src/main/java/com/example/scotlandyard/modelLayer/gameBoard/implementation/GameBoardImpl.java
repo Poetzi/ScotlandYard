@@ -15,19 +15,16 @@ public class GameBoardImpl implements GameBoard {
     /*
         Speichert die Anzahl der Spielfelder
      */
-    HashSet<Integer> fields; //(Liste oder Set von Field)
+    HashSet<Integer> fields = new HashSet<>(); //(Liste oder Set von Field)
     /*
         Speichert die Wege von einem Spielfeld zum anderen
      */
-    HashSet<Transition> transitions; //(Liste oder Set)
+    HashSet<Transition> transitions = new HashSet<>(); //(Liste oder Set)
 
 
     @Override
     public void addFieldWithTransition(int fromField, int toField, Transition Rule) {
-        Transition newTransition = new TransitionImpl();
-        newTransition.setFromField(fromField);
-        newTransition.setToField(toField);
-        newTransition.setName(Rule.getName());
+        Transition newTransition = new TransitionImpl(Rule.getName(),toField,fromField);
 
         transitions.add(newTransition);
     }
@@ -44,10 +41,7 @@ public class GameBoardImpl implements GameBoard {
 
     @Override
     public boolean movePlayer(int fromField, int toField, Transition Rule) {
-        Transition check = new TransitionImpl();
-        check.setFromField(fromField);
-        check.setToField(toField);
-        check.setName(Rule.getName());
+        Transition check = new TransitionImpl(Rule.getName(),toField,fromField);
 
         return transitions.contains(check);
     }

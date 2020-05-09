@@ -8,6 +8,12 @@ public class TransitionImpl implements Transition {
     private int toField;
     private int fromField;
 
+    public TransitionImpl(String name, int toField, int fromField) {
+        this.name = name;
+        this.toField = toField;
+        this.fromField = fromField;
+    }
+
     @Override
     public void setName(String name) {
         this.name = name;
