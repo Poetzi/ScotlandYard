@@ -27,8 +27,8 @@ public class MrXImpl extends PlayerImpl implements MrX {
      * @param newPosition Position
      */
     @Override
-    public void validateTicket(int round, int ticketType, int newPosition){
-        if (ticketType==4){
+    public void validateTicket(int round, String ticketType, int newPosition){
+        if (ticketType.equals("Black")){
             if(blackTickets>0){
                 blackTickets--;
                 setPositionOfRound(newPosition,4,round,false);
@@ -36,21 +36,59 @@ public class MrXImpl extends PlayerImpl implements MrX {
                 throw new IllegalArgumentException("No Black Tickets left.");
             }
         }else {
-            setPositionOfRound(newPosition, ticketType, round, false);
+            int ticket;
+            switch (ticketType){
+                case "Taxi":
+                    ticket=1;
+                    break;
+                case "Bus":
+                    ticket=2;
+                    break;
+                case "U-Bahn":
+                    ticket=3;
+                    break;
+                default:
+                    ticket=0;
+                    break;
+            }
+            setPositionOfRound(newPosition, ticket, round, false);
         }
     }
 
     /**
      * Löst ein Double Move Ticket ein und speichert den ERSTEN Zug des Doppelzugs.
-     *Zweiter Zug wird normal mit {@link #validateTicket(int, int, int)} Methode im Travel Log gespeichert.
+     *Zweiter Zug wird normal mit {@link #validateTicket(int, String, int)} Methode im Travel Log gespeichert.
      * @param round Spielrunde (Runde 1-24)
      * @param ticketType Ticket, welches zu gegebener Runde eingelöst wurde (1=Taxi, 2=Bus, 3=U-Bahn, 4=Black Ticket)
      * @param newPosition Position
      */
-    public void validateDoubleMoveTicket(int round, int ticketType, int newPosition){
+    public void validateDoubleMoveTicket(int round, String ticketType, int newPosition){
         if(doubleMoveTickets>0){
             doubleMoveTickets--;
-            setPositionOfRound(newPosition, ticketType, round, true);
+            int ticket=0;
+            switch (ticketType){
+                case "Taxi":
+                    ticket=1;
+                    break;
+                case "Bus":
+                    ticket=2;
+                    break;
+                case "U-Bahn":
+                    ticket=3;
+                    break;
+                case "Black":
+                    if (blackTickets>0) {
+                        blackTickets--;
+                        ticket=4;
+                    }else {
+                        throw new IllegalArgumentException("No Black Tickets left.");
+                    }
+                    break;
+                default:
+                    ticket=0;
+                    break;
+            }
+            setPositionOfRound(newPosition, ticket, round, true);
         }else {
             throw new IllegalArgumentException("No Double Move Tickets left.");
         }

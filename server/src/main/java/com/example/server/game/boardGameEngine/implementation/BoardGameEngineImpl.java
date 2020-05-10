@@ -2,12 +2,12 @@ package com.example.server.game.boardGameEngine.implementation;
 
 
 
+import com.example.server.game.players.interfaces.Detective;
+import com.example.server.game.players.interfaces.MrX;
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.game.gameBoard.implementation.GameBoardImpl;
 import com.example.server.game.gameBoard.interfaces.GameBoard;
 import com.example.server.game.players.implementation.PlayerImpl;
-import com.example.server.game.players.interfaces.Detective;
-import com.example.server.game.players.interfaces.MrX;
 import com.example.server.game.players.interfaces.Player;
 import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
@@ -113,62 +113,43 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         }
 
         /*
-            TODO
             Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
          */
         if (player instanceof Detective){
-            int ticketType;
-            switch (card){
-                case "Taxi":
-                    ticketType=1;
-                    break;
-                case "Bus":
-                    ticketType=2;
-                    break;
-                case "U-Bahn":
-                    ticketType=3;
-                    break;
-                default:
-                    ticketType=0;
-                    break;
-            }
-            ((Detective) player).validateTicket(ticketType);
+            ((Detective) player).validateTicket(card);
         }else if (player instanceof MrX){
-            int ticketType=0;   //Beispielwert
-
 
             if (!card.equals("Double")){
-                switch (card){
-                    case "Taxi":
-                        ticketType=1;
-                        break;
-                    case "Bus":
-                        ticketType=2;
-                        break;
-                    case "U-Bahn":
-                        ticketType=3;
-                        break;
-                    case "Black":
-                        ticketType=4;
-                        break;
-                    default:
-                        ticketType=0;
-                        break;
-                }
-                ((MrX) player).validateTicket(actualRound,ticketType,fieldToGo);
+                ((MrX) player).validateTicket(actualRound,card,fieldToGo);
             }else {
                 /**
-                 *      TODO
                  *      Warten bis Spieler den ersten Zug des Doppelzugs macht.
                  */
-                ((MrX) player).validateDoubleMoveTicket(actualRound, ticketType , fieldToGo);
+                drawValide=false;
+
+                while (drawValide==false) {
+                    if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
+                    {
+                        ((MrX) player).validateDoubleMoveTicket(actualRound, card , fieldToGo);
+                        drawValide = true;
+                    }
+
+                }
 
                 /**
-                 *      TODO
                  *      Warten auf den zweiten Zug des Doppelzugs.
                  */
+                drawValide=false;
 
-                ((MrX) player).validateTicket(actualRound, ticketType, fieldToGo);
+                while (drawValide==false) {
+                    if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
+                    {
+                        ((MrX) player).validateTicket(actualRound, card, fieldToGo);
+                        drawValide = true;
+                    }
+
+                }
+
             }
 
         }

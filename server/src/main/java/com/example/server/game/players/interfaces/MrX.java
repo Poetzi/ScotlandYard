@@ -21,7 +21,7 @@ public interface MrX extends Player {
 
     void setPositionOfRound(int position, int ticket, int round, boolean isDoubleMove);
 
-    void validateTicket(int round, int ticketType, int newPosition);
+    void validateTicket(int round, String ticketType, int newPosition);
 
-    void validateDoubleMoveTicket(int round, int ticketType, int newPosition);
+    void validateDoubleMoveTicket(int round, String ticketType, int newPosition);
 }

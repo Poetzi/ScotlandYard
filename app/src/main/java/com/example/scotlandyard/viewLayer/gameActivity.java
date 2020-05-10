@@ -113,7 +113,7 @@ public class gameActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Double Move Pressed",Toast.LENGTH_SHORT).show();
                 break;
         }
-        return false;
+
     }
 
     @Override
