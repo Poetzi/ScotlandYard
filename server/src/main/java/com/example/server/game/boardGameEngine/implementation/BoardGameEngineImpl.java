@@ -122,7 +122,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             if (!card.equals("Double")){
                 ((MrX) player).validateTicket(actualRound,card,fieldToGo);
             }else {
-                /**
+                /**     TODO
                  *      Warten bis Spieler den ersten Zug des Doppelzugs macht.
                  */
                 drawValide=false;
@@ -136,7 +136,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
                 }
 
-                /**
+                /**     TODO
                  *      Warten auf den zweiten Zug des Doppelzugs.
                  */
                 drawValide=false;

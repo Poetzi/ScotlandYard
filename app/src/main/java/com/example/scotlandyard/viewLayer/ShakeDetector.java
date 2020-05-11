@@ -4,20 +4,19 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.FloatMath;
 
 public class ShakeDetector implements SensorEventListener {
 
-    private static final float SHAKE_THRESHOLD_GRAVITY = 2F;    //gibt an wie stark geschüttelt werden muss.
+    private static final float SHAKE_THRESHOLD_GRAVITY = 3F;    //gibt an wie stark geschüttelt werden muss.
     private static final int SHAKE_SLOP_TIME_MS = 1000;
     private static final int SHAKE_COUNT_RESET_TIME_MS = 3000;
 
-    private OnShakeListener mListener;
+    private OnShakeListener listener;
     private long shakeTimestamp;
     private int shakeCount;
 
     public void setOnShakeListener(OnShakeListener listener) {
-        this.mListener = listener;
+        this.listener = listener;
     }
 
     public interface OnShakeListener {
@@ -31,7 +30,7 @@ public class ShakeDetector implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        if (mListener != null) {
+        if (listener != null) {
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
@@ -40,17 +39,17 @@ public class ShakeDetector implements SensorEventListener {
             float gY = y / SensorManager.GRAVITY_EARTH;
             float gZ = z / SensorManager.GRAVITY_EARTH;
 
-            // gForce will be close to 1 when there is no movement.
+            // gForce nahe 0, wenn keine Bewegung stattfindet
             float gForce = (float)Math.sqrt(gX * gX + gY * gY + gZ * gZ);
 
             if (gForce > SHAKE_THRESHOLD_GRAVITY) {
                 final long now = System.currentTimeMillis();
-                // ignore shake events too close to each other (1000ms)
+                // Events die zu nahe (1000 ms) zusammen liegen, werden ignoriert
                 if (shakeTimestamp + SHAKE_SLOP_TIME_MS > now) {
                     return;
                 }
 
-                // reset the shake count after 3 seconds of no shakes
+                // nach einer gewissen Zeit (3000 ms) wird shakeCount zurückgesetzt.
                 if (shakeTimestamp + SHAKE_COUNT_RESET_TIME_MS < now) {
                     shakeCount = 0;
                 }
@@ -58,7 +57,7 @@ public class ShakeDetector implements SensorEventListener {
                 shakeTimestamp = now;
                 shakeCount++;
 
-                mListener.onShake(shakeCount);
+                listener.onShake(shakeCount);
             }
         }
     }

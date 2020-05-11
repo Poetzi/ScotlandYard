@@ -46,22 +46,22 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
 
         /**
          * Löst ein Ticket ein.
-          * @param ticketType gibt an welches Ticket eingelöst werden soll (1=Taxi, 2=Bus, 3=U-Bahn, 4=Black Ticket, 5=Double Move).
+          * @param ticketType gibt an welches Ticket eingelöst werden soll
          */
-    public void validateTicket(int ticketType){
-        if (ticketType==1){
+    public void validateTicket(String ticketType){
+        if (ticketType.equals("Taxi")){
             if (taxiTickets>0){
                 taxiTickets--;
             }else {
                 throw new IllegalArgumentException("No Taxi Tickets left.");
             }
-        }else if (ticketType==2){
+        }else if (ticketType.equals("Bus")){
             if (busTickets>0){
                 busTickets--;
             }else {
                 throw new IllegalArgumentException("No Bus Tickets left.");
             }
-        }else if(ticketType==3){
+        }else if(ticketType.equals("U-Bahn")){
             if (undergroundTickets>0){
                 undergroundTickets--;
             }else {

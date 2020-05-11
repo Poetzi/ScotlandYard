@@ -2,7 +2,7 @@ package com.example.scotlandyard.modelLayer.players.interfaces;
 
 public interface Detective extends Player {
 
-    void validateTicket(int ticketType);
+    void validateTicket(String ticketType);
 
     int getTaxiTickets();
 

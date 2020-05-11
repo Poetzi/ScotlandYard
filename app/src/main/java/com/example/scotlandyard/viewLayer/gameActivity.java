@@ -1,6 +1,9 @@
 package com.example.scotlandyard.viewLayer;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,7 +12,8 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +22,10 @@ import android.widget.Toast;
 import com.example.scotlandyard.R;
 import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImpl;
 import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
+import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.modelLayer.transitions.implementation.TransitionImpl;
 import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
+import com.google.android.material.navigation.NavigationView;
 
 public class gameActivity extends AppCompatActivity {
 
@@ -32,6 +38,11 @@ public class gameActivity extends AppCompatActivity {
     private Sensor accelerometer;
     private ShakeDetector shakeDetector;
     private Button cheatBtn;
+
+    private DrawerLayout drawerLayout;
+    private NavigationView nav;
+    private Menu menu;
+    private View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +82,31 @@ public class gameActivity extends AppCompatActivity {
                 }
             }
         });
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        nav=findViewById(R.id.nav_view);
+        header=nav.getHeaderView(0);
+        header=findViewById(R.id.nav_header);
+        menu=nav.getMenu();
+
+        //Beispielwerte
+        menu.add(Menu.NONE,1,Menu.NONE,"Bus");
+        menu.add(Menu.NONE,2,Menu.NONE,"U-Bahn");
+        menu.add(Menu.NONE,3,Menu.NONE,"Taxi");
+
+        //nur zum Testen von addTravelLog()
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                TravelLog travelLog=new TravelLog(1,"Taxi",false);
+                addTravelLog(travelLog,4);
+            }
+        }, 10000);
+
     }
 
 
@@ -119,15 +155,26 @@ public class gameActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        // Add the following line to register the Session Manager Listener onResume
         sensorManager.registerListener(shakeDetector, accelerometer,	SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
     public void onPause() {
-        // Add the following line to unregister the Sensor Manager onPause
         sensorManager.unregisterListener(shakeDetector);
         super.onPause();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
+    }
+
+    public void addTravelLog(TravelLog travelLog, int round) {
+        String transport=travelLog.getTicket();
+        menu.add(Menu.NONE, round, Menu.NONE, transport);
+
+    }
 }

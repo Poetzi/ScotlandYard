@@ -12,6 +12,8 @@
     <string name="taxi">Taxi</string>
     <string name="u_bahn">U-bahn</string>
     <string name="cheat">Schummeln</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
 
 </resources>

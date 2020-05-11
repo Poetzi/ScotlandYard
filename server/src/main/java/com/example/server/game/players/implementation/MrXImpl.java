@@ -9,7 +9,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
     private int blackTickets;
     private int doubleMoveTickets;
     /**
-     * @see #setPositionOfRound(int, int, int, boolean)
+     * @see #setPositionOfRound(int, String, int, boolean)
      */
     private TravelLog[] travelLog =new TravelLog[24];
 
@@ -23,7 +23,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
     /**
      * Löst ein Ticket ein.
      * @param round Spielrunde (Runde 1-24)
-     * @param ticketType Ticket, welches zu gegebener Runde eingelöst wurde (1=Taxi, 2=Bus, 3=U-Bahn, 4=Black Ticket)
+     * @param ticketType Ticket, welches zu gegebener Runde eingelöst wurde
      * @param newPosition Position
      */
     @Override
@@ -31,27 +31,12 @@ public class MrXImpl extends PlayerImpl implements MrX {
         if (ticketType.equals("Black")){
             if(blackTickets>0){
                 blackTickets--;
-                setPositionOfRound(newPosition,4,round,false);
+                setPositionOfRound(newPosition,"Black",round,false);
             }else {
                 throw new IllegalArgumentException("No Black Tickets left.");
             }
         }else {
-            int ticket;
-            switch (ticketType){
-                case "Taxi":
-                    ticket=1;
-                    break;
-                case "Bus":
-                    ticket=2;
-                    break;
-                case "U-Bahn":
-                    ticket=3;
-                    break;
-                default:
-                    ticket=0;
-                    break;
-            }
-            setPositionOfRound(newPosition, ticket, round, false);
+            setPositionOfRound(newPosition, ticketType, round, false);
         }
     }
 
@@ -59,36 +44,13 @@ public class MrXImpl extends PlayerImpl implements MrX {
      * Löst ein Double Move Ticket ein und speichert den ERSTEN Zug des Doppelzugs.
      *Zweiter Zug wird normal mit {@link #validateTicket(int, String, int)} Methode im Travel Log gespeichert.
      * @param round Spielrunde (Runde 1-24)
-     * @param ticketType Ticket, welches zu gegebener Runde eingelöst wurde (1=Taxi, 2=Bus, 3=U-Bahn, 4=Black Ticket)
+     * @param ticketType Ticket, welches zu gegebener Runde eingelöst wurde
      * @param newPosition Position
      */
     public void validateDoubleMoveTicket(int round, String ticketType, int newPosition){
         if(doubleMoveTickets>0){
             doubleMoveTickets--;
-            int ticket=0;
-            switch (ticketType){
-                case "Taxi":
-                    ticket=1;
-                    break;
-                case "Bus":
-                    ticket=2;
-                    break;
-                case "U-Bahn":
-                    ticket=3;
-                    break;
-                case "Black":
-                    if (blackTickets>0) {
-                        blackTickets--;
-                        ticket=4;
-                    }else {
-                        throw new IllegalArgumentException("No Black Tickets left.");
-                    }
-                    break;
-                default:
-                    ticket=0;
-                    break;
-            }
-            setPositionOfRound(newPosition, ticket, round, true);
+            setPositionOfRound(newPosition, ticketType, round, true);
         }else {
             throw new IllegalArgumentException("No Double Move Tickets left.");
         }
@@ -101,8 +63,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
      */
     public void setHasCheated(int round, int newPosition){
         travelLog[round-1].setHasCheated(true);
-        int[] newMove={newPosition, travelLog[round-1].getTicket()};
-        travelLog[round-1].setMove(newMove);
+        travelLog[round-1].setPosition(newPosition);
     }
 
     /**
@@ -122,7 +83,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
      * @param isDoubleMove true= wenn in dieser Runde ein Doppelzug-Ticket gelöst wurde.
      */
     @Override
-    public void setPositionOfRound(int position, int ticket, int round, boolean isDoubleMove) {
+    public void setPositionOfRound(int position, String ticket, int round, boolean isDoubleMove) {
         TravelLog log=new TravelLog(position, ticket, isDoubleMove);
         travelLog[round-1]=log;
     }
@@ -143,7 +104,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
      * @return eingelöstes Ticket (1=Taxi, 2=Bus, 3=U-Bahn, 4=Black Ticket)
      */
     @Override
-    public int getTicketOfRound(int round){
+    public String getTicketOfRound(int round){
         return travelLog[round-1].getTicket();
     }
 
@@ -176,7 +137,6 @@ public class MrXImpl extends PlayerImpl implements MrX {
     public void setDoubleMoveTickets(int ticketNumber) {
         doubleMoveTickets=ticketNumber;
     }
-
 
 
 }

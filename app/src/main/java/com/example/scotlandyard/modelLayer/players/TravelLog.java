@@ -3,20 +3,23 @@ package com.example.scotlandyard.modelLayer.players;
 public class TravelLog {
 
     private boolean hasCheated;
-    private int[] move; //move[0]=Position, move[1]=Ticket Typ
+    private int position;
+    private String ticketType;
     private boolean isDoubleMove;
 
-    public TravelLog(int position, int ticket, boolean isDoubleMove){
-        move=new int [] {position, ticket};
+    public TravelLog(int position, String ticket, boolean isDoubleMove){
+        this.position=position;
+        this.ticketType=ticket;
         this.isDoubleMove=isDoubleMove;
     }
 
-    public int[] getMove() {
-        return move;
+
+    public void setTicketType(String ticketType) {
+        this.ticketType = ticketType;
     }
 
-    public void setMove(int[] move) {
-        this.move = move;
+    public void setPosition(int position){
+        this.position=position;
     }
 
     public boolean isDoubleMove() {
@@ -28,11 +31,11 @@ public class TravelLog {
     }
 
     public int getPosition(){
-        return move[0];
+        return position;
     }
 
-    public int getTicket(){
-        return move[1];
+    public String getTicket(){
+        return ticketType;
     }
 
     public boolean isHasCheated() {
