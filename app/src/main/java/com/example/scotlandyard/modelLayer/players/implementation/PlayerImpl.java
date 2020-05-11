@@ -59,8 +59,10 @@ public class PlayerImpl implements Player {
         currentPosition=field;
     }
 
+
     @Override
     public ArrayList<Transition> getAvailableTransitions() {
         return availableTransitions;
     }
+
 }

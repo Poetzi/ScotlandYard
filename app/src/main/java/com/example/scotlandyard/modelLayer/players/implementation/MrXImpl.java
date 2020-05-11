@@ -13,6 +13,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
     private TravelLog[] travelLog =new TravelLog[24];
 
 
+
     public MrXImpl(String name, int id){
         super(name, id);
         blackTickets=5;

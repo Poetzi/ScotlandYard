@@ -97,6 +97,7 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
         busTickets=ticketNumber;
     }
 
+
     @Override
     public void setUndergoundTickets(int ticketNumber) {
         undergroundTickets=ticketNumber;

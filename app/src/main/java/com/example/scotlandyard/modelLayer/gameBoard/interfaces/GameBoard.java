@@ -4,13 +4,13 @@ import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
 
 public interface GameBoard {
 
-    void addFieldWithTransition(int fromField, int toField, Transition Rule);
+    void addFieldWithTransition(int fromField, int toField, String Rule);
 
     void addField(int field);
 
     void removeField(int field);
 
-    boolean movePlayer(int fromField, int toField, Transition Rule);
+    boolean movePlayer(int fromField, int toField, String Rule);
 
     void setStartField(int playerId, int field);
 

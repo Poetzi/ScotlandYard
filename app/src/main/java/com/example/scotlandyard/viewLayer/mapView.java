@@ -134,6 +134,7 @@ public class mapView extends View {
                         String name = points.get(i).getStrField();
                         touchedPoint.setX(points.get(i).x);
                         touchedPoint.setY(points.get(i).y);
+                        touchedPoint.setField(points.get(i).getField());
                         Log.i("Point ",name+" got touched");
                         return true;
 
