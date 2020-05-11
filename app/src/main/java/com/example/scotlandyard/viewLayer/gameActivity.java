@@ -37,7 +37,7 @@ public class gameActivity extends AppCompatActivity {
         ubahn = findViewById(R.id.ubahn);
         blackTicket = findViewById(R.id.blackTicket);
         doubleMove = findViewById(R.id.doubleMove);
-        map = (mapView) findViewById(R.id.mapView);
+        map = findViewById(R.id.mapView);
         player = findViewById(R.id.playerView);
         setUpFields();
     }
@@ -66,9 +66,9 @@ public class gameActivity extends AppCompatActivity {
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
-        Log.i("PlayerPostition ",positionOfPlayer+"");
+       // Log.i("PlayerPostition ",positionOfPlayer+"");
 
-        Log.i("ToField",toField+"");
+      //  Log.i("ToField",toField+"");
 
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"taxi")){
@@ -80,11 +80,37 @@ public class gameActivity extends AppCompatActivity {
     }
 
     public void useBus(){
+        int positionOfPlayer = playerPostion.getField();
+        int toField = map.touchedPoint.getField();
 
+      //  Log.i("PlayerPostition ",positionOfPlayer+"");
+
+       // Log.i("ToField",toField+"");
+
+
+        if(gameBoard.movePlayer(positionOfPlayer,toField,"bus")){
+            playerPostion.setField(toField);
+            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+        }else {
+            Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void useUbahn(){
+        int positionOfPlayer = playerPostion.getField();
+        int toField = map.touchedPoint.getField();
 
+        //Log.i("PlayerPostition ",positionOfPlayer+"");
+
+       // Log.i("ToField",toField+"");
+
+
+        if(gameBoard.movePlayer(positionOfPlayer,toField,"ubahn")){
+            playerPostion.setField(toField);
+            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+        }else {
+            Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -95,11 +121,12 @@ public class gameActivity extends AppCompatActivity {
                 useTaxi();
                 break;
             case R.id.bus:
-                Toast.makeText(getApplicationContext(),"Bus Pressed",Toast.LENGTH_SHORT).show();
-                player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+                //Toast.makeText(getApplicationContext(),"Bus Pressed",Toast.LENGTH_SHORT).show();
+                useBus();
                 break;
             case R.id.ubahn:
-                Toast.makeText(getApplicationContext(),"U-Bahn Pressed",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(),"U-Bahn Pressed",Toast.LENGTH_SHORT).show();
+                useUbahn();
                 break;
             case R.id.blackTicket:
                 Toast.makeText(getApplicationContext(),"Black Ticket Pressed",Toast.LENGTH_SHORT).show();
