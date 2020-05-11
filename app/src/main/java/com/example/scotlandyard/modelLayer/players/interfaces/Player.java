@@ -20,4 +20,8 @@ public interface Player {
     int getCurrentPosition();
 
     void setCurrentPosition(int field);
+
+
+    ArrayList<Transition> getAvailableTransitions();
+
 }

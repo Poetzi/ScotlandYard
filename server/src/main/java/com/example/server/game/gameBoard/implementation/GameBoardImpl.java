@@ -25,11 +25,11 @@ public class GameBoardImpl implements GameBoard {
 
 
     @Override
-    public void addFieldWithTransition(int fromField, int toField, Transition Rule) {
+    public void addFieldWithTransition(int fromField, int toField, Transition rule) {
         Transition newTransition = new TransitionImpl();
         newTransition.setFromField(fromField);
         newTransition.setToField(toField);
-        newTransition.setName(Rule.getName());
+        newTransition.setName(rule.getName());
 
         transitions.add(newTransition);
     }

@@ -10,6 +10,14 @@ public class MrXImpl extends PlayerImpl implements MrX {
      */
     private int [][] travelLog =new int[24][2];
 
+
+
+    public MrXImpl(String name, int id){
+        super(name, id);
+        blackTickets=5;
+        doubleMoveTickets=2;
+    }
+
     @Override
     public void validateBlackTicket() {
 

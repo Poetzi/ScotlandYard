@@ -12,6 +12,11 @@ public class PlayerImpl implements Player {
     private int currentPosition;
     private ArrayList<Transition> availableTransitions = new ArrayList<>();
 
+    public PlayerImpl(String name, int id){
+        this.name=name;
+        this.id=id;
+    }
+
     @Override
     public String getName() {
         return this.name;
@@ -53,4 +58,11 @@ public class PlayerImpl implements Player {
     public void setCurrentPosition(int field) {
         currentPosition=field;
     }
+
+
+    @Override
+    public ArrayList<Transition> getAvailableTransitions() {
+        return availableTransitions;
+    }
+
 }
