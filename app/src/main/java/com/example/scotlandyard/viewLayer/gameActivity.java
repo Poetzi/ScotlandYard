@@ -15,15 +15,18 @@ import android.widget.Toast;
 import com.example.scotlandyard.R;
 import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImpl;
 import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
+import com.example.scotlandyard.modelLayer.players.implementation.DetectiveImpl;
+import com.example.scotlandyard.modelLayer.players.interfaces.Detective;
 import com.example.scotlandyard.modelLayer.transitions.implementation.TransitionImpl;
 import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
 
 public class gameActivity extends AppCompatActivity {
 
     private Button taxi, bus, ubahn, blackTicket, doubleMove;
-    private GameBoard gameBoard;
+    private GameBoard gameBoard = new GameBoardImpl();
     private mapView map;
     private playerView player;
+    private Points playerPostion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +44,46 @@ public class gameActivity extends AppCompatActivity {
 
 
     public void setUpFields(){
-        gameBoard = new GameBoardImpl();
-        Transition tr = new TransitionImpl("bus",2,1);
-        gameBoard.addFieldWithTransition(1,2,tr);
+       // gameBoard = new GameBoardImpl();
 
-        tr = new TransitionImpl("ubahn",3,2);
-        gameBoard.addFieldWithTransition(2,3,tr);
+        gameBoard.addFieldWithTransition(1,2,"bus");
+        gameBoard.addFieldWithTransition(2,1,"bus");
 
-        tr = new TransitionImpl("taxi",1,3);
-        gameBoard.addFieldWithTransition(3,1,tr);
+
+        gameBoard.addFieldWithTransition(2,3,"ubahn");
+        gameBoard.addFieldWithTransition(3,2,"ubahn");
+
+
+        gameBoard.addFieldWithTransition(3,1,"taxi");
+        gameBoard.addFieldWithTransition(1,3,"taxi");
+
+        //Initial position of player
+        playerPostion = new Points(635,347,0," ",1);
+        player.drawPlayer(635,347);
+    }
+
+    public void useTaxi(){
+        int positionOfPlayer = playerPostion.getField();
+        int toField = map.touchedPoint.getField();
+
+        Log.i("PlayerPostition ",positionOfPlayer+"");
+
+        Log.i("ToField",toField+"");
+
+
+        if(gameBoard.movePlayer(positionOfPlayer,toField,"taxi")){
+            playerPostion.setField(toField);
+            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+        }else {
+            Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void useBus(){
+
+    }
+
+    public void useUbahn(){
 
     }
 
@@ -57,11 +91,8 @@ public class gameActivity extends AppCompatActivity {
     public void onClick(View v){
         switch (v.getId()){
             case R.id.taxi:
-                Toast.makeText(getApplicationContext(),"Taxi Pressed",Toast.LENGTH_SHORT).show();
-
-
-                player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-
+                //Toast.makeText(getApplicationContext(),"Taxi Pressed",Toast.LENGTH_SHORT).show();
+                useTaxi();
                 break;
             case R.id.bus:
                 Toast.makeText(getApplicationContext(),"Bus Pressed",Toast.LENGTH_SHORT).show();
@@ -69,11 +100,9 @@ public class gameActivity extends AppCompatActivity {
                 break;
             case R.id.ubahn:
                 Toast.makeText(getApplicationContext(),"U-Bahn Pressed",Toast.LENGTH_SHORT).show();
-                player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
                 break;
             case R.id.blackTicket:
                 Toast.makeText(getApplicationContext(),"Black Ticket Pressed",Toast.LENGTH_SHORT).show();
-                player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
                 break;
             case R.id.doubleMove:
                 Toast.makeText(getApplicationContext(),"Double Move Pressed",Toast.LENGTH_SHORT).show();
