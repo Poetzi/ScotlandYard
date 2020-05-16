@@ -16,4 +16,12 @@ public interface Player {
     void setAvailableTransitions(ArrayList<Transition> transitions);
 
     void removeTransitionFromAvailable(Transition transition);
+
+    int getCurrentPosition();
+
+    void setCurrentPosition(int field);
+
+
+    ArrayList<Transition> getAvailableTransitions();
+
 }

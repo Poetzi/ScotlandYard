@@ -3,11 +3,15 @@ package com.example.server.game.boardGameEngine.implementation;
 
 
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
+import com.example.server.game.gameBoard.implementation.GameBoardImpl;
 import com.example.server.game.gameBoard.interfaces.GameBoard;
+import com.example.server.game.players.implementation.PlayerImpl;
 import com.example.server.game.players.interfaces.Player;
+import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BoardGameEngineImpl implements BoardGameEngine {
 
@@ -15,19 +19,43 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     private int numberOfPlayers;
     private int maxRounds;
     private int actualRound;
-    private GameBoard gamBoard;
-
-
+    private GameBoard gameBoard;
+    private int numberOfFields;
 
 
     @Override
-    public void addPlayer(String name) {
+    public void addPlayer(String name, int field) {
+        Player player = new PlayerImpl();
+        player.setId(players.size());
+        player.setName(name);
+        players.add(player);
 
+        gameBoard.setStartField(players.size(),field);
     }
 
     @Override
     public void setupNewGame() {
+        gameBoard = new GameBoardImpl();
+        Random rnd = new Random();
 
+        ArrayList<String> lobbyPlayerNames = new ArrayList<>();
+
+        numberOfPlayers = lobbyPlayerNames.size();
+
+        for (int i = 0; i < numberOfPlayers - 1 ; i++) {
+            addPlayer(lobbyPlayerNames.get(i),rnd.nextInt(20));
+        }
+        addPlayer("Mister X",rnd.nextInt(20));
+
+        for (int i = 0; i < numberOfFields ; i++) {
+            gameBoard.addField(i);
+        }
+
+        for (int i = 0; i < numberOfFields/2 ; i++) {
+            int random = rnd.nextInt(20);
+Transition x = new TransitionImpl();
+            gameBoard.addFieldWithTransition(random,random,x);
+        }
     }
 
     @Override
@@ -76,7 +104,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                ob der Zug gültig ist.
                Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
             */
-            if (gamBoard.checkDraw(player.getId(),fieldToGo,card))
+            if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
             {
                 drawValide = true;
             }
@@ -96,7 +124,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
          */
         if (drawValide)
         {
-            gamBoard.setPositionOfPlayer(player.getId(), fieldToGo);
+            gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
 
             /*
                 TODO
@@ -110,10 +138,19 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public boolean checkWinningCondition() {
-        /*
-            TODO
-            überprüfen ob die Detective gewonnen haben
-         */
+        int misterX = players.size() - 1;
+
+        if(maxRounds==actualRound){
+            System.out.println("Mister X won");
+            return false;
+        }
+
+        for (int i = 0; i <numberOfPlayers ; i++) {
+            if(players.get(misterX) == players.get(i)){ //Missing field from Player CLass
+                System.out.println("Mister X lost");
+                return true;
+            }
+        }
         return false;
     }
 
