@@ -1,4 +1,4 @@
-package com.example.scotlandyard.client;
+package com.example.scotlandyard.Client;
 
 import com.esotericsoftware.kryonet.Connection;
 
