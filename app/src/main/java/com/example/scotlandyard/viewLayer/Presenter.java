@@ -9,7 +9,7 @@ import com.example.scotlandyard.Client.MyKryoClient;
 
 import java.io.IOException;
 
-public class Presenter  implements Callback{
+public class Presenter {
 
     // Singleton
     private static Presenter presenter;
@@ -27,23 +27,19 @@ public class Presenter  implements Callback{
 
 
     // Singleton wird zurückgegeben
-    public static synchronized Presenter getInstance()
-    {
-        if (Presenter.presenter == null)
-        {
+    public static synchronized Presenter getInstance() {
+        if (Presenter.presenter == null) {
             Presenter.presenter = new Presenter();
         }
         return Presenter.presenter;
     }
 
-    public void connectToServer(String hostname)
-    {
+    public void connectToServer(String hostname) {
         client.registerClass(BaseMessage.class);
         client.registerClass(TextMessage.class);
 
         client.registerCallback(nachrichtVomServer -> {
-            if(nachrichtVomServer instanceof TextMessage)
-            {
+            if (nachrichtVomServer instanceof TextMessage) {
                 TextMessage message = (TextMessage) nachrichtVomServer;
                 updateLog(message.toString());
             }
@@ -56,9 +52,8 @@ public class Presenter  implements Callback{
         }
     }
 
-    public void sendMessagetoServer(String text)
-    {
-        TextMessage message = new TextMessage( user.getName()+": "+ text);
+    public void sendMessagetoServer(String text) {
+        TextMessage message = new TextMessage(user.getName() + ": " + text);
         client.sendMessage(message);
     }
 
@@ -70,16 +65,11 @@ public class Presenter  implements Callback{
         this.user = user;
     }
 
-    @Override
-    public void callback(Object argument) {
 
-    }
-
-    public void updateLog(String text)
-    {
+    public void updateLog(String text) {
         String prev = log.getText().toString();
         String toAdd = text;
-        String newlog = prev +toAdd+"\n";
+        String newlog = prev + toAdd + "\n";
 
         log.setText(newlog);
     }
