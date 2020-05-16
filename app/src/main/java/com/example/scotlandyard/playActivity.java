@@ -6,7 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.scotlandyard.viewLayer.NetworkTestActivity;
+
+import com.example.scotlandyard.viewLayer.Chat;
 import com.example.scotlandyard.viewLayer.gameActivity;
 
 public class playActivity extends AppCompatActivity {
@@ -17,10 +18,8 @@ public class playActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
     }
 
-    public void goToNetworkTest(View view)
-    {
-        Intent intent = new Intent(this, NetworkTestActivity.class);
-
+    public void chat(View view){
+        Intent intent = new Intent(this, Chat.class);
         startActivity(intent);
     }
 
