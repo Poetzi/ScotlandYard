@@ -9,6 +9,7 @@ import com.example.server.game.players.implementation.PlayerImpl;
 import com.example.server.game.players.interfaces.Player;
 import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
+import com.example.server.lobby.interfaces.Lobby;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,6 +18,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     private ArrayList<Player> players;
     private int numberOfPlayers;
+    public Lobby lobby;
     private int maxRounds;
     private int actualRound;
     private GameBoard gameBoard;
