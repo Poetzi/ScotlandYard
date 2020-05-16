@@ -28,10 +28,12 @@ public class Chat extends AppCompatActivity {
         presenter.setLog(textView);
     }
 
+
     public void verbindeZuServer(View view) {
         new Thread(() -> {
             // Server wird gestartet
-            presenter.connectToServer("192.168.8.158");
+            //Eigene IPv4-Adresse eintragen für einen lokalen Test.
+            presenter.connectToServer("lokalhost");
 
         }).start();
     }
