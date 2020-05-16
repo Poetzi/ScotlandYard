@@ -14,6 +14,10 @@ public class TransitionImpl implements Transition {
         this.fromField = fromField;
     }
 
+    public TransitionImpl() {
+    }
+
+
     @Override
     public void setName(String name) {
         this.name = name;
