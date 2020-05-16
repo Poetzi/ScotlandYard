@@ -1,10 +1,13 @@
 package com.example.server;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.Connection;
+import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.example.server.lobby.implementation.ID;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
+import com.example.server.messages.BaseMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,38 +15,35 @@ import java.util.ArrayList;
 public class MyKryoServer {
     //Server Objekt
     private Server server;
-    private MyServerListener listener;
-    private Kryo kryo;
+    private Callback<BaseMessage> messageCallback;
     public static ArrayList<Lobby> lobby = new ArrayList<Lobby>();
 
     public MyKryoServer() {
-        System.out.println("Server is starting...");
-        //Server wird erstellt
         server = new Server();
-        //listener wird hinzugefügt
-        listener = new MyServerListener(this);
-        //Bindet KryoServer für einfacheres handling
-        kryo = server.getKryo();
-        registerClasses();
     }
 
-    public void startServer() throws IOException {
+    public void registerClass(Class c) {
+        server.getKryo().register(c);
+    }
+
+    public void start() throws IOException {
         server.start();
         server.bind(Ports.TCP);
-        server.addListener(listener);
+
+        server.addListener(new Listener() {
+            public void received(Connection connection, Object object) {
+                if (messageCallback != null && object instanceof BaseMessage)
+                    messageCallback.callback((BaseMessage) object);
+            }
+        });
     }
 
-    private void registerClasses()
-    {
-        //Package Klasse wird registriert. (Es können nur Objekte
-        //gesendet werden, die registriert sind.
-        kryo.register(Message.class);
-        kryo.register(ID.class);
-
+    public void registerCallback(Callback<BaseMessage> callback) {
+        this.messageCallback = callback;
     }
 
-    public void stopServer()
-    {
-        server.stop();
+    public void broadcastMessage(BaseMessage message) {
+        for (Connection connection : server.getConnections())
+            connection.sendTCP(message);
     }
 }
