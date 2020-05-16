@@ -1,5 +1,8 @@
 package com.example.server.messages;
 
+/**
+ * Eine Klasse um einen String zu versenden z.B: für die Chatfunktion
+ */
 public class TextMessage extends BaseMessage {
 
     public TextMessage() {
