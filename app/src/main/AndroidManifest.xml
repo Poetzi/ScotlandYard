@@ -17,9 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".viewLayer.Chat"></activity>
+        <activity android:name=".playActivity" />
         <activity
-            android:name=".playActivity"
-        <activity android:name=".viewLayer.gameActivity"
+            android:name=".viewLayer.gameActivity"
             android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity" />
         <activity
