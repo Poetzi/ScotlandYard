@@ -9,7 +9,7 @@ import com.example.scotlandyard.Client.MyKryoClient;
 
 import java.io.IOException;
 
-public class Presenter {
+public class Presenter{
 
     // Singleton
     private static Presenter presenter;
@@ -19,6 +19,8 @@ public class Presenter {
     private User user;
 
     private TextView log;
+
+    private boolean verbunden = false;
 
     // private Konstruktor
     private Presenter() {
@@ -35,20 +37,23 @@ public class Presenter {
     }
 
     public void connectToServer(String hostname) {
-        client.registerClass(BaseMessage.class);
-        client.registerClass(TextMessage.class);
+        if(verbunden == false) {
+            client.registerClass(BaseMessage.class);
+            client.registerClass(TextMessage.class);
 
-        client.registerCallback(nachrichtVomServer -> {
-            if (nachrichtVomServer instanceof TextMessage) {
-                TextMessage message = (TextMessage) nachrichtVomServer;
-                updateLog(message.toString());
+            client.registerCallback(nachrichtVomServer -> {
+                if (nachrichtVomServer instanceof TextMessage) {
+                    TextMessage message = (TextMessage) nachrichtVomServer;
+                    updateLog(message.toString());
+                }
+            });
+
+            try {
+                client.connect(hostname);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
-
-        try {
-            client.connect(hostname);
-        } catch (IOException e) {
-            e.printStackTrace();
+            this.verbunden = true;
         }
     }
 
