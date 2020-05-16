@@ -1,6 +1,8 @@
 package com.example.server.lobby.implementation;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
+import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.lobby.interfaces.Lobby;
 
 import java.util.ArrayList;
@@ -27,11 +29,7 @@ public class LobbyImpl implements Lobby {
 
     @Override
     public void startGame() {
-        Runnable runnable =    new Runnable(){
-            public void run(){
-
-            }
-        };
+        Runnable runnable =    new LobbyStart(this);
         Thread t = new Thread(runnable);
         t.start();
 

@@ -11,12 +11,13 @@ import com.example.server.messages.BaseMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MyKryoServer {
     //Server Objekt
     private Server server;
     private Callback<BaseMessage> messageCallback;
-    public static ArrayList<Lobby> lobby = new ArrayList<Lobby>();
+    public static ArrayList<Lobby> lobbys = new ArrayList<Lobby>();
 
     public MyKryoServer() {
         server = new Server();
@@ -41,6 +42,39 @@ public class MyKryoServer {
 
         // Serverlistener wird hinzugefügt
         server.addListener(new Listener() {
+
+            public void connected(Connection connection) {
+                System.out.println("main.java.Server: Jemand ist dem main.java.Server beigetreten: " + connection.getRemoteAddressTCP().getHostString());
+                //Erstellen einer Nachricht für den Client
+                Message message = new Message();
+                //Text wird zugewiesen
+                message.message = "You have successfully connected to the server: " + new Date().toString();
+
+
+                ID id = new ID(connection);
+                boolean lobbyFound = false;
+                for(Lobby lobby : lobbys){
+                    if(lobby.isLobbyOpen()){
+                        lobby.addPlayertoGame(id);
+                        lobbyFound = true;
+                        break;
+                    }
+                }
+                if(!lobbyFound){
+                    Lobby lobby = new LobbyImpl();
+                    lobby.addPlayertoGame(id);
+                    lobbys.add(lobby);
+                }
+
+                //Nachricht wird über den Port gesendet.
+                connection.sendTCP(message);
+            }
+
+            @Override
+            public void disconnected(Connection connection) {
+                System.out.println("main.java.Server: Jemand hat den main.java.Server verlassen");
+            }
+
 
             // Die Nachricht die erhalten wird wird über den Callback weitergeleitet
             public void received(Connection connection, Object object) {
