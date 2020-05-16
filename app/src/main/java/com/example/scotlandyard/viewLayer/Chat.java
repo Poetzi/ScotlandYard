@@ -30,12 +30,17 @@ public class Chat extends AppCompatActivity {
 
 
     public void verbindeZuServer(View view) {
-        new Thread(() -> {
-            // Server wird gestartet
-            //Eigene IPv4-Adresse eintragen für einen lokalen Test.
-            presenter.connectToServer("lokalhost");
 
-        }).start();
+            new Thread(() -> {
+                // Server wird gestartet
+                //Eigene IPv4-Adresse eintragen für einen lokalen Test.
+                presenter.connectToServer("192.168.1.148");
+
+            }).start();
+
+
+
+
     }
 
     public void sendMessage(View view) {
