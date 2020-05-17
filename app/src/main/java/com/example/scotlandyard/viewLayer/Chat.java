@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.scotlandyard.R;
@@ -13,40 +15,62 @@ public class Chat extends AppCompatActivity {
 
     private Presenter presenter = Presenter.getInstance();
 
-    private TextView textView;
-    private TextView editText;
+    private TextView chatVerlaufTextView;
+    private TextView usernameTextView;
+    private TextView nachrichtenTextView;
     private User user;
+    private Button verbindeButton;
+    private Button sendenButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        textView = findViewById(R.id.textView);
-        editText = findViewById(R.id.editText);
-        user = new User("Computer");
-        presenter.setUser(user);
-        presenter.setLog(textView);
+        //Chatverlauf wird zugewiesen
+        chatVerlaufTextView = findViewById(R.id.textView);
+        //Nachrichten die gesendet werden sollen werden zugewiesen
+        usernameTextView = findViewById(R.id.editText);
+        //Name beim Verbinden zum Server wird zugewiesen
+        nachrichtenTextView = findViewById(R.id.editText2);
+        //Verbinde Button wird zugewiesen
+        verbindeButton = findViewById(R.id.buttonConnect);
+        //Senden Button wird zugewiesen
+        sendenButton = findViewById(R.id.buttonSend);
+
+        //Nachrichten versenden wird disabled bevor eine Verbindung aufgebaut ist
+        sendenButton.setEnabled(false);
+        nachrichtenTextView.setEnabled(false);
+        chatVerlaufTextView.setMovementMethod(new ScrollingMovementMethod());
     }
 
 
     public void verbindeZuServer(View view) {
 
-            new Thread(() -> {
-                // Server wird gestartet
-                //Eigene IPv4-Adresse eintragen für einen lokalen Test.
-                presenter.connectToServer("192.168.1.148");
 
-            }).start();
+        new Thread(() -> {
+            // Server wird gestartet
+            //Eigene IPv4-Adresse eintragen für einen lokalen Test.
+            presenter.connectToServer("192.168.1.148");
 
+        }).start();
 
+        //Verbinden Button und TextView werden disabled nachdem eine Verbindung aufgebaut ist
+        usernameTextView.setEnabled(false);
+        verbindeButton.setEnabled(false);
 
+        //Nachrichten versenden wird enabled nachdem eine Verbindung aufgebaut ist
+        sendenButton.setEnabled(true);
+        nachrichtenTextView.setEnabled(true);
 
+        user = new User(usernameTextView.getText().toString());
+        presenter.setUser(user);
+        presenter.setLog(chatVerlaufTextView);
     }
 
     public void sendMessage(View view) {
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
-            presenter.sendMessagetoServer(editText.getText().toString());
+            presenter.sendMessagetoServer(nachrichtenTextView.getText().toString());
 
         }).start();
     }
