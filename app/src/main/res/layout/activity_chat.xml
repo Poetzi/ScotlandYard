@@ -10,6 +10,7 @@
         android:id="@+id/textView"
         android:layout_width="282dp"
         android:layout_height="320dp"
+        android:gravity="bottom"
         android:text="Log:\n\n"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
