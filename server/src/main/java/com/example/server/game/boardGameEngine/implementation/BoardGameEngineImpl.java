@@ -90,7 +90,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         String card = "Bus";    // Beispielwert
         int fieldToGo = 0;
         boolean drawValide = false;
-        TurnMessage turnMessage = new TurnMessage();
+        TurnMessage turnMessage;
 
         // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
         while (drawValide = false)
