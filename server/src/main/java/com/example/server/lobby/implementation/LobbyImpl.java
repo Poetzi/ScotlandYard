@@ -13,7 +13,7 @@ public class LobbyImpl implements Lobby {
     public int playerCount =0;
 
     //ToDo
-    private int lobbyID = 1;
+    public   int lobbyID = 1;
 
 
     @Override
@@ -69,5 +69,14 @@ public class LobbyImpl implements Lobby {
         {
             p.name.sendTCP(playersPosition);
         }
+    }
+
+
+    public int getLobbyID() {
+        return lobbyID;
+    }
+
+    public void setLobbyID(int lobbyID) {
+        this.lobbyID = lobbyID;
     }
 }
