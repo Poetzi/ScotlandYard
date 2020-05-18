@@ -10,10 +10,15 @@ public interface Lobby {
     int getPlayerCount();
     void startGame();
     void removePlayerfromGame(ID id);
-     boolean isLobbyOpen();
+    boolean isLobbyOpen();
 
     TurnMessage askPlayerforTurn(int playerId);
 
     void updatePlayerPositionsToAllClients(int playerId, int toField);
+
+    int getLobbyID();
+    void setLobbyID(int lobbyID);
+    TurnMessage getReturnTurnMessage();
+    void setReturnTurnMessage(TurnMessage returnTurnMessage);
 
 }
