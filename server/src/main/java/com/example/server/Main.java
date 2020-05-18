@@ -2,6 +2,7 @@ package com.example.server;
 
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.TextMessage;
+import com.example.server.messages.TurnMessage;
 
 import java.io.IOException;
 
@@ -26,11 +27,26 @@ public class Main {
                     // Server sendet die Nachricht an alle Clients weiter
                     server.broadcastMessage(message);
                 }
+
+                if (nachrichtvomClient instanceof TurnMessage)
+                {
+                    TurnMessage turn = (TurnMessage)nachrichtvomClient;
+
+                    // Zug wird am Server ausgegeben
+                    System.out.println("Looby: "+turn.getLobbyId()+" Spieler "+ turn.getPlayerId()+" to Field "+turn.getToField()+" with "+turn.getCard());
+
+                    // Der Zug wird an die Lobby weitergegeben
+                    MyKryoServer.getLobby().get(turn.getLobbyId()).setReturnTurnMessage(turn, turn.getPlayerId());
+
+                }
             });
+
             server.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 }
 
