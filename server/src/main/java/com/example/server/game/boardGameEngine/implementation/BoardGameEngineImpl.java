@@ -19,6 +19,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     private ArrayList<Player> players;
     private int numberOfPlayers;
+    public Lobby lobby;
     private int maxRounds;
     private int actualRound;
     private GameBoard gameBoard;
