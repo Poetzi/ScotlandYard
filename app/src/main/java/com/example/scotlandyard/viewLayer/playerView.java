@@ -15,7 +15,7 @@ public class playerView extends View {
     Bitmap player = BitmapFactory.decodeResource(getResources(), R.drawable.player);
     int x = -100;
     int y = -100;
-    int imgOffset = 26;
+    int imgOffset = 20;
 
 
     public playerView(Context context) {

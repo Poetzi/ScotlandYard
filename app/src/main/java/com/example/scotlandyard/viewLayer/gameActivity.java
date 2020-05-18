@@ -44,7 +44,6 @@ public class gameActivity extends AppCompatActivity {
 
 
     public void setUpFields(){
-       // gameBoard = new GameBoardImpl();
 
         gameBoard.addFieldWithTransition(1,2,"bus");
         gameBoard.addFieldWithTransition(2,1,"bus");
@@ -59,16 +58,12 @@ public class gameActivity extends AppCompatActivity {
 
         //Initial position of player
         playerPostion = new Points(635,347,0," ",1);
-        player.drawPlayer(635,347);
+       // player.drawPlayer(635,347);
     }
 
     public void useTaxi(){
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
-
-       // Log.i("PlayerPostition ",positionOfPlayer+"");
-
-      //  Log.i("ToField",toField+"");
 
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"taxi")){
@@ -83,10 +78,6 @@ public class gameActivity extends AppCompatActivity {
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
-      //  Log.i("PlayerPostition ",positionOfPlayer+"");
-
-       // Log.i("ToField",toField+"");
-
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"bus")){
             playerPostion.setField(toField);
@@ -99,10 +90,6 @@ public class gameActivity extends AppCompatActivity {
     public void useUbahn(){
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
-
-        //Log.i("PlayerPostition ",positionOfPlayer+"");
-
-       // Log.i("ToField",toField+"");
 
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"ubahn")){
@@ -117,15 +104,12 @@ public class gameActivity extends AppCompatActivity {
     public void onClick(View v){
         switch (v.getId()){
             case R.id.taxi:
-                //Toast.makeText(getApplicationContext(),"Taxi Pressed",Toast.LENGTH_SHORT).show();
                 useTaxi();
                 break;
             case R.id.bus:
-                //Toast.makeText(getApplicationContext(),"Bus Pressed",Toast.LENGTH_SHORT).show();
                 useBus();
                 break;
             case R.id.ubahn:
-               // Toast.makeText(getApplicationContext(),"U-Bahn Pressed",Toast.LENGTH_SHORT).show();
                 useUbahn();
                 break;
             case R.id.blackTicket:

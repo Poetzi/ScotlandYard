@@ -146,7 +146,7 @@ Transition x = new TransitionImpl();
         }
 
         for (int i = 0; i <numberOfPlayers ; i++) {
-            if(players.get(misterX) == players.get(i)){ //Missing field from Player CLass
+            if(players.get(misterX).getCurrentPosition() == players.get(i).getCurrentPosition()){ //Missing field from Player CLass
                 System.out.println("Mister X lost");
                 return true;
             }
