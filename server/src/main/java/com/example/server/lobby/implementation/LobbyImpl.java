@@ -2,6 +2,7 @@ package com.example.server.lobby.implementation;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.example.server.lobby.interfaces.Lobby;
+import com.example.server.messages.TurnMessage;
 
 import java.util.ArrayList;
 
@@ -45,5 +46,23 @@ public class LobbyImpl implements Lobby {
     @Override
     public boolean isLobbyOpen(){
         return isOpen;
+    }
+
+    @Override
+    public TurnMessage askPlayerforTurn(int playerId) {
+        /*
+        ToDo
+        Ask Player over Client for a Turn
+         */
+        return null;
+    }
+
+
+    @Override
+    public void updatePlayerPositionsToAllClients(int playerId, int toField) {
+        /*
+        ToDo
+        Send a Message with the updated Position from a player to all Clients
+         */
     }
 }
