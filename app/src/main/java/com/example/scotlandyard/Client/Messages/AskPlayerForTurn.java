@@ -1,6 +1,4 @@
-package com.example.server.messages;
-
-import com.example.server.lobby.interfaces.Lobby;
+package com.example.scotlandyard.Client.Messages;
 
 public class AskPlayerForTurn extends BaseMessage {
     private int id;

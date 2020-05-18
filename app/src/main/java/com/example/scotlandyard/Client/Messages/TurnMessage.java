@@ -1,4 +1,4 @@
-package com.example.server.messages;
+package com.example.scotlandyard.Client.Messages;
 
 public class TurnMessage extends BaseMessage {
     private int playerId;
