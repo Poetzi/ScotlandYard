@@ -9,11 +9,6 @@ public class Points {
     int field;
     String strField;
 
-    public static Points[] allPoints = {
-            new Points(635,347, R.drawable.f1,"Field1",1),
-            new Points(892,344,R.drawable.f2,"Field2",2),
-            new Points(635,574,R.drawable.f3,"Field3",3)
-    };
 
     public Points(int x, int y, int img, String strField, int field){
         this.x = x;
@@ -63,11 +58,4 @@ public class Points {
         this.strField = strField;
     }
 
-   public Points[] getAllPoints() {
-        return allPoints;
-    }
-
-    public void setAllPoints(Points[] allPoints) {
-        this.allPoints = allPoints;
-    }
 }
