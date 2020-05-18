@@ -19,7 +19,6 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     private ArrayList<Player> players;
     private int numberOfPlayers;
-    public Lobby lobby;
     private int maxRounds;
     private int actualRound;
     private GameBoard gameBoard;
@@ -165,6 +164,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
 
     public void initLobby(Lobby lobby) {
+        this.lobby = lobby;
+    }
+    public void setLobby(Lobby lobby) {
         this.lobby = lobby;
     }
 }

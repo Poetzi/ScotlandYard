@@ -51,7 +51,7 @@ public class Chat extends AppCompatActivity {
         new Thread(() -> {
             // Server wird gestartet
             //Eigene IPv4-Adresse eintragen für einen lokalen Test.
-            presenter.connectToServer("192.168.1.148");
+            presenter.connectToServer("10.40.41.173");
 
         }).start();
 

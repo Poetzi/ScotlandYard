@@ -12,6 +12,6 @@ public class LobbyStart implements Runnable {
     @Override
     public void run() {
         BoardGameEngineImpl boardgame = new BoardGameEngineImpl();
-        boardgame.lobby = lobby;
+        boardgame.setLobby(lobby);
     }
 }

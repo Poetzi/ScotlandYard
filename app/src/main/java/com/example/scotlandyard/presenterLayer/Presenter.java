@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
+import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.viewLayer.User;
 
@@ -42,6 +43,7 @@ public class Presenter{
         if(verbunden == false) {
             client.registerClass(BaseMessage.class);
             client.registerClass(TextMessage.class);
+            client.registerClass(TurnMessage.class);
 
             client.registerCallback(nachrichtVomServer -> {
                 if (nachrichtVomServer instanceof TextMessage) {
@@ -62,6 +64,11 @@ public class Presenter{
     public void sendMessagetoServer(String text) {
         TextMessage message = new TextMessage(user.getName() + ": " + text);
         client.sendMessage(message);
+    }
+
+    public void sendTurn(TurnMessage message){
+        TurnMessage msg = new TurnMessage(user.getId(),message.getToField(),0,message.getCard());
+        client.sendMessage(msg);
     }
 
     public User getUser() {

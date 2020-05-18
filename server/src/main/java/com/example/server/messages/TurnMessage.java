@@ -6,6 +6,7 @@ public class TurnMessage extends BaseMessage {
     private int lobbyId;
     private String Card;
 
+    public TurnMessage(){}
     public TurnMessage(int playerId, int toField, int lobbyId, String card) {
         this.playerId = playerId;
         this.toField = toField;
