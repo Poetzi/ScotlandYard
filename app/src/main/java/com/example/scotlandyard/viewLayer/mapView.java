@@ -15,12 +15,6 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.scotlandyard.R;
-import com.example.scotlandyard.modelLayer.players.interfaces.Player;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class mapView extends View {
@@ -28,7 +22,7 @@ public class mapView extends View {
     Bitmap small;
     ArrayList<Points> points = new ArrayList<>();
     int imgOffset = 20;
-    int paintOffset = 5;
+    int paintOffset = 15;
     Canvas player;
     int numb =200;
     int x = 0;
@@ -76,7 +70,7 @@ public class mapView extends View {
         canvas.drawBitmap(f4, 596 - imgOffset, 535 - imgOffset,null);
         canvas.drawBitmap(f4, 502 - imgOffset, 700 - imgOffset,null);
         canvas.drawBitmap(f4, 394 - imgOffset, 873 - imgOffset,null);
-        canvas.drawBitmap(f4, 85 - imgOffset, 907 - imgOffset,null);
+       // canvas.drawBitmap(f4, 85 - imgOffset, 907 - imgOffset,null);
         canvas.drawBitmap(f4, 525 - imgOffset, 973 - imgOffset,null);
         canvas.drawBitmap(f4, 643 - imgOffset, 793 - imgOffset,null);
         canvas.drawBitmap(f4, 731 - imgOffset, 639 - imgOffset,null);
@@ -127,7 +121,7 @@ public class mapView extends View {
         points.add(new Points(596,535,R.drawable.fieldsnew,"Field14",14));
         points.add(new Points(502,700,R.drawable.fieldsnew,"Field15",15));
         points.add(new Points(394,873,R.drawable.fieldsnew,"Field16",16));
-        points.add(new Points(85,907,R.drawable.fieldsnew,"Field17",17));
+       // points.add(new Points(85,907,R.drawable.fieldsnew,"Field17",17));
         points.add(new Points(525,973,R.drawable.fieldsnew,"Field18",18));
         points.add(new Points(643,793,R.drawable.fieldsnew,"Field19",19));
         points.add(new Points(731,639,R.drawable.fieldsnew,"Field20",20));
@@ -179,26 +173,114 @@ public class mapView extends View {
 
     private void printLines(Canvas canvas){
         Paint paint = new Paint();
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(10f);
+        paint.setStrokeWidth(13f);
         paint.setStyle(Paint.Style.STROKE);
+        paint.setAntiAlias(true);
 
         //Plain
-        paint.setAntiAlias(true);
+        paint.setColor(Color.BLUE);
         canvas.drawLine(186,286,328,339,paint);
 
-        paint.setColor(Color.RED);
-        canvas.drawLine(186+imgOffset,286+imgOffset,328+imgOffset,339+imgOffset,paint);
+        paint.setColor(Color.YELLOW);
+        canvas.drawLine(394,873,502,700,paint);
+        canvas.drawLine(186,286,109,459,paint);
+        canvas.drawLine(47,623,109,459,paint);
+        canvas.drawLine(47,623,171,703,paint);
+        canvas.drawLine(251,518,109,459,paint);
+        canvas.drawLine(251,518,382,600,paint);
+        canvas.drawLine(465,439,382,600,paint);
+        canvas.drawLine(382,600,502,700,paint);
+        canvas.drawLine(394,873,525,973,paint);
+        canvas.drawLine(596,535,502,700,paint);
+        canvas.drawLine(1727,185,1504,149,paint);
+        canvas.drawLine(1426,477,1504,149,paint);
+        canvas.drawLine(465,439,542,259,paint);
+        canvas.drawLine(643,793,800,918,paint);
+        canvas.drawLine(903,757,800,918,paint);
+        canvas.drawLine(596,535,695,374,paint);
+        canvas.drawLine(403,155,542,259,paint);
+        canvas.drawLine(695,374,542,259,paint);
+        canvas.drawLine(695,374,830,473,paint);
+        canvas.drawLine(643,793,731,639,paint);
+        canvas.drawLine(736,265,590,168,paint);
+        canvas.drawLine(736,265,886,368,paint);
+        canvas.drawLine(736,265,798,153,paint);
+        canvas.drawLine(1072,312,991,433,paint);
+        canvas.drawLine(1072,312,969,245,paint);
+        canvas.drawLine(1163,362,969,245,paint);
+        canvas.drawLine(1163,362,1077,494,paint);
+        canvas.drawLine(1163,362,1285,442,paint);
+        canvas.drawLine(991,433,1077,494,paint);
+        canvas.drawLine(997,604,903,757,paint);
+        canvas.drawLine(1077,494,1195,582,paint);
+        canvas.drawLine(1077,494,997,604,paint);
+        canvas.drawLine(1122,695,997,604,paint);
+        canvas.drawLine(1467,883,1361,838,paint);
+        canvas.drawLine(1268,815,1361,838,paint);
+        canvas.drawLine(1396,653,1361,838,paint);
+        canvas.drawLine(1426,477,1699,505,paint);
+        canvas.drawLine(1122,695,1195,582,paint);
+
+
 
         //Intersecting
         paint.setColor(Color.RED);
-        canvas.drawLine(186+imgOffset,286+imgOffset,328+imgOffset,339+imgOffset,paint);
-        canvas.drawLine(465+imgOffset,439+imgOffset,328+imgOffset,339+imgOffset,paint);
-        canvas.drawLine(465+imgOffset,439+imgOffset,328+imgOffset,339+imgOffset,paint);
-        canvas.drawLine(465+imgOffset,439+imgOffset,596+imgOffset,535+imgOffset,paint);
-        canvas.drawLine(731+imgOffset,639+imgOffset,596+imgOffset,535+imgOffset,paint);
-        canvas.drawLine(731+imgOffset,639+imgOffset,903+imgOffset,757+imgOffset,paint);
-        canvas.drawLine(1023+imgOffset,836+imgOffset,903+imgOffset,757+imgOffset,paint);
+        canvas.drawLine(186+paintOffset+5,286+paintOffset+5,328+paintOffset+5,339+paintOffset+5,paint);
+        canvas.drawLine(465+paintOffset,439+paintOffset,328+paintOffset,339+paintOffset,paint);
+        canvas.drawLine(465+paintOffset,439+paintOffset,328+paintOffset,339+paintOffset,paint);
+        canvas.drawLine(465+paintOffset,439+paintOffset,596+paintOffset,535+paintOffset,paint);
+        canvas.drawLine(731+paintOffset,639+paintOffset,596+paintOffset,535+paintOffset,paint);
+        canvas.drawLine(731+paintOffset,639+paintOffset,903+paintOffset,757+paintOffset,paint);
+        canvas.drawLine(1023+paintOffset,836+paintOffset,903+paintOffset,757+paintOffset,paint);
+
+        canvas.drawLine(969+paintOffset,245+paintOffset,886+paintOffset,368+paintOffset,paint);
+        canvas.drawLine(830+paintOffset,473+paintOffset,886+paintOffset,368+paintOffset,paint);
+        canvas.drawLine(830+paintOffset,473+paintOffset,731+paintOffset,639+paintOffset,paint);
+        canvas.drawLine(643+paintOffset,793+paintOffset,731+paintOffset,639+paintOffset,paint);
+        canvas.drawLine(643+paintOffset,793+paintOffset,525+paintOffset,973+paintOffset,paint);
+        canvas.drawLine(1426,477,1396,653,paint);
+        canvas.drawLine(1195,582,1396,653,paint);
+        canvas.drawLine(1682,727,1396,653,paint);
+
+
+
+        paint.setColor(Color.BLUE);
+        canvas.drawLine(251+paintOffset+5,518+paintOffset+5,109+paintOffset+5,459+paintOffset+5,paint);
+        canvas.drawLine(1426+paintOffset,477+paintOffset,1504+paintOffset,149+paintOffset,paint);
+        canvas.drawLine(465+paintOffset,439+paintOffset,542+paintOffset,259+paintOffset,paint);
+        canvas.drawLine(596+paintOffset,535+paintOffset,695+paintOffset,374+paintOffset,paint);
+        canvas.drawLine(465+paintOffset,439+paintOffset,382+paintOffset,600+paintOffset,paint);
+
+
+
+        //Single Lines
+        paint.setColor(Color.BLUE);
+        canvas.drawLine(403,155,328,339,paint);
+        canvas.drawLine(251,518,328,339,paint);
+        canvas.drawLine(251,518,171,703,paint);
+        canvas.drawLine(394,873,171,703,paint);
+
+        canvas.drawLine(969,245,886,368,paint);
+        canvas.drawLine(830,473,886,368,paint);
+        canvas.drawLine(830,473,731,639,paint);
+        canvas.drawLine(643,793,525,973,paint);
+
+        canvas.drawLine(643,793,502,700,paint);
+        canvas.drawLine(1023,836,1122,695,paint);
+        canvas.drawLine(1268,815,1122,695,paint);
+        canvas.drawLine(542,259,590,168,paint);
+        canvas.drawLine(736,265,695,374,paint);
+        canvas.drawLine(969,245,798,153,paint);
+        canvas.drawLine(886,368,991,433,paint);
+
+        canvas.drawLine(1426,477,1285,442,paint);
+        canvas.drawLine(997,604,830,473,paint);
+        canvas.drawLine(1285,442,1195,582,paint);
+
+        canvas.drawLine(1727,185,1699,505,paint);
+        canvas.drawLine(1682,727,1699,505,paint);
+        canvas.drawLine(1682,727,1667,933,paint);
+        canvas.drawLine(1467,883,1667,933,paint);
 
 
 
@@ -210,7 +292,7 @@ public class mapView extends View {
     {
         int x = (int) event.getX();
         int y = (int) event.getY();
-        Log.i("Coordinates", "X=" + x + "  Y=" + y);
+        //Log.i("Coordinates", "X=" + x + "  Y=" + y);
 
         switch(event.getAction())
         {

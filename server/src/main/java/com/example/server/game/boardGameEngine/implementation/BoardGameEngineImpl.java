@@ -28,37 +28,22 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public void addPlayer(String name, int field) {
-        Player player = new PlayerImpl();
+        /*Player player = new PlayerImpl();
         player.setId(players.size());
         player.setName(name);
         players.add(player);
 
-        gameBoard.setStartField(players.size(),field);
+        gameBoard.setStartField(players.size(),field);*/
+        Player player = new PlayerImpl();
+        player.setCurrentPosition(field);
     }
 
     @Override
     public void setupNewGame() {
         gameBoard = new GameBoardImpl();
-        Random rnd = new Random();
+        addPlayer("test",2);
 
-        ArrayList<String> lobbyPlayerNames = new ArrayList<>();
-
-        numberOfPlayers = lobbyPlayerNames.size();
-
-        for (int i = 0; i < numberOfPlayers - 1 ; i++) {
-            addPlayer(lobbyPlayerNames.get(i),rnd.nextInt(20));
-        }
-        addPlayer("Mister X",rnd.nextInt(20));
-
-        for (int i = 0; i < numberOfFields ; i++) {
-            gameBoard.addField(i);
-        }
-
-        for (int i = 0; i < numberOfFields/2 ; i++) {
-            int random = rnd.nextInt(20);
-
-            //gameBoard.addFieldWithTransition(random,random,);
-        }
+        gameBoard.addFieldWithTransition(2,3,"taxi");
     }
 
     @Override

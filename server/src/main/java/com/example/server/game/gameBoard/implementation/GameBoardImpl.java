@@ -21,17 +21,16 @@ public class GameBoardImpl implements GameBoard {
     /*
         Speichert die Wege von einem Spielfeld zum anderen
      */
-    HashSet<Transition> transitions; //(Liste oder Set)
+    HashSet<Transition> transitions = new HashSet<>(); //(Liste oder Set)
 
 
     @Override
-    public void addFieldWithTransition(int fromField, int toField, Transition rule) {
-        Transition newTransition = new TransitionImpl();
-        newTransition.setFromField(fromField);
-        newTransition.setToField(toField);
-        newTransition.setName(rule.getName());
+    public void addFieldWithTransition(int fromField, int toField, String rule) {
+        Transition firstTransition = new TransitionImpl(rule,toField,fromField);
+        Transition secondTransition = new TransitionImpl(rule,fromField,toField);
 
-        transitions.add(newTransition);
+        transitions.add(firstTransition);
+        transitions.add(secondTransition);
     }
 
     @Override

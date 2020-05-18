@@ -52,7 +52,7 @@ public class gameActivity extends AppCompatActivity {
         user.setId(1);
         presenter.setUser(user);
 
-        gameBoard.addFieldWithTransition(1,2,"bus");
+       /* gameBoard.addFieldWithTransition(1,2,"bus");
         gameBoard.addFieldWithTransition(2,1,"bus");
 
 
@@ -62,10 +62,10 @@ public class gameActivity extends AppCompatActivity {
 
         gameBoard.addFieldWithTransition(3,1,"taxi");
         gameBoard.addFieldWithTransition(1,3,"taxi");
-
+*/
         //Initial position of player
-        playerPostion = new Points(635,347,0," ",1);
-       // player.drawPlayer(635,347);
+        playerPostion = new Points(186,286,0," ",1);
+      //  player.drawPlayer(186,286);
     }
 
     public void useTaxi(){
@@ -91,6 +91,12 @@ public class gameActivity extends AppCompatActivity {
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
+        TurnMessage msg = new TurnMessage(0,toField,0,"Bus");
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
+
+        }).start();
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"bus")){
             playerPostion.setField(toField);
@@ -104,6 +110,12 @@ public class gameActivity extends AppCompatActivity {
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
+        TurnMessage msg = new TurnMessage(0,toField,0,"uBahn");
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
+
+        }).start();
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"ubahn")){
             playerPostion.setField(toField);
