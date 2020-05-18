@@ -1,4 +1,4 @@
-package com.example.scotlandyard.viewLayer;
+package com.example.scotlandyard.presenterLayer;
 
 import android.widget.TextView;
 
@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
+import com.example.scotlandyard.viewLayer.User;
 
 import java.io.IOException;
 

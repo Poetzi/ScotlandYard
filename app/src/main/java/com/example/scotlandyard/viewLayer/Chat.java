@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.presenterLayer.Presenter;
 
 public class Chat extends AppCompatActivity {
 
