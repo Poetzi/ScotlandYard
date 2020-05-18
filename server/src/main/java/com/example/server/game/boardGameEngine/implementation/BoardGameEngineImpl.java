@@ -10,6 +10,7 @@ import com.example.server.game.players.interfaces.Player;
 import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.interfaces.Lobby;
+//import com.example.server.messages.TurnMessage;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,11 +19,11 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     private ArrayList<Player> players;
     private int numberOfPlayers;
-    public Lobby lobby;
     private int maxRounds;
     private int actualRound;
     private GameBoard gameBoard;
     private int numberOfFields;
+    private Lobby lobby;
 
 
     @Override
@@ -55,8 +56,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
         for (int i = 0; i < numberOfFields/2 ; i++) {
             int random = rnd.nextInt(20);
-Transition x = new TransitionImpl();
-            gameBoard.addFieldWithTransition(random,random,x);
+
+            //gameBoard.addFieldWithTransition(random,random,);
         }
     }
 
@@ -89,16 +90,18 @@ Transition x = new TransitionImpl();
         String card = "Bus";    // Beispielwert
         int fieldToGo = 0;
         boolean drawValide = false;
+        TurnMessage turnMessage;
 
         // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
         while (drawValide = false)
         {
             /*
-               TODO
                Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                und die Position zu der er ziehen möchte
             */
-
+            turnMessage = lobby.askPlayerforTurn(player.getId());
+            card = turnMessage.getCard();
+            fieldToGo = turnMessage.getToField();
 
 
             /*
@@ -113,9 +116,11 @@ Transition x = new TransitionImpl();
         }
 
         /*
-            TODO
             Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
          */
+        Transition toRemove = new TransitionImpl();
+        toRemove.setName(card);
+        player.removeTransitionFromAvailable(toRemove);
 
 
 
@@ -129,9 +134,9 @@ Transition x = new TransitionImpl();
             gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
 
             /*
-                TODO
                 Die Position an die anderen Spieler clients weitergeben
              */
+            lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
         }
 
     }
@@ -148,13 +153,17 @@ Transition x = new TransitionImpl();
         }
 
         for (int i = 0; i <numberOfPlayers ; i++) {
-            if(players.get(misterX) == players.get(i)){ //Missing field from Player CLass
+            /*if(players.get(misterX) == players.get(i).currentPosition){ //Missing field from Player CLass
                 System.out.println("Mister X lost");
                 return true;
             }
+             */
         }
         return false;
     }
 
-    
+
+    public void initLobby(Lobby lobby) {
+        this.lobby = lobby;
+    }
 }
