@@ -118,46 +118,135 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         }
 
         /*
-            TODO
             Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
          */
         Transition toRemove = new TransitionImpl();
         toRemove.setName(card);
         player.removeTransitionFromAvailable(toRemove);
+
         if (player instanceof Detective){
             ((Detective) player).validateTicket(card);
         }else if (player instanceof MrX){
 
-            if (!card.equals("Double")){
+            if (!card.equals("Double")&&!card.equals("cheat")){
                 ((MrX) player).validateTicket(actualRound,card,fieldToGo);
+                lobby.updateTravellogToAllClients(player.getId(),((MrX) player).getTravelLog(actualRound),actualRound);
+            }else if (card.equals("cheat")){
+
+                drawValide=false;
+                // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
+                while (drawValide = false)
+                {
+            /*
+               Der Server holt sich vom Spieler Client die Karte die er einsetzen will
+               und die Position zu der er ziehen möchte
+            */
+                    turnMessage = lobby.askPlayerforTurn(player.getId());
+                    card = turnMessage.getCard();
+                    fieldToGo = turnMessage.getToField();
+
+
+            /*
+               Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
+               ob der Zug gültig ist.
+               Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
+            */
+                    if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
+                    {
+                        drawValide = true;
+                    }
+                }
+                //Erster Zug wird normal im Travellog gespeichert.
+                ((MrX)player).validateTicket(actualRound,"cheat",0);
+                ((MrX)player).validateTicket(actualRound,card,fieldToGo);
+                lobby.updateTravellogToAllClients(player.getId(),((MrX) player).getTravelLog(actualRound),actualRound);
+
+                drawValide=false;
+                // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
+                while (drawValide = false)
+                {
+            /*
+               Der Server holt sich vom Spieler Client die Karte die er einsetzen will
+               und die Position zu der er ziehen möchte
+            */
+                    turnMessage = lobby.askPlayerforTurn(player.getId());
+                    card = turnMessage.getCard();
+                    fieldToGo = turnMessage.getToField();
+
+
+            /*
+               Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
+               ob der Zug gültig ist.
+               Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
+            */
+                    if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
+                    {
+                        drawValide = true;
+                    }
+                }
+                //Zweiter, geschummelter Zug wird nicht im Travellog gespeichert und ist somit nicht sichtbar für Detektive.
+                player.setCurrentPosition(fieldToGo);
+
             }else {
-                /**     TODO
+                /**
                  *      Warten bis Spieler den ersten Zug des Doppelzugs macht.
                  */
                 drawValide=false;
+                // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
+                while (drawValide = false)
+                {
+            /*
+               Der Server holt sich vom Spieler Client die Karte die er einsetzen will
+               und die Position zu der er ziehen möchte
+            */
+                    turnMessage = lobby.askPlayerforTurn(player.getId());
+                    card = turnMessage.getCard();
+                    fieldToGo = turnMessage.getToField();
 
-                while (drawValide==false) {
+
+            /*
+               Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
+               ob der Zug gültig ist.
+               Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
+            */
                     if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
                     {
-                        ((MrX) player).validateDoubleMoveTicket(actualRound, card , fieldToGo);
                         drawValide = true;
                     }
-
                 }
+                //Erster Zug wird im Travellog normal gespeichert.
+                ((MrX)player).validateDoubleMoveTicket(actualRound,card,fieldToGo);
+                lobby.updateTravellogToAllClients(player.getId(),((MrX) player).getTravelLog(actualRound),actualRound);
 
-                /**     TODO
+                /**
                  *      Warten auf den zweiten Zug des Doppelzugs.
                  */
                 drawValide=false;
+                // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
+                while (drawValide = false)
+                {
+            /*
+               Der Server holt sich vom Spieler Client die Karte die er einsetzen will
+               und die Position zu der er ziehen möchte
+            */
+                    turnMessage = lobby.askPlayerforTurn(player.getId());
+                    card = turnMessage.getCard();
+                    fieldToGo = turnMessage.getToField();
 
-                while (drawValide==false) {
+
+            /*
+               Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
+               ob der Zug gültig ist.
+               Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
+            */
                     if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
                     {
-                        ((MrX) player).validateTicket(actualRound, card, fieldToGo);
                         drawValide = true;
                     }
-
                 }
+                //Erster Zug wird im Travellog normal gespeichert.
+                ((MrX)player).validateTicket(actualRound,card,fieldToGo);
+                lobby.updateTravellogToAllClients(player.getId(),((MrX) player).getTravelLog(actualRound),actualRound);
 
             }
 

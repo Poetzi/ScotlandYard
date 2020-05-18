@@ -1,17 +1,17 @@
 package com.example.scotlandyard.viewLayer;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,11 +20,7 @@ import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.R;
 import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImpl;
 import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
-import com.example.scotlandyard.modelLayer.players.implementation.DetectiveImpl;
-import com.example.scotlandyard.modelLayer.players.interfaces.Detective;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
-import com.example.scotlandyard.modelLayer.transitions.implementation.TransitionImpl;
-import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.google.android.material.navigation.NavigationView;
 
@@ -67,9 +63,12 @@ public class gameActivity extends AppCompatActivity {
         cheatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /**
-                 *  Positionsänderung möglich
-                 */
+                TurnMessage msg = new TurnMessage(0,0,0,"cheat");
+                new Thread(() -> {
+                    // Nachricht wird an den Server geschickt
+                    presenter.sendTurn(msg);
+
+                }).start();
             }
         });
 
@@ -103,14 +102,10 @@ public class gameActivity extends AppCompatActivity {
         menu.add(Menu.NONE,2,Menu.NONE,"U-Bahn");
         menu.add(Menu.NONE,3,Menu.NONE,"Taxi");
 
-        //nur zum Testen von addTravelLog()
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                TravelLog travelLog=new TravelLog(1,"Taxi",false);
-                addTravelLog(travelLog,4);
-            }
-        }, 10000);
+        presenter.setTravellogMenu(menu);
+
+        TravelLog travelLog=new TravelLog(1,"Taxi",false);
+        presenter.updateTravellogMenu(travelLog,4);
 
     }
 
@@ -219,11 +214,5 @@ public class gameActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
-    }
-
-    public void addTravelLog(TravelLog travelLog, int round) {
-        String transport=travelLog.getTicket();
-        menu.add(Menu.NONE, round, Menu.NONE, transport);
-
     }
 }

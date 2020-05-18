@@ -8,6 +8,7 @@ import com.example.server.game.players.interfaces.MrX;
 public class MrXImpl extends PlayerImpl implements MrX {
     private int blackTickets;
     private int doubleMoveTickets;
+    private int cheatTickets;
     /**
      * @see #setPositionOfRound(int, String, int, boolean)
      */
@@ -18,6 +19,17 @@ public class MrXImpl extends PlayerImpl implements MrX {
         super(name, id);
         blackTickets=5;
         doubleMoveTickets=2;
+        cheatTickets=5;
+    }
+
+    @Override
+    public TravelLog getTravelLog(int round) {
+        return travelLog[round-1];
+    }
+
+    @Override
+    public void setTravelLog(TravelLog travelLog,int round) {
+        this.travelLog[round-1]=travelLog;
     }
 
     /**
@@ -35,7 +47,14 @@ public class MrXImpl extends PlayerImpl implements MrX {
             }else {
                 throw new IllegalArgumentException("No Black Tickets left.");
             }
-        }else {
+        }else if (ticketType.equals("cheat")){
+            if(cheatTickets>0){
+                cheatTickets--;
+                setHasCheated(round);
+            }else {
+                throw new IllegalArgumentException("No cheat tickets left.");
+            }
+        } else {
             setPositionOfRound(newPosition, ticketType, round, false);
         }
     }
@@ -59,11 +78,9 @@ public class MrXImpl extends PlayerImpl implements MrX {
     /**
      * Wenn Mr. X schummelt wird Variable hasCheated in {@link TravelLog} true gesetzt.
      * @param round Zu welcher Runde geschummelt wurde.
-     * @param newPosition Die neue Position von Mr. X nachdem er geschummelt hat.
      */
-    public void setHasCheated(int round, int newPosition){
+    public void setHasCheated(int round){
         travelLog[round-1].setHasCheated(true);
-        travelLog[round-1].setPosition(newPosition);
     }
 
     /**

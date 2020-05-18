@@ -1,5 +1,8 @@
 package com.example.server.game.players.interfaces;
 
+import com.example.server.game.players.TravelLog;
+import com.example.server.messages.TravellogMessage;
+
 public interface MrX extends Player {
     int getBlackTickets();
 
@@ -11,7 +14,7 @@ public interface MrX extends Player {
 
     boolean isDoubleMoveAtRound(int round);
 
-    void setHasCheated(int round, int newPosition);
+    void setHasCheated(int round);
 
     boolean getHasCheatedInRound(int round);
 
@@ -24,4 +27,8 @@ public interface MrX extends Player {
     void validateTicket(int round, String ticketType, int newPosition);
 
     void validateDoubleMoveTicket(int round, String ticketType, int newPosition);
+
+    TravelLog getTravelLog(int round);
+
+    void setTravelLog(TravelLog travelLog, int round);
 }

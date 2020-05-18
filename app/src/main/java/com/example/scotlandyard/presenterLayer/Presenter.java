@@ -1,13 +1,16 @@
 package com.example.scotlandyard.presenterLayer;
 
 import android.util.Log;
+import android.view.Menu;
 import android.widget.TextView;
 
 
 import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
+import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
+import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.viewLayer.User;
 
 import java.io.IOException;
@@ -24,6 +27,8 @@ public class Presenter{
     private TextView log;
 
     private boolean verbunden = false;
+
+    private Menu travellogMenu;
 
     // private Konstruktor
     private Presenter() {
@@ -49,6 +54,9 @@ public class Presenter{
                 if (nachrichtVomServer instanceof TextMessage) {
                     TextMessage message = (TextMessage) nachrichtVomServer;
                     updateLog(message.toString());
+                }else if (nachrichtVomServer instanceof TravellogMessage){
+                    TravelLog travelLog=((TravellogMessage) nachrichtVomServer).getTravelLog();
+                    updateTravellogMenu(travelLog,((TravellogMessage) nachrichtVomServer).getRound());
                 }
             });
 
@@ -64,6 +72,7 @@ public class Presenter{
     public void sendMessagetoServer(String text) {
         TextMessage message = new TextMessage(user.getName() + ": " + text);
         client.sendMessage(message);
+        updateLog(message.getText());
     }
 
     public void sendTurn(TurnMessage message){
@@ -94,5 +103,19 @@ public class Presenter{
 
     public void setLog(TextView log) {
         this.log = log;
+    }
+
+    public void updateTravellogMenu(TravelLog travelLog, int round){
+        String transport=travelLog.getTicket();
+        travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
+
+    }
+
+    public Menu getTravellogMenu() {
+        return travellogMenu;
+    }
+
+    public void setTravellogMenu(Menu travellogMenu) {
+        this.travellogMenu = travellogMenu;
     }
 }
