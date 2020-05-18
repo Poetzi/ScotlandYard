@@ -1,27 +1,27 @@
 package com.example.scotlandyard.Client.Messages;
 
+public class AskPlayerForTurn extends BaseMessage {
+    private int id;
+    private String text;
+    private int lobbyID;
 
-/**
- * Eine Klasse um einen String zu versenden z.B: für die Chatfunktion
- */
-public class TextMessage extends BaseMessage {
-
-    public TextMessage() {
-    }
-
-
-    public TextMessage(String text) {
-        this.text = text;
-    }
-
-    public TextMessage(String text, int lobbyID) {
+    public AskPlayerForTurn(int id, String text, int lobbyID) {
+        this.id = id;
         this.text = text;
         this.lobbyID = lobbyID;
     }
 
-    private String text;
-    private int lobbyID;
+    public AskPlayerForTurn() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getText() {
         return text;

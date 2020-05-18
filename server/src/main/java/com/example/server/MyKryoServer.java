@@ -66,4 +66,13 @@ public class MyKryoServer {
         for (Connection connection : server.getConnections())
             connection.sendTCP(message);
     }
+
+
+    public static ArrayList<Lobby> getLobby() {
+        return lobby;
+    }
+
+    public static void setLobby(ArrayList<Lobby> lobby) {
+        MyKryoServer.lobby = lobby;
+    }
 }

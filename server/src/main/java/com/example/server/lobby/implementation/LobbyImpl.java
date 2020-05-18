@@ -2,6 +2,8 @@ package com.example.server.lobby.implementation;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.example.server.lobby.interfaces.Lobby;
+import com.example.server.messages.TurnMessage;
+import com.example.server.messages.UpdatePlayersPosition;
 
 import java.util.ArrayList;
 
@@ -9,6 +11,9 @@ public class LobbyImpl implements Lobby {
     private ArrayList<ID> players = new ArrayList<ID>();
     private boolean isOpen = false;
     public int playerCount =0;
+
+    //ToDo
+    public   int lobbyID = 1;
 
 
     @Override
@@ -45,5 +50,33 @@ public class LobbyImpl implements Lobby {
     @Override
     public boolean isLobbyOpen(){
         return isOpen;
+    }
+
+    @Override
+    public TurnMessage askPlayerforTurn(int playerId) {
+        /*
+        ToDo
+        Ask Player over Client for a Turn
+         */
+        return null;
+    }
+
+
+    @Override
+    public void updatePlayerPositionsToAllClients(int playerId, int toField) {
+        UpdatePlayersPosition playersPosition = new UpdatePlayersPosition(playerId, toField, lobbyID);
+        for(ID p: players)
+        {
+            p.name.sendTCP(playersPosition);
+        }
+    }
+
+
+    public int getLobbyID() {
+        return lobbyID;
+    }
+
+    public void setLobbyID(int lobbyID) {
+        this.lobbyID = lobbyID;
     }
 }
