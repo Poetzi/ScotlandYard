@@ -18,7 +18,7 @@ public interface Lobby {
 
     int getLobbyID();
     void setLobbyID(int lobbyID);
-    TurnMessage getReturnTurnMessage();
-    void setReturnTurnMessage(TurnMessage returnTurnMessage);
+    TurnMessage[] getReturnTurnMessage();
+    void setReturnTurnMessage(TurnMessage turnMessage, int playerId);
 
 }

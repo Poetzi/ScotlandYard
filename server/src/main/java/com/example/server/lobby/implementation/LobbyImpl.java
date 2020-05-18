@@ -18,7 +18,7 @@ public class LobbyImpl implements Lobby {
 
     // Speichert ob auf einen Zug für einen Spieler gewartet wird
     private boolean[] waitForPlayersTurn = new boolean[6];
-    private TurnMessage returnTurnMessage;
+    private TurnMessage[] returnTurnMessage = new TurnMessage[6];
 
 
     @Override
@@ -71,7 +71,9 @@ public class LobbyImpl implements Lobby {
         {
             // Wait for TurnMessage from Player
         }
-        return null;
+
+
+        return returnTurnMessage[playerId];
     }
 
 
@@ -95,12 +97,12 @@ public class LobbyImpl implements Lobby {
     }
 
     @Override
-    public TurnMessage getReturnTurnMessage() {
+    public TurnMessage[] getReturnTurnMessage() {
         return returnTurnMessage;
     }
 
     @Override
-    public void setReturnTurnMessage(TurnMessage returnTurnMessage) {
-        this.returnTurnMessage = returnTurnMessage;
+    public void setReturnTurnMessage(TurnMessage turnMessage, int playerId) {
+        this.returnTurnMessage[playerId] = turnMessage;
     }
 }

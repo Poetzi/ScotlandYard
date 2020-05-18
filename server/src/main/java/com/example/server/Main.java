@@ -37,6 +37,8 @@ public class Main {
                     // Zug wird am Server ausgegeben
                     System.out.println("Looby: "+turn.getLobbyId()+" Spieler "+ turn.getPlayerId()+" to Field "+turn.getToField()+" with "+turn.getCard());
 
+                    // Der Zug wird an die Lobby weitergegeben
+                    MyKryoServer.getLobby().get(turn.getLobbyId()).setReturnTurnMessage(turn, turn.getPlayerId());
 
                 }
             });
@@ -44,6 +46,8 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 }
 
