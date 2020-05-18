@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.R;
 import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImpl;
 import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
@@ -24,6 +25,7 @@ import com.example.scotlandyard.modelLayer.players.interfaces.Detective;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.modelLayer.transitions.implementation.TransitionImpl;
 import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
+import com.example.scotlandyard.presenterLayer.Presenter;
 import com.google.android.material.navigation.NavigationView;
 
 public class gameActivity extends AppCompatActivity {
@@ -33,6 +35,9 @@ public class gameActivity extends AppCompatActivity {
     private mapView map;
     private playerView player;
     private Points playerPostion;
+    private Presenter presenter = Presenter.getInstance();
+    private TurnMessage msg;
+    private User user = new User("test");
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -111,7 +116,8 @@ public class gameActivity extends AppCompatActivity {
 
 
     public void setUpFields(){
-       // gameBoard = new GameBoardImpl();
+        user.setId(1);
+        presenter.setUser(user);
 
         gameBoard.addFieldWithTransition(1,2,"bus");
         gameBoard.addFieldWithTransition(2,1,"bus");
@@ -126,17 +132,19 @@ public class gameActivity extends AppCompatActivity {
 
         //Initial position of player
         playerPostion = new Points(635,347,0," ",1);
-        player.drawPlayer(635,347);
+       // player.drawPlayer(635,347);
     }
 
     public void useTaxi(){
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
-       // Log.i("PlayerPostition ",positionOfPlayer+"");
+        TurnMessage msg = new TurnMessage(0,toField,0,"taxi");
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
 
-      //  Log.i("ToField",toField+"");
-
+        }).start();
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"taxi")){
             playerPostion.setField(toField);
@@ -149,10 +157,6 @@ public class gameActivity extends AppCompatActivity {
     public void useBus(){
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
-
-      //  Log.i("PlayerPostition ",positionOfPlayer+"");
-
-       // Log.i("ToField",toField+"");
 
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"bus")){
@@ -167,10 +171,6 @@ public class gameActivity extends AppCompatActivity {
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
-        //Log.i("PlayerPostition ",positionOfPlayer+"");
-
-       // Log.i("ToField",toField+"");
-
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"ubahn")){
             playerPostion.setField(toField);
@@ -184,15 +184,12 @@ public class gameActivity extends AppCompatActivity {
     public void onClick(View v){
         switch (v.getId()){
             case R.id.taxi:
-                //Toast.makeText(getApplicationContext(),"Taxi Pressed",Toast.LENGTH_SHORT).show();
                 useTaxi();
                 break;
             case R.id.bus:
-                //Toast.makeText(getApplicationContext(),"Bus Pressed",Toast.LENGTH_SHORT).show();
                 useBus();
                 break;
             case R.id.ubahn:
-               // Toast.makeText(getApplicationContext(),"U-Bahn Pressed",Toast.LENGTH_SHORT).show();
                 useUbahn();
                 break;
             case R.id.blackTicket:

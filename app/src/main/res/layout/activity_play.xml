@@ -7,6 +7,7 @@
     android:background="#1C2D70"
     android:backgroundTint="#154FB3"
     android:backgroundTintMode="add"
+    android:hapticFeedbackEnabled="false"
     tools:context=".playActivity">
 
     <TextView
@@ -50,7 +51,6 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="322dp"
         android:drawableEnd="@drawable/wifiicon"
-        android:onClick="goToNetworkTest"
         android:text="@string/wifi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -69,8 +69,33 @@
         android:text="@string/test"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.475" />
+
+    <Button
+        android:id="@+id/chatButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="134dp"
+        android:layout_height="59dp"
+        android:backgroundTint="@color/colorAccent"
+        android:drawableEnd="@android:drawable/sym_action_chat"
+        android:elegantTextHeight="false"
+        android:fontFamily="sans-serif"
+        android:hapticFeedbackEnabled="true"
+        android:onClick="chat"
+        android:stateListAnimator="@android:anim/bounce_interpolator"
+        android:text="@string/chat"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColorHighlight="@color/colorPrimary"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.522" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

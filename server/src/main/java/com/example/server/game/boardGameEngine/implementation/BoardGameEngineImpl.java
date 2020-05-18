@@ -11,6 +11,8 @@ import com.example.server.game.players.implementation.PlayerImpl;
 import com.example.server.game.players.interfaces.Player;
 import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
+import com.example.server.lobby.interfaces.Lobby;
+import com.example.server.messages.TurnMessage;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,6 +25,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     private int actualRound;
     private GameBoard gameBoard;
     private int numberOfFields;
+    private Lobby lobby;
 
 
     @Override
@@ -55,8 +58,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
         for (int i = 0; i < numberOfFields/2 ; i++) {
             int random = rnd.nextInt(20);
-            Transition x = new TransitionImpl();
-            gameBoard.addFieldWithTransition(random,random,x);
+
+            //gameBoard.addFieldWithTransition(random,random,);
         }
     }
 
@@ -89,16 +92,18 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         String card = "Bus";    // Beispielwert
         int fieldToGo = 0;
         boolean drawValide = false;
+        TurnMessage turnMessage;
 
         // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
-        while (drawValide == false)
+        while (drawValide = false)
         {
             /*
-               TODO
                Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                und die Position zu der er ziehen möchte
             */
-
+            turnMessage = lobby.askPlayerforTurn(player.getId());
+            card = turnMessage.getCard();
+            fieldToGo = turnMessage.getToField();
 
 
             /*
@@ -113,8 +118,12 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         }
 
         /*
+            TODO
             Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
          */
+        Transition toRemove = new TransitionImpl();
+        toRemove.setName(card);
+        player.removeTransitionFromAvailable(toRemove);
         if (player instanceof Detective){
             ((Detective) player).validateTicket(card);
         }else if (player instanceof MrX){
@@ -166,9 +175,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
 
             /*
-                TODO
                 Die Position an die anderen Spieler clients weitergeben
              */
+            lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
         }
 
     }
@@ -194,4 +203,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     }
 
 
+    public void initLobby(Lobby lobby) {
+        this.lobby = lobby;
+    }
+    public void setLobby(Lobby lobby) {
+        this.lobby = lobby;
+    }
 }

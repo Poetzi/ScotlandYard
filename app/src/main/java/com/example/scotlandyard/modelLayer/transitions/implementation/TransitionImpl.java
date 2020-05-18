@@ -17,6 +17,7 @@ public class TransitionImpl implements Transition {
     public TransitionImpl() {
     }
 
+
     @Override
     public void setName(String name) {
         this.name = name;
