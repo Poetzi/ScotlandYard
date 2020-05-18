@@ -33,6 +33,14 @@ public class AskPlayerForTurn extends BaseMessage {
         this.text = text;
     }
 
+    public int getLobbyID() {
+        return lobbyID;
+    }
+
+    public void setLobbyID(int lobbyID) {
+        this.lobbyID = lobbyID;
+    }
+
     @Override
     public String toString() {
         return text;
