@@ -1,11 +1,13 @@
-package com.example.scotlandyard.viewLayer;
+package com.example.scotlandyard.presenterLayer;
 
+import android.util.Log;
 import android.widget.TextView;
 
 
 import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
+import com.example.scotlandyard.viewLayer.User;
 
 import java.io.IOException;
 
@@ -51,7 +53,7 @@ public class Presenter{
             try {
                 client.connect(hostname);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("Fehler:", "Beim Verbinden mit dem Server");
             }
             this.verbunden = true;
         }

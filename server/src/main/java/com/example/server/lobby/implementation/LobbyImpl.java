@@ -1,7 +1,14 @@
 package com.example.server.lobby.implementation;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
+import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
+import com.example.server.game.gameBoard.implementation.GameBoardImpl;
+import com.example.server.game.gameBoard.interfaces.GameBoard;
 import com.example.server.lobby.interfaces.Lobby;
+import com.example.server.messages.AskPlayerForTurn;
+import com.example.server.messages.TurnMessage;
+import com.example.server.messages.UpdatePlayersPosition;
 
 import java.util.ArrayList;
 
@@ -9,6 +16,15 @@ public class LobbyImpl implements Lobby {
     private ArrayList<ID> players = new ArrayList<ID>();
     private boolean isOpen = false;
     public int playerCount =0;
+
+    private BoardGameEngine game = new BoardGameEngineImpl();
+
+    //ToDo
+    private   int lobbyID = 1;
+
+    // Speichert ob auf einen Zug für einen Spieler gewartet wird
+    private boolean[] waitForPlayersTurn = new boolean[6];
+    private TurnMessage[] returnTurnMessage = new TurnMessage[6];
 
 
     @Override
@@ -27,6 +43,8 @@ public class LobbyImpl implements Lobby {
 
     @Override
     public void startGame() {
+        game.initLobby(this);
+
         Runnable runnable =    new Runnable(){
             public void run(){
 
@@ -45,5 +63,64 @@ public class LobbyImpl implements Lobby {
     @Override
     public boolean isLobbyOpen(){
         return isOpen;
+    }
+
+    @Override
+    public TurnMessage askPlayerforTurn(int playerId) {
+
+        AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId,"gib bitte einen Zug an", lobbyID);
+        players.get(playerId).name.sendTCP(askPlayerForTurn);
+
+        // Hier wird der boolean für diesen Spieler auf true gesetzt
+        // Also es wird auf einen Zug des Spielers gewartet
+        waitForPlayersTurn[playerId] = true;
+
+        while(waitForPlayersTurn[playerId])
+        {
+            // Wait for TurnMessage from Player
+        }
+
+
+        return returnTurnMessage[playerId];
+    }
+
+
+    @Override
+    public void updatePlayerPositionsToAllClients(int playerId, int toField) {
+        UpdatePlayersPosition playersPosition = new UpdatePlayersPosition(playerId, toField, lobbyID);
+        for(ID p: players)
+        {
+            p.name.sendTCP(playersPosition);
+        }
+    }
+
+    @Override
+    public int getLobbyID() {
+        return lobbyID;
+    }
+
+    @Override
+    public void setLobbyID(int lobbyID) {
+        this.lobbyID = lobbyID;
+    }
+
+    @Override
+    public TurnMessage[] getReturnTurnMessage() {
+        return returnTurnMessage;
+    }
+
+    @Override
+    public void setReturnTurnMessage(TurnMessage turnMessage, int playerId) {
+        this.returnTurnMessage[playerId] = turnMessage;
+    }
+
+    @Override
+    public BoardGameEngine getGame() {
+        return game;
+    }
+
+    @Override
+    public void setGame(BoardGameEngine game) {
+        this.game = game;
     }
 }

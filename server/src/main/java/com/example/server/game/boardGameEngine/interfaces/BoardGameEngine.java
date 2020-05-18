@@ -3,6 +3,7 @@ package com.example.server.game.boardGameEngine.interfaces;
 
 import com.example.server.game.players.interfaces.Player;
 import com.example.server.game.transitions.interfaces.Transition;
+import com.example.server.lobby.interfaces.Lobby;
 
 public interface BoardGameEngine {
 
@@ -37,5 +38,11 @@ public interface BoardGameEngine {
         Überprüft ob die Bedingungen für einen Sieg erfüllt sind
      */
     boolean checkWinningCondition();
+
+
+    /*
+        initialisiert ein Lobby Object
+     */
+    void initLobby(Lobby lobby);
 
 }
