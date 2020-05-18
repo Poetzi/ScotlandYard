@@ -75,4 +75,6 @@ public class MyKryoServer {
     public static void setLobby(ArrayList<Lobby> lobby) {
         MyKryoServer.lobby = lobby;
     }
+
+
 }
