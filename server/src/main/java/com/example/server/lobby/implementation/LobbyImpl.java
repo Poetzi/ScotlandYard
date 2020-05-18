@@ -1,6 +1,10 @@
 package com.example.server.lobby.implementation;
 
 import com.esotericsoftware.kryo.Kryo;
+import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
+import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
+import com.example.server.game.gameBoard.implementation.GameBoardImpl;
+import com.example.server.game.gameBoard.interfaces.GameBoard;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.TurnMessage;
@@ -12,6 +16,8 @@ public class LobbyImpl implements Lobby {
     private ArrayList<ID> players = new ArrayList<ID>();
     private boolean isOpen = false;
     public int playerCount =0;
+
+    private BoardGameEngine game = new BoardGameEngineImpl();
 
     //ToDo
     private   int lobbyID = 1;
@@ -37,6 +43,8 @@ public class LobbyImpl implements Lobby {
 
     @Override
     public void startGame() {
+        game.initLobby(this);
+
         Runnable runnable =    new Runnable(){
             public void run(){
 
@@ -104,5 +112,15 @@ public class LobbyImpl implements Lobby {
     @Override
     public void setReturnTurnMessage(TurnMessage turnMessage, int playerId) {
         this.returnTurnMessage[playerId] = turnMessage;
+    }
+
+    @Override
+    public BoardGameEngine getGame() {
+        return game;
+    }
+
+    @Override
+    public void setGame(BoardGameEngine game) {
+        this.game = game;
     }
 }
