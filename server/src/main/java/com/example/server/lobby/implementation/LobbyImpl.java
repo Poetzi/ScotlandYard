@@ -13,7 +13,7 @@ public class LobbyImpl implements Lobby {
     public int playerCount =0;
 
     //ToDo
-    private int lobbyID;
+    private int lobbyID = 1;
 
 
     @Override
