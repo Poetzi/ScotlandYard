@@ -1,5 +1,6 @@
 package com.example.scotlandyard.presenterLayer;
 
+import android.util.Log;
 import android.widget.TextView;
 
 
@@ -52,7 +53,7 @@ public class Presenter{
             try {
                 client.connect(hostname);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("Fehler:", "Beim Verbinden mit dem Server");
             }
             this.verbunden = true;
         }
