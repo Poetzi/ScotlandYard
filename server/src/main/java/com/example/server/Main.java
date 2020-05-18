@@ -2,6 +2,7 @@ package com.example.server;
 
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.TextMessage;
+import com.example.server.messages.TurnMessage;
 
 import java.io.IOException;
 
@@ -25,6 +26,18 @@ public class Main {
 
                     // Server sendet die Nachricht an alle Clients weiter
                     server.broadcastMessage(message);
+                }
+            });
+
+            server.registerCallback(turnFromPlayer -> {
+                if (turnFromPlayer instanceof TurnMessage)
+                {
+                    TurnMessage turn = (TurnMessage)turnFromPlayer;
+
+                    // Zug wird am Server ausgegeben
+                    System.out.println("Looby: "+turn.getLobbyId()+" Spieler "+ turn.getPlayerId()+" to Field "+turn.getToField()+" with "+turn.getCard());
+
+
                 }
             });
             server.start();
