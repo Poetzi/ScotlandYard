@@ -3,6 +3,8 @@ package com.example.scotlandyard;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +12,11 @@ import android.view.View;
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.example.scotlandyard.viewLayer.Chat;
 import com.example.scotlandyard.viewLayer.gameActivity;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class playActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
@@ -29,9 +36,20 @@ public class playActivity extends AppCompatActivity {
     public void goToGameActivity(View view)
     {
         new Thread(() -> {
-            // Server wird gestartet
-            //Eigene IPv4-Adresse eintragen für einen lokalen Test.
-            presenter.connectToServer("10.40.41.173");
+            //IPv4-Adresse des Geräts wird gesucht.
+            WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+            WifiInfo wifiInfo = wm.getConnectionInfo();
+            int ipInt = wifiInfo.getIpAddress();
+            String ip = null;
+            try {
+                ip = InetAddress.getByAddress(
+                        ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(ipInt).array())
+                        .getHostAddress();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            //Server wird gestartet.
+            presenter.connectToServer(ip);
 
         }).start();
 

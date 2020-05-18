@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -214,5 +215,10 @@ public class gameActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
+    }
+
+    public void chat(View view){
+        Intent intent = new Intent(this, Chat.class);
+        startActivity(intent);
     }
 }

@@ -2,8 +2,12 @@ package com.example.scotlandyard.viewLayer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.BluetoothClass;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.format.Formatter;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +15,12 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.R;
 import com.example.scotlandyard.presenterLayer.Presenter;
+
+import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class Chat extends AppCompatActivity {
 
@@ -49,9 +59,21 @@ public class Chat extends AppCompatActivity {
 
 
         new Thread(() -> {
+
+            //IPv4-Adresse des Geräts wird gesucht.
+            WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+            WifiInfo wifiInfo = wm.getConnectionInfo();
+            int ipInt = wifiInfo.getIpAddress();
+            String ip = null;
+            try {
+                ip = InetAddress.getByAddress(
+                        ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(ipInt).array())
+                        .getHostAddress();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
             // Server wird gestartet
-            //Eigene IPv4-Adresse eintragen für einen lokalen Test.
-            presenter.connectToServer("10.40.41.173");
+            presenter.connectToServer(ip);
 
         }).start();
 
