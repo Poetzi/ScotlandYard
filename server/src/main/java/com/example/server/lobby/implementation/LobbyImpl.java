@@ -2,6 +2,7 @@ package com.example.server.lobby.implementation;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.example.server.lobby.interfaces.Lobby;
+import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
 
@@ -13,7 +14,10 @@ public class LobbyImpl implements Lobby {
     public int playerCount =0;
 
     //ToDo
-    public   int lobbyID = 1;
+    private   int lobbyID = 1;
+
+    // Speichert ob auf einen Zug für einen Spieler gewartet wird
+    private boolean[] waitForPlayersTurn = new boolean[6];
 
 
     @Override
@@ -54,10 +58,18 @@ public class LobbyImpl implements Lobby {
 
     @Override
     public TurnMessage askPlayerforTurn(int playerId) {
-        /*
-        ToDo
-        Ask Player over Client for a Turn
-         */
+
+        AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId,"gib bitte einen Zug an", lobbyID);
+        players.get(playerId).name.sendTCP(askPlayerForTurn);
+
+        // Hier wird der boolean für diesen Spieler auf true gesetzt
+        // Also es wird auf einen Zug des Spielers gewartet
+        waitForPlayersTurn[playerId] = true;
+
+        while(waitForPlayersTurn[playerId])
+        {
+            // Wait for TurnMessage from Player
+        }
         return null;
     }
 
