@@ -31,6 +31,52 @@ public class mapView extends View {
 
     //Fields
     Bitmap f4 = BitmapFactory.decodeResource(getResources(),R.drawable.fieldsnew);
+    Bitmap f2 = BitmapFactory.decodeResource(getResources(),R.drawable.field2);
+    Bitmap f1 = BitmapFactory.decodeResource(getResources(),R.drawable.field1);
+    Bitmap f3 = BitmapFactory.decodeResource(getResources(),R.drawable.field3);
+    Bitmap f5 = BitmapFactory.decodeResource(getResources(),R.drawable.field5);
+    Bitmap f7 = BitmapFactory.decodeResource(getResources(),R.drawable.field7);
+    Bitmap f13 = BitmapFactory.decodeResource(getResources(),R.drawable.field13);
+    Bitmap f6 = BitmapFactory.decodeResource(getResources(),R.drawable.field6);
+    Bitmap f15 = BitmapFactory.decodeResource(getResources(),R.drawable.field15);
+    Bitmap f16 = BitmapFactory.decodeResource(getResources(),R.drawable.field16);
+    Bitmap f18 = BitmapFactory.decodeResource(getResources(),R.drawable.field18);
+    Bitmap f12 = BitmapFactory.decodeResource(getResources(),R.drawable.field12);
+    Bitmap f8 = BitmapFactory.decodeResource(getResources(),R.drawable.field8);
+    Bitmap f9 = BitmapFactory.decodeResource(getResources(),R.drawable.field9);
+    Bitmap f10 = BitmapFactory.decodeResource(getResources(),R.drawable.field10);
+    Bitmap f11 = BitmapFactory.decodeResource(getResources(),R.drawable.field11);
+    Bitmap f25 = BitmapFactory.decodeResource(getResources(),R.drawable.field25);
+    Bitmap f14 = BitmapFactory.decodeResource(getResources(),R.drawable.field14);
+    Bitmap f20 = BitmapFactory.decodeResource(getResources(),R.drawable.field20);
+    Bitmap f19 = BitmapFactory.decodeResource(getResources(),R.drawable.field19);
+    Bitmap f27 = BitmapFactory.decodeResource(getResources(),R.drawable.field27);
+    Bitmap f33 = BitmapFactory.decodeResource(getResources(),R.drawable.field33);
+    Bitmap f32 = BitmapFactory.decodeResource(getResources(),R.drawable.field32);
+    Bitmap f22 = BitmapFactory.decodeResource(getResources(),R.drawable.field22);
+    Bitmap f21 = BitmapFactory.decodeResource(getResources(),R.drawable.field21);
+    Bitmap f26 = BitmapFactory.decodeResource(getResources(),R.drawable.field26);
+    Bitmap f28 = BitmapFactory.decodeResource(getResources(),R.drawable.field28);
+    Bitmap f29 = BitmapFactory.decodeResource(getResources(),R.drawable.field29);
+    Bitmap f34 = BitmapFactory.decodeResource(getResources(),R.drawable.field34);
+    Bitmap f30 = BitmapFactory.decodeResource(getResources(),R.drawable.field30);
+    Bitmap f45 = BitmapFactory.decodeResource(getResources(),R.drawable.field45);
+    Bitmap f24 = BitmapFactory.decodeResource(getResources(),R.drawable.field24);
+    Bitmap f23 = BitmapFactory.decodeResource(getResources(),R.drawable.field23);
+    Bitmap f44 = BitmapFactory.decodeResource(getResources(),R.drawable.field44);
+    Bitmap f31 = BitmapFactory.decodeResource(getResources(),R.drawable.field31);
+    Bitmap f37 = BitmapFactory.decodeResource(getResources(),R.drawable.field37);
+    Bitmap f38 = BitmapFactory.decodeResource(getResources(),R.drawable.field38);
+    Bitmap f36 = BitmapFactory.decodeResource(getResources(),R.drawable.field36);
+    Bitmap f35 = BitmapFactory.decodeResource(getResources(),R.drawable.field35);
+    Bitmap f43 = BitmapFactory.decodeResource(getResources(),R.drawable.field43);
+    Bitmap f42 = BitmapFactory.decodeResource(getResources(),R.drawable.field42);
+    Bitmap f41 = BitmapFactory.decodeResource(getResources(),R.drawable.field41);
+    Bitmap f40 = BitmapFactory.decodeResource(getResources(),R.drawable.field40);
+    Bitmap f39 = BitmapFactory.decodeResource(getResources(),R.drawable.field39);
+
+
+
 
     public mapView(Context context) {
         super(context);
@@ -54,52 +100,52 @@ public class mapView extends View {
 
 
         //drawing points
-        canvas.drawBitmap(f4,251 - imgOffset,518 - imgOffset,null);
-        canvas.drawBitmap(f4, 186 - imgOffset, 286 - imgOffset,null);
-        canvas.drawBitmap(f4, 109 - imgOffset, 459 - imgOffset,null);
-        canvas.drawBitmap(f4, 182 - imgOffset, 282 - imgOffset,null);
-        canvas.drawBitmap(f4, 47 - imgOffset, 623 - imgOffset,null);
-        canvas.drawBitmap(f4, 465 - imgOffset, 439 - imgOffset,null);
-        canvas.drawBitmap(f4, 328 - imgOffset, 339 - imgOffset,null);
-        canvas.drawBitmap(f4, 403 - imgOffset, 155 - imgOffset,null);
-        canvas.drawBitmap(f4, 542 - imgOffset, 259 - imgOffset,null);
-        canvas.drawBitmap(f4, 590 - imgOffset, 168 - imgOffset,null);
-        canvas.drawBitmap(f4, 736 - imgOffset, 265- imgOffset,null);
-        canvas.drawBitmap(f4, 171- imgOffset, 703 - imgOffset,null);
-        canvas.drawBitmap(f4, 382 - imgOffset, 600 - imgOffset,null);
-        canvas.drawBitmap(f4, 596 - imgOffset, 535 - imgOffset,null);
-        canvas.drawBitmap(f4, 502 - imgOffset, 700 - imgOffset,null);
-        canvas.drawBitmap(f4, 394 - imgOffset, 873 - imgOffset,null);
+        canvas.drawBitmap(f1,251 - imgOffset,518 - imgOffset,null);
+        canvas.drawBitmap(f2, 186 - imgOffset, 286 - imgOffset,null);
+        canvas.drawBitmap(f3, 109 - imgOffset, 459 - imgOffset,null);
+        //canvas.drawBitmap(f4, 182 - imgOffset, 282 - imgOffset,null);
+        canvas.drawBitmap(f5, 47 - imgOffset, 623 - imgOffset,null);
+        canvas.drawBitmap(f6, 465 - imgOffset, 439 - imgOffset,null);
+        canvas.drawBitmap(f7, 328 - imgOffset, 339 - imgOffset,null);
+        canvas.drawBitmap(f8, 403 - imgOffset, 155 - imgOffset,null);
+        canvas.drawBitmap(f9, 542 - imgOffset, 259 - imgOffset,null);
+        canvas.drawBitmap(f10, 590 - imgOffset, 168 - imgOffset,null);
+        canvas.drawBitmap(f11, 736 - imgOffset, 265- imgOffset,null);
+        canvas.drawBitmap(f12, 171- imgOffset, 703 - imgOffset,null);
+        canvas.drawBitmap(f13, 382 - imgOffset, 600 - imgOffset,null);
+        canvas.drawBitmap(f14, 596 - imgOffset, 535 - imgOffset,null);
+        canvas.drawBitmap(f15, 502 - imgOffset, 700 - imgOffset,null);
+        canvas.drawBitmap(f16, 394 - imgOffset, 873 - imgOffset,null);
        // canvas.drawBitmap(f4, 85 - imgOffset, 907 - imgOffset,null);
-        canvas.drawBitmap(f4, 525 - imgOffset, 973 - imgOffset,null);
-        canvas.drawBitmap(f4, 643 - imgOffset, 793 - imgOffset,null);
-        canvas.drawBitmap(f4, 731 - imgOffset, 639 - imgOffset,null);
-        canvas.drawBitmap(f4, 830 - imgOffset, 473 - imgOffset,null);
-        canvas.drawBitmap(f4, 886 - imgOffset, 368 - imgOffset,null);
-        canvas.drawBitmap(f4, 1072 - imgOffset, 312 - imgOffset,null);
-        canvas.drawBitmap(f4, 991 - imgOffset, 433 - imgOffset,null);
-        canvas.drawBitmap(f4, 695 - imgOffset, 374 - imgOffset,null);
-        canvas.drawBitmap(f4,  903 - imgOffset,  757 - imgOffset,null);
-        canvas.drawBitmap(f4,  800 - imgOffset,  918 - imgOffset,null);
-        canvas.drawBitmap(f4,  1023 - imgOffset,  836 - imgOffset,null);
-        canvas.drawBitmap(f4, 1122 - imgOffset, 695 - imgOffset,null);
-        canvas.drawBitmap(f4,  1195 - imgOffset,  582 - imgOffset,null);
-        canvas.drawBitmap(f4,  1285 - imgOffset,  442 - imgOffset,null);
-        canvas.drawBitmap(f4,  969 - imgOffset, 245 - imgOffset,null);
-        canvas.drawBitmap(f4,  798 - imgOffset,  153 - imgOffset,null);
-        canvas.drawBitmap(f4,  997 - imgOffset,  604 - imgOffset,null);
-        canvas.drawBitmap(f4,  1426 - imgOffset,  477 - imgOffset,null);
-        canvas.drawBitmap(f4,  1396 - imgOffset,  653 - imgOffset,null);
-        canvas.drawBitmap(f4,  1268 - imgOffset,  815 - imgOffset,null);
+        canvas.drawBitmap(f18, 525 - imgOffset, 973 - imgOffset,null);
+        canvas.drawBitmap(f19, 643 - imgOffset, 793 - imgOffset,null);
+        canvas.drawBitmap(f20, 731 - imgOffset, 639 - imgOffset,null);
+        canvas.drawBitmap(f21, 830 - imgOffset, 473 - imgOffset,null);
+        canvas.drawBitmap(f22, 886 - imgOffset, 368 - imgOffset,null);
+        canvas.drawBitmap(f23, 1072 - imgOffset, 312 - imgOffset,null);
+        canvas.drawBitmap(f24, 991 - imgOffset, 433 - imgOffset,null);
+        canvas.drawBitmap(f25, 695 - imgOffset, 374 - imgOffset,null);
+        canvas.drawBitmap(f26,  903 - imgOffset,  757 - imgOffset,null);
+        canvas.drawBitmap(f27,  800 - imgOffset,  918 - imgOffset,null);
+        canvas.drawBitmap(f28,  1023 - imgOffset,  836 - imgOffset,null);
+        canvas.drawBitmap(f29, 1122 - imgOffset, 695 - imgOffset,null);
+        canvas.drawBitmap(f30,  1195 - imgOffset,  582 - imgOffset,null);
+        canvas.drawBitmap(f31,  1285 - imgOffset,  442 - imgOffset,null);
+        canvas.drawBitmap(f32,  969 - imgOffset, 245 - imgOffset,null);
+        canvas.drawBitmap(f33,  798 - imgOffset,  153 - imgOffset,null);
+        canvas.drawBitmap(f34,  997 - imgOffset,  604 - imgOffset,null);
+        canvas.drawBitmap(f35,  1426 - imgOffset,  477 - imgOffset,null);
+        canvas.drawBitmap(f36,  1396 - imgOffset,  653 - imgOffset,null);
+        canvas.drawBitmap(f37,  1268 - imgOffset,  815 - imgOffset,null);
         //canvas.drawBitmap(f4,  1362 - imgOffset,  847 - imgOffset,null);
-        canvas.drawBitmap(f4,  1467 - imgOffset,  883 - imgOffset,null);
-        canvas.drawBitmap(f4,  1667 - imgOffset,  933 - imgOffset,null);
-        canvas.drawBitmap(f4,  1682 - imgOffset,  727 - imgOffset,null);
-        canvas.drawBitmap(f4,  1699 - imgOffset,  505 - imgOffset,null);
-        canvas.drawBitmap(f4,  1727 - imgOffset,  185 - imgOffset,null);
-        canvas.drawBitmap(f4,  1504 - imgOffset,  149 - imgOffset,null);
-        canvas.drawBitmap(f4, 1163 - imgOffset,  362 - imgOffset,null);
-        canvas.drawBitmap(f4,  1077 - imgOffset,  494 - imgOffset,null);
+        canvas.drawBitmap(f38,  1467 - imgOffset,  883 - imgOffset,null);
+        canvas.drawBitmap(f39,  1667 - imgOffset,  933 - imgOffset,null);
+        canvas.drawBitmap(f40,  1682 - imgOffset,  727 - imgOffset,null);
+        canvas.drawBitmap(f41,  1699 - imgOffset,  505 - imgOffset,null);
+        canvas.drawBitmap(f42,  1727 - imgOffset,  185 - imgOffset,null);
+        canvas.drawBitmap(f43,  1504 - imgOffset,  149 - imgOffset,null);
+        canvas.drawBitmap(f44, 1163 - imgOffset,  362 - imgOffset,null);
+        canvas.drawBitmap(f45,  1077 - imgOffset,  494 - imgOffset,null);
 
 
 
@@ -108,7 +154,7 @@ public class mapView extends View {
         points.add(new Points(251,518,R.drawable.fieldsnew,"Field1",1));
         points.add(new Points(186,286,R.drawable.fieldsnew,"Field2",2));
         points.add(new Points(109,459,R.drawable.fieldsnew,"Field3",3));
-        points.add(new Points(182,282,R.drawable.fieldsnew,"Field4",4));
+        //points.add(new Points(182,282,R.drawable.fieldsnew,"Field4",4));
         points.add(new Points(47,623,R.drawable.fieldsnew,"Field5",5));
         points.add(new Points(465,439,R.drawable.fieldsnew,"Field6",6));
         points.add(new Points(328,339,R.drawable.fieldsnew,"Field7",7));

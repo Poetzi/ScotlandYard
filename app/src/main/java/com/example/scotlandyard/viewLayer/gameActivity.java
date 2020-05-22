@@ -32,6 +32,8 @@ public class gameActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
     private TurnMessage msg;
     private User user = new User("test");
+    public boolean check = true;
+    public String confirm = "no";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,9 @@ public class gameActivity extends AppCompatActivity {
 
 
     public void setUpFields(){
-        user.setId(1);
+        user.setId(0);
         presenter.setUser(user);
+        presenter.setGame(this);
 
        /* gameBoard.addFieldWithTransition(1,2,"bus");
         gameBoard.addFieldWithTransition(2,1,"bus");
@@ -65,11 +68,10 @@ public class gameActivity extends AppCompatActivity {
 */
         //Initial position of player
         playerPostion = new Points(186,286,0," ",1);
-      //  player.drawPlayer(186,286);
+        //player.drawPlayer(186,286);
     }
 
     public void useTaxi(){
-        int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
         TurnMessage msg = new TurnMessage(0,toField,0,"taxi");
@@ -79,9 +81,20 @@ public class gameActivity extends AppCompatActivity {
 
         }).start();
 
-        if(gameBoard.movePlayer(positionOfPlayer,toField,"taxi")){
+        while (check){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        check = true;
+
+        if(confirm.equalsIgnoreCase("yes")){
             playerPostion.setField(toField);
             player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+            Toast.makeText(getApplicationContext(),"YESSSS",Toast.LENGTH_SHORT).show();
+
         }else {
             Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
         }
