@@ -49,6 +49,7 @@ public class Presenter{
             client.registerClass(BaseMessage.class);
             client.registerClass(TextMessage.class);
             client.registerClass(TurnMessage.class);
+            client.registerClass(TravellogMessage.class);
 
             client.registerCallback(nachrichtVomServer -> {
                 if (nachrichtVomServer instanceof TextMessage) {
