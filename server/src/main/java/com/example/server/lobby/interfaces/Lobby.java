@@ -24,5 +24,6 @@ public interface Lobby {
     void setReturnTurnMessage(TurnMessage turnMessage, int playerId);
     BoardGameEngine getGame();
     void setGame(BoardGameEngine game);
+    void confirm(int playerId, String conf);
 
 }

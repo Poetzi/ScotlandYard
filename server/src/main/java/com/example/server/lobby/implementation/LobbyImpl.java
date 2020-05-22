@@ -27,13 +27,13 @@ public class LobbyImpl implements Lobby {
     // Speichert ob auf einen Zug für einen Spieler gewartet wird
     private boolean[] waitForPlayersTurn = new boolean[6];
     private TurnMessage[] returnTurnMessage = new TurnMessage[6];
-
+    public boolean wait = true;
 
     @Override
     public void addPlayertoGame(ID id) {
         players.add(id);
         playerCount++;
-        if(playerCount==6) startGame();
+        if(playerCount==1) startGame();//was 6
     }
 
     @Override
@@ -78,10 +78,20 @@ public class LobbyImpl implements Lobby {
         while(waitForPlayersTurn[playerId])
         {
             // Wait for TurnMessage from Player
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-
         return returnTurnMessage[playerId];
+    }
+
+    @Override
+    public void confirm(int playerId, String conf){
+        AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId,conf, lobbyID);
+        players.get(playerId).name.sendTCP(askPlayerForTurn);
     }
 
 
@@ -111,7 +121,8 @@ public class LobbyImpl implements Lobby {
 
     @Override
     public void setReturnTurnMessage(TurnMessage turnMessage, int playerId) {
-        this.returnTurnMessage[playerId] = turnMessage;
+        returnTurnMessage[playerId] = turnMessage;
+        waitForPlayersTurn[playerId] = false;
     }
 
     @Override

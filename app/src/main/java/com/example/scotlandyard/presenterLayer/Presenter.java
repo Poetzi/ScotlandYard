@@ -4,11 +4,13 @@ import android.util.Log;
 import android.widget.TextView;
 
 
+import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.viewLayer.User;
+import com.example.scotlandyard.viewLayer.gameActivity;
 
 import java.io.IOException;
 
@@ -24,6 +26,8 @@ public class Presenter{
     private TextView log;
 
     private boolean verbunden = false;
+
+    private gameActivity game;
 
     // private Konstruktor
     private Presenter() {
@@ -44,11 +48,22 @@ public class Presenter{
             client.registerClass(BaseMessage.class);
             client.registerClass(TextMessage.class);
             client.registerClass(TurnMessage.class);
+            client.registerClass(AskPlayerForTurn.class);
 
             client.registerCallback(nachrichtVomServer -> {
                 if (nachrichtVomServer instanceof TextMessage) {
                     TextMessage message = (TextMessage) nachrichtVomServer;
                     updateLog(message.toString());
+                }
+
+                if(nachrichtVomServer instanceof AskPlayerForTurn){
+                    AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
+                    System.out.println(message.getText());
+                    if(message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")){
+                        game.check = false;
+                        if(message.getText().equalsIgnoreCase("yes"))
+                            game.confirm = "yes";
+                    }
                 }
             });
 
@@ -94,5 +109,13 @@ public class Presenter{
 
     public void setLog(TextView log) {
         this.log = log;
+    }
+
+    public gameActivity getGame() {
+        return game;
+    }
+
+    public void setGame(gameActivity game) {
+        this.game = game;
     }
 }

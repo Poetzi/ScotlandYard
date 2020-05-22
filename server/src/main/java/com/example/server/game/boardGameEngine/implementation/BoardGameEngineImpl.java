@@ -42,8 +42,15 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     public void setupNewGame() {
         gameBoard = new GameBoardImpl();
         addPlayer("test",2);
+        Player player = new PlayerImpl();
+        player.setCurrentPosition(2);
+        player.setId(0);
 
         gameBoard.addFieldWithTransition(2,3,"taxi");
+
+
+        gameBoard.setPositionOfPlayer(0,2);
+        drawForPlayer(player);
     }
 
     @Override
@@ -76,10 +83,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         int fieldToGo = 0;
         boolean drawValide = false;
         TurnMessage turnMessage;
-
         // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
-        while (drawValide = false)
-        {
+       // while (true){
             /*
                Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                und die Position zu der er ziehen möchte
@@ -87,8 +92,6 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             turnMessage = lobby.askPlayerforTurn(player.getId());
             card = turnMessage.getCard();
             fieldToGo = turnMessage.getToField();
-
-
             /*
                Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
                ob der Zug gültig ist.
@@ -96,9 +99,14 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             */
             if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
             {
+                lobby.confirm(player.getId(),"yes");
+               // break;
                 drawValide = true;
+            }else {
+                lobby.confirm(player.getId(),"no");
+
             }
-        }
+       // }
 
         /*
             Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
@@ -121,7 +129,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             /*
                 Die Position an die anderen Spieler clients weitergeben
              */
-            lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
+           // lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
         }
 
     }

@@ -1,5 +1,6 @@
 package com.example.server;
 
+import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.TextMessage;
 import com.example.server.messages.TurnMessage;
@@ -15,6 +16,7 @@ public class Main {
             server.registerClass(BaseMessage.class);
             server.registerClass(TextMessage.class);
             server.registerClass(TurnMessage.class);
+            server.registerClass(AskPlayerForTurn.class);
 
 
             // Die Callbacks werden hier registriert,
@@ -32,7 +34,7 @@ public class Main {
 
                 if (nachrichtvomClient instanceof TurnMessage)
                 {
-                    TurnMessage turn = (TurnMessage)nachrichtvomClient;
+                   TurnMessage turn = (TurnMessage)nachrichtvomClient;
 
                     // Zug wird am Server ausgegeben
                     System.out.println("Looby: "+turn.getLobbyId()+" Spieler "+ turn.getPlayerId()+" to Field "+turn.getToField()+" with "+turn.getCard());
