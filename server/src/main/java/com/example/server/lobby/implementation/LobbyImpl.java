@@ -7,6 +7,8 @@ import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.game.gameBoard.implementation.GameBoardImpl;
 import com.example.server.game.gameBoard.interfaces.GameBoard;
 
+import com.example.server.game.players.implementation.PlayerImpl;
+import com.example.server.game.players.interfaces.Player;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.TurnMessage;
@@ -79,12 +81,13 @@ public class LobbyImpl implements Lobby {
         {
             // Wait for TurnMessage from Player
             try {
-                Thread.sleep(100);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
+        System.out.println("Player Id "+playerId);
         return returnTurnMessage[playerId];
     }
 

@@ -75,11 +75,24 @@ public class gameActivity extends AppCompatActivity {
         int toField = map.touchedPoint.getField();
 
         TurnMessage msg = new TurnMessage(0,toField,0,"taxi");
-        new Thread(() -> {
+        Thread t = new Thread(){
+            public void run(){
+                presenter.sendTurn(msg);
+
+            }
+        };
+      /*  new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
 
-        }).start();
+        }).start();*/
+      t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
         while (check){
             try {

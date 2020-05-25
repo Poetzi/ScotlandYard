@@ -45,6 +45,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         Player player = new PlayerImpl();
         player.setCurrentPosition(2);
         player.setId(0);
+        players.add(player);
 
         gameBoard.addFieldWithTransition(2,3,"taxi");
 
@@ -92,6 +93,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             turnMessage = lobby.askPlayerforTurn(player.getId());
             card = turnMessage.getCard();
             fieldToGo = turnMessage.getToField();
+        System.out.println(card+"sssss "+ fieldToGo);
             /*
                Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
                ob der Zug gültig ist.
@@ -111,10 +113,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         /*
             Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
          */
-        Transition toRemove = new TransitionImpl();
+        /*Transition toRemove = new TransitionImpl();
         toRemove.setName(card);
         player.removeTransitionFromAvailable(toRemove);
-
+*/
 
 
 
