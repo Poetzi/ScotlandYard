@@ -108,8 +108,11 @@ public class Presenter{
 
     public void updateTravellogMenu(TravelLog travelLog, int round){
         String transport=travelLog.getTicket();
-        travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
-
+        if (round==3||round==8||round==13||round==18||travelLog.isCaughtCheating()){
+            travellogMenu.add(Menu.NONE, round, Menu.NONE, transport+", Position:"+round);
+        }else {
+            travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
+        }
     }
 
     public Menu getTravellogMenu() {

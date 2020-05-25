@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.example.scotlandyard.viewLayer.Chat;
+import com.example.scotlandyard.viewLayer.IPFinder;
 import com.example.scotlandyard.viewLayer.gameActivity;
 
 import java.net.InetAddress;
@@ -38,31 +39,14 @@ public class playActivity extends AppCompatActivity {
     {
         new Thread(() -> {
             //IPv4-Adresse des Geräts wird gesucht.
-            WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-            WifiInfo wifiInfo;
-            int ipInt;
-            if (wm != null) {
-                wifiInfo = wm.getConnectionInfo();
-                ipInt = wifiInfo.getIpAddress();
-            }else {
-                throw new NullPointerException();
-            }
-            String ip = null;
-            try {
-                ip = InetAddress.getByAddress(
-                        ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(ipInt).array())
-                        .getHostAddress();
-            } catch (UnknownHostException e) {
-                Log.d("playActivity","Something went wrong while trying to determine the IPv4 address",e);
-            }
+            IPFinder ipFinder=new IPFinder(getApplicationContext());
+            ipFinder.findIP();
             //Server wird gestartet.
-            presenter.connectToServer(ip);
+            presenter.connectToServer(ipFinder.getIp());
 
         }).start();
 
         Intent intent = new Intent(this, gameActivity.class);
-
-
         startActivity(intent);
     }
 }

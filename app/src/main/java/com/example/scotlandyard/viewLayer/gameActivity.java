@@ -90,21 +90,29 @@ public class gameActivity extends AppCompatActivity {
 
 
         NavigationView nav=findViewById(R.id.nav_view);
-       // header=nav.getHeaderView(0);
-        //header=findViewById(R.id.nav_header);
         Menu menu=nav.getMenu();
+        presenter.setTravellogMenu(menu);
 
         //Beispielwerte
-        menu.add(Menu.NONE,1,Menu.NONE,"Bus");
-        menu.add(Menu.NONE,2,Menu.NONE,"U-Bahn");
-        menu.add(Menu.NONE,3,Menu.NONE,"Taxi");
+        TravelLog travelLog;
+        travelLog = new TravelLog(1,"Bus",false);
+        presenter.updateTravellogMenu(travelLog,1);
 
-        presenter.setTravellogMenu(menu);
+        travelLog=new TravelLog(2,"U-Bahn",false);
+        presenter.updateTravellogMenu(travelLog,2);
+
+        travelLog=new TravelLog(3,"Taxi",false);
+        presenter.updateTravellogMenu(travelLog,3);
+
 
         Handler handler = new Handler();
         handler.postDelayed(() -> {
-            TravelLog travelLog=new TravelLog(1,"Taxi",false);
-            presenter.updateTravellogMenu(travelLog,4);
+            TravelLog tl=new TravelLog(1,"Taxi",false);
+            presenter.updateTravellogMenu(tl,4);
+
+            tl=new TravelLog(2,"Bus",false);
+            tl.setCaughtCheating(true);
+            presenter.updateTravellogMenu(tl,5);
         }, 20000);
 
 

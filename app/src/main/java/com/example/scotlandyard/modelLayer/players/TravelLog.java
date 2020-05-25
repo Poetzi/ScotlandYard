@@ -6,6 +6,7 @@ public class TravelLog {
     private int position;
     private String ticketType;
     private boolean isDoubleMove;
+    private boolean caughtCheating;
 
     public TravelLog(int position, String ticket, boolean isDoubleMove){
         this.position=position;
@@ -44,5 +45,14 @@ public class TravelLog {
 
     public void setHasCheated(boolean hasCheated) {
         this.hasCheated = hasCheated;
+    }
+
+
+    public boolean isCaughtCheating() {
+        return caughtCheating;
+    }
+
+    public void setCaughtCheating(boolean caughtCheating) {
+        this.caughtCheating = caughtCheating;
     }
 }

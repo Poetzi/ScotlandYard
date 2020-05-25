@@ -31,4 +31,20 @@ public interface MrX extends Player {
     TravelLog getTravelLog(int round);
 
     void setTravelLog(TravelLog travelLog, int round);
+
+    int getCheatTickets();
+
+    void setCheatTickets(int cheatTickets);
+
+    boolean isCaughtCheating();
+
+    void setCaughtCheating(boolean caughtCheating, int round);
+
+    int getVisibleFor();
+
+    void setVisibleFor(int visibleFor);
+
+    TravelLog[] getTravelLog();
+
+    void setTravelLog(TravelLog[] travelLog);
 }

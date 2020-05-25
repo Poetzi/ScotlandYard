@@ -9,6 +9,8 @@ public class MrXImpl extends PlayerImpl implements MrX {
     private int blackTickets;
     private int doubleMoveTickets;
     private int cheatTickets;
+    private boolean caughtCheating;
+    private int visibleFor;
     /**
      * @see #setPositionOfRound(int, String, int, boolean)
      */
@@ -20,6 +22,8 @@ public class MrXImpl extends PlayerImpl implements MrX {
         blackTickets=5;
         doubleMoveTickets=2;
         cheatTickets=5;
+        caughtCheating=false;
+        visibleFor=0;
     }
 
     @Override
@@ -130,6 +134,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
      * @param round Werte 1-24
      * @return true=Double Move Ticket wurde benutzt.
      */
+    @Override
     public boolean isDoubleMoveAtRound(int round){
         return travelLog[round-1].isDoubleMove();
     }
@@ -155,6 +160,37 @@ public class MrXImpl extends PlayerImpl implements MrX {
         doubleMoveTickets=ticketNumber;
     }
 
+    public int getCheatTickets() {
+        return cheatTickets;
+    }
 
+    public void setCheatTickets(int cheatTickets) {
+        this.cheatTickets = cheatTickets;
+    }
+
+    public boolean isCaughtCheating() {
+        return caughtCheating;
+    }
+
+    public void setCaughtCheating(boolean caughtCheating, int round) {
+        this.caughtCheating = caughtCheating;
+        travelLog[round-1].setCaughtCheating(caughtCheating);
+    }
+
+    public int getVisibleFor() {
+        return visibleFor;
+    }
+
+    public void setVisibleFor(int visibleFor) {
+        this.visibleFor = visibleFor;
+    }
+
+    public TravelLog[] getTravelLog() {
+        return travelLog;
+    }
+
+    public void setTravelLog(TravelLog[] travelLog) {
+        this.travelLog = travelLog;
+    }
 }
 

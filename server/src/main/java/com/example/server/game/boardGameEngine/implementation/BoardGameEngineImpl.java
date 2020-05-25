@@ -135,10 +135,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                 //Wenn der Detektiv den Verdacht äußert, dass Mr. X geschummelt hat.
                 if (card.equals("cheat")){
                     if(checkIfMrXCheated()){
-                        /**
-                         * TODO
-                         * Position von Mr. X wird für die nächsten 2 oder 3 Runden offen angezeigt.
-                         */
+                        int misterX = players.size() - 1;
+                        ((MrX)(players.get(misterX))).setCaughtCheating(true,actualRound);
+                        ((MrX)(players.get(misterX))).setVisibleFor(2);
 
                         //Detektiv darf seine Position ändern.
                         drawValide = false;
@@ -168,6 +167,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                 if (!card.equals("Double") && !card.equals("cheat")) {
                     //Normaler Zug von Mister X
                     ((MrX) player).validateTicket(actualRound, card, fieldToGo);
+
+                    if (((MrX)player).isCaughtCheating()){
+                        ((MrX)player).setCaughtCheating(true,actualRound);
+                    }
                     lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
                 } else if (card.equals("cheat")) {
 
@@ -187,6 +190,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                     //Erster Zug wird normal im Travellog gespeichert.
                     ((MrX) player).validateTicket(actualRound, "cheat", 0); //Position ist hier egal
                     ((MrX) player).validateTicket(actualRound, card, fieldToGo);
+                    if (((MrX)player).isCaughtCheating()){
+                        ((MrX)player).setCaughtCheating(true,actualRound);
+                    }
                     lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
 
                     drawValide = false;
@@ -223,6 +229,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                     }
                     //Erster Zug wird im Travellog normal gespeichert.
                     ((MrX) player).validateDoubleMoveTicket(actualRound, card, fieldToGo);
+                    if (((MrX)player).isCaughtCheating()){
+                        ((MrX)player).setCaughtCheating(false,actualRound);
+                    }
                     lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
 
                     /**
@@ -240,9 +249,22 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                             drawValide = true;
                         }
                     }
-                    //Erster Zug wird im Travellog normal gespeichert.
+                    //Zweiter Zug wird im Travellog normal gespeichert.
                     ((MrX) player).validateTicket(actualRound, card, fieldToGo);
+                    if (((MrX)player).isCaughtCheating()){
+                        ((MrX)player).setCaughtCheating(false,actualRound);
+                    }
                     lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
+                }
+                /*
+                    Wenn Mister X beim Schummeln erwischt wurde, wird hier heruntergezählt,
+                    wie lange seine Position noch für die Detektive sichtbar ist.
+                 */
+                if (((MrX)player).isCaughtCheating()){
+                    ((MrX)player).setVisibleFor(((MrX)player).getVisibleFor()-1);
+                    if (((MrX)player).getVisibleFor()==0){
+                        ((MrX)player).setCaughtCheating(false,actualRound);
+                    }
                 }
 
             }
