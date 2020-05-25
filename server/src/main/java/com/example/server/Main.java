@@ -14,6 +14,8 @@ public class Main {
             // zwischen Server und Client
             server.registerClass(BaseMessage.class);
             server.registerClass(TextMessage.class);
+            server.registerClass(TurnMessage.class);
+
 
             // Die Callbacks werden hier registriert,
             server.registerCallback(nachrichtvomClient -> {

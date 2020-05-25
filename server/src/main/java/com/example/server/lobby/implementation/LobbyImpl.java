@@ -50,11 +50,6 @@ public class LobbyImpl implements Lobby {
 
         game.initLobby(this);
 
-        Runnable runnable =    new Runnable(){
-            public void run(){
-
-            }
-        };
         Thread t = new Thread(runnable);
         t.start();
 

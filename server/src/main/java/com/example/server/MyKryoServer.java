@@ -8,6 +8,7 @@ import com.example.server.lobby.implementation.ID;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.BaseMessage;
+import com.example.server.messages.TurnMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,11 +46,6 @@ public class MyKryoServer {
 
             public void connected(Connection connection) {
                 System.out.println("main.java.Server: Jemand ist dem main.java.Server beigetreten: " + connection.getRemoteAddressTCP().getHostString());
-                //Erstellen einer Nachricht für den Client
-                Message message = new Message();
-                //Text wird zugewiesen
-                message.message = "You have successfully connected to the server: " + new Date().toString();
-
 
                 ID id = new ID(connection);
                 boolean lobbyFound = false;
@@ -59,15 +55,15 @@ public class MyKryoServer {
                         lobbyFound = true;
                         break;
                     }
+                    id.id = lobby.getPlayerCount();
                 }
                 if(!lobbyFound){
+                    System.out.println("lobby created");
                     Lobby lobby = new LobbyImpl();
                     lobby.addPlayertoGame(id);
                     lobbys.add(lobby);
                 }
 
-                //Nachricht wird über den Port gesendet.
-                connection.sendTCP(message);
             }
 
             @Override
@@ -103,11 +99,11 @@ public class MyKryoServer {
 
 
     public static ArrayList<Lobby> getLobby() {
-        return lobby;
+        return lobbys;
     }
 
     public static void setLobby(ArrayList<Lobby> lobby) {
-        MyKryoServer.lobby = lobby;
+        MyKryoServer.lobbys = lobby;
     }
 
 

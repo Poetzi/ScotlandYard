@@ -166,4 +166,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     public void initLobby(Lobby lobby) {
         this.lobby = lobby;
     }
+    public void setLobby(Lobby lobby) {
+        this.lobby = lobby;
+    }
 }
