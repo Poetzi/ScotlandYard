@@ -64,7 +64,7 @@ public class gameActivity extends AppCompatActivity {
         cheatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TurnMessage msg = new TurnMessage(0,0,0,"cheat");
+                TurnMessage msg = new TurnMessage(presenter.getUser().getId(),0,0,"cheat");
                 new Thread(() -> {
                     // Nachricht wird an den Server geschickt
                     presenter.sendTurn(msg);
@@ -105,8 +105,14 @@ public class gameActivity extends AppCompatActivity {
 
         presenter.setTravellogMenu(menu);
 
-        TravelLog travelLog=new TravelLog(1,"Taxi",false);
-        presenter.updateTravellogMenu(travelLog,4);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                TravelLog travelLog=new TravelLog(1,"Taxi",false);
+                presenter.updateTravellogMenu(travelLog,4);
+            }
+        }, 20000);
+
 
     }
 
@@ -218,7 +224,9 @@ public class gameActivity extends AppCompatActivity {
     }
 
     public void chat(View view){
-        Intent intent = new Intent(this, Chat.class);
-        startActivity(intent);
+        new Thread(() -> {
+            Intent intent = new Intent(this, Chat.class);
+            startActivity(intent);
+        }).start();
     }
 }

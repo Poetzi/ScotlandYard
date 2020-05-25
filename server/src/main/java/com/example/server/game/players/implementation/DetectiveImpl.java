@@ -13,12 +13,15 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
     private int undergroundTickets;
     private ArrayList<Transition> availableTransitions;
 
+    private boolean inactive;
+
     public DetectiveImpl(String name, int id){
         super(name, id);
         availableTransitions=getAvailableTransitions();
         taxiTickets=11;
         busTickets=8;
         undergroundTickets=4;
+        inactive=false;
         //Beispielswerte
         for (int i = 0; i <taxiTickets; i++) {
             availableTransitions.add(new TransitionImpl("Taxi",1,2));
@@ -89,5 +92,15 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
     @Override
     public void setUndergoundTickets(int ticketNumber) {
         undergroundTickets=ticketNumber;
+    }
+
+    @Override
+    public boolean isInactive() {
+        return inactive;
+    }
+
+    @Override
+    public void setInactive(boolean inactive) {
+        this.inactive=inactive;
     }
 }

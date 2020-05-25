@@ -16,4 +16,8 @@ public interface Detective extends Player {
 
     void setUndergoundTickets(int ticketNumber);
 
+    boolean isInactive();
+
+    void setInactive(boolean inactive);
+
 }

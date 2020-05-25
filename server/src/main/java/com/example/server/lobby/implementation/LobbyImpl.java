@@ -96,7 +96,8 @@ public class LobbyImpl implements Lobby {
         }
     }
 
-    public void updateTravellogToAllClients(int playerID, TravelLog travelLog, int round){
+    @Override
+    public void updateTravellogToAllClients(TravelLog travelLog, int round){
         TravellogMessage travellogMessage=new TravellogMessage(travelLog,round,lobbyID);
         for (ID id:players){
             id.name.sendTCP(travellogMessage);
