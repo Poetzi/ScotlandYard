@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 
@@ -38,15 +39,21 @@ public class playActivity extends AppCompatActivity {
         new Thread(() -> {
             //IPv4-Adresse des Geräts wird gesucht.
             WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-            WifiInfo wifiInfo = wm.getConnectionInfo();
-            int ipInt = wifiInfo.getIpAddress();
+            WifiInfo wifiInfo;
+            int ipInt;
+            if (wm != null) {
+                wifiInfo = wm.getConnectionInfo();
+                ipInt = wifiInfo.getIpAddress();
+            }else {
+                throw new NullPointerException();
+            }
             String ip = null;
             try {
                 ip = InetAddress.getByAddress(
                         ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putInt(ipInt).array())
                         .getHostAddress();
             } catch (UnknownHostException e) {
-                e.printStackTrace();
+                Log.d("playActivity","Something went wrong while trying to determine the IPv4 address",e);
             }
             //Server wird gestartet.
             presenter.connectToServer(ip);

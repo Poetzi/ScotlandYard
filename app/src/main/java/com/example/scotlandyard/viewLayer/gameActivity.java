@@ -23,6 +23,7 @@ import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImp
 import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class gameActivity extends AppCompatActivity {
@@ -42,9 +43,6 @@ public class gameActivity extends AppCompatActivity {
     private Button cheatBtn;
 
     private DrawerLayout drawerLayout;
-    private NavigationView nav;
-    private Menu menu;
-    private View header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,30 +59,27 @@ public class gameActivity extends AppCompatActivity {
 
         cheatBtn=findViewById(R.id.btn_cheat);
         cheatBtn.setVisibility(View.INVISIBLE);
-        cheatBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TurnMessage msg = new TurnMessage(presenter.getUser().getId(),0,0,"cheat");
-                new Thread(() -> {
-                    // Nachricht wird an den Server geschickt
-                    presenter.sendTurn(msg);
+        cheatBtn.setOnClickListener(view -> {
+            msg = new TurnMessage(presenter.getUser().getId(),0,0,"cheat");
+            new Thread(() -> {
+                // Nachricht wird an den Server geschickt
+                presenter.sendTurn(msg);
 
-                }).start();
-            }
+            }).start();
         });
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        if (sensorManager != null) {
+            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        }else {
+            throw new NullPointerException();
+        }
         shakeDetector = new ShakeDetector();
-        shakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
-
-            @Override
-            public void onShake(int count) {
-                if (cheatBtn.getVisibility()==View.INVISIBLE){
-                    cheatBtn.setVisibility(View.VISIBLE);
-                }else {
-                    cheatBtn.setVisibility(View.INVISIBLE);
-                }
+        shakeDetector.setOnShakeListener(count -> {
+            if (cheatBtn.getVisibility()==View.INVISIBLE){
+                cheatBtn.setVisibility(View.VISIBLE);
+            }else {
+                cheatBtn.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -93,10 +88,11 @@ public class gameActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        nav=findViewById(R.id.nav_view);
-        header=nav.getHeaderView(0);
-        header=findViewById(R.id.nav_header);
-        menu=nav.getMenu();
+
+        NavigationView nav=findViewById(R.id.nav_view);
+       // header=nav.getHeaderView(0);
+        //header=findViewById(R.id.nav_header);
+        Menu menu=nav.getMenu();
 
         //Beispielwerte
         menu.add(Menu.NONE,1,Menu.NONE,"Bus");
@@ -106,11 +102,9 @@ public class gameActivity extends AppCompatActivity {
         presenter.setTravellogMenu(menu);
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                TravelLog travelLog=new TravelLog(1,"Taxi",false);
-                presenter.updateTravellogMenu(travelLog,4);
-            }
+        handler.postDelayed(() -> {
+            TravelLog travelLog=new TravelLog(1,"Taxi",false);
+            presenter.updateTravellogMenu(travelLog,4);
         }, 20000);
 
 
