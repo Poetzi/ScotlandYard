@@ -7,8 +7,10 @@ import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.game.gameBoard.implementation.GameBoardImpl;
 import com.example.server.game.gameBoard.interfaces.GameBoard;
 
+import com.example.server.game.players.TravelLog;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
+import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
 
@@ -91,6 +93,14 @@ public class LobbyImpl implements Lobby {
         for(ID p: players)
         {
             p.name.sendTCP(playersPosition);
+        }
+    }
+
+    @Override
+    public void updateTravellogToAllClients(TravelLog travelLog, int round){
+        TravellogMessage travellogMessage=new TravellogMessage(travelLog,round,lobbyID);
+        for (ID id:players){
+            id.name.sendTCP(travellogMessage);
         }
     }
 

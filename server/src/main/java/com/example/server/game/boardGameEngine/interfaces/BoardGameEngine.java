@@ -45,4 +45,6 @@ public interface BoardGameEngine {
      */
     void initLobby(Lobby lobby);
 
+    boolean checkIfMrXCheated();
+
 }
