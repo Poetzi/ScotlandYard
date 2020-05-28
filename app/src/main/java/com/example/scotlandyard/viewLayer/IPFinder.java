@@ -14,8 +14,6 @@ import static android.content.Context.WIFI_SERVICE;
 
 public class IPFinder {
     private  WifiManager wm;
-    private WifiInfo wifiInfo;
-    private int ipInt;
     private String ip;
 
     public IPFinder(Context context){
@@ -23,6 +21,9 @@ public class IPFinder {
     }
 
     public void findIP(){
+        WifiInfo wifiInfo;
+        int ipInt;
+
         if (wm != null) {
             wifiInfo = wm.getConnectionInfo();
             ipInt = wifiInfo.getIpAddress();

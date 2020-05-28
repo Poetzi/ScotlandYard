@@ -3,10 +3,7 @@ package com.example.scotlandyard;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 
@@ -15,10 +12,6 @@ import com.example.scotlandyard.viewLayer.Chat;
 import com.example.scotlandyard.viewLayer.IPFinder;
 import com.example.scotlandyard.viewLayer.gameActivity;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 public class playActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
