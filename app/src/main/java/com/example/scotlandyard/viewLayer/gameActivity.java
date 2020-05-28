@@ -1,13 +1,18 @@
 package com.example.scotlandyard.viewLayer;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
+
+import android.content.Context;
+import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
+import android.os.Handler;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,11 +21,10 @@ import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.R;
 import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImpl;
 import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
-import com.example.scotlandyard.modelLayer.players.implementation.DetectiveImpl;
-import com.example.scotlandyard.modelLayer.players.interfaces.Detective;
-import com.example.scotlandyard.modelLayer.transitions.implementation.TransitionImpl;
-import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
+import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 public class gameActivity extends AppCompatActivity {
 
@@ -32,6 +36,13 @@ public class gameActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
     private TurnMessage msg;
     private User user = new User("test");
+
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private ShakeDetector shakeDetector;
+    private Button cheatBtn;
+
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +56,66 @@ public class gameActivity extends AppCompatActivity {
         map = findViewById(R.id.mapView);
         player = findViewById(R.id.playerView);
         setUpFields();
+
+        cheatBtn=findViewById(R.id.btn_cheat);
+        cheatBtn.setVisibility(View.INVISIBLE);
+        cheatBtn.setOnClickListener(view -> {
+            msg = new TurnMessage(presenter.getUser().getId(),0,0,"cheat");
+            new Thread(() -> {
+                // Nachricht wird an den Server geschickt
+                presenter.sendTurn(msg);
+
+            }).start();
+        });
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        if (sensorManager != null) {
+            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        }else {
+            throw new NullPointerException();
+        }
+        shakeDetector = new ShakeDetector();
+        shakeDetector.setOnShakeListener(count -> {
+            if (cheatBtn.getVisibility()==View.INVISIBLE){
+                cheatBtn.setVisibility(View.VISIBLE);
+            }else {
+                cheatBtn.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+
+        NavigationView nav=findViewById(R.id.nav_view);
+        Menu menu=nav.getMenu();
+        presenter.setTravellogMenu(menu);
+
+        //Beispielwerte
+        TravelLog travelLog;
+        travelLog = new TravelLog(1,"Bus",false);
+        presenter.updateTravellogMenu(travelLog,1);
+
+        travelLog=new TravelLog(2,"U-Bahn",false);
+        presenter.updateTravellogMenu(travelLog,2);
+
+        travelLog=new TravelLog(3,"Taxi",false);
+        presenter.updateTravellogMenu(travelLog,3);
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            TravelLog tl=new TravelLog(1,"Taxi",false);
+            presenter.updateTravellogMenu(tl,4);
+
+            tl=new TravelLog(2,"Bus",false);
+            tl.setCaughtCheating(true);
+            presenter.updateTravellogMenu(tl,5);
+        }, 20000);
+
+
     }
 
 
@@ -134,4 +205,30 @@ public class gameActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        sensorManager.registerListener(shakeDetector, accelerometer,	SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        sensorManager.unregisterListener(shakeDetector);
+        super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
+    }
+
+    public void chat(View view){
+        new Thread(() -> {
+            Intent intent = new Intent(this, Chat.class);
+            startActivity(intent);
+        }).start();
+    }
 }

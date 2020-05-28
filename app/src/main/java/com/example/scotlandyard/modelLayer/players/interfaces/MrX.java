@@ -7,16 +7,21 @@ public interface MrX extends Player {
 
     int getPositionOfRound(int round);
 
-    int getTicketOfRound(int round);
+    String getTicketOfRound(int round);
+
+    boolean isDoubleMoveAtRound(int round);
+
+    void setHasCheated(int round, int newPosition);
+
+    boolean getHasCheatedInRound(int round);
 
     void setBlackTickets(int ticketNumber);
 
     void setDoubleMoveTickets(int ticketNumber);
 
-    void setPositionOfRound(int position, int ticket, int round);
+    void setPositionOfRound(int position, String ticket, int round, boolean isDoubleMove);
 
-    void validateBlackTicket();
+    void validateTicket(int round, String ticketType, int newPosition);
 
-    void validateDoubleMove();
-
+    void validateDoubleMoveTicket(int round, String ticketType, int newPosition);
 }
