@@ -6,6 +6,7 @@ import com.example.server.game.gameBoard.interfaces.GameBoard;
 import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class GameBoardImpl implements GameBoard {
@@ -13,7 +14,7 @@ public class GameBoardImpl implements GameBoard {
     /*
        Jede Stelle im Arrray steht für einen Spieler
      */
-    int [] playersPositions;
+    int [] playersPositions = new int[6];
     /*
         Speichert die Anzahl der Spielfelder
      */
@@ -21,17 +22,16 @@ public class GameBoardImpl implements GameBoard {
     /*
         Speichert die Wege von einem Spielfeld zum anderen
      */
-    HashSet<Transition> transitions; //(Liste oder Set)
+    ArrayList<Transition> transitions = new ArrayList<>(); //(Liste oder Set)
 
 
     @Override
-    public void addFieldWithTransition(int fromField, int toField, Transition rule) {
-        Transition newTransition = new TransitionImpl();
-        newTransition.setFromField(fromField);
-        newTransition.setToField(toField);
-        newTransition.setName(rule.getName());
+    public void addFieldWithTransition(int fromField, int toField, String rule) {
+        Transition firstTransition = new TransitionImpl(rule,toField,fromField);
+        Transition secondTransition = new TransitionImpl(rule,fromField,toField);
 
-        transitions.add(newTransition);
+        transitions.add(firstTransition);
+        transitions.add(secondTransition);
     }
 
     @Override
@@ -46,12 +46,16 @@ public class GameBoardImpl implements GameBoard {
 
     @Override
     public boolean checkDraw(int playerID, int toField, String card) {
-        Transition toCheck = new TransitionImpl(card, playersPositions[playerID], toField);
-        if (transitions.contains(toCheck))
-        {
-            return true;
+        for (int i = 0; i <transitions.size() ; i++) {
+            if (transitions.get(i).getToField() == toField) {
+                if (transitions.get(i).getFromField() == playersPositions[playerID]) {
+                    if (transitions.get(i).getName().equalsIgnoreCase(card)) {
+                        return true;
+                    }
+                }
+            }
         }
-        return false;
+            return false;
     }
 
     @Override
