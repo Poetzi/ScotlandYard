@@ -50,22 +50,7 @@ public class Presenter{
             client.registerClass(TurnMessage.class);
             client.registerClass(AskPlayerForTurn.class);
 
-            client.registerCallback(nachrichtVomServer -> {
-                if (nachrichtVomServer instanceof TextMessage) {
-                    TextMessage message = (TextMessage) nachrichtVomServer;
-                    updateLog(message.toString());
-                }
-
-                if(nachrichtVomServer instanceof AskPlayerForTurn){
-                    AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
-                    System.out.println(message.getText());
-                    if(message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")){
-                        game.check = false;
-                        if(message.getText().equalsIgnoreCase("yes"))
-                            game.confirm = "yes";
-                    }
-                }
-            });
+            registerCallback();
 
             try {
                 client.connect(hostname);
@@ -74,6 +59,27 @@ public class Presenter{
             }
             this.verbunden = true;
         }
+    }
+
+    private void registerCallback()
+    {
+        client.registerCallback(nachrichtVomServer -> {
+            if (nachrichtVomServer instanceof TextMessage) {
+                TextMessage message = (TextMessage) nachrichtVomServer;
+                updateLog(message.toString());
+            }
+
+            if(nachrichtVomServer instanceof AskPlayerForTurn){
+                AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
+                Log.d("Server:",message.getText());
+                if(message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")){
+                    game.check = false;
+                    if(message.getText().equalsIgnoreCase("yes"))
+                        game.confirm = "yes";
+                }
+            }
+        });
+
     }
 
     public void sendMessagetoServer(String text) {
