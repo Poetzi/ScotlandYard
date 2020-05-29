@@ -9,8 +9,10 @@ import com.example.server.game.gameBoard.interfaces.GameBoard;
 
 import com.example.server.game.players.implementation.PlayerImpl;
 import com.example.server.game.players.interfaces.Player;
+import com.example.server.game.players.TravelLog;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
+import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
 
@@ -19,12 +21,12 @@ import java.util.ArrayList;
 public class LobbyImpl implements Lobby {
     private ArrayList<ID> players = new ArrayList<ID>();
     private boolean isOpen = false;
-    public int playerCount =0;
+    public int playerCount = 0;
 
     private BoardGameEngine game = new BoardGameEngineImpl();
 
-    //ToDo
-    private   int lobbyID = 1;
+    // ToDo
+    private int lobbyID = 1;
 
     // Speichert ob auf einen Zug für einen Spieler gewartet wird
     private boolean[] waitForPlayersTurn = new boolean[6];
@@ -35,7 +37,8 @@ public class LobbyImpl implements Lobby {
     public void addPlayertoGame(ID id) {
         players.add(id);
         playerCount++;
-        if(playerCount==1) startGame();//was 6
+        if (playerCount == 1)
+            startGame();// was 6
     }
 
     @Override
@@ -43,12 +46,10 @@ public class LobbyImpl implements Lobby {
         return playerCount;
     }
 
-
-
     @Override
     public void startGame() {
 
-        Runnable runnable =    new LobbyStart(this);
+        Runnable runnable = new LobbyStart(this);
 
         game.initLobby(this);
 
@@ -63,22 +64,21 @@ public class LobbyImpl implements Lobby {
     }
 
     @Override
-    public boolean isLobbyOpen(){
+    public boolean isLobbyOpen() {
         return isOpen;
     }
 
     @Override
     public TurnMessage askPlayerforTurn(int playerId) {
 
-        AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId,"gib bitte einen Zug an", lobbyID);
+        AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId, "gib bitte einen Zug an", lobbyID);
         players.get(playerId).name.sendTCP(askPlayerForTurn);
 
         // Hier wird der boolean für diesen Spieler auf true gesetzt
         // Also es wird auf einen Zug des Spielers gewartet
         waitForPlayersTurn[playerId] = true;
 
-        while(waitForPlayersTurn[playerId])
-        {
+        while (waitForPlayersTurn[playerId]) {
             // Wait for TurnMessage from Player
             try {
                 Thread.sleep(10);
@@ -87,23 +87,29 @@ public class LobbyImpl implements Lobby {
             }
         }
 
-        System.out.println("Player Id "+playerId);
+        System.out.println("Player Id " + playerId);
         return returnTurnMessage[playerId];
     }
 
     @Override
-    public void confirm(int playerId, String conf){
-        AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId,conf, lobbyID);
+    public void confirm(int playerId, String conf) {
+        AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId, conf, lobbyID);
         players.get(playerId).name.sendTCP(askPlayerForTurn);
     }
-
 
     @Override
     public void updatePlayerPositionsToAllClients(int playerId, int toField) {
         UpdatePlayersPosition playersPosition = new UpdatePlayersPosition(playerId, toField, lobbyID);
-        for(ID p: players)
-        {
+        for (ID p : players) {
             p.name.sendTCP(playersPosition);
+        }
+    }
+
+    @Override
+    public void updateTravellogToAllClients(TravelLog travelLog, int round) {
+        TravellogMessage travellogMessage = new TravellogMessage(travelLog, round, lobbyID);
+        for (ID id : players) {
+            id.name.sendTCP(travellogMessage);
         }
     }
 

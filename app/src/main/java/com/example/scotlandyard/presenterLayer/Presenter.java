@@ -1,20 +1,22 @@
 package com.example.scotlandyard.presenterLayer;
 
 import android.util.Log;
+import android.view.Menu;
 import android.widget.TextView;
-
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
+import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
+import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.viewLayer.User;
 import com.example.scotlandyard.viewLayer.gameActivity;
 
 import java.io.IOException;
 
-public class Presenter{
+public class Presenter {
 
     // Singleton
     private static Presenter presenter;
@@ -28,12 +30,12 @@ public class Presenter{
     private boolean verbunden = false;
 
     private gameActivity game;
+    private Menu travellogMenu;
 
     // private Konstruktor
     private Presenter() {
         client = new MyKryoClient();
     }
-
 
     // Singleton wird zurückgegeben
     public static synchronized Presenter getInstance() {
@@ -44,10 +46,11 @@ public class Presenter{
     }
 
     public void connectToServer(String hostname) {
-        if(verbunden == false) {
+        if (verbunden == false) {
             client.registerClass(BaseMessage.class);
             client.registerClass(TextMessage.class);
             client.registerClass(TurnMessage.class);
+            client.registerClass(TravellogMessage.class);
             client.registerClass(AskPlayerForTurn.class);
 
             registerCallback();
@@ -61,20 +64,19 @@ public class Presenter{
         }
     }
 
-    private void registerCallback()
-    {
+    private void registerCallback() {
         client.registerCallback(nachrichtVomServer -> {
             if (nachrichtVomServer instanceof TextMessage) {
                 TextMessage message = (TextMessage) nachrichtVomServer;
                 updateLog(message.toString());
             }
 
-            if(nachrichtVomServer instanceof AskPlayerForTurn){
+            if (nachrichtVomServer instanceof AskPlayerForTurn) {
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
-                Log.d("Server:",message.getText());
-                if(message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")){
+                Log.d("Server:", message.getText());
+                if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
                     game.check = false;
-                    if(message.getText().equalsIgnoreCase("yes"))
+                    if (message.getText().equalsIgnoreCase("yes"))
                         game.confirm = "yes";
                 }
             }
@@ -85,10 +87,11 @@ public class Presenter{
     public void sendMessagetoServer(String text) {
         TextMessage message = new TextMessage(user.getName() + ": " + text);
         client.sendMessage(message);
+        updateLog(message.getText());
     }
 
-    public void sendTurn(TurnMessage message){
-        TurnMessage msg = new TurnMessage(user.getId(),message.getToField(),0,message.getCard());
+    public void sendTurn(TurnMessage message) {
+        TurnMessage msg = new TurnMessage(user.getId(), message.getToField(), 0, message.getCard());
         client.sendMessage(msg);
     }
 
@@ -99,7 +102,6 @@ public class Presenter{
     public void setUser(User user) {
         this.user = user;
     }
-
 
     public void updateLog(String text) {
         String prev = log.getText().toString();
@@ -123,5 +125,22 @@ public class Presenter{
 
     public void setGame(gameActivity game) {
         this.game = game;
+    }
+
+    public void updateTravellogMenu(TravelLog travelLog, int round) {
+        String transport = travelLog.getTicket();
+        if (round == 3 || round == 8 || round == 13 || round == 18 || travelLog.isCaughtCheating()) {
+            travellogMenu.add(Menu.NONE, round, Menu.NONE, transport + ", Position:" + round);
+        } else {
+            travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
+        }
+    }
+
+    public Menu getTravellogMenu() {
+        return travellogMenu;
+    }
+
+    public void setTravellogMenu(Menu travellogMenu) {
+        this.travellogMenu = travellogMenu;
     }
 }

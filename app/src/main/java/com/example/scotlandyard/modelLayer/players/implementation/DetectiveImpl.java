@@ -7,7 +7,7 @@ import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
 
 import java.util.ArrayList;
 
-    public class DetectiveImpl extends PlayerImpl implements Detective {
+public class DetectiveImpl extends PlayerImpl implements Detective {
         private int taxiTickets;
         private int busTickets;
         private int undergroundTickets;
@@ -41,6 +41,34 @@ import java.util.ArrayList;
         x.setName("U-Bahn");
         for (int i = 0; i < undergroundTickets; i++) {
             availableTransitions.add(x);
+        }
+    }
+
+        /**
+         * Löst ein Ticket ein.
+          * @param ticketType gibt an welches Ticket eingelöst werden soll
+         */
+    public void validateTicket(String ticketType){
+        if (ticketType.equals("Taxi")){
+            if (taxiTickets>0){
+                taxiTickets--;
+            }else {
+                throw new IllegalArgumentException("No Taxi Tickets left.");
+            }
+        }else if (ticketType.equals("Bus")){
+            if (busTickets>0){
+                busTickets--;
+            }else {
+                throw new IllegalArgumentException("No Bus Tickets left.");
+            }
+        }else if(ticketType.equals("U-Bahn")){
+            if (undergroundTickets>0){
+                undergroundTickets--;
+            }else {
+                throw new IllegalArgumentException("No Metro Tickets left.");
+            }
+        }else {
+            throw new IllegalArgumentException("Ticket type "+ticketType+" not allowed here.");
         }
     }
 
