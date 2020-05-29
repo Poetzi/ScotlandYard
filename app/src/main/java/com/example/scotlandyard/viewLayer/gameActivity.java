@@ -24,6 +24,7 @@ import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.*;
 import com.google.android.material.navigation.NavigationView;
 
 public class gameActivity extends AppCompatActivity {
@@ -92,6 +93,7 @@ public class gameActivity extends AppCompatActivity {
 
 
         NavigationView nav=findViewById(R.id.nav_view);
+
         Menu menu=nav.getMenu();
         presenter.setTravellogMenu(menu);
 
