@@ -36,6 +36,52 @@ public class mapView extends View {
 
     //Fields
     Bitmap f4 = BitmapFactory.decodeResource(getResources(),R.drawable.fieldsnew);
+    Bitmap f2 = BitmapFactory.decodeResource(getResources(),R.drawable.field2);
+    Bitmap f1 = BitmapFactory.decodeResource(getResources(),R.drawable.field1);
+    Bitmap f3 = BitmapFactory.decodeResource(getResources(),R.drawable.field3);
+    Bitmap f5 = BitmapFactory.decodeResource(getResources(),R.drawable.field5);
+    Bitmap f7 = BitmapFactory.decodeResource(getResources(),R.drawable.field7);
+    Bitmap f13 = BitmapFactory.decodeResource(getResources(),R.drawable.field13);
+    Bitmap f6 = BitmapFactory.decodeResource(getResources(),R.drawable.field6);
+    Bitmap f15 = BitmapFactory.decodeResource(getResources(),R.drawable.field15);
+    Bitmap f16 = BitmapFactory.decodeResource(getResources(),R.drawable.field16);
+    Bitmap f18 = BitmapFactory.decodeResource(getResources(),R.drawable.field18);
+    Bitmap f12 = BitmapFactory.decodeResource(getResources(),R.drawable.field12);
+    Bitmap f8 = BitmapFactory.decodeResource(getResources(),R.drawable.field8);
+    Bitmap f9 = BitmapFactory.decodeResource(getResources(),R.drawable.field9);
+    Bitmap f10 = BitmapFactory.decodeResource(getResources(),R.drawable.field10);
+    Bitmap f11 = BitmapFactory.decodeResource(getResources(),R.drawable.field11);
+    Bitmap f25 = BitmapFactory.decodeResource(getResources(),R.drawable.field25);
+    Bitmap f14 = BitmapFactory.decodeResource(getResources(),R.drawable.field14);
+    Bitmap f20 = BitmapFactory.decodeResource(getResources(),R.drawable.field20);
+    Bitmap f19 = BitmapFactory.decodeResource(getResources(),R.drawable.field19);
+    Bitmap f27 = BitmapFactory.decodeResource(getResources(),R.drawable.field27);
+    Bitmap f33 = BitmapFactory.decodeResource(getResources(),R.drawable.field33);
+    Bitmap f32 = BitmapFactory.decodeResource(getResources(),R.drawable.field32);
+    Bitmap f22 = BitmapFactory.decodeResource(getResources(),R.drawable.field22);
+    Bitmap f21 = BitmapFactory.decodeResource(getResources(),R.drawable.field21);
+    Bitmap f26 = BitmapFactory.decodeResource(getResources(),R.drawable.field26);
+    Bitmap f28 = BitmapFactory.decodeResource(getResources(),R.drawable.field28);
+    Bitmap f29 = BitmapFactory.decodeResource(getResources(),R.drawable.field29);
+    Bitmap f34 = BitmapFactory.decodeResource(getResources(),R.drawable.field34);
+    Bitmap f30 = BitmapFactory.decodeResource(getResources(),R.drawable.field30);
+    Bitmap f45 = BitmapFactory.decodeResource(getResources(),R.drawable.field45);
+    Bitmap f24 = BitmapFactory.decodeResource(getResources(),R.drawable.field24);
+    Bitmap f23 = BitmapFactory.decodeResource(getResources(),R.drawable.field23);
+    Bitmap f44 = BitmapFactory.decodeResource(getResources(),R.drawable.field44);
+    Bitmap f31 = BitmapFactory.decodeResource(getResources(),R.drawable.field31);
+    Bitmap f37 = BitmapFactory.decodeResource(getResources(),R.drawable.field37);
+    Bitmap f38 = BitmapFactory.decodeResource(getResources(),R.drawable.field38);
+    Bitmap f36 = BitmapFactory.decodeResource(getResources(),R.drawable.field36);
+    Bitmap f35 = BitmapFactory.decodeResource(getResources(),R.drawable.field35);
+    Bitmap f43 = BitmapFactory.decodeResource(getResources(),R.drawable.field43);
+    Bitmap f42 = BitmapFactory.decodeResource(getResources(),R.drawable.field42);
+    Bitmap f41 = BitmapFactory.decodeResource(getResources(),R.drawable.field41);
+    Bitmap f40 = BitmapFactory.decodeResource(getResources(),R.drawable.field40);
+    Bitmap f39 = BitmapFactory.decodeResource(getResources(),R.drawable.field39);
+
+
+
 
 
 
@@ -212,26 +258,116 @@ public class mapView extends View {
 
     private void printLines(Canvas canvas){
         Paint paint = new Paint();
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(10f);
+        paint.setStrokeWidth(13f);
         paint.setStyle(Paint.Style.STROKE);
 
         //Plain
         paint.setAntiAlias(true);
+
+        //Plain
+        paint.setColor(Color.BLUE);
         canvas.drawLine(186,286,328,339,paint);
 
-        paint.setColor(Color.RED);
-        canvas.drawLine(186+imgOffset,286+imgOffset,328+imgOffset,339+imgOffset,paint);
+        paint.setColor(Color.YELLOW);
+        canvas.drawLine(394,873,502,700,paint);
+        canvas.drawLine(186,286,109,459,paint);
+        canvas.drawLine(47,623,109,459,paint);
+        canvas.drawLine(47,623,171,703,paint);
+        canvas.drawLine(251,518,109,459,paint);
+        canvas.drawLine(251,518,382,600,paint);
+        canvas.drawLine(465,439,382,600,paint);
+        canvas.drawLine(382,600,502,700,paint);
+        canvas.drawLine(394,873,525,973,paint);
+        canvas.drawLine(596,535,502,700,paint);
+        canvas.drawLine(1727,185,1504,149,paint);
+        canvas.drawLine(1426,477,1504,149,paint);
+        canvas.drawLine(465,439,542,259,paint);
+        canvas.drawLine(643,793,800,918,paint);
+        canvas.drawLine(903,757,800,918,paint);
+        canvas.drawLine(596,535,695,374,paint);
+        canvas.drawLine(403,155,542,259,paint);
+        canvas.drawLine(695,374,542,259,paint);
+        canvas.drawLine(695,374,830,473,paint);
+        canvas.drawLine(643,793,731,639,paint);
+        canvas.drawLine(736,265,590,168,paint);
+        canvas.drawLine(736,265,886,368,paint);
+        canvas.drawLine(736,265,798,153,paint);
+        canvas.drawLine(1072,312,991,433,paint);
+        canvas.drawLine(1072,312,969,245,paint);
+        canvas.drawLine(1163,362,969,245,paint);
+        canvas.drawLine(1163,362,1077,494,paint);
+        canvas.drawLine(1163,362,1285,442,paint);
+        canvas.drawLine(991,433,1077,494,paint);
+        canvas.drawLine(997,604,903,757,paint);
+        canvas.drawLine(1077,494,1195,582,paint);
+        canvas.drawLine(1077,494,997,604,paint);
+        canvas.drawLine(1122,695,997,604,paint);
+        canvas.drawLine(1467,883,1361,838,paint);
+        canvas.drawLine(1268,815,1361,838,paint);
+        canvas.drawLine(1396,653,1361,838,paint);
+        canvas.drawLine(1426,477,1699,505,paint);
+        canvas.drawLine(1122,695,1195,582,paint);
+
+
 
         //Intersecting
         paint.setColor(Color.RED);
-        canvas.drawLine(186+imgOffset,286+imgOffset,328+imgOffset,339+imgOffset,paint);
-        canvas.drawLine(465+imgOffset,439+imgOffset,328+imgOffset,339+imgOffset,paint);
-        canvas.drawLine(465+imgOffset,439+imgOffset,328+imgOffset,339+imgOffset,paint);
-        canvas.drawLine(465+imgOffset,439+imgOffset,596+imgOffset,535+imgOffset,paint);
-        canvas.drawLine(731+imgOffset,639+imgOffset,596+imgOffset,535+imgOffset,paint);
-        canvas.drawLine(731+imgOffset,639+imgOffset,903+imgOffset,757+imgOffset,paint);
-        canvas.drawLine(1023+imgOffset,836+imgOffset,903+imgOffset,757+imgOffset,paint);
+        canvas.drawLine(186+paintOffset+5,286+paintOffset+5,328+paintOffset+5,339+paintOffset+5,paint);
+        canvas.drawLine(465+paintOffset,439+paintOffset,328+paintOffset,339+paintOffset,paint);
+        canvas.drawLine(465+paintOffset,439+paintOffset,328+paintOffset,339+paintOffset,paint);
+        canvas.drawLine(465+paintOffset,439+paintOffset,596+paintOffset,535+paintOffset,paint);
+        canvas.drawLine(731+paintOffset,639+paintOffset,596+paintOffset,535+paintOffset,paint);
+        canvas.drawLine(731+paintOffset,639+paintOffset,903+paintOffset,757+paintOffset,paint);
+        canvas.drawLine(1023+paintOffset,836+paintOffset,903+paintOffset,757+paintOffset,paint);
+
+        canvas.drawLine(969+paintOffset,245+paintOffset,886+paintOffset,368+paintOffset,paint);
+        canvas.drawLine(830+paintOffset,473+paintOffset,886+paintOffset,368+paintOffset,paint);
+        canvas.drawLine(830+paintOffset,473+paintOffset,731+paintOffset,639+paintOffset,paint);
+        canvas.drawLine(643+paintOffset,793+paintOffset,731+paintOffset,639+paintOffset,paint);
+        canvas.drawLine(643+paintOffset,793+paintOffset,525+paintOffset,973+paintOffset,paint);
+        canvas.drawLine(1426,477,1396,653,paint);
+        canvas.drawLine(1195,582,1396,653,paint);
+        canvas.drawLine(1682,727,1396,653,paint);
+
+
+
+        paint.setColor(Color.BLUE);
+        canvas.drawLine(251+paintOffset+5,518+paintOffset+5,109+paintOffset+5,459+paintOffset+5,paint);
+        canvas.drawLine(1426+paintOffset,477+paintOffset,1504+paintOffset,149+paintOffset,paint);
+        canvas.drawLine(465+paintOffset,439+paintOffset,542+paintOffset,259+paintOffset,paint);
+        canvas.drawLine(596+paintOffset,535+paintOffset,695+paintOffset,374+paintOffset,paint);
+        canvas.drawLine(465+paintOffset,439+paintOffset,382+paintOffset,600+paintOffset,paint);
+
+
+
+        //Single Lines
+        paint.setColor(Color.BLUE);
+        canvas.drawLine(403,155,328,339,paint);
+        canvas.drawLine(251,518,328,339,paint);
+        canvas.drawLine(251,518,171,703,paint);
+        canvas.drawLine(394,873,171,703,paint);
+
+        canvas.drawLine(969,245,886,368,paint);
+        canvas.drawLine(830,473,886,368,paint);
+        canvas.drawLine(830,473,731,639,paint);
+        canvas.drawLine(643,793,525,973,paint);
+
+        canvas.drawLine(643,793,502,700,paint);
+        canvas.drawLine(1023,836,1122,695,paint);
+        canvas.drawLine(1268,815,1122,695,paint);
+        canvas.drawLine(542,259,590,168,paint);
+        canvas.drawLine(736,265,695,374,paint);
+        canvas.drawLine(969,245,798,153,paint);
+        canvas.drawLine(886,368,991,433,paint);
+
+        canvas.drawLine(1426,477,1285,442,paint);
+        canvas.drawLine(997,604,830,473,paint);
+        canvas.drawLine(1285,442,1195,582,paint);
+
+        canvas.drawLine(1727,185,1699,505,paint);
+        canvas.drawLine(1682,727,1699,505,paint);
+        canvas.drawLine(1682,727,1667,933,paint);
+        canvas.drawLine(1467,883,1667,933,paint);
 
 
 
@@ -243,7 +379,7 @@ public class mapView extends View {
     {
         int x = (int) event.getX();
         int y = (int) event.getY();
-        Log.i("Coordinates", "X=" + x + "  Y=" + y);
+        //Log.i("Coordinates", "X=" + x + "  Y=" + y);
 
         switch(event.getAction())
         {

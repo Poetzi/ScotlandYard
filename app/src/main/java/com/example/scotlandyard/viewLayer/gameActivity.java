@@ -23,6 +23,8 @@ import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImp
 import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.*;
 import com.google.android.material.navigation.NavigationView;
 
 public class gameActivity extends AppCompatActivity {
@@ -35,6 +37,8 @@ public class gameActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
     private TurnMessage msg;
     private User user = new User("test");
+    public boolean check = true;
+    public String confirm = "no";
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -89,6 +93,7 @@ public class gameActivity extends AppCompatActivity {
 
 
         NavigationView nav=findViewById(R.id.nav_view);
+
         Menu menu=nav.getMenu();
         presenter.setTravellogMenu(menu);
 
@@ -119,10 +124,11 @@ public class gameActivity extends AppCompatActivity {
 
 
     public void setUpFields(){
-        user.setId(1);
+        user.setId(0);
         presenter.setUser(user);
+        presenter.setGame(this);
 
-        gameBoard.addFieldWithTransition(1,2,"bus");
+       /* gameBoard.addFieldWithTransition(1,2,"bus");
         gameBoard.addFieldWithTransition(2,1,"bus");
 
 
@@ -132,26 +138,49 @@ public class gameActivity extends AppCompatActivity {
 
         gameBoard.addFieldWithTransition(3,1,"taxi");
         gameBoard.addFieldWithTransition(1,3,"taxi");
-
+*/
         //Initial position of player
-        playerPostion = new Points(635,347,0," ",1);
-       // player.drawPlayer(635,347);
+        playerPostion = new Points(186,286,0," ",1);
+        //player.drawPlayer(186,286);
     }
 
     public void useTaxi(){
-        int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
         TurnMessage msg = new TurnMessage(0,toField,0,"taxi");
-        new Thread(() -> {
+        Thread t = new Thread(){
+            public void run(){
+                presenter.sendTurn(msg);
+
+            }
+        };
+      /*  new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
 
-        }).start();
+        }).start();*/
+      t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        if(gameBoard.movePlayer(positionOfPlayer,toField,"taxi")){
+
+        while (check){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        check = true;
+
+        if(confirm.equalsIgnoreCase("yes")){
             playerPostion.setField(toField);
             player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+            Toast.makeText(getApplicationContext(),"YESSSS",Toast.LENGTH_SHORT).show();
+
         }else {
             Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
         }
@@ -161,6 +190,12 @@ public class gameActivity extends AppCompatActivity {
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
+        TurnMessage msg = new TurnMessage(0,toField,0,"Bus");
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
+
+        }).start();
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"bus")){
             playerPostion.setField(toField);
@@ -174,6 +209,12 @@ public class gameActivity extends AppCompatActivity {
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
+        TurnMessage msg = new TurnMessage(0,toField,0,"uBahn");
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
+
+        }).start();
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"ubahn")){
             playerPostion.setField(toField);
