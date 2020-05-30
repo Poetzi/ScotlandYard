@@ -15,19 +15,18 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.scotlandyard.R;
-import com.example.scotlandyard.modelLayer.players.interfaces.Player;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class mapView extends View {
 
     Bitmap small;
     ArrayList<Points> points = new ArrayList<>();
-    int imgOffset = 20;
+    int imgOffset = 10;
     int paintOffset = 5;
     Canvas player;
     int numb =200;
@@ -59,6 +58,39 @@ public class mapView extends View {
         printLines(canvas);
 
 
+        //Map image dimensions
+        float height=791;
+        float width=1678;
+
+        float density=getResources().getDisplayMetrics().density;
+        //scale factor specifies how much the display is larger than the map image
+        float widthScale=getResources().getDisplayMetrics().widthPixels/width;
+        float heightScale=(getResources().getDisplayMetrics().heightPixels-55*density)/height;
+
+        String delimiter = ";";
+        InputStream inputStream = getResources().openRawResource(R.raw.points);
+        InputStreamReader inputreader = new InputStreamReader(inputStream);
+        BufferedReader buffreader = new BufferedReader(inputreader);
+        String line;
+        String[] tempArr;
+        try {
+            while (( line = buffreader.readLine()) != null) {
+                tempArr = line.split(delimiter);
+                canvas.drawBitmap(f4,((Integer.valueOf(tempArr[0])-imgOffset)*widthScale)-20,((Integer.valueOf(tempArr[1])-imgOffset)*heightScale)-40,null);
+                points.add(new Points((int) (Integer.valueOf(tempArr[0])*widthScale), (int) (Integer.valueOf(tempArr[1])*heightScale),R.drawable.fieldsnew,"Field"+tempArr[2],Integer.valueOf(tempArr[2])));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                buffreader.close();
+                inputreader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+/*
         //drawing points
         canvas.drawBitmap(f4,251 - imgOffset,518 - imgOffset,null);
         canvas.drawBitmap(f4, 186 - imgOffset, 286 - imgOffset,null);
@@ -84,7 +116,7 @@ public class mapView extends View {
         canvas.drawBitmap(f4, 886 - imgOffset, 368 - imgOffset,null);
         canvas.drawBitmap(f4, 1072 - imgOffset, 312 - imgOffset,null);
         canvas.drawBitmap(f4, 991 - imgOffset, 433 - imgOffset,null);
-        canvas.drawBitmap(f4, 695 - imgOffset, 374 - imgOffset,null);
+        canvas.drawBitmap(f4, 695 - imgOffset, 374- imgOffset,null);
         canvas.drawBitmap(f4,  903 - imgOffset,  757 - imgOffset,null);
         canvas.drawBitmap(f4,  800 - imgOffset,  918 - imgOffset,null);
         canvas.drawBitmap(f4,  1023 - imgOffset,  836 - imgOffset,null);
@@ -156,7 +188,7 @@ public class mapView extends View {
         points.add(new Points(1504,149,R.drawable.fieldsnew,"Field43",43));
         points.add(new Points(1163,362,R.drawable.fieldsnew,"Field44",44));
         points.add(new Points(1077,494,R.drawable.fieldsnew,"Field45",45));
-
+*/
 
 
     }

@@ -68,13 +68,15 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
             //gameBoard.addFieldWithTransition(random,random,);
         }
+        actualRound=1;
+        maxRounds=24;
     }
 
     @Override
     public void startGame() {
 
         // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
-        for (int i = 0; i < maxRounds ; i++) {
+        for (; actualRound < maxRounds ; actualRound++) {
             playOneRound();
 
             // Wenn die Detektive gewonnen haben wird der Spielablauf beendet
@@ -234,6 +236,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                     }
                     lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
 
+                    actualRound++;
                     /**
                      *      Warten auf den zweiten Zug des Doppelzugs.
                      */
