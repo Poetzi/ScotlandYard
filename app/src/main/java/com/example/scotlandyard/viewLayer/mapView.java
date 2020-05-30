@@ -26,7 +26,7 @@ public class mapView extends View {
 
     Bitmap small;
     ArrayList<Points> points = new ArrayList<>();
-    int imgOffset = 10;
+    int imgOffset;
     int paintOffset = 5;
     Canvas player;
     int numb =200;
@@ -36,6 +36,8 @@ public class mapView extends View {
 
     //Fields
     Bitmap f4 = BitmapFactory.decodeResource(getResources(),R.drawable.fieldsnew);
+
+
 
     public mapView(Context context) {
         super(context);
@@ -53,10 +55,9 @@ public class mapView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         player = canvas;
-
+        imgOffset=f4.getWidth()/2;
         //drawing lines
         printLines(canvas);
-
 
         //Map image dimensions
         float height=791;
@@ -76,7 +77,7 @@ public class mapView extends View {
         try {
             while (( line = buffreader.readLine()) != null) {
                 tempArr = line.split(delimiter);
-                canvas.drawBitmap(f4,((Integer.valueOf(tempArr[0])-imgOffset)*widthScale)-20,((Integer.valueOf(tempArr[1])-imgOffset)*heightScale)-40,null);
+                canvas.drawBitmap(f4,(Integer.valueOf(tempArr[0])-imgOffset)*widthScale,(Integer.valueOf(tempArr[1])-imgOffset)*heightScale,null);
                 points.add(new Points((int) (Integer.valueOf(tempArr[0])*widthScale), (int) (Integer.valueOf(tempArr[1])*heightScale),R.drawable.fieldsnew,"Field"+tempArr[2],Integer.valueOf(tempArr[2])));
             }
         } catch (IOException e) {
