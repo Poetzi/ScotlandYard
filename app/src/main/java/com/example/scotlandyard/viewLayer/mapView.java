@@ -35,54 +35,15 @@ public class mapView extends View {
     Position touchedPoint = new Position();
 
     //Fields
-    Bitmap f4 = BitmapFactory.decodeResource(getResources(),R.drawable.fieldsnew);
-    Bitmap f2 = BitmapFactory.decodeResource(getResources(),R.drawable.field2);
-    Bitmap f1 = BitmapFactory.decodeResource(getResources(),R.drawable.field1);
-    Bitmap f3 = BitmapFactory.decodeResource(getResources(),R.drawable.field3);
-    Bitmap f5 = BitmapFactory.decodeResource(getResources(),R.drawable.field5);
-    Bitmap f7 = BitmapFactory.decodeResource(getResources(),R.drawable.field7);
-    Bitmap f13 = BitmapFactory.decodeResource(getResources(),R.drawable.field13);
-    Bitmap f6 = BitmapFactory.decodeResource(getResources(),R.drawable.field6);
-    Bitmap f15 = BitmapFactory.decodeResource(getResources(),R.drawable.field15);
-    Bitmap f16 = BitmapFactory.decodeResource(getResources(),R.drawable.field16);
-    Bitmap f18 = BitmapFactory.decodeResource(getResources(),R.drawable.field18);
-    Bitmap f12 = BitmapFactory.decodeResource(getResources(),R.drawable.field12);
-    Bitmap f8 = BitmapFactory.decodeResource(getResources(),R.drawable.field8);
-    Bitmap f9 = BitmapFactory.decodeResource(getResources(),R.drawable.field9);
-    Bitmap f10 = BitmapFactory.decodeResource(getResources(),R.drawable.field10);
-    Bitmap f11 = BitmapFactory.decodeResource(getResources(),R.drawable.field11);
-    Bitmap f25 = BitmapFactory.decodeResource(getResources(),R.drawable.field25);
-    Bitmap f14 = BitmapFactory.decodeResource(getResources(),R.drawable.field14);
-    Bitmap f20 = BitmapFactory.decodeResource(getResources(),R.drawable.field20);
-    Bitmap f19 = BitmapFactory.decodeResource(getResources(),R.drawable.field19);
-    Bitmap f27 = BitmapFactory.decodeResource(getResources(),R.drawable.field27);
-    Bitmap f33 = BitmapFactory.decodeResource(getResources(),R.drawable.field33);
-    Bitmap f32 = BitmapFactory.decodeResource(getResources(),R.drawable.field32);
-    Bitmap f22 = BitmapFactory.decodeResource(getResources(),R.drawable.field22);
-    Bitmap f21 = BitmapFactory.decodeResource(getResources(),R.drawable.field21);
-    Bitmap f26 = BitmapFactory.decodeResource(getResources(),R.drawable.field26);
-    Bitmap f28 = BitmapFactory.decodeResource(getResources(),R.drawable.field28);
-    Bitmap f29 = BitmapFactory.decodeResource(getResources(),R.drawable.field29);
-    Bitmap f34 = BitmapFactory.decodeResource(getResources(),R.drawable.field34);
-    Bitmap f30 = BitmapFactory.decodeResource(getResources(),R.drawable.field30);
-    Bitmap f45 = BitmapFactory.decodeResource(getResources(),R.drawable.field45);
-    Bitmap f24 = BitmapFactory.decodeResource(getResources(),R.drawable.field24);
-    Bitmap f23 = BitmapFactory.decodeResource(getResources(),R.drawable.field23);
-    Bitmap f44 = BitmapFactory.decodeResource(getResources(),R.drawable.field44);
-    Bitmap f31 = BitmapFactory.decodeResource(getResources(),R.drawable.field31);
-    Bitmap f37 = BitmapFactory.decodeResource(getResources(),R.drawable.field37);
-    Bitmap f38 = BitmapFactory.decodeResource(getResources(),R.drawable.field38);
-    Bitmap f36 = BitmapFactory.decodeResource(getResources(),R.drawable.field36);
-    Bitmap f35 = BitmapFactory.decodeResource(getResources(),R.drawable.field35);
-    Bitmap f43 = BitmapFactory.decodeResource(getResources(),R.drawable.field43);
-    Bitmap f42 = BitmapFactory.decodeResource(getResources(),R.drawable.field42);
-    Bitmap f41 = BitmapFactory.decodeResource(getResources(),R.drawable.field41);
-    Bitmap f40 = BitmapFactory.decodeResource(getResources(),R.drawable.field40);
-    Bitmap f39 = BitmapFactory.decodeResource(getResources(),R.drawable.field39);
+    Bitmap f;
 
+    float height=791;
+    float width=1678;
 
-
-
+    float density=getResources().getDisplayMetrics().density;
+    //scale factor specifies how much the display is larger than the map image
+    float widthScale=getResources().getDisplayMetrics().widthPixels/width;
+    float heightScale=(getResources().getDisplayMetrics().heightPixels-55*density)/height;
 
 
     public mapView(Context context) {
@@ -101,9 +62,7 @@ public class mapView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         player = canvas;
-        imgOffset=f4.getWidth()/2;
-        //drawing lines
-        printLines(canvas);
+     //   printLines(canvas);
 
         //Map image dimensions
         float height=791;
@@ -120,11 +79,22 @@ public class mapView extends View {
         BufferedReader buffreader = new BufferedReader(inputreader);
         String line;
         String[] tempArr;
+
         try {
             while (( line = buffreader.readLine()) != null) {
                 tempArr = line.split(delimiter);
-                canvas.drawBitmap(f4,(Integer.valueOf(tempArr[0])-imgOffset)*widthScale,(Integer.valueOf(tempArr[1])-imgOffset)*heightScale,null);
-                points.add(new Points((int) (Integer.valueOf(tempArr[0])*widthScale), (int) (Integer.valueOf(tempArr[1])*heightScale),R.drawable.fieldsnew,"Field"+tempArr[2],Integer.valueOf(tempArr[2])));
+
+                int resID = getContext().getResources().getIdentifier("field" + tempArr[2], "drawable", getContext().getApplicationInfo().packageName);
+                //Log.d("MAP", "resID:" + resID + " " + getContext().getApplicationInfo().packageName);
+                if (resID != 0) {
+                    f = BitmapFactory.decodeResource(getContext().getResources(), resID);
+                } else {
+                    resID=R.drawable.field1;
+                    f = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.field1);
+                }
+
+                imgOffset=f.getWidth()/2;
+                points.add(new Points((int) (Integer.valueOf(tempArr[0])*widthScale), (int) (Integer.valueOf(tempArr[1])*heightScale),resID,"Field"+tempArr[2],Integer.valueOf(tempArr[2])));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -136,107 +106,13 @@ public class mapView extends View {
                 e.printStackTrace();
             }
         }
-
-/*
-        //drawing points
-        canvas.drawBitmap(f4,251 - imgOffset,518 - imgOffset,null);
-        canvas.drawBitmap(f4, 186 - imgOffset, 286 - imgOffset,null);
-        canvas.drawBitmap(f4, 109 - imgOffset, 459 - imgOffset,null);
-        canvas.drawBitmap(f4, 182 - imgOffset, 282 - imgOffset,null);
-        canvas.drawBitmap(f4, 47 - imgOffset, 623 - imgOffset,null);
-        canvas.drawBitmap(f4, 465 - imgOffset, 439 - imgOffset,null);
-        canvas.drawBitmap(f4, 328 - imgOffset, 339 - imgOffset,null);
-        canvas.drawBitmap(f4, 403 - imgOffset, 155 - imgOffset,null);
-        canvas.drawBitmap(f4, 542 - imgOffset, 259 - imgOffset,null);
-        canvas.drawBitmap(f4, 590 - imgOffset, 168 - imgOffset,null);
-        canvas.drawBitmap(f4, 736 - imgOffset, 265- imgOffset,null);
-        canvas.drawBitmap(f4, 171- imgOffset, 703 - imgOffset,null);
-        canvas.drawBitmap(f4, 382 - imgOffset, 600 - imgOffset,null);
-        canvas.drawBitmap(f4, 596 - imgOffset, 535 - imgOffset,null);
-        canvas.drawBitmap(f4, 502 - imgOffset, 700 - imgOffset,null);
-        canvas.drawBitmap(f4, 394 - imgOffset, 873 - imgOffset,null);
-        canvas.drawBitmap(f4, 85 - imgOffset, 907 - imgOffset,null);
-        canvas.drawBitmap(f4, 525 - imgOffset, 973 - imgOffset,null);
-        canvas.drawBitmap(f4, 643 - imgOffset, 793 - imgOffset,null);
-        canvas.drawBitmap(f4, 731 - imgOffset, 639 - imgOffset,null);
-        canvas.drawBitmap(f4, 830 - imgOffset, 473 - imgOffset,null);
-        canvas.drawBitmap(f4, 886 - imgOffset, 368 - imgOffset,null);
-        canvas.drawBitmap(f4, 1072 - imgOffset, 312 - imgOffset,null);
-        canvas.drawBitmap(f4, 991 - imgOffset, 433 - imgOffset,null);
-        canvas.drawBitmap(f4, 695 - imgOffset, 374- imgOffset,null);
-        canvas.drawBitmap(f4,  903 - imgOffset,  757 - imgOffset,null);
-        canvas.drawBitmap(f4,  800 - imgOffset,  918 - imgOffset,null);
-        canvas.drawBitmap(f4,  1023 - imgOffset,  836 - imgOffset,null);
-        canvas.drawBitmap(f4, 1122 - imgOffset, 695 - imgOffset,null);
-        canvas.drawBitmap(f4,  1195 - imgOffset,  582 - imgOffset,null);
-        canvas.drawBitmap(f4,  1285 - imgOffset,  442 - imgOffset,null);
-        canvas.drawBitmap(f4,  969 - imgOffset, 245 - imgOffset,null);
-        canvas.drawBitmap(f4,  798 - imgOffset,  153 - imgOffset,null);
-        canvas.drawBitmap(f4,  997 - imgOffset,  604 - imgOffset,null);
-        canvas.drawBitmap(f4,  1426 - imgOffset,  477 - imgOffset,null);
-        canvas.drawBitmap(f4,  1396 - imgOffset,  653 - imgOffset,null);
-        canvas.drawBitmap(f4,  1268 - imgOffset,  815 - imgOffset,null);
-        //canvas.drawBitmap(f4,  1362 - imgOffset,  847 - imgOffset,null);
-        canvas.drawBitmap(f4,  1467 - imgOffset,  883 - imgOffset,null);
-        canvas.drawBitmap(f4,  1667 - imgOffset,  933 - imgOffset,null);
-        canvas.drawBitmap(f4,  1682 - imgOffset,  727 - imgOffset,null);
-        canvas.drawBitmap(f4,  1699 - imgOffset,  505 - imgOffset,null);
-        canvas.drawBitmap(f4,  1727 - imgOffset,  185 - imgOffset,null);
-        canvas.drawBitmap(f4,  1504 - imgOffset,  149 - imgOffset,null);
-        canvas.drawBitmap(f4, 1163 - imgOffset,  362 - imgOffset,null);
-        canvas.drawBitmap(f4,  1077 - imgOffset,  494 - imgOffset,null);
-
-
-
-
-        //adding points to the list
-        points.add(new Points(251,518,R.drawable.fieldsnew,"Field1",1));
-        points.add(new Points(186,286,R.drawable.fieldsnew,"Field2",2));
-        points.add(new Points(109,459,R.drawable.fieldsnew,"Field3",3));
-        points.add(new Points(182,282,R.drawable.fieldsnew,"Field4",4));
-        points.add(new Points(47,623,R.drawable.fieldsnew,"Field5",5));
-        points.add(new Points(465,439,R.drawable.fieldsnew,"Field6",6));
-        points.add(new Points(328,339,R.drawable.fieldsnew,"Field7",7));
-        points.add(new Points(403,155,R.drawable.fieldsnew,"Field8",8));
-        points.add(new Points(542,259,R.drawable.fieldsnew,"Field9",9));
-        points.add(new Points(590,168,R.drawable.fieldsnew,"Field10",10));
-        points.add(new Points(736,265,R.drawable.fieldsnew,"Field11",11));
-        points.add(new Points(171,703,R.drawable.fieldsnew,"Field12",12));
-        points.add(new Points(382,600,R.drawable.fieldsnew,"Field13",13));
-        points.add(new Points(596,535,R.drawable.fieldsnew,"Field14",14));
-        points.add(new Points(502,700,R.drawable.fieldsnew,"Field15",15));
-        points.add(new Points(394,873,R.drawable.fieldsnew,"Field16",16));
-        points.add(new Points(85,907,R.drawable.fieldsnew,"Field17",17));
-        points.add(new Points(525,973,R.drawable.fieldsnew,"Field18",18));
-        points.add(new Points(643,793,R.drawable.fieldsnew,"Field19",19));
-        points.add(new Points(731,639,R.drawable.fieldsnew,"Field20",20));
-        points.add(new Points(830,473,R.drawable.fieldsnew,"Field21",21));
-        points.add(new Points(886,368,R.drawable.fieldsnew,"Field22",22));
-        points.add(new Points(1072,312,R.drawable.fieldsnew,"Field23",23));
-        points.add(new Points(991,433,R.drawable.fieldsnew,"Field24",24));
-        points.add(new Points(695,374,R.drawable.fieldsnew,"Field25",25));
-        points.add(new Points(903,757,R.drawable.fieldsnew,"Field26",26));
-        points.add(new Points(800,918,R.drawable.fieldsnew,"Field27",27));
-        points.add(new Points(1023,836,R.drawable.fieldsnew,"Field28",28));
-        points.add(new Points(1122,695,R.drawable.fieldsnew,"Field29",29));
-        points.add(new Points(1195,582,R.drawable.fieldsnew,"Field30",30));
-        points.add(new Points(1285,442,R.drawable.fieldsnew,"Field31",31));
-        points.add(new Points(969,245,R.drawable.fieldsnew,"Field32",32));
-        points.add(new Points(798,153,R.drawable.fieldsnew,"Field33",33));
-        points.add(new Points(997,604,R.drawable.fieldsnew,"Field34",34));
-        points.add(new Points(1426,477,R.drawable.fieldsnew,"Field35",35));
-        points.add(new Points(1396,653,R.drawable.fieldsnew,"Field36",36));
-        points.add(new Points(1268,815,R.drawable.fieldsnew,"Field37",37));
-        points.add(new Points(1467,883,R.drawable.fieldsnew,"Field38",38));
-        points.add(new Points(1667,933,R.drawable.fieldsnew,"Field39",39));
-        points.add(new Points(1682,727,R.drawable.fieldsnew,"Field40",40));
-        points.add(new Points(1699,505,R.drawable.fieldsnew,"Field41",41));
-        points.add(new Points(1727,185,R.drawable.fieldsnew,"Field42",42));
-        points.add(new Points(1504,149,R.drawable.fieldsnew,"Field43",43));
-        points.add(new Points(1163,362,R.drawable.fieldsnew,"Field44",44));
-        points.add(new Points(1077,494,R.drawable.fieldsnew,"Field45",45));
-*/
-
+        //draw lines
+        printLines(canvas);
+        //draw points
+        for (Points p:points){
+            f=BitmapFactory.decodeResource(getContext().getResources(),p.getImg());
+            canvas.drawBitmap(f,p.getX()-(widthScale*imgOffset),p.getY()-(heightScale*imgOffset),null);
+        }
 
     }
 
@@ -258,9 +134,56 @@ public class mapView extends View {
 
     private void printLines(Canvas canvas){
         Paint paint = new Paint();
-        paint.setStrokeWidth(13f);
+        //stroke width in pixel
+        paint.setStrokeWidth(4f*density);
         paint.setStyle(Paint.Style.STROKE);
 
+        String delimiter = ";";
+        InputStream inputStream = getResources().openRawResource(R.raw.lines);
+        InputStreamReader inputreader = new InputStreamReader(inputStream);
+        BufferedReader buffreader = new BufferedReader(inputreader);
+        String line;
+        String[] tempArr;
+
+        try {
+
+            while (( line = buffreader.readLine()) != null) {
+                tempArr = line.split(delimiter);
+                int x1=points.get(Integer.valueOf(tempArr[0])-1).getX();
+                int y1=points.get(Integer.valueOf(tempArr[0])-1).getY();
+
+                int x2=points.get(Integer.valueOf(tempArr[1])-1).getX();
+                int y2=points.get(Integer.valueOf(tempArr[1])-1).getY();
+
+                for (int i=2;i<tempArr.length;i++){
+                    if(i==2){
+                        paintOffset=0;
+                    }
+                    if (tempArr[i].equals("t")){
+                        paint.setColor(Color.YELLOW);
+                    }else if (tempArr[i].equals("b")){
+                        paint.setColor(Color.BLUE);
+                    }else {
+                        paint.setColor(Color.RED);
+                    }
+
+                    canvas.drawLine(x1+paintOffset,y1+paintOffset,x2+paintOffset,y2+paintOffset,paint);
+                    paintOffset=(int)(3*density);
+                }
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                buffreader.close();
+                inputreader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+/*
         //Plain
         paint.setAntiAlias(true);
 
@@ -369,7 +292,7 @@ public class mapView extends View {
         canvas.drawLine(1682,727,1667,933,paint);
         canvas.drawLine(1467,883,1667,933,paint);
 
-
+*/
 
     }
 
