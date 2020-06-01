@@ -298,4 +298,9 @@ public class gameActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void updatePlayerPosition(int fieldNummer,int playerId){
+        Points newPosition=map.getOtherPlayersPosition(fieldNummer);
+        player.updateOtherPlayersPosition(playerId, newPosition.getX(), newPosition.getY());
+    }
 }

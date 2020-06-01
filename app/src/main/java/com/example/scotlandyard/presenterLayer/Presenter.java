@@ -9,6 +9,7 @@ import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
+import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
 import com.example.scotlandyard.Client.Messages.UpdateTicketCount;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
@@ -54,6 +55,7 @@ public class Presenter {
             client.registerClass(TravellogMessage.class);
             client.registerClass(AskPlayerForTurn.class);
             client.registerClass(UpdateTicketCount.class);
+            client.registerClass(UpdatePlayersPosition.class);
 
             registerCallback();
 
@@ -82,10 +84,20 @@ public class Presenter {
                         game.confirm = "yes";
                 }
             }
-
+            //Update Ticketanzahl
             if (nachrichtVomServer instanceof UpdateTicketCount){
                 UpdateTicketCount message=(UpdateTicketCount) nachrichtVomServer;
                 game.updateTicketCount(message.getTicketCount(),message.getTicketType());
+            }
+            //Update Travellog
+            if (nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage message=(TravellogMessage) nachrichtVomServer;
+                updateTravellogMenu(message.getTravelLog(),message.getRound());
+            }
+            //Update Position von Mitspielern
+            if (nachrichtVomServer instanceof UpdatePlayersPosition){
+                UpdatePlayersPosition message=(UpdatePlayersPosition) nachrichtVomServer;
+                game.updatePlayerPosition(message.getToField(),message.getPlayerId());
             }
         });
 
@@ -136,7 +148,10 @@ public class Presenter {
 
     public void updateTravellogMenu(TravelLog travelLog, int round) {
         String transport = travelLog.getTicket();
+
         if (round == 3 || round == 8 || round == 13 || round == 18 || travelLog.isCaughtCheating()) {
+            //In Runde 3,8,13 und 18 wird wie nach den Regeln die Position von Mister X bekannt gegeben.
+            //Oder wenn er beim Schummeln erwischt wurde.
             travellogMenu.add(Menu.NONE, round, Menu.NONE, transport + ", Position:" + round);
         } else {
             travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
