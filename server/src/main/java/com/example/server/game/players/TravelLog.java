@@ -8,10 +8,11 @@ public class TravelLog {
     private boolean isDoubleMove;
     private boolean caughtCheating;
 
-    public TravelLog(int position, String ticket, boolean isDoubleMove){
+    public TravelLog(int position, String ticket, boolean isDoubleMove, boolean caughtCheating){
         this.position=position;
         this.ticketType=ticket;
         this.isDoubleMove=isDoubleMove;
+        this.caughtCheating=caughtCheating;
     }
 
 

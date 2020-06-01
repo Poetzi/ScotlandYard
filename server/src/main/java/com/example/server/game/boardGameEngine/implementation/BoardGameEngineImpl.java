@@ -260,11 +260,11 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                     Wenn Mister X beim Schummeln erwischt wurde, wird hier heruntergezählt,
                     wie lange seine Position noch für die Detektive sichtbar ist.
                  */
+                if (((MrX)player).getVisibleFor()==0){
+                    ((MrX)player).setCaughtCheating(false,actualRound);
+                }
                 if (((MrX)player).isCaughtCheating()){
                     ((MrX)player).setVisibleFor(((MrX)player).getVisibleFor()-1);
-                    if (((MrX)player).getVisibleFor()==0){
-                        ((MrX)player).setCaughtCheating(false,actualRound);
-                    }
                 }
 
             }

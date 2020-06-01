@@ -105,7 +105,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
      */
     @Override
     public void setPositionOfRound(int position, String ticket, int round, boolean isDoubleMove) {
-        TravelLog log=new TravelLog(position, ticket, isDoubleMove);
+        TravelLog log=new TravelLog(position, ticket, isDoubleMove, caughtCheating);
         travelLog[round-1]=log;
     }
 
