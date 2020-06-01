@@ -1,5 +1,5 @@
 package com.example.scotlandyard.Client.Messages;
-
+//
 public class AskPlayerForTurn extends BaseMessage {
     private int id;
     private String text;
