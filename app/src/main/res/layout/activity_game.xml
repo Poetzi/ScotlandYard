@@ -106,6 +106,71 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/txtview_blacktickets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="TextView"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/blackTicket"
+                    app:layout_constraintStart_toStartOf="@+id/blackTicket"
+                    app:layout_constraintTop_toBottomOf="@+id/blackTicket" />
+
+                <TextView
+                    android:id="@+id/txtview_doublemove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="TextView"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/doubleMove"
+                    app:layout_constraintStart_toStartOf="@+id/doubleMove"
+                    app:layout_constraintTop_toBottomOf="@+id/doubleMove" />
+
+                <TextView
+                    android:id="@+id/txtview_metrotickets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="TextView"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/ubahn"
+                    app:layout_constraintStart_toStartOf="@+id/ubahn"
+                    app:layout_constraintTop_toBottomOf="@+id/ubahn" />
+
+                <TextView
+                    android:id="@+id/txtview_taxitickets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="TextView"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/taxi"
+                    app:layout_constraintStart_toStartOf="@+id/taxi"
+                    app:layout_constraintTop_toBottomOf="@+id/taxi" />
+
+                <TextView
+                    android:id="@+id/txtview_bustickets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="TextView"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/bus"
+                    app:layout_constraintStart_toStartOf="@+id/bus"
+                    app:layout_constraintTop_toBottomOf="@+id/bus" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -39,4 +39,6 @@ public interface Lobby {
 
     void updateTravellogToAllClients(TravelLog travelLog, int round);
 
+    void updateTicketCount(int playerId, int ticketCount, String ticketType);
+
 }

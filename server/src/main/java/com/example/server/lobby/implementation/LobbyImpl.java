@@ -15,6 +15,7 @@ import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
+import com.example.server.messages.UpdateTicketCount;
 
 import java.util.ArrayList;
 
@@ -111,6 +112,11 @@ public class LobbyImpl implements Lobby {
         for (ID id : players) {
             id.name.sendTCP(travellogMessage);
         }
+    }
+
+    public void updateTicketCount(int playerId, int ticketCount, String ticketType){
+        UpdateTicketCount updateTicketCount=new UpdateTicketCount(playerId,ticketCount,ticketType,lobbyID);
+        players.get(playerId).name.sendTCP(updateTicketCount);
     }
 
     @Override

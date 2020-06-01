@@ -15,6 +15,8 @@ import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.TurnMessage;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -144,10 +146,25 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                                 fieldToGo = turnMessage.getToField();
 
                                 if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
+                                    lobby.confirm(player.getId(), "yes");
+                                    // break;
                                     drawValide = true;
+                                } else {
+                                    lobby.confirm(player.getId(), "no");
+
                                 }
                             }
                             ((Detective) player).validateTicket(card);
+                            try {
+                                Method getNameMethod = ((Detective) player).getClass().getMethod(getMethodName(card));
+                                int count=(int) getNameMethod.invoke(((Detective) player));
+                                lobby.updateTicketCount(player.getId(),count,card);
+                            } catch (NoSuchMethodException nsme) {
+                                nsme.printStackTrace();
+                            } catch (InvocationTargetException | IllegalAccessException e ) {
+                                e.printStackTrace();
+                            }
+
 
                         } else {
                             //Wenn Mr. X nicht geschummelt hat, wird der Detektiv für diese und  nächste Runde als inaktiv gekennzeichnet.
@@ -156,12 +173,31 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                         }
                     } else {
                         ((Detective) player).validateTicket(card);
+                        try {
+                            Method getNameMethod = ((Detective) player).getClass().getMethod(getMethodName(card));
+                            int count=(int) getNameMethod.invoke(((Detective) player));
+                            lobby.updateTicketCount(player.getId(),count,card);
+                        } catch (NoSuchMethodException nsme) {
+                            nsme.printStackTrace();
+                        } catch (InvocationTargetException | IllegalAccessException e ) {
+                            e.printStackTrace();
+                        }
                     }
-                } else if (player instanceof MrX) {
+                }
+                else if (player instanceof MrX) {
 
                     if (!card.equals("Double") && !card.equals("cheat")) {
                         //Normaler Zug von Mister X
                         ((MrX) player).validateTicket(actualRound, card, fieldToGo);
+                        try {
+                            Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
+                            int count=(int) getNameMethod.invoke(((MrX) player));
+                            lobby.updateTicketCount(player.getId(),count,card);
+                        } catch (NoSuchMethodException nsme) {
+                            nsme.printStackTrace();
+                        } catch (InvocationTargetException | IllegalAccessException e ) {
+                            e.printStackTrace();
+                        }
 
                         if (((MrX) player).isCaughtCheating()) {
                             ((MrX) player).setCaughtCheating(true, actualRound);
@@ -179,12 +215,26 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
 
                             if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
+                                lobby.confirm(player.getId(), "yes");
+                                // break;
                                 drawValide = true;
+                            } else {
+                                lobby.confirm(player.getId(), "no");
+
                             }
                         }
                         //Erster Zug wird normal im Travellog gespeichert.
                         ((MrX) player).validateTicket(actualRound, "cheat", 0); //Position ist hier egal
                         ((MrX) player).validateTicket(actualRound, card, fieldToGo);
+                        try {
+                            Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
+                            int count=(int) getNameMethod.invoke(((MrX) player));
+                            lobby.updateTicketCount(player.getId(),count,card);
+                        } catch (NoSuchMethodException nsme) {
+                            nsme.printStackTrace();
+                        } catch (InvocationTargetException | IllegalAccessException e ) {
+                            e.printStackTrace();
+                        }
                         if (((MrX) player).isCaughtCheating()) {
                             ((MrX) player).setCaughtCheating(true, actualRound);
                         }
@@ -200,9 +250,24 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
 
                             if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
+                                lobby.confirm(player.getId(), "yes");
+                                // break;
                                 drawValide = true;
+                            } else {
+                                lobby.confirm(player.getId(), "no");
+
                             }
                         }
+                        try {
+                            Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
+                            int count=(int) getNameMethod.invoke(((MrX) player));
+                            lobby.updateTicketCount(player.getId(),count,card);
+                        } catch (NoSuchMethodException nsme) {
+                            nsme.printStackTrace();
+                        } catch (InvocationTargetException | IllegalAccessException e ) {
+                            e.printStackTrace();
+                        }
+
                         //Zweiter, geschummelter Zug wird nicht im Travellog gespeichert und ist somit nicht sichtbar für Detektive.
                         player.setCurrentPosition(fieldToGo);
 
@@ -219,13 +284,27 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                             fieldToGo = turnMessage.getToField();
 
                             if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
+                                lobby.confirm(player.getId(), "yes");
+                                // break;
                                 drawValide = true;
+                            } else {
+                                lobby.confirm(player.getId(), "no");
+
                             }
                         }
                         //Erster Zug wird im Travellog normal gespeichert.
                         ((MrX) player).validateDoubleMoveTicket(actualRound, card, fieldToGo);
                         if (((MrX) player).isCaughtCheating()) {
                             ((MrX) player).setCaughtCheating(false, actualRound);
+                        }
+                        try {
+                            Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
+                            int count=(int) getNameMethod.invoke(((MrX) player));
+                            lobby.updateTicketCount(player.getId(),count,card);
+                        } catch (NoSuchMethodException nsme) {
+                            nsme.printStackTrace();
+                        } catch (InvocationTargetException | IllegalAccessException e ) {
+                            e.printStackTrace();
                         }
                         lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
 
@@ -241,7 +320,12 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                             fieldToGo = turnMessage.getToField();
 
                             if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
+                                lobby.confirm(player.getId(), "yes");
+                                // break;
                                 drawValide = true;
+                            } else {
+                                lobby.confirm(player.getId(), "no");
+
                             }
                         }
                         //Zweiter Zug wird im Travellog normal gespeichert.
@@ -249,28 +333,35 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                         if (((MrX) player).isCaughtCheating()) {
                             ((MrX) player).setCaughtCheating(false, actualRound);
                         }
+                        try {
+                            Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
+                            int count=(int) getNameMethod.invoke(((MrX) player));
+                            lobby.updateTicketCount(player.getId(),count,card);
+                        } catch (NoSuchMethodException nsme) {
+                            nsme.printStackTrace();
+                        } catch (InvocationTargetException | IllegalAccessException e ) {
+                            e.printStackTrace();
+                        }
                         lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
                     }
                 /*
                     Wenn Mister X beim Schummeln erwischt wurde, wird hier heruntergezählt,
                     wie lange seine Position noch für die Detektive sichtbar ist.
                  */
+                    if (((MrX) player).getVisibleFor() == 0) {
+                        ((MrX) player).setCaughtCheating(false, actualRound);
+                    }
                     if (((MrX) player).isCaughtCheating()) {
                         ((MrX) player).setVisibleFor(((MrX) player).getVisibleFor() - 1);
-                        if (((MrX) player).getVisibleFor() == 0) {
-                            ((MrX) player).setCaughtCheating(false, actualRound);
-                        }
                     }
 
                 }
                 player.setCurrentPosition(fieldToGo);
 
-
-
-        /*
-            Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
-            und an die anderen Spieler Clients weitergegeben
-         */
+                /*
+                    Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
+                    und an die anderen Spieler Clients weitergegeben
+                 */
                 if (drawValide) {
                     gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
                     lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
@@ -302,32 +393,39 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
 
 
-            public void initLobby (Lobby lobby){
-                this.lobby = lobby;
-            }
+    public void initLobby (Lobby lobby){
+        this.lobby = lobby;
+    }
 
-            public void setLobby (Lobby lobby){
-                this.lobby = lobby;
-            }
+    public void setLobby (Lobby lobby){
+        this.lobby = lobby;
+    }
 
-            /**
-             * Methode überprüft ob Mr. X in den letzten 5 Zügen mindestens einmal
-             * geschummelt hat.
-             *
-             * @return true, wenn mindestens einmal {@link MrX#getHasCheatedInRound(int)}
-             *         true zurück liefert.
-             */
-            @Override
-            public boolean checkIfMrXCheated () {
-                int misterX = players.size() - 1;
-                MrX mrX = (MrX) players.get(misterX);
-                for (int i = actualRound - 5; i <= actualRound; i++) {
-                    if (mrX.getHasCheatedInRound(i)) {
-                        return true;
-                    }
-                }
-                return false;
+    /**
+     * Methode überprüft ob Mr. X in den letzten 5 Zügen mindestens einmal
+     * geschummelt hat.
+     *
+     * @return true, wenn mindestens einmal {@link MrX#getHasCheatedInRound(int)}
+     *         true zurück liefert.
+     */
+    @Override
+    public boolean checkIfMrXCheated () {
+        int misterX = players.size() - 1;
+        MrX mrX = (MrX) players.get(misterX);
+        for (int i = actualRound - 5; i <= actualRound; i++) {
+            if (mrX.getHasCheatedInRound(i)) {
+                return true;
             }
         }
+        return false;
+    }
+
+    public String getMethodName(String card){
+        if (card.equals("U-Bahn")){
+            return "getUndergroundTickets";
+        }
+        return "get"+card+"Tickets";
+    }
+}
 
 

@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.scotlandyard.Client.Messages.TurnMessage;
@@ -147,7 +148,7 @@ public class gameActivity extends AppCompatActivity {
     public void useTaxi(){
         int toField = map.touchedPoint.getField();
 
-        TurnMessage msg = new TurnMessage(0,toField,0,"taxi");
+        TurnMessage msg = new TurnMessage(0,toField,0,"Taxi");
         Thread t = new Thread(){
             public void run(){
                 presenter.sendTurn(msg);
@@ -209,7 +210,7 @@ public class gameActivity extends AppCompatActivity {
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
-        TurnMessage msg = new TurnMessage(0,toField,0,"uBahn");
+        TurnMessage msg = new TurnMessage(0,toField,0,"U-Bahn");
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
@@ -270,5 +271,31 @@ public class gameActivity extends AppCompatActivity {
             Intent intent = new Intent(this, Chat.class);
             startActivity(intent);
         }).start();
+    }
+
+    public void updateTicketCount(int ticketCount, String ticketType){
+        TextView textView;
+        switch (ticketType){
+            case "taxi":
+                textView=findViewById(R.id.txtview_taxitickets);
+                textView.setText(String.valueOf(ticketCount));
+                break;
+            case "bus":
+                textView=findViewById(R.id.txtview_bustickets);
+                textView.setText(String.valueOf(ticketCount));
+                break;
+            case "ubahn":
+                textView=findViewById(R.id.txtview_metrotickets);
+                textView.setText(String.valueOf(ticketCount));
+                break;
+            case "black":
+                textView=findViewById(R.id.txtview_blacktickets);
+                textView.setText(String.valueOf(ticketCount));
+                break;
+            case "doublemove":
+                textView=findViewById(R.id.txtview_doublemove);
+                textView.setText(String.valueOf(ticketCount));
+                break;
+        }
     }
 }

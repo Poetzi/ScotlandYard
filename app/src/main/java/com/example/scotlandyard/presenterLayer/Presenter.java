@@ -9,6 +9,7 @@ import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
+import com.example.scotlandyard.Client.Messages.UpdateTicketCount;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.viewLayer.User;
@@ -52,6 +53,7 @@ public class Presenter {
             client.registerClass(TurnMessage.class);
             client.registerClass(TravellogMessage.class);
             client.registerClass(AskPlayerForTurn.class);
+            client.registerClass(UpdateTicketCount.class);
 
             registerCallback();
 
@@ -79,6 +81,11 @@ public class Presenter {
                     if (message.getText().equalsIgnoreCase("yes"))
                         game.confirm = "yes";
                 }
+            }
+
+            if (nachrichtVomServer instanceof UpdateTicketCount){
+                UpdateTicketCount message=(UpdateTicketCount) nachrichtVomServer;
+                game.updateTicketCount(message.getTicketCount(),message.getTicketType());
             }
         });
 
