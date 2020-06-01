@@ -17,6 +17,8 @@ import com.example.server.messages.UpdatePlayersPosition;
 import java.util.ArrayList;
 
 public class LobbyImpl implements Lobby {
+
+
     private ArrayList<ID> players = new ArrayList<ID>();
     private boolean isOpen = false;
     public int playerCount =0;
@@ -30,6 +32,10 @@ public class LobbyImpl implements Lobby {
     private boolean[] waitForPlayersTurn = new boolean[6];
     private TurnMessage[] returnTurnMessage = new TurnMessage[6];
 
+    @Override
+    public ArrayList<ID> getPlayers() {
+        return players;
+    }
 
     @Override
     public void addPlayertoGame(ID id) {

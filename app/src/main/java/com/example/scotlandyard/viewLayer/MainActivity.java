@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void play(View view) {
-        Intent intent = new Intent(this, playActivity.class);
+        Intent intent = new Intent(this, usernameActivity.class);
         startActivity(intent);
     }
 

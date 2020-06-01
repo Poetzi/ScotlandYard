@@ -1,9 +1,13 @@
 package com.example.server;
 
+import com.example.server.lobby.implementation.ID;
+import com.example.server.lobby.implementation.LobbyImpl;
+import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.TextMessage;
 import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
+import com.example.server.messages.UsernameMessage;
 
 import java.io.IOException;
 
@@ -17,6 +21,7 @@ public class Main {
             server.registerClass(TextMessage.class);
             server.registerClass(TurnMessage.class);
             server.registerClass(TravellogMessage.class);
+            server.registerClass(UsernameMessage.class);
 
 
             // Die Callbacks werden hier registriert,
@@ -43,6 +48,8 @@ public class Main {
                     MyKryoServer.getLobby().get(turn.getLobbyId()).setReturnTurnMessage(turn, turn.getPlayerId());
 
                 }
+
+
             });
 
             server.start();
