@@ -69,6 +69,8 @@ public class Chat extends AppCompatActivity {
         //Verbinden Button und TextView werden disabled nachdem eine Verbindung aufgebaut ist
         usernameTextView.setEnabled(false);
         verbindeButton.setEnabled(false);
+        usernameTextView.setVisibility(View.GONE);
+        verbindeButton.setVisibility(View.GONE);
 
         //Nachrichten versenden wird enabled nachdem eine Verbindung aufgebaut ist
         sendenButton.setEnabled(true);

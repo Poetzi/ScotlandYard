@@ -12,9 +12,13 @@ import java.util.ArrayList;
 public interface Lobby {
 
     void addPlayertoGame(ID id);
+
     int getPlayerCount();
+
     void startGame();
+
     void removePlayerfromGame(ID id);
+
     boolean isLobbyOpen();
 
     TurnMessage askPlayerforTurn(int playerId);
@@ -22,11 +26,19 @@ public interface Lobby {
     void updatePlayerPositionsToAllClients(int playerId, int toField);
     public ArrayList<ID> getPlayers();
     int getLobbyID();
+
     void setLobbyID(int lobbyID);
+
     TurnMessage[] getReturnTurnMessage();
+
     void setReturnTurnMessage(TurnMessage turnMessage, int playerId);
+
     BoardGameEngine getGame();
+
     void setGame(BoardGameEngine game);
+
+    void confirm(int playerId, String conf);
+
     void updateTravellogToAllClients(TravelLog travelLog, int round);
 
 }
