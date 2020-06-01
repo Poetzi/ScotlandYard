@@ -8,6 +8,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 
 import com.example.scotlandyard.presenterLayer.Presenter;
@@ -35,6 +36,8 @@ public class playActivity extends AppCompatActivity {
     }
 
 
+
+
     public void goToGameActivity(View view)
     {
         new Thread(() -> {
@@ -43,6 +46,7 @@ public class playActivity extends AppCompatActivity {
             ipFinder.findIP();
             //Server wird gestartet.
             presenter.connectToServer(ipFinder.getIp());
+            presenter.sendUsername();
 
         }).start();
 

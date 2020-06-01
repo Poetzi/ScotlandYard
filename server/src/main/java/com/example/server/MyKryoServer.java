@@ -9,10 +9,12 @@ import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.TurnMessage;
+import com.example.server.messages.UsernameMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+
 
 public class MyKryoServer {
     //Server Objekt
@@ -47,28 +49,13 @@ public class MyKryoServer {
             public void connected(Connection connection) {
                 System.out.println("main.java.Server: Jemand ist dem main.java.Server beigetreten: " + connection.getRemoteAddressTCP().getHostString());
 
-                ID id = new ID(connection);
-                boolean lobbyFound = false;
-                for(Lobby lobby : lobbys){
-                    if(lobby.isLobbyOpen()){
-                        lobby.addPlayertoGame(id);
-                        lobbyFound = true;
-                        break;
-                    }
-                    id.id = lobby.getPlayerCount();
-                }
-                if(!lobbyFound){
-                    System.out.println("lobby created");
-                    Lobby lobby = new LobbyImpl();
-                    lobby.addPlayertoGame(id);
-                    lobbys.add(lobby);
-                }
 
             }
 
             @Override
             public void disconnected(Connection connection) {
                 System.out.println("main.java.Server: Jemand hat den main.java.Server verlassen");
+
             }
 
 
@@ -76,6 +63,30 @@ public class MyKryoServer {
             public void received(Connection connection, Object object) {
                 if (messageCallback != null && object instanceof BaseMessage)
                     messageCallback.callback((BaseMessage) object);
+
+                if (object instanceof UsernameMessage)
+                {
+                    String name = ((UsernameMessage) object).getUsername();
+                    ID id = new ID(connection, name);
+                    boolean lobbyFound = false;
+                    for(Lobby lobby : lobbys){
+                        if(lobby.isLobbyOpen()){
+                            id.id = lobby.getPlayerCount();
+                            lobby.addPlayertoGame(id);
+                            lobbyFound = true;
+                            break;
+                        }
+                    }
+                    if(!lobbyFound){
+                        System.out.println("lobby created");
+                        Lobby lobby = new LobbyImpl();
+                        id.id = lobby.getPlayerCount();
+                        lobby.addPlayertoGame(id);
+                        lobbys.add(lobby);
+                    }
+
+
+                }
             }
         });
     }

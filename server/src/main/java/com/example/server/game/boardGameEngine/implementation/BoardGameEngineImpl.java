@@ -14,6 +14,7 @@ import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.TurnMessage;
+//import com.example.server.messages.TurnMessage;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -84,7 +85,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void drawForPlayer(Player player) {
         //Zug wird nur durchgeführt, wenn der Detektiv nicht inaktiv ist oder wenn es sich um den Zug von Mr. X handelt.
-        if ((player instanceof Detective && ((Detective) player).isInactive() == false) || player instanceof MrX) {
+
+        if ((player instanceof Detective && !((Detective) player).isInactive()) || player instanceof MrX) {
+
             String card = "Bus";    // Beispielwert
             int fieldToGo = 0;
             boolean drawValide = false;

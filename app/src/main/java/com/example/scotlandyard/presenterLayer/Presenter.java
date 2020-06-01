@@ -9,6 +9,7 @@ import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
+import com.example.scotlandyard.Client.Messages.UsernameMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.viewLayer.User;
@@ -24,6 +25,8 @@ public class Presenter {
     private MyKryoClient client;
     // Logik z.B: Spielelogik
     private User user;
+
+    private String username;
 
     private TextView log;
 
@@ -51,7 +54,10 @@ public class Presenter {
             client.registerClass(TextMessage.class);
             client.registerClass(TurnMessage.class);
             client.registerClass(TravellogMessage.class);
+
+            client.registerClass(UsernameMessage.class);
             client.registerClass(AskPlayerForTurn.class);
+
 
             registerCallback();
 
@@ -64,6 +70,14 @@ public class Presenter {
         }
     }
 
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
     private void registerCallback() {
         client.registerCallback(nachrichtVomServer -> {
             if (nachrichtVomServer instanceof TextMessage) {
@@ -82,6 +96,7 @@ public class Presenter {
             }
         });
 
+
     }
 
     public void sendMessagetoServer(String text) {
@@ -92,6 +107,11 @@ public class Presenter {
 
     public void sendTurn(TurnMessage message) {
         TurnMessage msg = new TurnMessage(user.getId(), message.getToField(), 0, message.getCard());
+        client.sendMessage(msg);
+    }
+
+    public void sendUsername(){
+        UsernameMessage msg = new UsernameMessage(username);
         client.sendMessage(msg);
     }
 
