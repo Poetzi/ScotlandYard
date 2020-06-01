@@ -1,24 +1,31 @@
 package com.example.scotlandyard.viewLayer;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
+
+import android.content.Context;
+import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
+import android.os.Handler;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.R;
 import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImpl;
 import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
-import com.example.scotlandyard.modelLayer.players.implementation.DetectiveImpl;
-import com.example.scotlandyard.modelLayer.players.interfaces.Detective;
-import com.example.scotlandyard.modelLayer.transitions.implementation.TransitionImpl;
-import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
+import com.example.scotlandyard.modelLayer.players.TravelLog;
+import com.example.scotlandyard.presenterLayer.Presenter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.*;
+import com.google.android.material.navigation.NavigationView;
 
 public class gameActivity extends AppCompatActivity {
 
@@ -27,6 +34,18 @@ public class gameActivity extends AppCompatActivity {
     private mapView map;
     private playerView player;
     private Points playerPostion;
+    private Presenter presenter = Presenter.getInstance();
+    private TurnMessage msg;
+    private User user = new User("test");
+    public boolean check = true;
+    public String confirm = "no";
+
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private ShakeDetector shakeDetector;
+    private Button cheatBtn;
+
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +59,76 @@ public class gameActivity extends AppCompatActivity {
         map = findViewById(R.id.mapView);
         player = findViewById(R.id.playerView);
         setUpFields();
+
+        cheatBtn=findViewById(R.id.btn_cheat);
+        cheatBtn.setVisibility(View.INVISIBLE);
+        cheatBtn.setOnClickListener(view -> {
+            msg = new TurnMessage(presenter.getUser().getId(),0,0,"cheat");
+            new Thread(() -> {
+                // Nachricht wird an den Server geschickt
+                presenter.sendTurn(msg);
+
+            }).start();
+        });
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        if (sensorManager != null) {
+            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        }else {
+            throw new NullPointerException();
+        }
+        shakeDetector = new ShakeDetector();
+        shakeDetector.setOnShakeListener(count -> {
+            if (cheatBtn.getVisibility()==View.INVISIBLE){
+                cheatBtn.setVisibility(View.VISIBLE);
+            }else {
+                cheatBtn.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+
+        NavigationView nav=findViewById(R.id.nav_view);
+
+        Menu menu=nav.getMenu();
+        presenter.setTravellogMenu(menu);
+
+        //Beispielwerte
+        TravelLog travelLog;
+        travelLog = new TravelLog(1,"Bus",false);
+        presenter.updateTravellogMenu(travelLog,1);
+
+        travelLog=new TravelLog(2,"U-Bahn",false);
+        presenter.updateTravellogMenu(travelLog,2);
+
+        travelLog=new TravelLog(3,"Taxi",false);
+        presenter.updateTravellogMenu(travelLog,3);
+
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            TravelLog tl=new TravelLog(1,"Taxi",false);
+            presenter.updateTravellogMenu(tl,4);
+
+            tl=new TravelLog(2,"Bus",false);
+            tl.setCaughtCheating(true);
+            presenter.updateTravellogMenu(tl,5);
+        }, 20000);
+
+
     }
 
 
     public void setUpFields(){
-       // gameBoard = new GameBoardImpl();
+        user.setId(0);
+        presenter.setUser(user);
+        presenter.setGame(this);
 
-        gameBoard.addFieldWithTransition(1,2,"bus");
+       /* gameBoard.addFieldWithTransition(1,2,"bus");
         gameBoard.addFieldWithTransition(2,1,"bus");
 
 
@@ -56,24 +138,49 @@ public class gameActivity extends AppCompatActivity {
 
         gameBoard.addFieldWithTransition(3,1,"taxi");
         gameBoard.addFieldWithTransition(1,3,"taxi");
-
+*/
         //Initial position of player
-        playerPostion = new Points(635,347,0," ",1);
-        player.drawPlayer(635,347);
+        playerPostion = new Points(186,286,0," ",1);
+        //player.drawPlayer(186,286);
     }
 
     public void useTaxi(){
-        int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
-       // Log.i("PlayerPostition ",positionOfPlayer+"");
+        TurnMessage msg = new TurnMessage(0,toField,0,"taxi");
+        Thread t = new Thread(){
+            public void run(){
+                presenter.sendTurn(msg);
 
-      //  Log.i("ToField",toField+"");
+            }
+        };
+      /*  new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
+
+        }).start();*/
+      t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
-        if(gameBoard.movePlayer(positionOfPlayer,toField,"taxi")){
+        while (check){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        check = true;
+
+        if(confirm.equalsIgnoreCase("yes")){
             playerPostion.setField(toField);
             player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+            Toast.makeText(getApplicationContext(),"YESSSS",Toast.LENGTH_SHORT).show();
+
         }else {
             Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
         }
@@ -83,10 +190,12 @@ public class gameActivity extends AppCompatActivity {
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
-      //  Log.i("PlayerPostition ",positionOfPlayer+"");
+        TurnMessage msg = new TurnMessage(0,toField,0,"Bus");
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
 
-       // Log.i("ToField",toField+"");
-
+        }).start();
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"bus")){
             playerPostion.setField(toField);
@@ -100,10 +209,12 @@ public class gameActivity extends AppCompatActivity {
         int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
-        //Log.i("PlayerPostition ",positionOfPlayer+"");
+        TurnMessage msg = new TurnMessage(0,toField,0,"uBahn");
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
 
-       // Log.i("ToField",toField+"");
-
+        }).start();
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"ubahn")){
             playerPostion.setField(toField);
@@ -117,15 +228,12 @@ public class gameActivity extends AppCompatActivity {
     public void onClick(View v){
         switch (v.getId()){
             case R.id.taxi:
-                //Toast.makeText(getApplicationContext(),"Taxi Pressed",Toast.LENGTH_SHORT).show();
                 useTaxi();
                 break;
             case R.id.bus:
-                //Toast.makeText(getApplicationContext(),"Bus Pressed",Toast.LENGTH_SHORT).show();
                 useBus();
                 break;
             case R.id.ubahn:
-               // Toast.makeText(getApplicationContext(),"U-Bahn Pressed",Toast.LENGTH_SHORT).show();
                 useUbahn();
                 break;
             case R.id.blackTicket:
@@ -137,4 +245,30 @@ public class gameActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        sensorManager.registerListener(shakeDetector, accelerometer,	SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        sensorManager.unregisterListener(shakeDetector);
+        super.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START);
+        else
+            super.onBackPressed();
+    }
+
+    public void chat(View view){
+        new Thread(() -> {
+            Intent intent = new Intent(this, Chat.class);
+            startActivity(intent);
+        }).start();
+    }
 }

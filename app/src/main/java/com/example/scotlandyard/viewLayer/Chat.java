@@ -2,14 +2,23 @@ package com.example.scotlandyard.viewLayer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.presenterLayer.Presenter;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class Chat extends AppCompatActivity {
 
@@ -48,9 +57,12 @@ public class Chat extends AppCompatActivity {
 
 
         new Thread(() -> {
-            // Server wird gestartet
-            //Eigene IPv4-Adresse eintragen für einen lokalen Test.
-            presenter.connectToServer("192.168.1.148");
+
+            //IPv4-Adresse des Geräts wird gesucht.
+            IPFinder ipFinder=new IPFinder(getApplicationContext());
+            ipFinder.findIP();
+            //Server wird gestartet.
+            presenter.connectToServer(ipFinder.getIp());
 
         }).start();
 

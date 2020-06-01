@@ -3,14 +3,25 @@ package com.example.scotlandyard;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 
+import com.example.scotlandyard.presenterLayer.Presenter;
 import com.example.scotlandyard.viewLayer.Chat;
+import com.example.scotlandyard.viewLayer.IPFinder;
 import com.example.scotlandyard.viewLayer.gameActivity;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 public class playActivity extends AppCompatActivity {
+    private Presenter presenter = Presenter.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +34,19 @@ public class playActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void goToGameActivity(View view)
     {
-        Intent intent = new Intent(this, gameActivity.class);
+        new Thread(() -> {
+            //IPv4-Adresse des Geräts wird gesucht.
+            IPFinder ipFinder=new IPFinder(getApplicationContext());
+            ipFinder.findIP();
+            //Server wird gestartet.
+            presenter.connectToServer(ipFinder.getIp());
 
+        }).start();
+
+        Intent intent = new Intent(this, gameActivity.class);
         startActivity(intent);
     }
 }
