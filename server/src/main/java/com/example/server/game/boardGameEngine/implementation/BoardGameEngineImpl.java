@@ -66,7 +66,17 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public void startGame() {
-
+        //Ticketanzahl zu Beginn anzeigen
+        for (Player p:players){
+            if (p instanceof Detective){
+                lobby.updateTicketCount(p.getId(),11,"taxi");
+                lobby.updateTicketCount(p.getId(),8,"bus");
+                lobby.updateTicketCount(p.getId(),4,"ubahn");
+            }else{
+                lobby.updateTicketCount(p.getId(),5,"black");
+                lobby.updateTicketCount(p.getId(),2,"doublemove");
+            }
+        }
         // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
         for (int i = 0; i < maxRounds; i++) {
             playOneRound();
