@@ -8,6 +8,7 @@ import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Presenter{
 
@@ -21,6 +22,8 @@ public class Presenter{
     private TextView log;
 
     private boolean verbunden = false;
+
+    //private ArrayList<String> list = new ArrayList<>();
 
     // private Konstruktor
     private Presenter() {
@@ -75,8 +78,17 @@ public class Presenter{
         String prev = log.getText().toString();
         String toAdd = text;
         String newlog = prev + toAdd + "\n";
-
         log.setText(newlog);
+
+        /*list.add(text);
+        if (list.size() == 15) {
+            list.remove(0);
+        }
+        String toAdd = "";
+        for (int i = 0; i < list.size(); i++) {
+            toAdd += list.get(i) + "\n";
+        }
+        log.setText(toAdd);*/
     }
 
     public TextView getLog() {
