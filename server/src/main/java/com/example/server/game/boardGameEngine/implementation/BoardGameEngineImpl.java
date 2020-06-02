@@ -165,6 +165,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                                 }
                             }
                             ((Detective) player).validateTicket(card);
+                            //Ticketanzahl wird aktualisiert
                             try {
                                 Method getNameMethod = ((Detective) player).getClass().getMethod(getMethodName(card));
                                 int count=(int) getNameMethod.invoke(((Detective) player));
@@ -174,7 +175,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                             } catch (InvocationTargetException | IllegalAccessException e ) {
                                 e.printStackTrace();
                             }
-
+                            //Position der Spielfigur wird aktualisiert
+                            lobby.updatePlayerPositionsToAllClients(player.getId(),fieldToGo);
 
                         } else {
                             //Wenn Mr. X nicht geschummelt hat, wird der Detektiv für diese und  nächste Runde als inaktiv gekennzeichnet.
@@ -182,7 +184,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                             fieldToGo = player.getCurrentPosition();
                         }
                     } else {
+                        //Normaler Zug
                         ((Detective) player).validateTicket(card);
+                        //Ticketanzahl aktualisieren
                         try {
                             Method getNameMethod = ((Detective) player).getClass().getMethod(getMethodName(card));
                             int count=(int) getNameMethod.invoke(((Detective) player));
@@ -192,6 +196,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                         } catch (InvocationTargetException | IllegalAccessException e ) {
                             e.printStackTrace();
                         }
+                        //Position der Spielfigur aktualisieren
+                        lobby.updatePlayerPositionsToAllClients(player.getId(),fieldToGo);
                     }
                 }
                 else if (player instanceof MrX) {
@@ -199,6 +205,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                     if (!card.equals("Double") && !card.equals("cheat")) {
                         //Normaler Zug von Mister X
                         ((MrX) player).validateTicket(actualRound, card, fieldToGo);
+                        //Ticketanzahl aktualisieren
                         try {
                             Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
                             int count=(int) getNameMethod.invoke(((MrX) player));
@@ -236,6 +243,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                         //Erster Zug wird normal im Travellog gespeichert.
                         ((MrX) player).validateTicket(actualRound, "cheat", 0); //Position ist hier egal
                         ((MrX) player).validateTicket(actualRound, card, fieldToGo);
+                        //Ticketanzahl aktualisieren
                         try {
                             Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
                             int count=(int) getNameMethod.invoke(((MrX) player));
@@ -268,6 +276,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
                             }
                         }
+                        //Ticketanzahl aktualisieren
                         try {
                             Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
                             int count=(int) getNameMethod.invoke(((MrX) player));
@@ -307,6 +316,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                         if (((MrX) player).isCaughtCheating()) {
                             ((MrX) player).setCaughtCheating(false, actualRound);
                         }
+                        //Ticketanzahl aktualisieren
                         try {
                             Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
                             int count=(int) getNameMethod.invoke(((MrX) player));
@@ -343,6 +353,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                         if (((MrX) player).isCaughtCheating()) {
                             ((MrX) player).setCaughtCheating(false, actualRound);
                         }
+                        //Ticketanzahl aktualisieren
                         try {
                             Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
                             int count=(int) getNameMethod.invoke(((MrX) player));
