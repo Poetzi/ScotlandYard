@@ -42,12 +42,12 @@ public class gameActivity extends AppCompatActivity {
         this.check = check;
     }
 
-    public void setConfirm(String confirm) {
+    public void setConfirm(boolean confirm) {
         this.confirm = confirm;
     }
 
     private boolean check = true;
-    private String confirm = "no";
+    private boolean confirm = false;
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -183,9 +183,9 @@ public class gameActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        check = true;
+        setCheck(true);
 
-        if(confirm.equalsIgnoreCase("yes")){
+        if(confirm){
             playerPostion.setField(toField);
             player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
             Toast.makeText(getApplicationContext(),"YESSSS",Toast.LENGTH_SHORT).show();
@@ -196,38 +196,82 @@ public class gameActivity extends AppCompatActivity {
     }
 
     public void useBus(){
-        int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
-        TurnMessage msg = new TurnMessage(0,toField,0,"Bus");
+        TurnMessage msg = new TurnMessage(0,toField,0,"bus");
+        Thread t = new Thread(){
+            public void run(){
+                presenter.sendTurn(msg);
+
+            }
+        };
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
 
         }).start();
+    /*  t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
 
-        if(gameBoard.movePlayer(positionOfPlayer,toField,"bus")){
+
+        while (check){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        setCheck(true);
+
+        if(confirm){
             playerPostion.setField(toField);
             player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+            Toast.makeText(getApplicationContext(),"YESSSS",Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
         }
     }
 
     public void useUbahn(){
-        int positionOfPlayer = playerPostion.getField();
         int toField = map.touchedPoint.getField();
 
-        TurnMessage msg = new TurnMessage(0,toField,0,"uBahn");
+        TurnMessage msg = new TurnMessage(0,toField,0,"ubahn");
+        Thread t = new Thread(){
+            public void run(){
+                presenter.sendTurn(msg);
+
+            }
+        };
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
 
         }).start();
+    /*  t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
 
-        if(gameBoard.movePlayer(positionOfPlayer,toField,"ubahn")){
+
+        while (check){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        setCheck(true);
+
+        if(confirm){
             playerPostion.setField(toField);
             player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+            Toast.makeText(getApplicationContext(),"YESSSS",Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
         }

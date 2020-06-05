@@ -47,16 +47,18 @@ public class GameBoardImpl implements GameBoard {
     @Override
     public boolean checkDraw(int playerID, int toField, String card) {
         for (int i = 0; i <transitions.size() ; i++) {
-            if (transitions.get(i).getToField() == toField) {
-                if (transitions.get(i).getFromField() == playersPositions[playerID]) {
-                    if (transitions.get(i).getName().equalsIgnoreCase(card)) {
-                        System.out.println("Gameboard True");
-                        return true;
-                    }
-                }
+            if (transitions.get(i).getToField() == toField && transitions.get(i).getFromField() == playersPositions[playerID]
+            && transitions.get(i).getName().equalsIgnoreCase(card)) {
+                System.out.println("Gameboard True");
+                return true;
             }
         }
-        System.out.println("player position"+playersPositions[playerID]);
+        /*Transition tr = new TransitionImpl(card,toField,playersPositions[playerID]);
+        if(transitions.contains(tr)){
+            System.out.println("Gameboard True");
+            return true;
+        }*/
+        System.out.println("player position "+playersPositions[playerID]+" card:"+card+" togo:"+toField);
         System.out.println("Gameboard False");
 
         return false;

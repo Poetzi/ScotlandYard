@@ -91,8 +91,9 @@ public class Presenter {
                 Log.d("Server:", message.getText());
                 if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
                     game.setCheck(false);
+                    game.setConfirm(false);
                     if (message.getText().equalsIgnoreCase("yes"))
-                        game.setConfirm("yes");
+                        game.setConfirm(true);
                 }
             }
         });
