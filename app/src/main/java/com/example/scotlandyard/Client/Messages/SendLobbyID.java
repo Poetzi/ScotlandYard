@@ -1,8 +1,6 @@
 package com.example.scotlandyard.Client.Messages;
 
-public class SendRoleMessage extends BaseMessage {
-    private String text;
-
+public class SendLobbyID extends BaseMessage {
     private int lobbyID;
 
     public int getLobbyID() {
@@ -11,13 +9,5 @@ public class SendRoleMessage extends BaseMessage {
 
     public void setLobbyID(int lobbyID) {
         this.lobbyID = lobbyID;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 }
