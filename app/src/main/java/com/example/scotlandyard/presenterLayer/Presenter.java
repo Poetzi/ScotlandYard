@@ -78,11 +78,10 @@ public class Presenter {
             if (nachrichtVomServer instanceof AskPlayerForTurn) {
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
                 Log.d("Server:", message.getText());
-                if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
-                    game.check = false;
-                    if (message.getText().equalsIgnoreCase("yes"))
-                        game.confirm = "yes";
+                if (message.getText().equalsIgnoreCase("yes")) {
+                    game.confirm = "yes";
                 }
+                game.movePlayer();
             }
             //Update Ticketanzahl
             if (nachrichtVomServer instanceof UpdateTicketCount){

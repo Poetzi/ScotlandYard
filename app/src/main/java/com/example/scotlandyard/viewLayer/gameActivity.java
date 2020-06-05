@@ -40,6 +40,7 @@ public class gameActivity extends AppCompatActivity {
     private User user = new User("test");
     public boolean check = true;
     public String confirm = "no";
+    private int toField;
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -146,7 +147,7 @@ public class gameActivity extends AppCompatActivity {
     }
 
     public void useTaxi(){
-        int toField = map.touchedPoint.getField();
+        toField = map.touchedPoint.getField();
 
         TurnMessage msg = new TurnMessage(0,toField,0,"Taxi");
         Thread t = new Thread(){
@@ -189,14 +190,21 @@ public class gameActivity extends AppCompatActivity {
 
     public void useBus(){
         int positionOfPlayer = playerPostion.getField();
-        int toField = map.touchedPoint.getField();
+        toField = map.touchedPoint.getField();
 
         TurnMessage msg = new TurnMessage(0,toField,0,"Bus");
-        new Thread(() -> {
-            // Nachricht wird an den Server geschickt
-            presenter.sendTurn(msg);
+        Thread t = new Thread(){
+            public void run(){
+                presenter.sendTurn(msg);
 
-        }).start();
+            }
+        };
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"bus")){
             playerPostion.setField(toField);
@@ -208,18 +216,72 @@ public class gameActivity extends AppCompatActivity {
 
     public void useUbahn(){
         int positionOfPlayer = playerPostion.getField();
-        int toField = map.touchedPoint.getField();
+        toField = map.touchedPoint.getField();
 
         TurnMessage msg = new TurnMessage(0,toField,0,"U-Bahn");
-        new Thread(() -> {
-            // Nachricht wird an den Server geschickt
-            presenter.sendTurn(msg);
+        Thread t = new Thread(){
+            public void run(){
+                presenter.sendTurn(msg);
 
-        }).start();
+            }
+        };
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         if(gameBoard.movePlayer(positionOfPlayer,toField,"ubahn")){
             playerPostion.setField(toField);
             player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+        }else {
+            Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void useBlack(){ ;
+        toField = map.touchedPoint.getField();
+
+        TurnMessage msg = new TurnMessage(presenter.getUser().getId(),toField,0,"Black");
+        Thread t = new Thread(){
+            public void run(){
+                presenter.sendTurn(msg);
+
+            }
+        };
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void useDoubleMove(){ ;
+        int toField = map.touchedPoint.getField();
+
+        TurnMessage msg = new TurnMessage(presenter.getUser().getId(),toField,0,"Black");
+        Thread t = new Thread(){
+            public void run(){
+                presenter.sendTurn(msg);
+
+            }
+        };
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void movePlayer(){
+        if(confirm.equalsIgnoreCase("yes")){
+            playerPostion.setField(toField);
+            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+            Toast.makeText(getApplicationContext(),"YESSSS",Toast.LENGTH_SHORT).show();
+
         }else {
             Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
         }
@@ -238,10 +300,10 @@ public class gameActivity extends AppCompatActivity {
                 useUbahn();
                 break;
             case R.id.blackTicket:
-                Toast.makeText(getApplicationContext(),"Black Ticket Pressed",Toast.LENGTH_SHORT).show();
+                useBlack();
                 break;
             case R.id.doubleMove:
-                Toast.makeText(getApplicationContext(),"Double Move Pressed",Toast.LENGTH_SHORT).show();
+                useDoubleMove();
                 break;
         }
     }
@@ -276,15 +338,15 @@ public class gameActivity extends AppCompatActivity {
     public void updateTicketCount(int ticketCount, String ticketType){
         TextView textView;
         switch (ticketType){
-            case "taxi":
+            case "Taxi":
                 textView=findViewById(R.id.txtview_taxitickets);
                 textView.setText(String.valueOf(ticketCount));
                 break;
-            case "bus":
+            case "Bus":
                 textView=findViewById(R.id.txtview_bustickets);
                 textView.setText(String.valueOf(ticketCount));
                 break;
-            case "ubahn":
+            case "U-Bahn":
                 textView=findViewById(R.id.txtview_metrotickets);
                 textView.setText(String.valueOf(ticketCount));
                 break;
