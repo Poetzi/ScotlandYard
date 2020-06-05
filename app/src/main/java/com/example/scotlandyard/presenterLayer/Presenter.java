@@ -9,6 +9,7 @@ import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
+import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
 import com.example.scotlandyard.Client.Messages.UsernameMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
@@ -53,10 +54,10 @@ public class Presenter {
             client.registerClass(BaseMessage.class);
             client.registerClass(TextMessage.class);
             client.registerClass(TurnMessage.class);
-            client.registerClass(TravellogMessage.class);
-
-            client.registerClass(UsernameMessage.class);
             client.registerClass(AskPlayerForTurn.class);
+            client.registerClass(TravellogMessage.class);
+            client.registerClass(UsernameMessage.class);
+            client.registerClass(UpdatePlayersPosition.class);
 
 
             registerCallback();
