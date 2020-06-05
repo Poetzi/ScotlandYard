@@ -45,7 +45,7 @@ public class playActivity extends AppCompatActivity {
             IPFinder ipFinder=new IPFinder(getApplicationContext());
             ipFinder.findIP();
             //Server wird gestartet.
-            presenter.connectToServer(ipFinder.getIp());
+            presenter.connectToServer("143.205.186.73");
             presenter.sendUsername();
 
         }).start();
