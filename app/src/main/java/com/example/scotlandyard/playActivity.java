@@ -41,7 +41,7 @@ public class playActivity extends AppCompatActivity {
 
         }).start();
 
-        //Intent wird gestartet um durch Knopfdruck auf Chat-Seite zu gelangen
+        //Intent wird gestartet um durch Knopfdruck auf Chat-Seite zu gelangen.
         Intent intent = new Intent(this, gameActivity.class);
         startActivity(intent);
 
