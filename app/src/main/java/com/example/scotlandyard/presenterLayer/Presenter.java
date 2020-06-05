@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.SendRoleMessage;
 import com.example.scotlandyard.Client.Messages.StartGameMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
@@ -27,6 +28,8 @@ public class Presenter {
     private MyKryoClient client;
     // Logik z.B: Spielelogik
     private User user;
+
+    private String role;
 
     private String username;
 
@@ -60,6 +63,7 @@ public class Presenter {
             client.registerClass(UsernameMessage.class);
             client.registerClass(UpdatePlayersPosition.class);
             client.registerClass(StartGameMessage.class);
+            client.registerClass(SendRoleMessage.class);
 
 
             registerCallback();
@@ -111,6 +115,13 @@ public class Presenter {
     public void sendTurn(TurnMessage message) {
         TurnMessage msg = new TurnMessage(user.getId(), message.getToField(), 0, message.getCard());
         client.sendMessage(msg);
+    }
+
+    public void sendRole()
+    {
+        SendRoleMessage message = new SendRoleMessage();
+        message.setText(role);
+        client.sendMessage(message);
     }
 
     public void sendUsername(){
@@ -174,5 +185,13 @@ public class Presenter {
 
     public void setTravellogMenu(Menu travellogMenu) {
         this.travellogMenu = travellogMenu;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
