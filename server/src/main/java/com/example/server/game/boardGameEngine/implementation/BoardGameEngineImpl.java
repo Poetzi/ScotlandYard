@@ -69,15 +69,22 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void startGame() {
 
+        // Aktuelle Runde wird auf 0 gesetzt
+        actualRound = 0;
+
         // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
         for (int i = 0; i < maxRounds ; i++) {
             playOneRound();
+
 
             // Wenn die Detektive gewonnen haben wird der Spielablauf beendet
             if (checkWinningCondition())
             {
                 break;
             }
+
+            // Die aktuelle Runde wird erhöht
+            actualRound++;
         }
 
     }
