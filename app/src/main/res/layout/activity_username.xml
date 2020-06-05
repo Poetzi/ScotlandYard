@@ -7,7 +7,7 @@
     android:background="#1C2D70"
     android:backgroundTint="#154FB3"
     android:backgroundTintMode="add"
-    tools:context=".viewLayer.usernameActivity">
+    tools:context=".viewLayer.UsernameActivity">
 
     <EditText
         android:id="@+id/editText3"

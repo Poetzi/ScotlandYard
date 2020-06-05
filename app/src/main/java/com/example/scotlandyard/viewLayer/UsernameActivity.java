@@ -11,7 +11,7 @@ import com.example.scotlandyard.R;
 import com.example.scotlandyard.playActivity;
 import com.example.scotlandyard.presenterLayer.Presenter;
 
-public class usernameActivity extends AppCompatActivity {
+public class UsernameActivity extends AppCompatActivity {
 
     private Presenter presenter = Presenter.getInstance();
 

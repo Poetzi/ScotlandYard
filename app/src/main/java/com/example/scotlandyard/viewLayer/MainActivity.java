@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.scotlandyard.R;
-import com.example.scotlandyard.playActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void play(View view) {
-        Intent intent = new Intent(this, usernameActivity.class);
+        Intent intent = new Intent(this, UsernameActivity.class);
         startActivity(intent);
     }
 
