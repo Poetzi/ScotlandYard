@@ -23,14 +23,16 @@ public class ChooseRoleActivity extends AppCompatActivity {
     public void chooseMrX(View view)
     {
         Intent intent = new Intent( this, playActivity.class);
-        // Todo MrX setzen
+        // MrX setzen
+        presenter.setRole("MISTERX");
         startActivity(intent);
     }
 
     public void chooseDetektiv(View view)
     {
         Intent intent = new Intent( this, playActivity.class);
-        // Todo Detektiv setzen
+        // Detektiv setzen
+        presenter.setRole("DETEKTIV");
 
         startActivity(intent);
     }

@@ -29,6 +29,8 @@ public class Presenter {
     // Logik z.B: Spielelogik
     private User user;
 
+    private String role;
+
     private String username;
 
     private TextView log;
@@ -115,6 +117,13 @@ public class Presenter {
         client.sendMessage(msg);
     }
 
+    public void sendRole()
+    {
+        SendRoleMessage message = new SendRoleMessage();
+        message.setText(role);
+        client.sendMessage(message);
+    }
+
     public void sendUsername(){
         UsernameMessage msg = new UsernameMessage(username);
         client.sendMessage(msg);
@@ -176,5 +185,13 @@ public class Presenter {
 
     public void setTravellogMenu(Menu travellogMenu) {
         this.travellogMenu = travellogMenu;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
