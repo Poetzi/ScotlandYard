@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.SendLobbyID;
 import com.example.scotlandyard.Client.Messages.SendRoleMessage;
 import com.example.scotlandyard.Client.Messages.StartGameMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
@@ -30,6 +31,8 @@ public class Presenter {
     private User user;
 
     private String role;
+
+    private int lobbyID;
 
     private String username;
 
@@ -64,6 +67,7 @@ public class Presenter {
             client.registerClass(UpdatePlayersPosition.class);
             client.registerClass(StartGameMessage.class);
             client.registerClass(SendRoleMessage.class);
+            client.registerClass(SendLobbyID.class);
 
 
             registerCallback();
@@ -100,6 +104,12 @@ public class Presenter {
                     if (message.getText().equalsIgnoreCase("yes"))
                         game.confirm = "yes";
                 }
+            }
+
+            if (nachrichtVomServer instanceof  SendLobbyID)
+            {
+                SendLobbyID message = (SendLobbyID) nachrichtVomServer;
+                setLobbyID(message.getLobbyID());
             }
         });
 
@@ -193,5 +203,13 @@ public class Presenter {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getLobbyID() {
+        return lobbyID;
+    }
+
+    public void setLobbyID(int lobbyID) {
+        this.lobbyID = lobbyID;
     }
 }
