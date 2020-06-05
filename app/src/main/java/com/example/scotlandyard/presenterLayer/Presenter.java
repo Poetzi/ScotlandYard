@@ -81,7 +81,6 @@ public class Presenter {
                 if (message.getText().equalsIgnoreCase("yes")) {
                     game.confirm = "yes";
                 }
-                game.movePlayer();
             }
             //Update Ticketanzahl
             if (nachrichtVomServer instanceof UpdateTicketCount){
@@ -96,7 +95,11 @@ public class Presenter {
             //Update Position von Mitspielern
             if (nachrichtVomServer instanceof UpdatePlayersPosition){
                 UpdatePlayersPosition message=(UpdatePlayersPosition) nachrichtVomServer;
-                game.updatePlayerPosition(message.getToField(),message.getPlayerId());
+                if (((UpdatePlayersPosition) nachrichtVomServer).getPlayerId()!=user.getId()) {
+                    game.updatePlayerPosition(message.getToField(), message.getPlayerId());
+                }else {
+                    game.movePlayer();
+                }
             }
         });
 

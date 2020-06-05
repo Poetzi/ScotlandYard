@@ -102,7 +102,6 @@ public class LobbyImpl implements Lobby {
     public void updatePlayerPositionsToAllClients(int playerId, int toField) {
         UpdatePlayersPosition playersPosition = new UpdatePlayersPosition(playerId, toField, lobbyID);
         for (ID p : players) {
-            if (p.id!=playerId)
                 p.name.sendTCP(playersPosition);
         }
     }

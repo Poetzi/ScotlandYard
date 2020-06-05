@@ -327,8 +327,8 @@ public class mapView extends View {
         return false;
     }
 
-    public Points getOtherPlayersPosition(int fielNumber){
-        return points.get(fielNumber-1);
+    public Points getOtherPlayersPosition(int fieldNumber){
+        return points.get(fieldNumber-1);
     }
 
 }
