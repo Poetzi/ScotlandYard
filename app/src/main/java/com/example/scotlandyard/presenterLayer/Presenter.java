@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.StartGameMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
@@ -58,6 +59,7 @@ public class Presenter {
             client.registerClass(TravellogMessage.class);
             client.registerClass(UsernameMessage.class);
             client.registerClass(UpdatePlayersPosition.class);
+            client.registerClass(StartGameMessage.class);
 
 
             registerCallback();
