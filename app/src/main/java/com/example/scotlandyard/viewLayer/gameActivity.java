@@ -240,7 +240,7 @@ public class gameActivity extends AppCompatActivity {
         }
     }
 
-    public void useBlack(){ ;
+    public void useBlack(){
         toField = map.touchedPoint.getField();
 
         TurnMessage msg = new TurnMessage(presenter.getUser().getId(),toField,0,"Black");
@@ -258,10 +258,10 @@ public class gameActivity extends AppCompatActivity {
         }
     }
 
-    public void useDoubleMove(){ ;
+    public void useDoubleMove(){
         int toField = map.touchedPoint.getField();
 
-        TurnMessage msg = new TurnMessage(presenter.getUser().getId(),toField,0,"Black");
+        TurnMessage msg = new TurnMessage(presenter.getUser().getId(),toField,0,"DoubleMove");
         Thread t = new Thread(){
             public void run(){
                 presenter.sendTurn(msg);
@@ -350,11 +350,11 @@ public class gameActivity extends AppCompatActivity {
                 textView=findViewById(R.id.txtview_metrotickets);
                 textView.setText(String.valueOf(ticketCount));
                 break;
-            case "black":
+            case "Black":
                 textView=findViewById(R.id.txtview_blacktickets);
                 textView.setText(String.valueOf(ticketCount));
                 break;
-            case "doublemove":
+            case "DoubleMove":
                 textView=findViewById(R.id.txtview_doublemove);
                 textView.setText(String.valueOf(ticketCount));
                 break;
