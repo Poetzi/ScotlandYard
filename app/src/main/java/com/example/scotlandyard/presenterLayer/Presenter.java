@@ -107,9 +107,9 @@ public class Presenter {
     }
 
     public void sendMessagetoServer(String text) {
-        TextMessage message = new TextMessage(user.getName() + ": " + text);
+        TextMessage message = new TextMessage(username + ": " + text);
         client.sendMessage(message);
-        updateLog(message.getText());
+        // updateLog(message.getText());
     }
 
     public void sendTurn(TurnMessage message) {
