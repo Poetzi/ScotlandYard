@@ -67,6 +67,7 @@ public class MyKryoServer {
                 if (object instanceof UsernameMessage)
                 {
                     String name = ((UsernameMessage) object).getUsername();
+                    System.out.println("User "+name+" ist beigetreten");
                     ID id = new ID(connection, name);
                     boolean lobbyFound = false;
                     for(Lobby lobby : lobbys){
