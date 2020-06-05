@@ -90,9 +90,9 @@ public class Presenter {
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
                 Log.d("Server:", message.getText());
                 if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
-                    game.check = false;
+                    game.setCheck(false);
                     if (message.getText().equalsIgnoreCase("yes"))
-                        game.confirm = "yes";
+                        game.setConfirm("yes");
                 }
             }
         });

@@ -21,11 +21,11 @@ import java.util.Random;
 
 public class BoardGameEngineImpl implements BoardGameEngine {
 
-    private ArrayList<Player> players;
+    private ArrayList<Player> players = new ArrayList<>();
     private int numberOfPlayers;
-    private int maxRounds;
+    private int maxRounds=24;
     private int actualRound;
-    private GameBoard gameBoard;
+    private GameBoard gameBoard= new GameBoardImpl();
     private int numberOfFields;
     private Lobby lobby;
 
@@ -36,34 +36,16 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         Player player = new PlayerImpl();
         player.setId(players.size());
         player.setName(name);
+        gameBoard.setPositionOfPlayer(players.size(),field);
         players.add(player);
 
-        gameBoard.setStartField(players.size(),field);
     }
 
     @Override
     public void setupNewGame() {
-        gameBoard = new GameBoardImpl();
-        Random rnd = new Random();
+        gameBoard.addFieldWithTransition(2,3,"taxi");
+        addPlayer("nils",2);
 
-        ArrayList<String> lobbyPlayerNames = new ArrayList<>();
-
-        numberOfPlayers = lobbyPlayerNames.size();
-
-        for (int i = 0; i < numberOfPlayers - 1 ; i++) {
-            addPlayer(lobbyPlayerNames.get(i),rnd.nextInt(20));
-        }
-        addPlayer("Mister X",rnd.nextInt(20));
-
-        for (int i = 0; i < numberOfFields ; i++) {
-            gameBoard.addField(i);
-        }
-
-        for (int i = 0; i < numberOfFields/2 ; i++) {
-            int random = rnd.nextInt(20);
-
-            //gameBoard.addFieldWithTransition(random,random,);
-        }
     }
 
     @Override
@@ -94,7 +76,6 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         for (Player p:players) {
             drawForPlayer(p);
         }
-
     }
 
     @Override
@@ -105,7 +86,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         TurnMessage turnMessage;
 
         // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
-        while (drawValide = false)
+        while (drawValide == false)
         {
             /*
                Der Server holt sich vom Spieler Client die Karte die er einsetzen will
@@ -115,7 +96,6 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             card = turnMessage.getCard();
             fieldToGo = turnMessage.getToField();
 
-
             /*
                Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
                ob der Zug gültig ist.
@@ -123,7 +103,13 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             */
             if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
             {
+                System.out.println("Nice ");
+                lobby.confirm(player.getId(),"yes");
+
                 drawValide = true;
+            }else {
+                lobby.confirm(player.getId(),"no");
+
             }
         }
 
@@ -148,7 +134,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             /*
                 Die Position an die anderen Spieler clients weitergeben
              */
-            lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
+            //lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
         }
 
     }

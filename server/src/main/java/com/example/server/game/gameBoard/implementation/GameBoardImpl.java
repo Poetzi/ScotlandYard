@@ -50,12 +50,16 @@ public class GameBoardImpl implements GameBoard {
             if (transitions.get(i).getToField() == toField) {
                 if (transitions.get(i).getFromField() == playersPositions[playerID]) {
                     if (transitions.get(i).getName().equalsIgnoreCase(card)) {
+                        System.out.println("Gameboard True");
                         return true;
                     }
                 }
             }
         }
-            return false;
+        System.out.println("player position"+playersPositions[playerID]);
+        System.out.println("Gameboard False");
+
+        return false;
     }
 
     @Override

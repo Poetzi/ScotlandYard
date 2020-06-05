@@ -37,8 +37,17 @@ public class gameActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
     private TurnMessage msg;
     private User user = new User("test");
-    public boolean check = true;
-    public String confirm = "no";
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public void setConfirm(String confirm) {
+        this.confirm = confirm;
+    }
+
+    private boolean check = true;
+    private String confirm = "no";
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -140,8 +149,8 @@ public class gameActivity extends AppCompatActivity {
         gameBoard.addFieldWithTransition(1,3,"taxi");
 */
         //Initial position of player
-        playerPostion = new Points(186,286,0," ",1);
-        //player.drawPlayer(186,286);
+        playerPostion = new Points(100,286,0," ",1);
+        player.drawPlayer(100,286);
     }
 
     public void useTaxi(){
@@ -154,17 +163,17 @@ public class gameActivity extends AppCompatActivity {
 
             }
         };
-      /*  new Thread(() -> {
+        new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
 
-        }).start();*/
-      t.start();
+        }).start();
+    /*  t.start();
         try {
             t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         while (check){
