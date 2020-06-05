@@ -1,11 +1,10 @@
 package com.example.scotlandyard;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.example.scotlandyard.viewLayer.Chat;
@@ -28,6 +27,8 @@ public class playActivity extends AppCompatActivity {
     }
 
 
+
+
     public void goToGameActivity(View view)
     {
         new Thread(() -> {
@@ -35,11 +36,19 @@ public class playActivity extends AppCompatActivity {
             IPFinder ipFinder=new IPFinder(getApplicationContext());
             ipFinder.findIP();
             //Server wird gestartet.
-            presenter.connectToServer(ipFinder.getIp());
+            presenter.connectToServer("143.205.186.73");
+            // Username wird dem Server übergeben
+            presenter.sendUsername();
+            // die Rolle wird dem Server übergeben
+            presenter.sendRole();
+
 
         }).start();
 
+        //Intent wird gestartet um durch Knopfdruck auf Chat-Seite zu gelangen
         Intent intent = new Intent(this, gameActivity.class);
         startActivity(intent);
+
+
     }
 }

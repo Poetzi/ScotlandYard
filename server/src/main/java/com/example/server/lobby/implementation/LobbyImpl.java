@@ -20,8 +20,10 @@ import com.example.server.messages.UpdateTicketCount;
 import java.util.ArrayList;
 
 public class LobbyImpl implements Lobby {
+
+
     private ArrayList<ID> players = new ArrayList<ID>();
-    private boolean isOpen = false;
+    private boolean isOpen = true;
     public int playerCount = 0;
 
     private BoardGameEngine game = new BoardGameEngineImpl();
@@ -32,13 +34,21 @@ public class LobbyImpl implements Lobby {
     // Speichert ob auf einen Zug für einen Spieler gewartet wird
     private boolean[] waitForPlayersTurn = new boolean[6];
     private TurnMessage[] returnTurnMessage = new TurnMessage[6];
+
+
+    @Override
+    public ArrayList<ID> getPlayers() {
+        return players;
+    }
+
     public boolean wait = true;
+
 
     @Override
     public void addPlayertoGame(ID id) {
         players.add(id);
         playerCount++;
-        if (playerCount == 1)
+        if (playerCount == 5)
             startGame();// was 6
     }
 

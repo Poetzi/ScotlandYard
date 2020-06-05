@@ -1,10 +1,19 @@
 package com.example.server;
 
+import com.example.server.lobby.implementation.ID;
+import com.example.server.lobby.implementation.LobbyImpl;
+import com.example.server.lobby.interfaces.Lobby;
+
 import com.example.server.messages.AskPlayerForTurn;
+
 import com.example.server.messages.BaseMessage;
+import com.example.server.messages.SendRoleMessage;
+import com.example.server.messages.StartGameMessage;
 import com.example.server.messages.TextMessage;
 import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
+import com.example.server.messages.UpdatePlayersPosition;
+import com.example.server.messages.UsernameMessage;
 import com.example.server.messages.UpdatePlayersPosition;
 import com.example.server.messages.UpdateTicketCount;
 
@@ -23,6 +32,11 @@ public class Main {
             server.registerClass(TravellogMessage.class);
             server.registerClass(UpdateTicketCount.class);
             server.registerClass(UpdatePlayersPosition.class);
+            server.registerClass(UsernameMessage.class);
+            server.registerClass(UpdatePlayersPosition.class);
+            server.registerClass(StartGameMessage.class);
+            server.registerClass(SendRoleMessage.class);
+
 
             // Die Callbacks werden hier registriert,
             server.registerCallback(nachrichtvomClient -> {
@@ -47,6 +61,8 @@ public class Main {
                     MyKryoServer.getLobby().get(turn.getLobbyId()).setReturnTurnMessage(turn, turn.getPlayerId());
 
                 }
+
+
             });
 
             server.start();

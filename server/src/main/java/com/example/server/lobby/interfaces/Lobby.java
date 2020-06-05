@@ -7,6 +7,8 @@ import com.example.server.game.players.TravelLog;
 import com.example.server.lobby.implementation.ID;
 import com.example.server.messages.TurnMessage;
 
+import java.util.ArrayList;
+
 public interface Lobby {
 
     void addPlayertoGame(ID id);
@@ -22,7 +24,7 @@ public interface Lobby {
     TurnMessage askPlayerforTurn(int playerId);
 
     void updatePlayerPositionsToAllClients(int playerId, int toField);
-
+    public ArrayList<ID> getPlayers();
     int getLobbyID();
 
     void setLobbyID(int lobbyID);

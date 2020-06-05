@@ -30,20 +30,11 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     private int numberOfFields;
     private Lobby lobby;
 
-
     @Override
     public void addPlayer(String name, int field) {
-        /*
-         * Player player = new PlayerImpl(); player.setId(players.size());
-         * player.setName(name); Player player; if (name.equals("Mister X")){ player =
-         * new MrXImpl(name,players.size()); }else { player=new
-         * DetectiveImpl(name,players.size()); } player.setCurrentPosition(field);
-         * players.add(player);
-         *
-         * gameBoard.setStartField(players.size(),field);
-         */
         Player player = new PlayerImpl();
-        player.setCurrentPosition(field);
+        player.setId(players.size());
+        player.setName(name);
         players.add(player);
 
         gameBoard.setStartField(players.size(),field);
@@ -52,16 +43,26 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void setupNewGame() {
         gameBoard = new GameBoardImpl();
-        addPlayer("test", 2);
-        Player player = new PlayerImpl();
-        player.setCurrentPosition(2);
-        player.setId(0);
-        players.add(player);
+        Random rnd = new Random();
 
-        gameBoard.addFieldWithTransition(2, 3, "taxi");
+        ArrayList<String> lobbyPlayerNames = new ArrayList<>();
 
-        gameBoard.setPositionOfPlayer(0, 2);
-        drawForPlayer(player);
+        numberOfPlayers = lobbyPlayerNames.size();
+
+        for (int i = 0; i < numberOfPlayers - 1 ; i++) {
+            addPlayer(lobbyPlayerNames.get(i),rnd.nextInt(20));
+        }
+        addPlayer("Mister X",rnd.nextInt(20));
+
+        for (int i = 0; i < numberOfFields ; i++) {
+            gameBoard.addField(i);
+        }
+
+        for (int i = 0; i < numberOfFields/2 ; i++) {
+            int random = rnd.nextInt(20);
+
+            //gameBoard.addFieldWithTransition(random,random,);
+        }
     }
 
     @Override
@@ -77,21 +78,30 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                 lobby.updateTicketCount(p.getId(),2,"doublemove");
             }
         }
+
+        // Aktuelle Runde wird auf 0 gesetzt
+        actualRound = 0;
+
         // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
-        for (int i = 0; i < maxRounds; i++) {
+        for (int i = 0; i < maxRounds ; i++) {
             playOneRound();
 
+
             // Wenn die Detektive gewonnen haben wird der Spielablauf beendet
-            if (checkWinningCondition()) {
+            if (checkWinningCondition())
+            {
                 break;
             }
+
+            // Die aktuelle Runde wird erhöht
+            actualRound++;
         }
 
     }
 
     @Override
     public void playOneRound() {
-        for (Player p : players) {
+        for (Player p:players) {
             drawForPlayer(p);
         }
 
@@ -112,31 +122,28 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                und die Position zu der er ziehen möchte
             */
-                turnMessage = lobby.askPlayerforTurn(player.getId());
-                card = turnMessage.getCard();
-                fieldToGo = turnMessage.getToField();
-                System.out.println(card + "sssss " + fieldToGo);
+            turnMessage = lobby.askPlayerforTurn(player.getId());
+            card = turnMessage.getCard();
+            fieldToGo = turnMessage.getToField();
+
+
             /*
                Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
                ob der Zug gültig ist.
                Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
             */
-                if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
-                    lobby.confirm(player.getId(), "yes");
-                    // break;
-                    drawValide = true;
-                } else {
-                    lobby.confirm(player.getId(), "no");
-
-                }
-                // }
+            if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
+            {
+                drawValide = true;
+            }
+        }
 
         /*
             Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
          */
-                Transition toRemove = new TransitionImpl();
-                toRemove.setName(card);
-                player.removeTransitionFromAvailable(toRemove);
+        Transition toRemove = new TransitionImpl();
+        toRemove.setName(card);
+        player.removeTransitionFromAvailable(toRemove);
 
                 if (player instanceof Detective) {
                     //Wenn der Detektiv den Verdacht äußert, dass Mr. X geschummelt hat.
@@ -413,12 +420,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     }
 
 
-
-    public void initLobby (Lobby lobby){
-        this.lobby = lobby;
-    }
-
-    public void setLobby (Lobby lobby){
+    public void initLobby(Lobby lobby) {
         this.lobby = lobby;
     }
 
@@ -449,4 +451,11 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     }
 }
 
+    public Lobby getLobby() {
+        return lobby;
+    }
 
+    public void setLobby(Lobby lobby) {
+        this.lobby = lobby;
+    }
+}

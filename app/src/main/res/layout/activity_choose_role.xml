@@ -7,7 +7,7 @@
     android:background="#1C2D70"
     android:backgroundTint="#154FB3"
     android:backgroundTintMode="add"
-    tools:context=".viewLayer.MainActivity">
+    tools:context=".viewLayer.ChooseRoleActivity">
 
     <Button
         android:id="@+id/detektiveButton"
@@ -15,8 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:layout_marginBottom="92dp"
-        android:onClick="play"
-        android:text="@string/playButton"
+        android:text="Detektive"
+        android:onClick="chooseDetektiv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
@@ -36,5 +36,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/scotland_logo" />
+        app:srcCompat="@drawable/scotland_logo"/>
+
+    <Button
+        android:id="@+id/mrxButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MrX"
+        android:onClick="chooseMrX"
+        app:layout_constraintBottom_toTopOf="@+id/detektiveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

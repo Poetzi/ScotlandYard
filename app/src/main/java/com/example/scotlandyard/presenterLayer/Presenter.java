@@ -6,11 +6,13 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.SendRoleMessage;
+import com.example.scotlandyard.Client.Messages.StartGameMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
-import com.example.scotlandyard.Client.Messages.UpdateTicketCount;
+import com.example.scotlandyard.Client.Messages.UsernameMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.viewLayer.User;
@@ -26,6 +28,10 @@ public class Presenter {
     private MyKryoClient client;
     // Logik z.B: Spielelogik
     private User user;
+
+    private String role;
+
+    private String username;
 
     private TextView log;
 
@@ -52,8 +58,13 @@ public class Presenter {
             client.registerClass(BaseMessage.class);
             client.registerClass(TextMessage.class);
             client.registerClass(TurnMessage.class);
-            client.registerClass(TravellogMessage.class);
             client.registerClass(AskPlayerForTurn.class);
+            client.registerClass(TravellogMessage.class);
+            client.registerClass(UsernameMessage.class);
+            client.registerClass(UpdatePlayersPosition.class);
+            client.registerClass(StartGameMessage.class);
+            client.registerClass(SendRoleMessage.class);
+
             client.registerClass(UpdateTicketCount.class);
             client.registerClass(UpdatePlayersPosition.class);
 
@@ -68,6 +79,14 @@ public class Presenter {
         }
     }
 
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
     private void registerCallback() {
         client.registerCallback(nachrichtVomServer -> {
             if (nachrichtVomServer instanceof TextMessage) {
@@ -78,8 +97,10 @@ public class Presenter {
             if (nachrichtVomServer instanceof AskPlayerForTurn) {
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
                 Log.d("Server:", message.getText());
-                if (message.getText().equalsIgnoreCase("yes")) {
-                    game.confirm = "yes";
+                if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
+                    game.check = false;
+                    if (message.getText().equalsIgnoreCase("yes"))
+                        game.confirm = "yes";
                 }
             }
             //Update Ticketanzahl
@@ -106,13 +127,25 @@ public class Presenter {
     }
 
     public void sendMessagetoServer(String text) {
-        TextMessage message = new TextMessage(user.getName() + ": " + text);
+        TextMessage message = new TextMessage(username + ": " + text);
         client.sendMessage(message);
-        updateLog(message.getText());
+        // updateLog(message.getText());
     }
 
     public void sendTurn(TurnMessage message) {
         TurnMessage msg = new TurnMessage(user.getId(), message.getToField(), 0, message.getCard());
+        client.sendMessage(msg);
+    }
+
+    public void sendRole()
+    {
+        SendRoleMessage message = new SendRoleMessage();
+        message.setText(role);
+        client.sendMessage(message);
+    }
+
+    public void sendUsername(){
+        UsernameMessage msg = new UsernameMessage(username);
         client.sendMessage(msg);
     }
 
@@ -128,7 +161,6 @@ public class Presenter {
         String prev = log.getText().toString();
         String toAdd = text;
         String newlog = prev + toAdd + "\n";
-
         log.setText(newlog);
     }
 
@@ -150,7 +182,6 @@ public class Presenter {
 
     public void updateTravellogMenu(TravelLog travelLog, int round) {
         String transport = travelLog.getTicket();
-
         if (round == 3 || round == 8 || round == 13 || round == 18 || travelLog.isCaughtCheating()) {
             //In Runde 3,8,13 und 18 wird wie nach den Regeln die Position von Mister X bekannt gegeben.
             //Oder wenn er beim Schummeln erwischt wurde.
@@ -166,5 +197,13 @@ public class Presenter {
 
     public void setTravellogMenu(Menu travellogMenu) {
         this.travellogMenu = travellogMenu;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
