@@ -25,6 +25,7 @@ public class UsernameActivity extends AppCompatActivity {
         TextView username = findViewById(R.id.editText3);
         presenter.setUsername(username.getText().toString());
         Intent intent = new Intent( this, playActivity.class);
+        startActivity(intent);
     }
 
 
