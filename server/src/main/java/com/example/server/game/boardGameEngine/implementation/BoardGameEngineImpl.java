@@ -30,6 +30,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     private Lobby lobby;
 
 
+
     @Override
     public void addPlayer(String name, int field) {
         Player player = new PlayerImpl();
@@ -174,5 +175,13 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public boolean checkIfMrXCheated() {
         return false;
+    }
+
+    public Lobby getLobby() {
+        return lobby;
+    }
+
+    public void setLobby(Lobby lobby) {
+        this.lobby = lobby;
     }
 }
