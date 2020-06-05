@@ -7,7 +7,7 @@
     android:background="#1C2D70"
     android:backgroundTint="#154FB3"
     android:backgroundTintMode="add"
-    tools:context=".MainActivity">
+    tools:context=".viewLayer.MainActivity">
 
     <Button
         android:id="@+id/playButton"
