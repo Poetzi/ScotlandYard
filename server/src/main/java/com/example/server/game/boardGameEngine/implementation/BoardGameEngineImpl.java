@@ -83,7 +83,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         actualRound = 0;
 
         // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
-        for (int i = 0; i < maxRounds ; i++) {
+        for (int i = actualRound; i < maxRounds ; i++) {
             playOneRound();
 
 
@@ -117,286 +117,42 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             TurnMessage turnMessage;
 
             // Schleife wird solange ausgeführt bis ein gültiger Zug vom Spieler kommt
-            while (drawValide = false) {
-            /*
-               Der Server holt sich vom Spieler Client die Karte die er einsetzen will
-               und die Position zu der er ziehen möchte
-            */
-            turnMessage = lobby.askPlayerforTurn(player.getId());
-            card = turnMessage.getCard();
-            fieldToGo = turnMessage.getToField();
-
-
-            /*
-               Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
-               ob der Zug gültig ist.
-               Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
-            */
-            if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
-            {
-                drawValide = true;
-            }
-        }
-
-        /*
-            Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
-         */
-        Transition toRemove = new TransitionImpl();
-        toRemove.setName(card);
-        player.removeTransitionFromAvailable(toRemove);
-
-                if (player instanceof Detective) {
-                    //Wenn der Detektiv den Verdacht äußert, dass Mr. X geschummelt hat.
-                    if (card.equals("cheat")) {
-                        if (checkIfMrXCheated()) {
-                            int misterX = players.size() - 1;
-                            ((MrX) (players.get(misterX))).setCaughtCheating(true, actualRound);
-                            ((MrX) (players.get(misterX))).setVisibleFor(2);
-
-                            //Detektiv darf seine Position ändern.
-                            drawValide = false;
-                            // Schleife wird solange ausgeführt bis ein gültiger Zug vom Spieler kommt
-                            while (drawValide = false) {
-
-                                turnMessage = lobby.askPlayerforTurn(player.getId());
-                                card = turnMessage.getCard();
-                                fieldToGo = turnMessage.getToField();
-
-                                if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
-                                    lobby.confirm(player.getId(), "yes");
-                                    // break;
-                                    drawValide = true;
-                                } else {
-                                    lobby.confirm(player.getId(), "no");
-
-                                }
-                            }
-                            ((Detective) player).validateTicket(card);
-                            //Ticketanzahl wird aktualisiert
-                            try {
-                                Method getNameMethod = ((Detective) player).getClass().getMethod(getMethodName(card));
-                                int count=(int) getNameMethod.invoke(((Detective) player));
-                                lobby.updateTicketCount(player.getId(),count,card);
-                            } catch (NoSuchMethodException nsme) {
-                                nsme.printStackTrace();
-                            } catch (InvocationTargetException | IllegalAccessException e ) {
-                                e.printStackTrace();
-                            }
-                            //Position der Spielfigur wird aktualisiert
-                            lobby.updatePlayerPositionsToAllClients(player.getId(),fieldToGo);
-
-                        } else {
-                            //Wenn Mr. X nicht geschummelt hat, wird der Detektiv für diese und  nächste Runde als inaktiv gekennzeichnet.
-                            ((Detective) player).setInactive(true);
-                            fieldToGo = player.getCurrentPosition();
-                        }
-                    } else {
-                        //Normaler Zug
-                        ((Detective) player).validateTicket(card);
-                        //Ticketanzahl aktualisieren
-                        try {
-                            Method getNameMethod = ((Detective) player).getClass().getMethod(getMethodName(card));
-                            int count=(int) getNameMethod.invoke(((Detective) player));
-                            lobby.updateTicketCount(player.getId(),count,card);
-                        } catch (NoSuchMethodException nsme) {
-                            nsme.printStackTrace();
-                        } catch (InvocationTargetException | IllegalAccessException e ) {
-                            e.printStackTrace();
-                        }
-                        //Position der Spielfigur aktualisieren
-                        lobby.updatePlayerPositionsToAllClients(player.getId(),fieldToGo);
-                    }
-                }
-                else if (player instanceof MrX) {
-
-                    if (!card.equals("Double") && !card.equals("cheat")) {
-                        //Normaler Zug von Mister X
-                        ((MrX) player).validateTicket(actualRound, card, fieldToGo);
-                        //Ticketanzahl aktualisieren
-                        try {
-                            Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
-                            int count=(int) getNameMethod.invoke(((MrX) player));
-                            lobby.updateTicketCount(player.getId(),count,card);
-                        } catch (NoSuchMethodException nsme) {
-                            nsme.printStackTrace();
-                        } catch (InvocationTargetException | IllegalAccessException e ) {
-                            e.printStackTrace();
-                        }
-
-                        if (((MrX) player).isCaughtCheating()) {
-                            ((MrX) player).setCaughtCheating(true, actualRound);
-                        }
-                        lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
-                    } else if (card.equals("cheat")) {
-
-                        drawValide = false;
-                        // Schleife wird solange ausgeführt bis ein gültiger Zug vom Spieler kommt
-                        while (drawValide = false) {
-
-                            turnMessage = lobby.askPlayerforTurn(player.getId());
-                            card = turnMessage.getCard();
-                            fieldToGo = turnMessage.getToField();
-
-
-                            if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
-                                lobby.confirm(player.getId(), "yes");
-                                // break;
-                                drawValide = true;
-                            } else {
-                                lobby.confirm(player.getId(), "no");
-
-                            }
-                        }
-                        //Erster Zug wird normal im Travellog gespeichert.
-                        ((MrX) player).validateTicket(actualRound, "cheat", 0); //Position ist hier egal
-                        ((MrX) player).validateTicket(actualRound, card, fieldToGo);
-                        //Ticketanzahl aktualisieren
-                        try {
-                            Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
-                            int count=(int) getNameMethod.invoke(((MrX) player));
-                            lobby.updateTicketCount(player.getId(),count,card);
-                        } catch (NoSuchMethodException nsme) {
-                            nsme.printStackTrace();
-                        } catch (InvocationTargetException | IllegalAccessException e ) {
-                            e.printStackTrace();
-                        }
-                        if (((MrX) player).isCaughtCheating()) {
-                            ((MrX) player).setCaughtCheating(true, actualRound);
-                        }
-                        lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
-
-                        drawValide = false;
-                        // Schleife wird solange ausgeführt bis ein gültiger Zug vom Spieler kommt
-                        while (drawValide = false) {
-
-                            turnMessage = lobby.askPlayerforTurn(player.getId());
-                            card = turnMessage.getCard();
-                            fieldToGo = turnMessage.getToField();
-
-
-                            if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
-                                lobby.confirm(player.getId(), "yes");
-                                // break;
-                                drawValide = true;
-                            } else {
-                                lobby.confirm(player.getId(), "no");
-
-                            }
-                        }
-                        //Ticketanzahl aktualisieren
-                        try {
-                            Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
-                            int count=(int) getNameMethod.invoke(((MrX) player));
-                            lobby.updateTicketCount(player.getId(),count,card);
-                        } catch (NoSuchMethodException nsme) {
-                            nsme.printStackTrace();
-                        } catch (InvocationTargetException | IllegalAccessException e ) {
-                            e.printStackTrace();
-                        }
-
-                        //Zweiter, geschummelter Zug wird nicht im Travellog gespeichert und ist somit nicht sichtbar für Detektive.
-                        player.setCurrentPosition(fieldToGo);
-
-                    } else {
-                        /**
-                         *      Warten bis Spieler den ersten Zug des Doppelzugs macht.
-                         */
-                        drawValide = false;
-                        // Schleife wird solange ausgeführt bis ein gültiger Zug vom Spieler kommt
-                        while (drawValide = false) {
-
-                            turnMessage = lobby.askPlayerforTurn(player.getId());
-                            card = turnMessage.getCard();
-                            fieldToGo = turnMessage.getToField();
-
-                            if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
-                                lobby.confirm(player.getId(), "yes");
-                                // break;
-                                drawValide = true;
-                            } else {
-                                lobby.confirm(player.getId(), "no");
-
-                            }
-                        }
-                        //Erster Zug wird im Travellog normal gespeichert.
-                        ((MrX) player).validateDoubleMoveTicket(actualRound, card, fieldToGo);
-                        if (((MrX) player).isCaughtCheating()) {
-                            ((MrX) player).setCaughtCheating(false, actualRound);
-                        }
-                        //Ticketanzahl aktualisieren
-                        try {
-                            Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
-                            int count=(int) getNameMethod.invoke(((MrX) player));
-                            lobby.updateTicketCount(player.getId(),count,card);
-                        } catch (NoSuchMethodException nsme) {
-                            nsme.printStackTrace();
-                        } catch (InvocationTargetException | IllegalAccessException e ) {
-                            e.printStackTrace();
-                        }
-                        lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
-
-                        /**
-                         *      Warten auf den zweiten Zug des Doppelzugs.
-                         */
-                        drawValide = false;
-                        // Schleife wird solange ausgeführt bis ein gültiger Zug vom Spieler kommt
-                        while (drawValide = false) {
-
-                            turnMessage = lobby.askPlayerforTurn(player.getId());
-                            card = turnMessage.getCard();
-                            fieldToGo = turnMessage.getToField();
-
-                            if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
-                                lobby.confirm(player.getId(), "yes");
-                                // break;
-                                drawValide = true;
-                            } else {
-                                lobby.confirm(player.getId(), "no");
-
-                            }
-                        }
-                        //Zweiter Zug wird im Travellog normal gespeichert.
-                        ((MrX) player).validateTicket(actualRound, card, fieldToGo);
-                        if (((MrX) player).isCaughtCheating()) {
-                            ((MrX) player).setCaughtCheating(false, actualRound);
-                        }
-                        //Ticketanzahl aktualisieren
-                        try {
-                            Method getNameMethod = ((MrX) player).getClass().getMethod(getMethodName(card));
-                            int count=(int) getNameMethod.invoke(((MrX) player));
-                            lobby.updateTicketCount(player.getId(),count,card);
-                        } catch (NoSuchMethodException nsme) {
-                            nsme.printStackTrace();
-                        } catch (InvocationTargetException | IllegalAccessException e ) {
-                            e.printStackTrace();
-                        }
-                        lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
-                    }
+            while (drawValide == false) {
                 /*
-                    Wenn Mister X beim Schummeln erwischt wurde, wird hier heruntergezählt,
-                    wie lange seine Position noch für die Detektive sichtbar ist.
-                 */
-                    if (((MrX) player).getVisibleFor() == 0) {
-                        ((MrX) player).setCaughtCheating(false, actualRound);
-                    }
-                    if (((MrX) player).isCaughtCheating()) {
-                        ((MrX) player).setVisibleFor(((MrX) player).getVisibleFor() - 1);
-                    }
+                   Der Server holt sich vom Spieler Client die Karte die er einsetzen will
+                   und die Position zu der er ziehen möchte
+                */
+                turnMessage = lobby.askPlayerforTurn(player.getId());
+                card = turnMessage.getCard();
+                fieldToGo = turnMessage.getToField();
 
-                }
-                player.setCurrentPosition(fieldToGo);
 
                 /*
-                    Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
-                    und an die anderen Spieler Clients weitergegeben
-                 */
-                if (drawValide) {
-                    gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
-                    lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
-                } else {
-                    ((Detective) player).setInactive(false);
+                   Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
+                   ob der Zug gültig ist.
+                   Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
+                */
+                if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
+                {
+                    drawValide = true;
                 }
             }
+
+            if (card.equals("cheat")){
+                if (player instanceof MrX){
+                    cheatMoveMrX(player);
+                }else {
+                    cheatMoveDetectiv(player);
+                }
+            }else if (card.equals("DoubleMove")){
+                doubleMove(player);
+            }else {
+                oneMove(player,card,fieldToGo);
+            }
+
+
+        }else {
+            ((Detective) player).setInactive(false);
         }
     }
 
@@ -443,13 +199,6 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         return false;
     }
 
-    public String getMethodName(String card){
-        if (card.equals("U-Bahn")){
-            return "getUndergroundTickets";
-        }
-        return "get"+card+"Tickets";
-    }
-}
 
     public Lobby getLobby() {
         return lobby;
@@ -457,5 +206,146 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;
+    }
+
+    public void oneMove(Player player, String card, int fieldToGo){
+        /*
+            Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
+         */
+        Transition toRemove = new TransitionImpl();
+        toRemove.setName(card);
+        player.removeTransitionFromAvailable(toRemove);
+
+        if (player instanceof Detective){
+            ((Detective)player).validateTicket(card);
+        }else {
+            ((MrX)player).validateTicket(actualRound,card,fieldToGo);
+            lobby.updateTravellogToAllClients(((MrX)player).getTravelLog(actualRound),actualRound);
+            lobby.updateTicketCount(player.getId(),((MrX)player).getBlackTickets(),"Black");
+            lobby.updateTicketCount(player.getId(),((MrX)player).getDoubleMoveTickets(),"DoubleMove");
+        }
+        lobby.updateTicketCount(player.getId(),player.getBusTickets(),"Bus");
+        lobby.updateTicketCount(player.getId(),player.getTaxiTickets(),"Taxi");
+        lobby.updateTicketCount(player.getId(),player.getUndergroundTickets(),"U-Bahn");
+
+        player.setCurrentPosition(fieldToGo);
+        gameBoard.setPositionOfPlayer(player.getId(),fieldToGo);
+
+    }
+
+    public void doubleMove(Player player){
+        /*
+            Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
+         */
+        Transition toRemove = new TransitionImpl();
+        toRemove.setName("DoubleMove");
+        player.removeTransitionFromAvailable(toRemove);
+
+        String card = "Bus";    // Beispielwert
+        boolean drawValide = false;
+        int fieldToGo=0;
+        TurnMessage turnMessage;
+
+        // Schleife wird solange ausgeführt bis ein gültiger Zug vom Spieler kommt
+        while (drawValide == false) {
+                /*
+                   Der Server holt sich vom Spieler Client die Karte die er einsetzen will
+                   und die Position zu der er ziehen möchte
+                */
+            turnMessage = lobby.askPlayerforTurn(player.getId());
+            card = turnMessage.getCard();
+            fieldToGo = turnMessage.getToField();
+
+
+                /*
+                   Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
+                   ob der Zug gültig ist.
+                   Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
+                */
+            if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
+            {
+                drawValide = true;
+            }
+        }
+
+        toRemove = new TransitionImpl();
+        toRemove.setName(card);
+        player.removeTransitionFromAvailable(toRemove);
+        ((MrX)player).validateDoubleMoveTicket(actualRound,card,fieldToGo);
+
+        lobby.updateTravellogToAllClients(((MrX)player).getTravelLog(actualRound),actualRound);
+        //Ticketanzahl aktualisieren
+        lobby.updateTicketCount(player.getId(),((MrX)player).getDoubleMoveTickets(),"DoubleMove");
+        lobby.updateTicketCount(player.getId(),player.getBusTickets(),"Bus");
+        lobby.updateTicketCount(player.getId(),player.getTaxiTickets(),"Taxi");
+        lobby.updateTicketCount(player.getId(),player.getUndergroundTickets(),"U-Bahn");
+        lobby.updateTicketCount(player.getId(),((MrX)player).getBlackTickets(),"Black");
+
+        player.setCurrentPosition(fieldToGo);
+        gameBoard.setPositionOfPlayer(player.getId(),fieldToGo);
+
+        actualRound++;
+
+        drawForPlayer(player);
+
+    }
+
+    public void cheatMoveDetectiv(Player player){
+
+        boolean cheated=checkIfMrXCheated();
+        if (!cheated){
+            ((Detective)player).setInactive(true);
+        }else {
+            Player mrX=players.get(players.size() - 1);
+            ((MrX)mrX).setCaughtCheating(true,actualRound);
+
+            drawForPlayer(player);
+        }
+
+    }
+
+    public void cheatMoveMrX(Player player){
+        ((MrX)player).validateTicket(actualRound,"cheat",0);
+
+        //erster Zug normal
+        drawForPlayer(player);
+
+        actualRound++;
+
+        //Zweiter geschummelter Zug
+        String card = "Bus";    // Beispielwert
+        int fieldToGo = 0;
+        boolean drawValide = false;
+        TurnMessage turnMessage;
+
+        // Schleife wird solange ausgeführt bis ein gültiger Zug vom Spieler kommt
+        while (drawValide == false) {
+                /*
+                   Der Server holt sich vom Spieler Client die Karte die er einsetzen will
+                   und die Position zu der er ziehen möchte
+                */
+            turnMessage = lobby.askPlayerforTurn(player.getId());
+            card = turnMessage.getCard();
+            fieldToGo = turnMessage.getToField();
+
+
+                /*
+                   Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
+                   ob der Zug gültig ist.
+                   Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
+                */
+            if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
+            {
+                drawValide = true;
+            }
+        }
+        player.setCurrentPosition(fieldToGo);
+        gameBoard.setPositionOfPlayer(player.getId(),fieldToGo);
+
+        lobby.updateTicketCount(player.getId(),player.getBusTickets(),"Bus");
+        lobby.updateTicketCount(player.getId(),player.getTaxiTickets(),"Taxi");
+        lobby.updateTicketCount(player.getId(),player.getUndergroundTickets(),"U-Bahn");
+        lobby.updateTicketCount(player.getId(),((MrX)player).getBlackTickets(),"Black");
+
     }
 }

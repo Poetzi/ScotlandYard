@@ -341,22 +341,44 @@ public class gameActivity extends AppCompatActivity {
             case "Taxi":
                 textView=findViewById(R.id.txtview_taxitickets);
                 textView.setText(String.valueOf(ticketCount));
+                if (ticketCount==0) {
+                    Button b = findViewById(R.id.taxi);
+                    b.setClickable(false);
+                }
                 break;
             case "Bus":
                 textView=findViewById(R.id.txtview_bustickets);
                 textView.setText(String.valueOf(ticketCount));
+                if (ticketCount==0) {
+                    Button b = findViewById(R.id.bus);
+                    b.setClickable(false);
+                }
                 break;
             case "U-Bahn":
                 textView=findViewById(R.id.txtview_metrotickets);
                 textView.setText(String.valueOf(ticketCount));
+                if (ticketCount==0) {
+                    Button b = findViewById(R.id.ubahn);
+                    b.setClickable(false);
+                }
                 break;
             case "Black":
                 textView=findViewById(R.id.txtview_blacktickets);
                 textView.setText(String.valueOf(ticketCount));
+                if (ticketCount==0) {
+                    Button b = findViewById(R.id.blackTicket);
+                    b.setClickable(false);
+                }
                 break;
             case "DoubleMove":
                 textView=findViewById(R.id.txtview_doublemove);
                 textView.setText(String.valueOf(ticketCount));
+                if (ticketCount==0) {
+                    Button b = findViewById(R.id.doubleMove);
+                    b.setClickable(false);
+                }
+                break;
+            default:
                 break;
         }
     }

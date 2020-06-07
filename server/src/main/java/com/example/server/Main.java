@@ -33,7 +33,6 @@ public class Main {
             server.registerClass(UpdateTicketCount.class);
             server.registerClass(UpdatePlayersPosition.class);
             server.registerClass(UsernameMessage.class);
-            server.registerClass(UpdatePlayersPosition.class);
             server.registerClass(StartGameMessage.class);
             server.registerClass(SendRoleMessage.class);
 

@@ -174,6 +174,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
 
     public void setCaughtCheating(boolean caughtCheating, int round) {
         this.caughtCheating = caughtCheating;
+        visibleFor=3;
         travelLog[round].setCaughtCheating(caughtCheating);
     }
 
