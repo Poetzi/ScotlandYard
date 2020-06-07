@@ -305,10 +305,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     }
 
     public void cheatMoveMrX(Player player){
-        ((MrX)player).validateTicket(actualRound,"cheat",0);
 
         //erster Zug normal
         drawForPlayer(player);
+        ((MrX)player).validateTicket(actualRound,"cheat",0);
 
         actualRound++;
 
