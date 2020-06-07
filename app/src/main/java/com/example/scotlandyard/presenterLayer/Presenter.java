@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.SendLobbyID;
 import com.example.scotlandyard.Client.Messages.SendRoleMessage;
 import com.example.scotlandyard.Client.Messages.StartGameMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
@@ -31,6 +32,8 @@ public class Presenter {
     private User user;
 
     private String role;
+
+    private int lobbyID;
 
     private String username;
 
@@ -66,6 +69,8 @@ public class Presenter {
             client.registerClass(StartGameMessage.class);
             client.registerClass(SendRoleMessage.class);
             client.registerClass(UpdateTicketCount.class);
+            client.registerClass(SendLobbyID.class);
+
 
             registerCallback();
 
@@ -101,6 +106,12 @@ public class Presenter {
                     if (message.getText().equalsIgnoreCase("yes"))
                         game.confirm = "yes";
                 }
+            }
+
+            if (nachrichtVomServer instanceof  SendLobbyID)
+            {
+                SendLobbyID message = (SendLobbyID) nachrichtVomServer;
+                setLobbyID(message.getLobbyID());
             }
             //Update Ticketanzahl
             if (nachrichtVomServer instanceof UpdateTicketCount){
@@ -161,6 +172,16 @@ public class Presenter {
         String toAdd = text;
         String newlog = prev + toAdd + "\n";
         log.setText(newlog);
+
+        /*list.add(text);
+        if (list.size() == 15) {
+            list.remove(0);
+        }
+        String toAdd = "";
+        for (int i = 0; i < list.size(); i++) {
+            toAdd += list.get(i) + "\n";
+        }
+        log.setText(toAdd);*/
     }
 
     public TextView getLog() {
@@ -204,5 +225,13 @@ public class Presenter {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getLobbyID() {
+        return lobbyID;
+    }
+
+    public void setLobbyID(int lobbyID) {
+        this.lobbyID = lobbyID;
     }
 }
