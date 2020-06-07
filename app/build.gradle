@@ -85,6 +85,6 @@ dependencies {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:28.+'
+    implementation 'androidx.appcompat:appcompat:+'
     implementation 'com.android.support.constraint:constraint-layout:+'
 }

@@ -1,8 +1,6 @@
 package com.example.server.game.boardGameEngine.implementation;
 
-import com.example.server.game.players.TravelLog;
-import com.example.server.game.players.implementation.DetectiveImpl;
-import com.example.server.game.players.implementation.MrXImpl;
+
 import com.example.server.game.players.interfaces.Detective;
 import com.example.server.game.players.interfaces.MrX;
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
@@ -15,8 +13,7 @@ import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.TurnMessage;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.Random;
 
