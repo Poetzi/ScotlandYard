@@ -9,6 +9,7 @@ import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.SendLobbyID;
+import com.example.server.messages.SendPlayerIDtoClient;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UsernameMessage;
 
@@ -82,6 +83,13 @@ public class MyKryoServer {
                             SendLobbyID messageLobbyID = new SendLobbyID();
                             messageLobbyID.setLobbyID(lobbyId);
                             connection.sendTCP(messageLobbyID);
+                            System.out.println("Server sendet Lobby ID "+ messageLobbyID.getLobbyID()+" an Client");
+
+                            // Sende PlayerId an Client
+                            SendPlayerIDtoClient messagePlayerId = new SendPlayerIDtoClient();
+                            messagePlayerId.setId(id.id);
+                            connection.sendTCP((messagePlayerId));
+                            System.out.println("Server sendet PlayerId "+" an Client");
 
                             break;
                         }
@@ -98,6 +106,13 @@ public class MyKryoServer {
                         SendLobbyID messageLobbyID = new SendLobbyID();
                         messageLobbyID.setLobbyID(lobbyId);
                         connection.sendTCP(messageLobbyID);
+                        System.out.println("Server sendet Lobby ID "+ messageLobbyID.getLobbyID()+" an Client");
+
+                        // Sende PlayerId an Client
+                        SendPlayerIDtoClient messagePlayerId = new SendPlayerIDtoClient();
+                        messagePlayerId.setId(id.id);
+                        connection.sendTCP((messagePlayerId));
+                        System.out.println("Server sendet PlayerId "+" an Client");
                     }
 
 
