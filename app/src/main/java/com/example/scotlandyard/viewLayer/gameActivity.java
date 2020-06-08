@@ -136,17 +136,6 @@ public class gameActivity extends AppCompatActivity {
         presenter.setUser(user);
         presenter.setGame(this);
 
-       /* gameBoard.addFieldWithTransition(1,2,"bus");
-        gameBoard.addFieldWithTransition(2,1,"bus");
-
-
-        gameBoard.addFieldWithTransition(2,3,"ubahn");
-        gameBoard.addFieldWithTransition(3,2,"ubahn");
-
-
-        gameBoard.addFieldWithTransition(3,1,"taxi");
-        gameBoard.addFieldWithTransition(1,3,"taxi");
-*/
         //Initial position of player
         playerPostion = new Points(100, 286, 0, " ", 1);
         player.drawPlayer(100, 286);
@@ -167,12 +156,7 @@ public class gameActivity extends AppCompatActivity {
             presenter.sendTurn(msg);
 
         }).start();
-    /*  t.start();
-        try {
-            t.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
+
 
 
         while (check) {
@@ -209,12 +193,7 @@ public class gameActivity extends AppCompatActivity {
             presenter.sendTurn(msg);
 
         }).start();
-    /*  t.start();
-        try {
-            t.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
+
 
 
         while (check) {
@@ -250,12 +229,7 @@ public class gameActivity extends AppCompatActivity {
             presenter.sendTurn(msg);
 
         }).start();
-    /*  t.start();
-        try {
-            t.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
+
 
 
         while (check) {
