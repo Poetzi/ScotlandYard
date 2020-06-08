@@ -242,7 +242,6 @@ public class BoardGameEngineImpl implements BoardGameEngine {
              */
             lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
         }
-
     }
 
 
