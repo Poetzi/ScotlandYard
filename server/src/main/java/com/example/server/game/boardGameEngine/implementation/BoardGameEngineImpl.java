@@ -21,11 +21,11 @@ import java.util.Random;
 
 public class BoardGameEngineImpl implements BoardGameEngine {
 
-    private ArrayList<Player> players;
+    private ArrayList<Player> players = new ArrayList<>();
     private int numberOfPlayers;
-    private int maxRounds;
+    private int maxRounds=24;
     private int actualRound;
-    private GameBoard gameBoard;
+    private GameBoard gameBoard= new GameBoardImpl();
     private int numberOfFields;
     private Lobby lobby;
 
@@ -36,34 +36,131 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         Player player = new PlayerImpl();
         player.setId(players.size());
         player.setName(name);
+        gameBoard.setPositionOfPlayer(players.size(),field);
         players.add(player);
 
-        gameBoard.setStartField(players.size(),field);
     }
 
     @Override
     public void setupNewGame() {
-        gameBoard = new GameBoardImpl();
-        Random rnd = new Random();
+        gameBoard.addFieldWithTransition(2,3,"taxi");
+        gameBoard.addFieldWithTransition(2,7,"bus");
+        gameBoard.addFieldWithTransition(2,7,"ubahn");
 
-        ArrayList<String> lobbyPlayerNames = new ArrayList<>();
+        gameBoard.addFieldWithTransition(3,1,"bus");
+        gameBoard.addFieldWithTransition(3,1,"taxi");
+        gameBoard.addFieldWithTransition(3,5,"taxi");
 
-        numberOfPlayers = lobbyPlayerNames.size();
+        gameBoard.addFieldWithTransition(5,12,"taxi");
 
-        for (int i = 0; i < numberOfPlayers - 1 ; i++) {
-            addPlayer(lobbyPlayerNames.get(i),rnd.nextInt(20));
-        }
-        addPlayer("Mister X",rnd.nextInt(20));
+        gameBoard.addFieldWithTransition(12,1,"bus");
+        gameBoard.addFieldWithTransition(12,16,"bus");
 
-        for (int i = 0; i < numberOfFields ; i++) {
-            gameBoard.addField(i);
-        }
+        gameBoard.addFieldWithTransition(1,7,"bus");
+        gameBoard.addFieldWithTransition(1,13,"taxi");
+        gameBoard.addFieldWithTransition(1,12,"bus");
 
-        for (int i = 0; i < numberOfFields/2 ; i++) {
-            int random = rnd.nextInt(20);
+        gameBoard.addFieldWithTransition(7,6,"ubahn");
+        gameBoard.addFieldWithTransition(7,8,"bus");
 
-            //gameBoard.addFieldWithTransition(random,random,);
-        }
+        gameBoard.addFieldWithTransition(8,9,"taxi");
+
+        gameBoard.addFieldWithTransition(6,9,"taxi");
+        gameBoard.addFieldWithTransition(6,9,"bus");
+        gameBoard.addFieldWithTransition(6,13,"bus");
+        gameBoard.addFieldWithTransition(6,13,"taxi");
+        gameBoard.addFieldWithTransition(6,14,"ubahn");
+
+        gameBoard.addFieldWithTransition(13,15,"taxi");
+
+        gameBoard.addFieldWithTransition(15,16,"taxi");
+        gameBoard.addFieldWithTransition(15,14,"taxi");
+        gameBoard.addFieldWithTransition(15,19,"bus");
+
+        gameBoard.addFieldWithTransition(14,20,"ubahn");
+        gameBoard.addFieldWithTransition(14,25,"taxi");
+        gameBoard.addFieldWithTransition(14,25,"bus");
+
+        gameBoard.addFieldWithTransition(16,18,"taxi");
+
+        gameBoard.addFieldWithTransition(25,9,"taxi");
+        gameBoard.addFieldWithTransition(25,21,"taxi");
+        gameBoard.addFieldWithTransition(25,11,"bus");
+
+        gameBoard.addFieldWithTransition(9,10,"bus");
+
+        gameBoard.addFieldWithTransition(10,11,"taxi");
+
+        gameBoard.addFieldWithTransition(11,33,"taxi");
+        gameBoard.addFieldWithTransition(11,22,"taxi");
+
+        gameBoard.addFieldWithTransition(33,32,"bus");
+
+        gameBoard.addFieldWithTransition(32,23,"taxi");
+        gameBoard.addFieldWithTransition(32,22,"bus");
+        gameBoard.addFieldWithTransition(32,22,"ubahn");
+
+        gameBoard.addFieldWithTransition(22,21,"bus");
+        gameBoard.addFieldWithTransition(22,21,"ubahn");
+        gameBoard.addFieldWithTransition(22,24,"bus");
+
+        gameBoard.addFieldWithTransition(21,20,"bus");
+        gameBoard.addFieldWithTransition(21,20,"ubahn");
+        gameBoard.addFieldWithTransition(21,34,"bus");
+
+        gameBoard.addFieldWithTransition(20,19,"taxi");
+        gameBoard.addFieldWithTransition(20,19,"ubahn");
+        gameBoard.addFieldWithTransition(20,26,"ubahn");
+
+        gameBoard.addFieldWithTransition(19,18,"bus");
+        gameBoard.addFieldWithTransition(19,18,"ubahn");
+        gameBoard.addFieldWithTransition(19,27,"taxi");
+
+        gameBoard.addFieldWithTransition(23,44,"taxi");
+        gameBoard.addFieldWithTransition(23,24,"taxi");
+
+        gameBoard.addFieldWithTransition(24,45,"taxi");
+        gameBoard.addFieldWithTransition(45,44,"taxi");
+
+        gameBoard.addFieldWithTransition(45,34,"taxi");
+        gameBoard.addFieldWithTransition(45,30,"taxi");
+
+        gameBoard.addFieldWithTransition(34,29,"taxi");
+        gameBoard.addFieldWithTransition(34,26,"taxi");
+        gameBoard.addFieldWithTransition(27,26,"taxi");
+
+        gameBoard.addFieldWithTransition(28,29,"bus");
+        gameBoard.addFieldWithTransition(30,29,"taxi");
+
+        gameBoard.addFieldWithTransition(30,36,"ubahn");
+        gameBoard.addFieldWithTransition(30,31,"bus");
+        gameBoard.addFieldWithTransition(31,44,"taxi");
+        gameBoard.addFieldWithTransition(31,35,"bus");
+
+
+        gameBoard.addFieldWithTransition(37,29,"bus");
+
+        gameBoard.addFieldWithTransition(37,36,"taxi");
+        gameBoard.addFieldWithTransition(37,38,"taxi");
+        gameBoard.addFieldWithTransition(38,36,"taxi");
+        gameBoard.addFieldWithTransition(36,35,"ubahn");
+
+        gameBoard.addFieldWithTransition(43,35,"taxi");
+        gameBoard.addFieldWithTransition(43,35,"bus");
+
+        gameBoard.addFieldWithTransition(43,42,"taxi");
+
+        gameBoard.addFieldWithTransition(41,42,"bus");
+
+        gameBoard.addFieldWithTransition(41,40,"bus");
+
+        gameBoard.addFieldWithTransition(38,39,"bus");
+        gameBoard.addFieldWithTransition(40,39,"bus");
+
+
+
+        addPlayer("nils",2);
+
     }
 
     @Override
@@ -94,7 +191,6 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         for (Player p:players) {
             drawForPlayer(p);
         }
-
     }
 
     @Override
@@ -105,7 +201,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         TurnMessage turnMessage;
 
         // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
-        while (drawValide = false)
+        while (drawValide == false)
         {
             /*
                Der Server holt sich vom Spieler Client die Karte die er einsetzen will
@@ -115,7 +211,6 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             card = turnMessage.getCard();
             fieldToGo = turnMessage.getToField();
 
-
             /*
                Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
                ob der Zug gültig ist.
@@ -123,7 +218,13 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             */
             if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
             {
+                System.out.println("Nice ");
+                lobby.confirm(player.getId(),"yes");
+
                 drawValide = true;
+            }else {
+                lobby.confirm(player.getId(),"no");
+
             }
         }
 
@@ -148,7 +249,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             /*
                 Die Position an die anderen Spieler clients weitergeben
              */
-            lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
+            //lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
         }
 
     }
