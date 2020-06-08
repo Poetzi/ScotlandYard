@@ -25,7 +25,6 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".viewLayer.UsernameActivity"
-            android:screenOrientation="landscape"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".viewLayer.MainActivity"
