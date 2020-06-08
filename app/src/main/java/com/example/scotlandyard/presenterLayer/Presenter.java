@@ -6,9 +6,13 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.SendLobbyID;
+import com.example.scotlandyard.Client.Messages.SendRoleMessage;
+import com.example.scotlandyard.Client.Messages.StartGameMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
+import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
 import com.example.scotlandyard.Client.Messages.UsernameMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
@@ -25,6 +29,10 @@ public class Presenter {
     private MyKryoClient client;
     // Logik z.B: Spielelogik
     private User user;
+
+    private String role;
+
+    private int lobbyID;
 
     private String username;
 
@@ -53,10 +61,13 @@ public class Presenter {
             client.registerClass(BaseMessage.class);
             client.registerClass(TextMessage.class);
             client.registerClass(TurnMessage.class);
-            client.registerClass(TravellogMessage.class);
-
-            client.registerClass(UsernameMessage.class);
             client.registerClass(AskPlayerForTurn.class);
+            client.registerClass(TravellogMessage.class);
+            client.registerClass(UsernameMessage.class);
+            client.registerClass(UpdatePlayersPosition.class);
+            client.registerClass(StartGameMessage.class);
+            client.registerClass(SendRoleMessage.class);
+            client.registerClass(SendLobbyID.class);
 
 
             registerCallback();
@@ -94,20 +105,33 @@ public class Presenter {
                         game.confirm = "yes";
                 }
             }
+
+            if (nachrichtVomServer instanceof  SendLobbyID)
+            {
+                SendLobbyID message = (SendLobbyID) nachrichtVomServer;
+                setLobbyID(message.getLobbyID());
+            }
         });
 
 
     }
 
     public void sendMessagetoServer(String text) {
-        TextMessage message = new TextMessage(user.getName() + ": " + text);
+        TextMessage message = new TextMessage(username + ": " + text);
         client.sendMessage(message);
-        updateLog(message.getText());
+        // updateLog(message.getText());
     }
 
     public void sendTurn(TurnMessage message) {
         TurnMessage msg = new TurnMessage(user.getId(), message.getToField(), 0, message.getCard());
         client.sendMessage(msg);
+    }
+
+    public void sendRole()
+    {
+        SendRoleMessage message = new SendRoleMessage();
+        message.setText(role);
+        client.sendMessage(message);
     }
 
     public void sendUsername(){
@@ -171,5 +195,21 @@ public class Presenter {
 
     public void setTravellogMenu(Menu travellogMenu) {
         this.travellogMenu = travellogMenu;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public int getLobbyID() {
+        return lobbyID;
+    }
+
+    public void setLobbyID(int lobbyID) {
+        this.lobbyID = lobbyID;
     }
 }

@@ -22,7 +22,7 @@ public class LobbyImpl implements Lobby {
 
 
     private ArrayList<ID> players = new ArrayList<ID>();
-    private boolean isOpen = false;
+    private boolean isOpen = true;
     public int playerCount = 0;
 
     private BoardGameEngine game = new BoardGameEngineImpl();
@@ -47,7 +47,7 @@ public class LobbyImpl implements Lobby {
     public void addPlayertoGame(ID id) {
         players.add(id);
         playerCount++;
-        if (playerCount == 1)
+        if (playerCount == 5)
             startGame();// was 6
     }
 

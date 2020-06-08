@@ -1,9 +1,9 @@
 package com.example.scotlandyard.viewLayer;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,23 +11,29 @@ import com.example.scotlandyard.R;
 import com.example.scotlandyard.playActivity;
 import com.example.scotlandyard.presenterLayer.Presenter;
 
-public class UsernameActivity extends AppCompatActivity {
-
+public class ChooseRoleActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_username);
+        setContentView(R.layout.activity_choose_role);
     }
 
-    public void MainMenu(View view){
-        TextView username = findViewById(R.id.editText3);
-        presenter.setUsername(username.getText().toString());
-        Intent intent = new Intent( this, ChooseRoleActivity.class);
+    public void chooseMrX(View view)
+    {
+        Intent intent = new Intent( this, playActivity.class);
+        // MrX setzen
+        presenter.setRole("MISTERX");
         startActivity(intent);
     }
 
+    public void chooseDetektiv(View view)
+    {
+        Intent intent = new Intent( this, playActivity.class);
+        // Detektiv setzen
+        presenter.setRole("DETEKTIV");
 
-
+        startActivity(intent);
+    }
 }

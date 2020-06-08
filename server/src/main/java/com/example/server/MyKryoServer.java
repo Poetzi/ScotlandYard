@@ -8,6 +8,7 @@ import com.example.server.lobby.implementation.ID;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.BaseMessage;
+import com.example.server.messages.SendLobbyID;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UsernameMessage;
 
@@ -67,6 +68,7 @@ public class MyKryoServer {
                 if (object instanceof UsernameMessage)
                 {
                     String name = ((UsernameMessage) object).getUsername();
+                    System.out.println("User "+name+" ist beigetreten");
                     ID id = new ID(connection, name);
                     boolean lobbyFound = false;
                     for(Lobby lobby : lobbys){
@@ -74,6 +76,13 @@ public class MyKryoServer {
                             id.id = lobby.getPlayerCount();
                             lobby.addPlayertoGame(id);
                             lobbyFound = true;
+
+                            // Sende LobbyId an Client
+                            int lobbyId = lobby.getLobbyID();
+                            SendLobbyID messageLobbyID = new SendLobbyID();
+                            messageLobbyID.setLobbyID(lobbyId);
+                            connection.sendTCP(messageLobbyID);
+
                             break;
                         }
                     }
@@ -83,6 +92,12 @@ public class MyKryoServer {
                         id.id = lobby.getPlayerCount();
                         lobby.addPlayertoGame(id);
                         lobbys.add(lobby);
+
+                        // Sende LobbyId an Client
+                        int lobbyId = lobby.getLobbyID();
+                        SendLobbyID messageLobbyID = new SendLobbyID();
+                        messageLobbyID.setLobbyID(lobbyId);
+                        connection.sendTCP(messageLobbyID);
                     }
 
 
