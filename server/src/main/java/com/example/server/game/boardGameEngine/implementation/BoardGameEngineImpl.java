@@ -180,6 +180,11 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     public void startGame() {
 
         // toDo send initial position of the players to clients
+        gameBoard.setPositionOfPlayer(0,2);
+        gameBoard.setPositionOfPlayer(1, 21);
+
+        lobby.updatePlayerPositionsToAllClients(0,2);
+        lobby.updatePlayerPositionsToAllClients(1,21);
 
 
 
