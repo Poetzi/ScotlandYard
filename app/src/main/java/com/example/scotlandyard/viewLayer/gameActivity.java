@@ -25,6 +25,7 @@ import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.google.android.material.navigation.NavigationView;
 
+
 public class gameActivity extends AppCompatActivity {
 
     private Button taxi, bus, ubahn, blackTicket, doubleMove;
