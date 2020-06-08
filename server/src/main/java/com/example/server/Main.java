@@ -69,12 +69,12 @@ public class Main {
                 {
                     SendRoleMessage msg = (SendRoleMessage)nachrichtvomClient;
 
-                    if (msg.getText()== "MISTERX")
+                    if (msg.getText().equals("MISTERX"))
                     {
                         game.addMrX(msg.getName(),msg.getPlayerId());
                         System.out.println("Spieler "+ msg.getName()+" ist ein MrX und wurde erstellt");
                     }
-                    if(msg.getText()== "DETEKTIV")
+                    if(msg.getText().equals("DETEKTIV"))
                     {
                         game.addDetektiv(msg.getName(), msg.getPlayerId());
                         System.out.println("Spieler "+ msg.getName()+" ist ein Detektiv und wurde erstellt");
