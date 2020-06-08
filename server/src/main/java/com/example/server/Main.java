@@ -71,11 +71,13 @@ public class Main {
 
                     if (msg.getText()== "MISTERX")
                     {
-
+                        game.addMrX(msg.getName(),msg.getPlayerId());
+                        System.out.println("Spieler "+ msg.getName()+" ist ein MrX und wurde erstellt");
                     }
                     if(msg.getText()== "DETEKTIV")
                     {
-
+                        game.addDetektiv(msg.getName(), msg.getPlayerId());
+                        System.out.println("Spieler "+ msg.getName()+" ist ein Detektiv und wurde erstellt");
                     }
 
                 }
