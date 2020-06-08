@@ -144,6 +144,7 @@ public class gameActivity extends AppCompatActivity {
     public void useTaxi() {
         int toField = map.touchedPoint.getField();
 
+        // Zug wird an den Server geschickt
         TurnMessage msg = new TurnMessage(0, toField, 0, "taxi");
         Thread t = new Thread() {
             public void run() {
@@ -159,28 +160,12 @@ public class gameActivity extends AppCompatActivity {
 
 
 
-        while (check) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        setCheck(true);
-
-        if (confirm) {
-            playerPostion.setField(toField);
-            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-            Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void useBus() {
         int toField = map.touchedPoint.getField();
 
+        // Zug wird an den Server geschickt
         TurnMessage msg = new TurnMessage(0, toField, 0, "bus");
         Thread t = new Thread() {
             public void run() {
@@ -193,30 +178,12 @@ public class gameActivity extends AppCompatActivity {
             presenter.sendTurn(msg);
 
         }).start();
-
-
-
-        while (check) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        setCheck(true);
-
-        if (confirm) {
-            playerPostion.setField(toField);
-            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-            Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void useUbahn() {
         int toField = map.touchedPoint.getField();
 
+        // Zug wird an den Server geschickt
         TurnMessage msg = new TurnMessage(0, toField, 0, "ubahn");
         Thread t = new Thread() {
             public void run() {
@@ -231,23 +198,6 @@ public class gameActivity extends AppCompatActivity {
         }).start();
 
 
-
-        while (check) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        setCheck(true);
-
-        if (confirm) {
-            playerPostion.setField(toField);
-            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-            Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
-        }
     }
 
 
