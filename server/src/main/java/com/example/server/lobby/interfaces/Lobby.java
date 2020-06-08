@@ -24,7 +24,9 @@ public interface Lobby {
     TurnMessage askPlayerforTurn(int playerId);
 
     void updatePlayerPositionsToAllClients(int playerId, int toField);
+
     public ArrayList<ID> getPlayers();
+
     int getLobbyID();
 
     void setLobbyID(int lobbyID);

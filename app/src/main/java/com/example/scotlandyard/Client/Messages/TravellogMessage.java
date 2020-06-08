@@ -9,13 +9,14 @@ public class TravellogMessage extends BaseMessage {
     private int round;
     private int lobbyID;
 
-    public TravellogMessage(){}
+    public TravellogMessage() {
+    }
 
-    public TravellogMessage(int id, TravelLog travelLog, int round, int lobbyID){
-        this.playerID=id;
-        this.travelLog=travelLog;
-        this.round=round;
-        this.lobbyID=lobbyID;
+    public TravellogMessage(int id, TravelLog travelLog, int round, int lobbyID) {
+        this.playerID = id;
+        this.travelLog = travelLog;
+        this.round = round;
+        this.lobbyID = lobbyID;
     }
 
     public int getPlayerID() {

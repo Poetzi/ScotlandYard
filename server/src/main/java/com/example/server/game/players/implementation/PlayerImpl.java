@@ -1,7 +1,6 @@
 package com.example.server.game.players.implementation;
 
 
-
 import com.example.server.game.players.interfaces.Player;
 import com.example.server.game.transitions.interfaces.Transition;
 
@@ -14,11 +13,12 @@ public class PlayerImpl implements Player {
     private int currentPosition;
     private ArrayList<Transition> availableTransitions = new ArrayList<>();
 
-    public PlayerImpl(){}
+    public PlayerImpl() {
+    }
 
-    public PlayerImpl(String name, int id){
-        this.name=name;
-        this.id=id;
+    public PlayerImpl(String name, int id) {
+        this.name = name;
+        this.id = id;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PlayerImpl implements Player {
 
     @Override
     public void setCurrentPosition(int field) {
-        currentPosition=field;
+        currentPosition = field;
     }
 
     public ArrayList<Transition> getAvailableTransitions() {

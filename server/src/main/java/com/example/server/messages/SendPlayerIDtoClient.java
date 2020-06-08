@@ -1,7 +1,7 @@
 package com.example.server.messages;
 
 public class SendPlayerIDtoClient extends BaseMessage {
-   private int id;
+    private int id;
 
 
     public int getId() {

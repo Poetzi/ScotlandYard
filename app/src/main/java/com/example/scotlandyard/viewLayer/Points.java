@@ -10,7 +10,7 @@ public class Points {
     String strField;
 
 
-    public Points(int x, int y, int img, String strField, int field){
+    public Points(int x, int y, int img, String strField, int field) {
         this.x = x;
         this.y = y;
         this.img = img;

@@ -19,16 +19,13 @@ public class playActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
     }
 
-    public void chat(View view){
+    public void chat(View view) {
         Intent intent = new Intent(this, Chat.class);
         startActivity(intent);
     }
 
 
-
-
-    public void goToGameActivity(View view)
-    {
+    public void goToGameActivity(View view) {
         new Thread(() -> {
 
             //Server wird gestartet.

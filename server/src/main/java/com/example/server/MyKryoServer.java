@@ -31,6 +31,7 @@ public class MyKryoServer {
     /**
      * eine Methode um Messageklassen zu registrieren
      * Jede Message klasse muss ein Kind von BaseMessage sein!!!!!!!!
+     *
      * @param c Klasse die registriert werden soll
      */
     public void registerClass(Class c) {
@@ -39,6 +40,7 @@ public class MyKryoServer {
 
     /**
      * eine Methode um den Server zu starten
+     *
      * @throws IOException
      */
     public void start() throws IOException {
@@ -66,14 +68,13 @@ public class MyKryoServer {
                 if (messageCallback != null && object instanceof BaseMessage)
                     messageCallback.callback((BaseMessage) object);
 
-                if (object instanceof UsernameMessage)
-                {
+                if (object instanceof UsernameMessage) {
                     String name = ((UsernameMessage) object).getUsername();
-                    System.out.println("User "+name+" ist beigetreten");
+                    System.out.println("User " + name + " ist beigetreten");
                     ID id = new ID(connection, name);
                     boolean lobbyFound = false;
-                    for(Lobby lobby : lobbys){
-                        if(lobby.isLobbyOpen()){
+                    for (Lobby lobby : lobbys) {
+                        if (lobby.isLobbyOpen()) {
                             id.id = lobby.getPlayerCount();
                             lobby.addPlayertoGame(id);
                             lobbyFound = true;
@@ -83,18 +84,18 @@ public class MyKryoServer {
                             SendLobbyID messageLobbyID = new SendLobbyID();
                             messageLobbyID.setLobbyID(lobbyId);
                             connection.sendTCP(messageLobbyID);
-                            System.out.println("Server sendet Lobby ID "+ messageLobbyID.getLobbyID()+" an Client");
+                            System.out.println("Server sendet Lobby ID " + messageLobbyID.getLobbyID() + " an Client");
 
                             // Sende PlayerId an Client
                             SendPlayerIDtoClient messagePlayerId = new SendPlayerIDtoClient();
                             messagePlayerId.setId(id.id);
                             connection.sendTCP((messagePlayerId));
-                            System.out.println("Server sendet PlayerId "+ messagePlayerId.getId() +" an Client");
+                            System.out.println("Server sendet PlayerId " + messagePlayerId.getId() + " an Client");
 
                             break;
                         }
                     }
-                    if(!lobbyFound){
+                    if (!lobbyFound) {
                         System.out.println("lobby created");
                         Lobby lobby = new LobbyImpl();
                         id.id = lobby.getPlayerCount();
@@ -106,13 +107,13 @@ public class MyKryoServer {
                         SendLobbyID messageLobbyID = new SendLobbyID();
                         messageLobbyID.setLobbyID(lobbyId);
                         connection.sendTCP(messageLobbyID);
-                        System.out.println("Server sendet Lobby ID "+ messageLobbyID.getLobbyID()+" an Client");
+                        System.out.println("Server sendet Lobby ID " + messageLobbyID.getLobbyID() + " an Client");
 
                         // Sende PlayerId an Client
                         SendPlayerIDtoClient messagePlayerId = new SendPlayerIDtoClient();
                         messagePlayerId.setId(id.id);
                         connection.sendTCP((messagePlayerId));
-                        System.out.println("Server sendet PlayerId "+messagePlayerId.getId()+" an Client");
+                        System.out.println("Server sendet PlayerId " + messagePlayerId.getId() + " an Client");
                     }
 
 
@@ -123,6 +124,7 @@ public class MyKryoServer {
 
     /**
      * Eine Methode um Callbacks zu registrieren
+     *
      * @param callback
      */
     public void registerCallback(Callback<BaseMessage> callback) {
@@ -131,6 +133,7 @@ public class MyKryoServer {
 
     /**
      * Eine Methode die eine Nachricht an alle Clients schickt
+     *
      * @param message
      */
     public void broadcastMessage(BaseMessage message) {

@@ -102,7 +102,6 @@ public class LobbyImpl implements Lobby {
     }
 
 
-
     @Override
     public void updatePlayerPositionsToAllClients(int playerId, int toField) {
         UpdatePlayersPosition playersPosition = new UpdatePlayersPosition(playerId, toField, lobbyID);

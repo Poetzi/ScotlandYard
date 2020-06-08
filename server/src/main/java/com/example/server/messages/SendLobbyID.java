@@ -1,7 +1,7 @@
 package com.example.server.messages;
 
 public class SendLobbyID extends BaseMessage {
-   private int lobbyID;
+    private int lobbyID;
 
     public int getLobbyID() {
         return lobbyID;

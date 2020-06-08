@@ -30,10 +30,10 @@ public class playerView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawBitmap(player,x - imgOffset,y- imgOffset,null);
+        canvas.drawBitmap(player, x - imgOffset, y - imgOffset, null);
     }
 
-    public void drawPlayer(int x, int y){
+    public void drawPlayer(int x, int y) {
         this.x = x;
         this.y = y;
         invalidate();

@@ -6,9 +6,10 @@ public class LobbyStart implements Runnable {
 
     LobbyImpl lobby;
 
-    public LobbyStart(LobbyImpl lobby){
+    public LobbyStart(LobbyImpl lobby) {
         this.lobby = lobby;
     }
+
     @Override
     public void run() {
         BoardGameEngineImpl boardgame = new BoardGameEngineImpl();

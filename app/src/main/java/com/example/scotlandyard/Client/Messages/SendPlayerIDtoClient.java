@@ -1,7 +1,6 @@
 package com.example.scotlandyard.Client.Messages;
 
 
-
 public class SendPlayerIDtoClient extends BaseMessage {
     private int id;
 

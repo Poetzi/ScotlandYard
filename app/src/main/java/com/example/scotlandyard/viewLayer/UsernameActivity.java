@@ -21,13 +21,12 @@ public class UsernameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_username);
     }
 
-    public void MainMenu(View view){
+    public void MainMenu(View view) {
         TextView username = findViewById(R.id.editText3);
         presenter.setUsername(username.getText().toString());
-        Intent intent = new Intent( this, ChooseRoleActivity.class);
+        Intent intent = new Intent(this, ChooseRoleActivity.class);
         startActivity(intent);
     }
-
 
 
 }
