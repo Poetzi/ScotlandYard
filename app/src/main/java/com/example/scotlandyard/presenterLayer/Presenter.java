@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.SendLobbyID;
+import com.example.scotlandyard.Client.Messages.SendPlayerIDtoClient;
 import com.example.scotlandyard.Client.Messages.SendRoleMessage;
 import com.example.scotlandyard.Client.Messages.StartGameMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
@@ -39,6 +40,8 @@ public class Presenter {
     private TextView log;
 
     private boolean verbunden = false;
+
+    private int playerID;
 
     private gameActivity game;
     private Menu travellogMenu;
@@ -112,12 +115,20 @@ public class Presenter {
                 SendLobbyID message = (SendLobbyID) nachrichtVomServer;
                 setLobbyID(message.getLobbyID());
             }
+
             if (nachrichtVomServer instanceof UpdatePlayersPosition) {
                 UpdatePlayersPosition updatePlayersPosition = (UpdatePlayersPosition) nachrichtVomServer;
                 Log.d("Server:", "PlayersPosition: " + updatePlayersPosition.getPlayerId() + " ToField: " + updatePlayersPosition.getToField()
                         + " LobbyID: " + updatePlayersPosition.getLobbyId());
 
             }
+
+            if (nachrichtVomServer instanceof SendPlayerIDtoClient) {
+                SendPlayerIDtoClient sendPlayerIDtoClient = (SendPlayerIDtoClient) nachrichtVomServer;
+                Log.d("Server:", "PlayerID: " + sendPlayerIDtoClient.getId());
+                this.playerID = sendPlayerIDtoClient.getId();
+            }
+
         });
 
 
