@@ -22,7 +22,7 @@ import java.util.Random;
 public class BoardGameEngineImpl implements BoardGameEngine {
 
     private Player[] players = new Player[6];
-    private int numberOfPlayers;
+    private int numberOfPlayers = 0;
     private int maxRounds=24;
     private int actualRound;
     private GameBoard gameBoard= new GameBoardImpl();
@@ -35,12 +35,14 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void addDetektiv(String name ,int id) {
         players[id] = new DetectiveImpl(name, id);
+        numberOfPlayers++;
     }
 
     @Override
     public void addMrX(String name ,int id) {
         players[id] = new MrXImpl(name, id);
         mrXId = id;
+        numberOfPlayers++;
     }
 
     @Override
@@ -167,6 +169,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public void startGame() {
+
+
 
         // Aktuelle Runde wird auf 0 gesetzt
         actualRound = 0;
