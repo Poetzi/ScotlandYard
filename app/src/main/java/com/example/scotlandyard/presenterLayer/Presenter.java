@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
 import com.example.scotlandyard.Client.Messages.SendLobbyID;
+import com.example.scotlandyard.Client.Messages.SendPlayerIDtoClient;
 import com.example.scotlandyard.Client.Messages.SendRoleMessage;
 import com.example.scotlandyard.Client.Messages.StartGameMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
@@ -40,6 +41,8 @@ public class Presenter {
 
     private boolean verbunden = false;
 
+    private int playerID;
+
     private gameActivity game;
     private Menu travellogMenu;
 
@@ -68,6 +71,7 @@ public class Presenter {
             client.registerClass(StartGameMessage.class);
             client.registerClass(SendRoleMessage.class);
             client.registerClass(SendLobbyID.class);
+            client.registerClass(SendPlayerIDtoClient.class);
 
 
             registerCallback();
@@ -89,6 +93,7 @@ public class Presenter {
     public void setUsername(String username) {
         this.username = username;
     }
+
     private void registerCallback() {
         client.registerCallback(nachrichtVomServer -> {
             if (nachrichtVomServer instanceof TextMessage) {
@@ -100,17 +105,31 @@ public class Presenter {
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
                 Log.d("Server:", message.getText());
                 if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
-                    game.check = false;
+                    game.setCheck(false);
+                    game.setConfirm(false);
                     if (message.getText().equalsIgnoreCase("yes"))
-                        game.confirm = "yes";
+                        game.setConfirm(true);
                 }
             }
 
-            if (nachrichtVomServer instanceof  SendLobbyID)
-            {
+            if (nachrichtVomServer instanceof SendLobbyID) {
                 SendLobbyID message = (SendLobbyID) nachrichtVomServer;
                 setLobbyID(message.getLobbyID());
             }
+
+            if (nachrichtVomServer instanceof UpdatePlayersPosition) {
+                UpdatePlayersPosition updatePlayersPosition = (UpdatePlayersPosition) nachrichtVomServer;
+                Log.d("Server:", "PlayersPosition: " + updatePlayersPosition.getPlayerId() + " ToField: " + updatePlayersPosition.getToField()
+                        + " LobbyID: " + updatePlayersPosition.getLobbyId());
+
+            }
+
+            if (nachrichtVomServer instanceof SendPlayerIDtoClient) {
+                SendPlayerIDtoClient sendPlayerIDtoClient = (SendPlayerIDtoClient) nachrichtVomServer;
+                Log.d("Server:", "PlayerID: " + sendPlayerIDtoClient.getId());
+                this.playerID = sendPlayerIDtoClient.getId();
+            }
+
         });
 
 
@@ -127,14 +146,17 @@ public class Presenter {
         client.sendMessage(msg);
     }
 
-    public void sendRole()
-    {
+    public void sendRole() {
         SendRoleMessage message = new SendRoleMessage();
         message.setText(role);
+        message.setPlayerId(playerID);
+        message.setName(getUsername());
+        message.setLobbyId(getLobbyID());
         client.sendMessage(message);
+
     }
 
-    public void sendUsername(){
+    public void sendUsername() {
         UsernameMessage msg = new UsernameMessage(username);
         client.sendMessage(msg);
     }

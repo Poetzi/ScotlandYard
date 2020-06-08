@@ -1,5 +1,7 @@
 package com.example.server;
 
+import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
+import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.lobby.implementation.ID;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
@@ -8,6 +10,7 @@ import com.example.server.messages.AskPlayerForTurn;
 
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.SendLobbyID;
+import com.example.server.messages.SendPlayerIDtoClient;
 import com.example.server.messages.SendRoleMessage;
 import com.example.server.messages.StartGameMessage;
 import com.example.server.messages.TextMessage;
@@ -21,6 +24,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         MyKryoServer server = new MyKryoServer();
+        BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
         try {
             // Registrieren der Messageklassen zur Kommunikation
             // zwischen Server und Client
@@ -34,6 +38,7 @@ public class Main {
             server.registerClass(StartGameMessage.class);
             server.registerClass(SendRoleMessage.class);
             server.registerClass(SendLobbyID.class);
+            server.registerClass(SendPlayerIDtoClient.class);
 
 
             // Die Callbacks werden hier registriert,
@@ -57,6 +62,23 @@ public class Main {
 
                     // Der Zug wird an die Lobby weitergegeben
                     MyKryoServer.getLobby().get(turn.getLobbyId()).setReturnTurnMessage(turn, turn.getPlayerId());
+
+                }
+
+                if (nachrichtvomClient instanceof SendRoleMessage)
+                {
+                    SendRoleMessage msg = (SendRoleMessage)nachrichtvomClient;
+
+                    if (msg.getText().equals("MISTERX"))
+                    {
+                        game.addMrX(msg.getName(),msg.getPlayerId());
+                        System.out.println("Spieler "+ msg.getName()+" ist ein MrX und wurde erstellt");
+                    }
+                    if(msg.getText().equals("DETEKTIV"))
+                    {
+                        game.addDetektiv(msg.getName(), msg.getPlayerId());
+                        System.out.println("Spieler "+ msg.getName()+" ist ein Detektiv und wurde erstellt");
+                    }
 
                 }
 

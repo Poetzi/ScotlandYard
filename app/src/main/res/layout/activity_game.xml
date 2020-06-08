@@ -12,16 +12,16 @@
         android:layout_height="match_parent">
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="779dp"
-        android:layout_height="453dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/proto" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="779dp"
+            android:layout_height="453dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/proto" />
 
-    <ImageView
+        <ImageView
         android:id="@+id/imageView2"
         android:layout_width="796dp"
         android:layout_height="478dp"

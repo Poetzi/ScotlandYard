@@ -24,7 +24,9 @@ public interface Lobby {
     TurnMessage askPlayerforTurn(int playerId);
 
     void updatePlayerPositionsToAllClients(int playerId, int toField);
+
     public ArrayList<ID> getPlayers();
+
     int getLobbyID();
 
     void setLobbyID(int lobbyID);
@@ -36,8 +38,6 @@ public interface Lobby {
     BoardGameEngine getGame();
 
     void setGame(BoardGameEngine game);
-
-    void confirm(int playerId, String conf);
 
     void updateTravellogToAllClients(TravelLog travelLog, int round);
 

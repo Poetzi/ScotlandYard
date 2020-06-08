@@ -3,14 +3,18 @@ package com.example.scotlandyard.Client.Messages;
 public class SendRoleMessage extends BaseMessage {
     private String text;
 
-    private int lobbyID;
+    private int playerId;
 
-    public int getLobbyID() {
-        return lobbyID;
+    private String name;
+
+    private int lobbyId;
+
+    public int getLobbyId() {
+        return lobbyId;
     }
 
-    public void setLobbyID(int lobbyID) {
-        this.lobbyID = lobbyID;
+    public void setLobbyId(int lobbyId) {
+        this.lobbyId = lobbyId;
     }
 
     public String getText() {
@@ -19,5 +23,21 @@ public class SendRoleMessage extends BaseMessage {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

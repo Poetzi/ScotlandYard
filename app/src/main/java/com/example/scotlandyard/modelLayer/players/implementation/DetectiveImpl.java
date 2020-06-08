@@ -8,34 +8,34 @@ import com.example.scotlandyard.modelLayer.transitions.interfaces.Transition;
 import java.util.ArrayList;
 
 public class DetectiveImpl extends PlayerImpl implements Detective {
-        private int taxiTickets;
-        private int busTickets;
-        private int undergroundTickets;
-        private ArrayList<Transition> availableTransitions;
+    private int taxiTickets;
+    private int busTickets;
+    private int undergroundTickets;
+    private ArrayList<Transition> availableTransitions;
 
 
-    public DetectiveImpl(String name, int id){
+    public DetectiveImpl(String name, int id) {
         super(name, id);
-        availableTransitions=getAvailableTransitions();
-        taxiTickets=11;
-        busTickets=8;
-        undergroundTickets=4;
+        availableTransitions = getAvailableTransitions();
+        taxiTickets = 11;
+        busTickets = 8;
+        undergroundTickets = 4;
         //Beispielswerte
-        Transition x=new TransitionImpl();
+        Transition x = new TransitionImpl();
         x.setFromField(1);
         x.setToField(2);
         x.setName("Taxi");
         for (int i = 0; i < taxiTickets; i++) {
             availableTransitions.add(x);
         }
-        x=new TransitionImpl();
+        x = new TransitionImpl();
         x.setFromField(1);
         x.setToField(2);
         x.setName("Bus");
         for (int i = 0; i < busTickets; i++) {
             availableTransitions.add(x);
         }
-        x=new TransitionImpl();
+        x = new TransitionImpl();
         x.setFromField(1);
         x.setToField(2);
         x.setName("U-Bahn");
@@ -44,31 +44,32 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
         }
     }
 
-        /**
-         * Löst ein Ticket ein.
-          * @param ticketType gibt an welches Ticket eingelöst werden soll
-         */
-    public void validateTicket(String ticketType){
-        if (ticketType.equals("Taxi")){
-            if (taxiTickets>0){
+    /**
+     * Löst ein Ticket ein.
+     *
+     * @param ticketType gibt an welches Ticket eingelöst werden soll
+     */
+    public void validateTicket(String ticketType) {
+        if (ticketType.equals("Taxi")) {
+            if (taxiTickets > 0) {
                 taxiTickets--;
-            }else {
+            } else {
                 throw new IllegalArgumentException("No Taxi Tickets left.");
             }
-        }else if (ticketType.equals("Bus")){
-            if (busTickets>0){
+        } else if (ticketType.equals("Bus")) {
+            if (busTickets > 0) {
                 busTickets--;
-            }else {
+            } else {
                 throw new IllegalArgumentException("No Bus Tickets left.");
             }
-        }else if(ticketType.equals("U-Bahn")){
-            if (undergroundTickets>0){
+        } else if (ticketType.equals("U-Bahn")) {
+            if (undergroundTickets > 0) {
                 undergroundTickets--;
-            }else {
+            } else {
                 throw new IllegalArgumentException("No Metro Tickets left.");
             }
-        }else {
-            throw new IllegalArgumentException("Ticket type "+ticketType+" not allowed here.");
+        } else {
+            throw new IllegalArgumentException("Ticket type " + ticketType + " not allowed here.");
         }
     }
 
@@ -89,17 +90,17 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
 
     @Override
     public void setTaxiTickets(int ticketNumber) {
-        taxiTickets=ticketNumber;
+        taxiTickets = ticketNumber;
     }
 
     @Override
     public void setBusTickets(int ticketNumber) {
-        busTickets=ticketNumber;
+        busTickets = ticketNumber;
     }
 
 
     @Override
     public void setUndergoundTickets(int ticketNumber) {
-        undergroundTickets=ticketNumber;
+        undergroundTickets = ticketNumber;
     }
 }

@@ -7,8 +7,8 @@ public class ID {
     public Connection name;
     public String nickname;
 
-    public ID( Connection name, String username){
-        id = id+1;
+    public ID(Connection name, String username) {
+        id = id + 1;
         this.name = name;
         nickname = username;
 

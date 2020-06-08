@@ -20,17 +20,15 @@ public class ChooseRoleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_role);
     }
 
-    public void chooseMrX(View view)
-    {
-        Intent intent = new Intent( this, playActivity.class);
+    public void chooseMrX(View view) {
+        Intent intent = new Intent(this, playActivity.class);
         // MrX setzen
         presenter.setRole("MISTERX");
         startActivity(intent);
     }
 
-    public void chooseDetektiv(View view)
-    {
-        Intent intent = new Intent( this, playActivity.class);
+    public void chooseDetektiv(View view) {
+        Intent intent = new Intent(this, playActivity.class);
         // Detektiv setzen
         presenter.setRole("DETEKTIV");
 

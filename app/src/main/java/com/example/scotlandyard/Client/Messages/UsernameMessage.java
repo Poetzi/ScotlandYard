@@ -8,7 +8,7 @@ public class UsernameMessage extends BaseMessage {
     }
 
 
-    public UsernameMessage(String username){
+    public UsernameMessage(String username) {
         this.username = username;
     }
 

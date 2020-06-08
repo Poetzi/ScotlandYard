@@ -15,52 +15,53 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
 
     private boolean inactive;
 
-    public DetectiveImpl(String name, int id){
+    public DetectiveImpl(String name, int id) {
         super(name, id);
-        availableTransitions=getAvailableTransitions();
-        taxiTickets=11;
-        busTickets=8;
-        undergroundTickets=4;
-        inactive=false;
+        availableTransitions = getAvailableTransitions();
+        taxiTickets = 11;
+        busTickets = 8;
+        undergroundTickets = 4;
+        inactive = false;
         //Beispielswerte
-        for (int i = 0; i <taxiTickets; i++) {
-            availableTransitions.add(new TransitionImpl("Taxi",1,2));
+        for (int i = 0; i < taxiTickets; i++) {
+            availableTransitions.add(new TransitionImpl("Taxi", 1, 2));
         }
 
-        for (int i = 0; i <busTickets; i++) {
-            availableTransitions.add(new TransitionImpl("Bus",1,2));
+        for (int i = 0; i < busTickets; i++) {
+            availableTransitions.add(new TransitionImpl("Bus", 1, 2));
         }
 
-        for (int i = 0; i <undergroundTickets; i++) {
-            availableTransitions.add(new TransitionImpl("U-Bahn",1,2));
+        for (int i = 0; i < undergroundTickets; i++) {
+            availableTransitions.add(new TransitionImpl("U-Bahn", 1, 2));
         }
     }
 
     /**
      * Löst ein Ticket ein.
+     *
      * @param ticketType gibt an welches Ticket eingelöst werden soll
      */
-    public void validateTicket(String ticketType){
-        if (ticketType.equals("Taxi")){
-            if (taxiTickets>0){
+    public void validateTicket(String ticketType) {
+        if (ticketType.equals("Taxi")) {
+            if (taxiTickets > 0) {
                 taxiTickets--;
-            }else {
+            } else {
                 throw new IllegalArgumentException("No Taxi Tickets left.");
             }
-        }else if (ticketType.equals("Bus")){
-            if (busTickets>0){
+        } else if (ticketType.equals("Bus")) {
+            if (busTickets > 0) {
                 busTickets--;
-            }else {
+            } else {
                 throw new IllegalArgumentException("No Bus Tickets left.");
             }
-        }else if(ticketType.equals("U-Bahn")){
-            if (undergroundTickets>0){
+        } else if (ticketType.equals("U-Bahn")) {
+            if (undergroundTickets > 0) {
                 undergroundTickets--;
-            }else {
+            } else {
                 throw new IllegalArgumentException("No Metro Tickets left.");
             }
-        }else {
-            throw new IllegalArgumentException("Ticket type "+ticketType+" not allowed here.");
+        } else {
+            throw new IllegalArgumentException("Ticket type " + ticketType + " not allowed here.");
         }
     }
 
@@ -81,17 +82,17 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
 
     @Override
     public void setTaxiTickets(int ticketNumber) {
-        taxiTickets=ticketNumber;
+        taxiTickets = ticketNumber;
     }
 
     @Override
     public void setBusTickets(int ticketNumber) {
-        busTickets=ticketNumber;
+        busTickets = ticketNumber;
     }
 
     @Override
     public void setUndergoundTickets(int ticketNumber) {
-        undergroundTickets=ticketNumber;
+        undergroundTickets = ticketNumber;
     }
 
     @Override
@@ -101,6 +102,6 @@ public class DetectiveImpl extends PlayerImpl implements Detective {
 
     @Override
     public void setInactive(boolean inactive) {
-        this.inactive=inactive;
+        this.inactive = inactive;
     }
 }
