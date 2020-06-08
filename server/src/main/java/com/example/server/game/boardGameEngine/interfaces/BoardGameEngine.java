@@ -6,10 +6,19 @@ import com.example.server.lobby.interfaces.Lobby;
 
 public interface BoardGameEngine {
 
-    /*
-     * Methode, um einen neuen Spieler hinzuzufügen
+    /**
+     * Methode um einen MrX Spieler hinzuzufügen
+     * @param name
+     * @param id
      */
-    void addPlayer(String name, int field);
+    public void addMrX(String name ,int id);
+
+    /**
+     * Methode um einen Detektiv hinzuzufügen
+     * @param name
+     * @param id
+     */
+    public void addDetektiv(String name ,int id);
 
     /*
      * Einstellungen für ein neues Spiel werden hier festgelegt, wie den Spielern

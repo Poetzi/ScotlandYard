@@ -21,24 +21,26 @@ import java.util.Random;
 
 public class BoardGameEngineImpl implements BoardGameEngine {
 
-    private ArrayList<Player> players = new ArrayList<>();
+    private Player[] players = new Player[6];
     private int numberOfPlayers;
     private int maxRounds=24;
     private int actualRound;
     private GameBoard gameBoard= new GameBoardImpl();
     private int numberOfFields;
     private Lobby lobby;
+    private  int mrXId;
 
 
 
     @Override
-    public void addPlayer(String name, int field) {
-        Player player = new PlayerImpl();
-        player.setId(players.size());
-        player.setName(name);
-        gameBoard.setPositionOfPlayer(players.size(),field);
-        players.add(player);
+    public void addDetektiv(String name ,int id) {
+        players[id] = new DetectiveImpl(name, id);
+    }
 
+    @Override
+    public void addMrX(String name ,int id) {
+        players[id] = new MrXImpl(name, id);
+        mrXId = id;
     }
 
     @Override
@@ -159,7 +161,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
 
 
-        addPlayer("nils",2);
+
 
     }
 
@@ -249,7 +251,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public boolean checkWinningCondition() {
-        int misterX = players.size() - 1;
+        int misterX = mrXId;
 
         if(maxRounds==actualRound){
             System.out.println("Mister X won");
