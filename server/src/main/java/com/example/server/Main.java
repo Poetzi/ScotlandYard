@@ -8,6 +8,7 @@ import com.example.server.messages.AskPlayerForTurn;
 
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.SendLobbyID;
+import com.example.server.messages.SendPlayerIDtoClient;
 import com.example.server.messages.SendRoleMessage;
 import com.example.server.messages.StartGameMessage;
 import com.example.server.messages.TextMessage;
@@ -34,6 +35,7 @@ public class Main {
             server.registerClass(StartGameMessage.class);
             server.registerClass(SendRoleMessage.class);
             server.registerClass(SendLobbyID.class);
+            server.registerClass(SendPlayerIDtoClient.class);
 
 
             // Die Callbacks werden hier registriert,
