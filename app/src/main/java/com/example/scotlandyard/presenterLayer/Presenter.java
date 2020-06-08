@@ -130,6 +130,13 @@ public class Presenter {
                 this.playerID = sendPlayerIDtoClient.getId();
             }
 
+            if (nachrichtVomServer instanceof UpdatePlayersPosition){
+
+                // Updates the position of a player on the map
+                UpdatePlayersPosition msg =(UpdatePlayersPosition)nachrichtVomServer;
+                updatePositionOfPlayerOnMap(msg.getPlayerId(),msg.getToField());
+            }
+
         });
 
 
@@ -211,6 +218,8 @@ public class Presenter {
         }
     }
 
+
+
     public Menu getTravellogMenu() {
         return travellogMenu;
     }
@@ -233,5 +242,10 @@ public class Presenter {
 
     public void setLobbyID(int lobbyID) {
         this.lobbyID = lobbyID;
+    }
+
+    public void updatePositionOfPlayerOnMap(int id, int toField)
+    {
+        // toDo change the position of a player on the player View
     }
 }

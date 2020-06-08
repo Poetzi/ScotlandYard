@@ -179,6 +179,14 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void startGame() {
 
+        // toDo send initial position of the players to clients
+        gameBoard.setPositionOfPlayer(0,2);
+        gameBoard.setPositionOfPlayer(1, 21);
+
+        lobby.updatePlayerPositionsToAllClients(0,2);
+        lobby.updatePlayerPositionsToAllClients(1,21);
+
+
 
         // Aktuelle Runde wird auf 0 gesetzt
         actualRound = 0;
