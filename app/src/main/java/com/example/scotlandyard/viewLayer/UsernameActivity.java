@@ -28,5 +28,4 @@ public class UsernameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
 }
