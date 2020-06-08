@@ -71,6 +71,7 @@ public class Presenter {
             client.registerClass(StartGameMessage.class);
             client.registerClass(SendRoleMessage.class);
             client.registerClass(SendLobbyID.class);
+            client.registerClass(SendPlayerIDtoClient.class);
 
 
             registerCallback();
