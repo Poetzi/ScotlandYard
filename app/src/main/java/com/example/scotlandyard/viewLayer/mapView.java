@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class mapView extends View {
 
     Bitmap small;
+
     ArrayList<Points> points = new ArrayList<>();
     int imgOffset = 20;
     int paintOffset = 15;
@@ -197,8 +198,7 @@ public class mapView extends View {
         points.add(new Points(1163,362,R.drawable.fieldsnew,"Field44",44));
         points.add(new Points(1077,494,R.drawable.fieldsnew,"Field45",45));
 
-
-
+       Points.allPoints = points;
     }
 
     //Getting coordinates from img

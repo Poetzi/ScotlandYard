@@ -47,7 +47,7 @@ public class LobbyImpl implements Lobby {
     public void addPlayertoGame(ID id) {
         players.add(id);
         playerCount++;
-        if (playerCount == 5)
+        if (playerCount == 2)
             startGame();// was 6
     }
 

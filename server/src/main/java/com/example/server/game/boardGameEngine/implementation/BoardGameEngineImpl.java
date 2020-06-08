@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class BoardGameEngineImpl implements BoardGameEngine {
 
-    private Player[] players = new Player[6];
+    private Player[] players = new Player[2];
     private int numberOfPlayers = 0;
     private int maxRounds = 24;
     private int actualRound;

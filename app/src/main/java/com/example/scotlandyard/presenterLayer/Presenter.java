@@ -135,6 +135,8 @@ public class Presenter {
                 // Updates the position of a player on the map
                 UpdatePlayersPosition msg =(UpdatePlayersPosition)nachrichtVomServer;
                 updatePositionOfPlayerOnMap(msg.getPlayerId(),msg.getToField());
+
+
             }
 
         });
@@ -149,7 +151,7 @@ public class Presenter {
     }
 
     public void sendTurn(TurnMessage message) {
-        TurnMessage msg = new TurnMessage(user.getId(), message.getToField(), 0, message.getCard());
+        TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard());
         client.sendMessage(msg);
     }
 
@@ -246,6 +248,6 @@ public class Presenter {
 
     public void updatePositionOfPlayerOnMap(int id, int toField)
     {
-        // toDo change the position of a player on the player View
+        game.drawPlayer(id,toField);
     }
 }

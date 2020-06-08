@@ -1,6 +1,10 @@
 package com.example.scotlandyard.viewLayer;
 
+import android.graphics.Point;
+
 import com.example.scotlandyard.R;
+
+import java.util.ArrayList;
 
 public class Points {
     int x;
@@ -8,6 +12,7 @@ public class Points {
     int img;
     int field;
     String strField;
+    static ArrayList<Points> allPoints;
 
 
     public Points(int x, int y, int img, String strField, int field) {

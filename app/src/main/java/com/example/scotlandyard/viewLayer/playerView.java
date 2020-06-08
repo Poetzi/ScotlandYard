@@ -10,13 +10,17 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.viewLayer.mapView;
+
+import java.util.ArrayList;
 
 public class playerView extends View {
     Bitmap player = BitmapFactory.decodeResource(getResources(), R.drawable.player);
     int x = -100;
     int y = -100;
     int imgOffset = 20;
-
+    ArrayList<Players> players = new ArrayList<>();
+    ArrayList<Points> points = Points.allPoints;
 
     public playerView(Context context) {
         super(context);
@@ -30,12 +34,46 @@ public class playerView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawBitmap(player, x - imgOffset, y - imgOffset, null);
+        for (int i = 0; i < players.size() ; i++) {
+            if(players.get(i).getPlayerId() == 0){
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
+            }
+            if(players.get(i).getPlayerId() == 1){
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+            }if(players.get(i).getPlayerId() == 2){
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
+            }
+            if(players.get(i).getPlayerId() == 3){
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+            }if(players.get(i).getPlayerId() == 4){
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
+            }
+            if(players.get(i).getPlayerId() == 5){
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+            }
+        }
+
     }
 
-    public void drawPlayer(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public void addPlayers(){
+        for (int i = 0; i < 6 ; i++) {
+            players.add(new Players(0,0,i,0));
+        }
+    }
+
+    public void drawSinglePlayer(int playerId, int toField){
+        int x = 0,y = 0;
+        for (int i = 0; i <points.size() ; i++) {
+            if(toField == points.get(i).getField()){
+                x = points.get(i).getX();
+                y = points.get(i).getX();
+                break;
+            }
+        }
+        players.get(playerId).setX(x);
+        players.get(playerId).setY(y);
+        players.get(playerId).setPosition(toField);
         invalidate();
     }
+
 }

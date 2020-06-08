@@ -35,7 +35,6 @@ public class gameActivity extends AppCompatActivity {
     private Points playerPostion;
     private Presenter presenter = Presenter.getInstance();
     private TurnMessage msg;
-    private User user = new User("test");
 
     public void setCheck(boolean check) {
         this.check = check;
@@ -66,7 +65,8 @@ public class gameActivity extends AppCompatActivity {
         doubleMove = findViewById(R.id.doubleMove);
         map = findViewById(R.id.mapView);
         player = findViewById(R.id.playerView);
-        setUpFields();
+        presenter.setGame(this);
+        player.addPlayers();
 
         cheatBtn = findViewById(R.id.btn_cheat);
         cheatBtn.setVisibility(View.INVISIBLE);
@@ -130,16 +130,10 @@ public class gameActivity extends AppCompatActivity {
 
     }
 
-
-    public void setUpFields() {
-        user.setId(0);
-        presenter.setUser(user);
-        presenter.setGame(this);
-
-        //Initial position of player
-        playerPostion = new Points(100, 286, 0, " ", 1);
-        player.drawPlayer(100, 286);
+    public void drawPlayer(int playerId, int toField){
+        player.drawSinglePlayer(playerId,toField);
     }
+
 
     public void useTaxi() {
         int toField = map.touchedPoint.getField();
@@ -170,7 +164,7 @@ public class gameActivity extends AppCompatActivity {
 
         if (confirm) {
             playerPostion.setField(toField);
-            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+           // player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
             Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
 
         } else {
@@ -207,8 +201,8 @@ public class gameActivity extends AppCompatActivity {
 
         if (confirm) {
             playerPostion.setField(toField);
-            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-            Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
+           // player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+           // Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
         }
@@ -243,7 +237,7 @@ public class gameActivity extends AppCompatActivity {
 
         if (confirm) {
             playerPostion.setField(toField);
-            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
+         //   player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
             Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
