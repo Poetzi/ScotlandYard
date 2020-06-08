@@ -25,7 +25,7 @@ public class LobbyImpl implements Lobby {
     private boolean isOpen = true;
     public int playerCount = 0;
 
-    private BoardGameEngine game = new BoardGameEngineImpl();
+    private BoardGameEngine game = BoardGameEngineImpl.getInstance();
 
     // ToDo
     private int lobbyID = 1;

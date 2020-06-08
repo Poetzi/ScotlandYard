@@ -1,5 +1,7 @@
 package com.example.server;
 
+import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
+import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.lobby.implementation.ID;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
@@ -22,6 +24,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         MyKryoServer server = new MyKryoServer();
+        BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
         try {
             // Registrieren der Messageklassen zur Kommunikation
             // zwischen Server und Client
@@ -59,6 +62,21 @@ public class Main {
 
                     // Der Zug wird an die Lobby weitergegeben
                     MyKryoServer.getLobby().get(turn.getLobbyId()).setReturnTurnMessage(turn, turn.getPlayerId());
+
+                }
+
+                if (nachrichtvomClient instanceof SendRoleMessage)
+                {
+                    SendRoleMessage msg = (SendRoleMessage)nachrichtvomClient;
+
+                    if (msg.getText()== "MISTERX")
+                    {
+
+                    }
+                    if(msg.getText()== "DETEKTIV")
+                    {
+
+                    }
 
                 }
 
