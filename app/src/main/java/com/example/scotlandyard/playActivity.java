@@ -36,7 +36,7 @@ public class playActivity extends AppCompatActivity {
             ipFinder.findIP();
             //Server wird gestartet.
 
-            presenter.connectToServer("143.205.187.52");
+            presenter.connectToServer("143.205.186.73");
             // Username wird dem Server übergeben
 
             presenter.sendUsername();

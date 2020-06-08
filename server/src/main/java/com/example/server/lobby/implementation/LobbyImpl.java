@@ -101,11 +101,7 @@ public class LobbyImpl implements Lobby {
         return returnTurnMessage[playerId];
     }
 
-    @Override
-    public void confirm(int playerId, String conf) {
-        AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId, conf, lobbyID);
-        players.get(playerId).name.sendTCP(askPlayerForTurn);
-    }
+
 
     @Override
     public void updatePlayerPositionsToAllClients(int playerId, int toField) {

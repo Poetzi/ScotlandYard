@@ -216,16 +216,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                ob der Zug gültig ist.
                Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
             */
-            if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
-            {
-                System.out.println("Nice ");
-                lobby.confirm(player.getId(),"yes");
 
-                drawValide = true;
-            }else {
-                lobby.confirm(player.getId(),"no");
-
-            }
         }
 
         /*
@@ -249,7 +240,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             /*
                 Die Position an die anderen Spieler clients weitergeben
              */
-            //lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
+            lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
         }
 
     }

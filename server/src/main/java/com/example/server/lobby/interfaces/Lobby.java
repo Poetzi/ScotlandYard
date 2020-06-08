@@ -37,8 +37,6 @@ public interface Lobby {
 
     void setGame(BoardGameEngine game);
 
-    void confirm(int playerId, String conf);
-
     void updateTravellogToAllClients(TravelLog travelLog, int round);
 
 }
