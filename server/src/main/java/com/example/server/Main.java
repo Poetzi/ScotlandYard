@@ -7,6 +7,9 @@ import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
 
 import com.example.server.messages.BaseMessage;
+import com.example.server.messages.SendLobbyID;
+import com.example.server.messages.SendRoleMessage;
+import com.example.server.messages.StartGameMessage;
 import com.example.server.messages.TextMessage;
 import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
@@ -28,6 +31,9 @@ public class Main {
             server.registerClass(TravellogMessage.class);
             server.registerClass(UsernameMessage.class);
             server.registerClass(UpdatePlayersPosition.class);
+            server.registerClass(StartGameMessage.class);
+            server.registerClass(SendRoleMessage.class);
+            server.registerClass(SendLobbyID.class);
 
 
             // Die Callbacks werden hier registriert,

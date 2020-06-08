@@ -1,25 +1,15 @@
 package com.example.scotlandyard;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.example.scotlandyard.viewLayer.Chat;
 import com.example.scotlandyard.viewLayer.IPFinder;
 import com.example.scotlandyard.viewLayer.gameActivity;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 public class playActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
@@ -45,12 +35,21 @@ public class playActivity extends AppCompatActivity {
             IPFinder ipFinder=new IPFinder(getApplicationContext());
             ipFinder.findIP();
             //Server wird gestartet.
-            presenter.connectToServer("143.205.187.59");
+
+            presenter.connectToServer("143.205.187.52");
+            // Username wird dem Server übergeben
+
             presenter.sendUsername();
+            // die Rolle wird dem Server übergeben
+            presenter.sendRole();
+
 
         }).start();
 
+        //Intent wird gestartet um durch Knopfdruck auf Chat-Seite zu gelangen
         Intent intent = new Intent(this, gameActivity.class);
         startActivity(intent);
+
+
     }
 }
