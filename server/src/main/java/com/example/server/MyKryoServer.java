@@ -89,7 +89,7 @@ public class MyKryoServer {
                             SendPlayerIDtoClient messagePlayerId = new SendPlayerIDtoClient();
                             messagePlayerId.setId(id.id);
                             connection.sendTCP((messagePlayerId));
-                            System.out.println("Server sendet PlayerId "+" an Client");
+                            System.out.println("Server sendet PlayerId "+ messagePlayerId.getId() +" an Client");
 
                             break;
                         }
