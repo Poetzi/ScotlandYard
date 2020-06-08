@@ -149,7 +149,11 @@ public class Presenter {
     public void sendRole() {
         SendRoleMessage message = new SendRoleMessage();
         message.setText(role);
+        message.setPlayerId(playerID);
+        message.setName(getUsername());
+        message.setLobbyId(getLobbyID());
         client.sendMessage(message);
+
     }
 
     public void sendUsername() {
