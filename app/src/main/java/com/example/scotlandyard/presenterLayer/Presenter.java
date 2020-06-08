@@ -89,6 +89,7 @@ public class Presenter {
     public void setUsername(String username) {
         this.username = username;
     }
+
     private void registerCallback() {
         client.registerCallback(nachrichtVomServer -> {
             if (nachrichtVomServer instanceof TextMessage) {
@@ -107,10 +108,15 @@ public class Presenter {
                 }
             }
 
-            if (nachrichtVomServer instanceof  SendLobbyID)
-            {
+            if (nachrichtVomServer instanceof SendLobbyID) {
                 SendLobbyID message = (SendLobbyID) nachrichtVomServer;
                 setLobbyID(message.getLobbyID());
+            }
+            if (nachrichtVomServer instanceof UpdatePlayersPosition) {
+                UpdatePlayersPosition updatePlayersPosition = (UpdatePlayersPosition) nachrichtVomServer;
+                Log.d("Server:", "PlayersPosition: " + updatePlayersPosition.getPlayerId() + " ToField: " + updatePlayersPosition.getToField()
+                        + " LobbyID: " + updatePlayersPosition.getLobbyId());
+
             }
         });
 
@@ -128,14 +134,13 @@ public class Presenter {
         client.sendMessage(msg);
     }
 
-    public void sendRole()
-    {
+    public void sendRole() {
         SendRoleMessage message = new SendRoleMessage();
         message.setText(role);
         client.sendMessage(message);
     }
 
-    public void sendUsername(){
+    public void sendUsername() {
         UsernameMessage msg = new UsernameMessage(username);
         client.sendMessage(msg);
     }
