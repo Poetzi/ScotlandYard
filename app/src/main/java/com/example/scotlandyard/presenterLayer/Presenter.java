@@ -14,6 +14,7 @@ import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
+import com.example.scotlandyard.Client.Messages.UpdateTicketCount;
 import com.example.scotlandyard.Client.Messages.UsernameMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.players.TravelLog;
@@ -72,6 +73,7 @@ public class Presenter {
             client.registerClass(SendRoleMessage.class);
             client.registerClass(SendLobbyID.class);
             client.registerClass(SendPlayerIDtoClient.class);
+            client.registerClass(UpdateTicketCount.class);
 
 
             registerCallback();
@@ -137,6 +139,12 @@ public class Presenter {
                 updatePositionOfPlayerOnMap(msg.getPlayerId(),msg.getToField());
 
 
+            }
+
+            if (nachrichtVomServer instanceof UpdateTicketCount){
+                UpdateTicketCount msg=(UpdateTicketCount)nachrichtVomServer;
+                Log.d("TICKET","type:"+msg.getType()+" count:"+msg.getCount());
+                updateTicketCount(msg.getType(),msg.getCount());
             }
 
         });
@@ -249,5 +257,9 @@ public class Presenter {
     public void updatePositionOfPlayerOnMap(int id, int toField)
     {
         game.drawPlayer(id,toField);
+    }
+
+    public void updateTicketCount(String type, int count){
+        game.updateCount(type,count);
     }
 }

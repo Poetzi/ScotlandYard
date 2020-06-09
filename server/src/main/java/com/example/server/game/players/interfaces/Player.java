@@ -23,4 +23,14 @@ public interface Player {
     void setCurrentPosition(int field);
 
     ArrayList<Transition> getAvailableTransitions();
+
+    public int getTaxiTickets();
+
+    public int getBusTickets();
+
+    public int getUndergroundTickets();
+
+    public int getDoubleMoveTickets();
+
+    public int getBlackTickets();
 }

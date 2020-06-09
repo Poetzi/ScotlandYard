@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.scotlandyard.Client.Messages.TurnMessage;
@@ -127,6 +128,11 @@ public class gameActivity extends AppCompatActivity {
             presenter.updateTravellogMenu(tl, 5);
         }, 20000);
 
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendMessagetoServer("DONE");
+
+        }).start();
 
     }
 
@@ -290,5 +296,35 @@ public class gameActivity extends AppCompatActivity {
             Intent intent = new Intent(this, Chat.class);
             startActivity(intent);
         }).start();
+    }
+
+    public void updateCount(String type, int count){
+        String c=String.valueOf(count);
+        TextView v;
+        switch(type){
+            case "Taxi":
+                v=findViewById(R.id.txtview_taxi);
+                v.setText(c);
+                break;
+            case "Bus":
+                v=findViewById(R.id.txtview_bus);
+                v.setText(c);
+                break;
+            case "U-Bahn":
+                v=findViewById(R.id.txtview_metro);
+                v.setText(c);
+                break;
+            case "Black":
+                v=findViewById(R.id.txtview_black);
+                v.setText(c);
+                break;
+            case "DoubleMove":
+                v=findViewById(R.id.txtview_double);
+                v.setText(c);
+                break;
+            case "Cheat":
+                //noch zu machen
+                break;
+        }
     }
 }

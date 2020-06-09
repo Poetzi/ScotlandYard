@@ -17,6 +17,7 @@ import com.example.server.messages.TextMessage;
 import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
+import com.example.server.messages.UpdateTicketCount;
 import com.example.server.messages.UsernameMessage;
 
 import java.io.IOException;
@@ -39,6 +40,7 @@ public class Main {
             server.registerClass(SendRoleMessage.class);
             server.registerClass(SendLobbyID.class);
             server.registerClass(SendPlayerIDtoClient.class);
+            server.registerClass(UpdateTicketCount.class);
 
 
             // Die Callbacks werden hier registriert,
@@ -48,9 +50,12 @@ public class Main {
                 if (nachrichtvomClient instanceof TextMessage) {
                     TextMessage message = (TextMessage) nachrichtvomClient;
                     System.out.println(message.toString());
-
-                    // Server sendet die Nachricht an alle Clients weiter
-                    server.broadcastMessage(message);
+                    if (message.getText().contains("DONE")){
+                        game.startGame();
+                    }else {
+                        // Server sendet die Nachricht an alle Clients weiter
+                        server.broadcastMessage(message);
+                    }
                 }
 
                 if (nachrichtvomClient instanceof TurnMessage) {
@@ -79,7 +84,8 @@ public class Main {
                         game.addDetektiv(msg.getName(), msg.getPlayerId());
                         System.out.println("Spieler "+ msg.getName()+" ist ein Detektiv und wurde erstellt");
                     }
-
+                    System.out.println(game);
+                    game.setupNewGame();
                 }
 
 

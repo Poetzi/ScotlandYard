@@ -66,4 +66,29 @@ public class PlayerImpl implements Player {
     public ArrayList<Transition> getAvailableTransitions() {
         return availableTransitions;
     }
+
+    @Override
+    public int getTaxiTickets() {
+        return 24;
+    }
+
+    @Override
+    public int getBusTickets() {
+        return 24;
+    }
+
+    @Override
+    public int getUndergroundTickets() {
+        return 24;
+    }
+
+    @Override
+    public int getDoubleMoveTickets() {
+        return 0;
+    }
+
+    @Override
+    public int getBlackTickets() {
+        return 0;
+    }
 }

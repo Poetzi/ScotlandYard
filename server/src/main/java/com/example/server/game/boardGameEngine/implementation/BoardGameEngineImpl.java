@@ -183,8 +183,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         gameBoard.setPositionOfPlayer(0,2);
         gameBoard.setPositionOfPlayer(1, 21);
 
-        lobby.updatePlayerPositionsToAllClients(0,2);
-        lobby.updatePlayerPositionsToAllClients(1,21);
+      //  lobby.updatePlayerPositionsToAllClients(0,2);
+     //   lobby.updatePlayerPositionsToAllClients(1,21);
 
 
 
@@ -210,6 +210,11 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void playOneRound() {
         for (Player p : players) {
+            lobby.updateTicketCount(p.getId(),p.getTaxiTickets(),"Taxi");
+            lobby.updateTicketCount(p.getId(),p.getBusTickets(),"Bus");
+            lobby.updateTicketCount(p.getId(),p.getUndergroundTickets(),"U-Bahn");
+            lobby.updateTicketCount(p.getId(),p.getBlackTickets(),"Black");
+            lobby.updateTicketCount(p.getId(),p.getDoubleMoveTickets(),"DoubleMove");
             drawForPlayer(p);
         }
     }
