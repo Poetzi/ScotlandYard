@@ -24,13 +24,15 @@ public interface Player {
 
     ArrayList<Transition> getAvailableTransitions();
 
-    public int getTaxiTickets();
+    int getTaxiTickets();
 
-    public int getBusTickets();
+    int getBusTickets();
 
-    public int getUndergroundTickets();
+    int getUndergroundTickets();
 
-    public int getDoubleMoveTickets();
+    int getDoubleMoveTickets();
 
-    public int getBlackTickets();
+    int getBlackTickets();
+
+    int getCheatTickets();
 }

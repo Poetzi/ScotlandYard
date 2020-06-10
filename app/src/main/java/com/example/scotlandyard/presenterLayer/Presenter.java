@@ -74,6 +74,7 @@ public class Presenter {
             client.registerClass(SendLobbyID.class);
             client.registerClass(SendPlayerIDtoClient.class);
             client.registerClass(UpdateTicketCount.class);
+            client.registerClass(TravelLog.class);
 
 
             registerCallback();

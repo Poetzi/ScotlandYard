@@ -206,6 +206,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/mapView"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <TextView
+            android:id="@+id/txtview_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_cheat"
+            app:layout_constraintStart_toEndOf="@+id/btn_cheat"
+            app:layout_constraintTop_toTopOf="@+id/btn_cheat" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

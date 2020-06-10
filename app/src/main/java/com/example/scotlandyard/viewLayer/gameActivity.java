@@ -52,6 +52,7 @@ public class gameActivity extends AppCompatActivity {
     private Sensor accelerometer;
     private ShakeDetector shakeDetector;
     private Button cheatBtn;
+    private TextView cheatTicketCount;
 
     private DrawerLayout drawerLayout;
 
@@ -80,6 +81,9 @@ public class gameActivity extends AppCompatActivity {
             }).start();
         });
 
+        cheatTicketCount=findViewById(R.id.txtview_cheat);
+        cheatTicketCount.setVisibility(View.INVISIBLE);
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -90,8 +94,10 @@ public class gameActivity extends AppCompatActivity {
         shakeDetector.setOnShakeListener(count -> {
             if (cheatBtn.getVisibility() == View.INVISIBLE) {
                 cheatBtn.setVisibility(View.VISIBLE);
+                cheatTicketCount.setVisibility(View.VISIBLE);
             } else {
                 cheatBtn.setVisibility(View.INVISIBLE);
+                cheatTicketCount.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -326,7 +332,11 @@ public class gameActivity extends AppCompatActivity {
                 }
                 break;
             case "Cheat":
-                //noch zu machen
+                cheatTicketCount.setText(c);
+                if (count==0){
+                    cheatBtn.setBackgroundColor(0xff888888);
+                    cheatBtn.setClickable(false);
+                }
                 break;
         }
     }

@@ -2,6 +2,7 @@ package com.example.server;
 
 import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
+import com.example.server.game.players.TravelLog;
 import com.example.server.lobby.implementation.ID;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
@@ -41,6 +42,7 @@ public class Main {
             server.registerClass(SendLobbyID.class);
             server.registerClass(SendPlayerIDtoClient.class);
             server.registerClass(UpdateTicketCount.class);
+            server.registerClass(TravelLog.class);
 
 
             // Die Callbacks werden hier registriert,

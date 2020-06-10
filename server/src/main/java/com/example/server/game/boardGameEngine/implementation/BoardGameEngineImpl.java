@@ -186,6 +186,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         lobby.updatePlayerPositionsToAllClients(0,2);
         lobby.updatePlayerPositionsToAllClients(1,21);
 
+        //Test ob Travellog an Client geschickt wird
+        TravelLog log=new TravelLog(2,"Taxi",false);
+        lobby.updateTravellogToAllClients(log,actualRound);
+
 
 
         // Aktuelle Runde wird auf 0 gesetzt
@@ -215,6 +219,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             lobby.updateTicketCount(p.getId(),p.getUndergroundTickets(),"U-Bahn");
             lobby.updateTicketCount(p.getId(),p.getBlackTickets(),"Black");
             lobby.updateTicketCount(p.getId(),p.getDoubleMoveTickets(),"DoubleMove");
+            lobby.updateTicketCount(p.getId(),p.getCheatTickets(),"Cheat");
             drawForPlayer(p);
         }
     }

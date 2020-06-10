@@ -91,4 +91,6 @@ public class PlayerImpl implements Player {
     public int getBlackTickets() {
         return 0;
     }
+
+    public int getCheatTickets(){return 24;}
 }
