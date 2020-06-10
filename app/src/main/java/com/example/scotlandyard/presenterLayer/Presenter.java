@@ -147,6 +147,11 @@ public class Presenter {
                 updateTicketCount(msg.getType(),msg.getCount());
             }
 
+            if (nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage msg=(TravellogMessage)nachrichtVomServer;
+                updateTravellogMenu(msg.getTravelLog(),msg.getRound());
+            }
+
         });
 
 
@@ -221,7 +226,7 @@ public class Presenter {
 
     public void updateTravellogMenu(TravelLog travelLog, int round) {
         String transport = travelLog.getTicket();
-        if (round == 3 || round == 8 || round == 13 || round == 18 || travelLog.isCaughtCheating()) {
+        if (round == 2 || round == 7 || round == 12 || round == 17 || travelLog.isCaughtCheating()) {
             travellogMenu.add(Menu.NONE, round, Menu.NONE, transport + ", Position:" + round);
         } else {
             travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);

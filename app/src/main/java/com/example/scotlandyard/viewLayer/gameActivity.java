@@ -64,7 +64,7 @@ public class gameActivity extends AppCompatActivity {
         ubahn = findViewById(R.id.ubahn);
         blackTicket = findViewById(R.id.blackTicket);
         doubleMove = findViewById(R.id.doubleMove);
-        map = findViewById(R.id.mapView);
+        map =findViewById(R.id.mapView);
         player = findViewById(R.id.playerView);
         presenter.setGame(this);
         player.addPlayers();
@@ -106,28 +106,6 @@ public class gameActivity extends AppCompatActivity {
         Menu menu = nav.getMenu();
         presenter.setTravellogMenu(menu);
 
-        //Beispielwerte
-        TravelLog travelLog;
-        travelLog = new TravelLog(1, "Bus", false);
-        presenter.updateTravellogMenu(travelLog, 1);
-
-        travelLog = new TravelLog(2, "U-Bahn", false);
-        presenter.updateTravellogMenu(travelLog, 2);
-
-        travelLog = new TravelLog(3, "Taxi", false);
-        presenter.updateTravellogMenu(travelLog, 3);
-
-
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            TravelLog tl = new TravelLog(1, "Taxi", false);
-            presenter.updateTravellogMenu(tl, 4);
-
-            tl = new TravelLog(2, "Bus", false);
-            tl.setCaughtCheating(true);
-            presenter.updateTravellogMenu(tl, 5);
-        }, 20000);
-
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendMessagetoServer("DONE");
@@ -137,7 +115,7 @@ public class gameActivity extends AppCompatActivity {
     }
 
     public void drawPlayer(int playerId, int toField){
-        player.drawSinglePlayer(playerId,toField);
+        player.drawSinglePlayer(playerId,toField,map.getPoints());
     }
 
 
@@ -305,22 +283,47 @@ public class gameActivity extends AppCompatActivity {
             case "Taxi":
                 v=findViewById(R.id.txtview_taxi);
                 v.setText(c);
+                if (count==0){
+                    Button b=findViewById(R.id.taxi);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
                 break;
             case "Bus":
                 v=findViewById(R.id.txtview_bus);
                 v.setText(c);
+                if (count==0){
+                    Button b=findViewById(R.id.bus);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
                 break;
             case "U-Bahn":
                 v=findViewById(R.id.txtview_metro);
                 v.setText(c);
+                if (count==0){
+                    Button b=findViewById(R.id.ubahn);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
                 break;
             case "Black":
                 v=findViewById(R.id.txtview_black);
                 v.setText(c);
+                if (count==0){
+                    Button b=findViewById(R.id.blackTicket);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
                 break;
             case "DoubleMove":
                 v=findViewById(R.id.txtview_double);
                 v.setText(c);
+                if (count==0){
+                    Button b=findViewById(R.id.doubleMove);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
                 break;
             case "Cheat":
                 //noch zu machen

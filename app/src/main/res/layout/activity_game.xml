@@ -49,6 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/taxi"
             app:layout_constraintStart_toStartOf="@+id/taxi"
             app:layout_constraintTop_toBottomOf="@+id/taxi" />
@@ -59,6 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/bus"
             app:layout_constraintStart_toStartOf="@+id/bus"
             app:layout_constraintTop_toBottomOf="@+id/bus" />
@@ -69,6 +73,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/blackTicket"
             app:layout_constraintStart_toStartOf="@+id/blackTicket"
             app:layout_constraintTop_toBottomOf="@+id/blackTicket" />
@@ -79,6 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/ubahn"
             app:layout_constraintHorizontal_bias="0.466"
             app:layout_constraintStart_toStartOf="@+id/ubahn"
@@ -90,6 +98,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/doubleMove"
             app:layout_constraintStart_toStartOf="@+id/doubleMove"
             app:layout_constraintTop_toBottomOf="@+id/doubleMove" />
