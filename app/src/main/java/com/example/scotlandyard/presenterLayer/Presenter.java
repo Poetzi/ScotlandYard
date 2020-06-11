@@ -26,7 +26,7 @@ import java.io.IOException;
 
 /**
  * Mediator class for communicating between Android-Activities and the Kryo-Client.
- * Implemented as Singleton-Pattern.
+ * Implemented as Singleton-Pattern
  */
 public class Presenter {
 
