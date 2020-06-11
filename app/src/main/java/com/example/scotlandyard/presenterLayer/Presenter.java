@@ -153,6 +153,12 @@ public class Presenter {
         client.sendMessage(msg);
     }
 
+    public void sendReady() {
+        ReadyMessage message = new ReadyMessage();
+        client.sendMessage(message);
+
+    }
+
     public void sendRole() {
         SendRoleMessage message = new SendRoleMessage();
         message.setText(role);
@@ -181,16 +187,6 @@ public class Presenter {
         String toAdd = text;
         String newlog = prev + toAdd + "\n";
         log.setText(newlog);
-
-        /*list.add(text);
-        if (list.size() == 15) {
-            list.remove(0);
-        }
-        String toAdd = "";
-        for (int i = 0; i < list.size(); i++) {
-            toAdd += list.get(i) + "\n";
-        }
-        log.setText(toAdd);*/
     }
 
     public TextView getLog() {

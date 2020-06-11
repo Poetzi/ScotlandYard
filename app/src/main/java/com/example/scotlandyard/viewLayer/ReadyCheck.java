@@ -1,4 +1,4 @@
-package com.example.scotlandyard;
+package com.example.scotlandyard.viewLayer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,37 +6,30 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.scotlandyard.R;
 import com.example.scotlandyard.presenterLayer.Presenter;
-import com.example.scotlandyard.viewLayer.Chat;
-import com.example.scotlandyard.viewLayer.ReadyCheck;
-import com.example.scotlandyard.viewLayer.gameActivity;
 
-public class playActivity extends AppCompatActivity {
+public class ReadyCheck extends AppCompatActivity {
+
     private Presenter presenter = Presenter.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play);
+        setContentView(R.layout.activity_username);
     }
-
-    public void chat(View view) {
-        Intent intent = new Intent(this, Chat.class);
-        startActivity(intent);
-    }
-
 
     public void goToGameActivity(View view) {
         new Thread(() -> {
 
             // die Rolle wird dem Server übergeben
-            presenter.sendRole();
+            presenter.sendReady();
 
 
         }).start();
 
         //Intent wird gestartet um durch Knopfdruck auf Chat-Seite zu gelangen
-        Intent intent = new Intent(this, ReadyCheck.class);
+        Intent intent = new Intent(this, gameActivity.class);
         startActivity(intent);
 
 
