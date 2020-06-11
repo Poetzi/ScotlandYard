@@ -186,6 +186,8 @@ public class Presenter {
             }
 
         });
+
+
     }
 
     /**
@@ -198,6 +200,7 @@ public class Presenter {
         TextMessage message = new TextMessage(username + ": " + text);
         //Message gets send to the server
         client.sendMessage(message);
+
     }
 
     /**
@@ -280,16 +283,7 @@ public class Presenter {
         }
     }
 
-    /**
-     * Method for updating the Player position on the map
-     *
-     * @param id      Player ID
-     * @param toField toField
-     */
-    public void updatePositionOfPlayerOnMap(int id, int toField) {
-        //Player is drawn on the map
-        game.drawPlayer(id, toField);
-    }
+
 
     //Getter and Setter
     public User getUser() {
@@ -338,5 +332,28 @@ public class Presenter {
 
     public void setLobbyID(int lobbyID) {
         this.lobbyID = lobbyID;
+    }
+
+    /**
+     * Method for updating the Player position on the map
+     *
+     * @param id      Player ID
+     * @param toField toField
+     */
+    public void updatePositionOfPlayerOnMap(int id, int toField)
+    {
+        while(game == null)
+        {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        game.drawPlayer(id,toField);
+    }
+
+    public void updateTicketCount(String type, int count){
+        game.updateCount(type,count);
     }
 }
