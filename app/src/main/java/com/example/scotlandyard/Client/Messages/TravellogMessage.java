@@ -4,7 +4,6 @@ package com.example.scotlandyard.Client.Messages;
 import com.example.scotlandyard.modelLayer.TravelLog;
 
 public class TravellogMessage extends BaseMessage {
-    private int playerID;
     private TravelLog travelLog;
     private int round;
     private int lobbyID;
@@ -12,19 +11,10 @@ public class TravellogMessage extends BaseMessage {
     public TravellogMessage() {
     }
 
-    public TravellogMessage(int id, TravelLog travelLog, int round, int lobbyID) {
-        this.playerID = id;
+    public TravellogMessage(TravelLog travelLog, int round, int lobbyID) {
         this.travelLog = travelLog;
         this.round = round;
         this.lobbyID = lobbyID;
-    }
-
-    public int getPlayerID() {
-        return playerID;
-    }
-
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
     }
 
     public TravelLog getTravelLog() {

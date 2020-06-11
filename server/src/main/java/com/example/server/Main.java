@@ -1,6 +1,12 @@
 package com.example.server;
 
 import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
+import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
+import com.example.server.game.players.TravelLog;
+import com.example.server.lobby.implementation.ID;
+import com.example.server.lobby.implementation.LobbyImpl;
+import com.example.server.lobby.interfaces.Lobby;
+
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.ReadyMessage;
@@ -12,6 +18,7 @@ import com.example.server.messages.TextMessage;
 import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
+import com.example.server.messages.UpdateTicketCount;
 import com.example.server.messages.UsernameMessage;
 
 import java.io.IOException;
@@ -41,6 +48,8 @@ public class Main {
             server.registerClass(SendLobbyID.class);
             server.registerClass(SendPlayerIDtoClient.class);
             server.registerClass(ReadyMessage.class);
+            server.registerClass(UpdateTicketCount.class);
+            server.registerClass(TravelLog.class);
 
 
             // Die Callbacks werden hier registriert,
@@ -50,9 +59,12 @@ public class Main {
                 if (nachrichtvomClient instanceof TextMessage) {
                     TextMessage message = (TextMessage) nachrichtvomClient;
                     System.out.println(message.toString());
-
-                    // Server sendet die Nachricht an alle Clients weiter
-                    server.broadcastMessage(message);
+                    if (message.getText().contains("DONE")){
+                        game.startGame();
+                    }else {
+                        // Server sendet die Nachricht an alle Clients weiter
+                        server.broadcastMessage(message);
+                    }
                 }
 
                 if (nachrichtvomClient instanceof TurnMessage) {

@@ -3,6 +3,8 @@ package com.example.server;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
+import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.lobby.implementation.ID;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
@@ -111,6 +113,9 @@ public class MyKryoServer {
                         messagePlayerId.setId(id.id);
                         connection.sendTCP((messagePlayerId));
                         System.out.println("Server sendet PlayerId " + messagePlayerId.getId() + " an Client");
+
+                        BoardGameEngineImpl game=BoardGameEngineImpl.getInstance();
+                        game.setLobby(lobby);
                     }
 
 

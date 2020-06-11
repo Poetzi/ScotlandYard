@@ -74,6 +74,8 @@ public class Presenter {
             client.registerClass(SendLobbyID.class);
             client.registerClass(SendPlayerIDtoClient.class);
             client.registerClass(ReadyMessage.class);
+            client.registerClass(UpdateTicketCount.class);
+            client.registerClass(TravelLog.class);
 
 
             registerCallback();
@@ -136,6 +138,17 @@ public class Presenter {
                 updatePositionOfPlayerOnMap(msg.getPlayerId(),msg.getToField());
 
 
+            }
+
+            if (nachrichtVomServer instanceof UpdateTicketCount){
+                UpdateTicketCount msg=(UpdateTicketCount)nachrichtVomServer;
+                Log.d("TICKET","type:"+msg.getType()+" count:"+msg.getCount());
+                updateTicketCount(msg.getType(),msg.getCount());
+            }
+
+            if (nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage msg=(TravellogMessage)nachrichtVomServer;
+                updateTravellogMenu(msg.getTravelLog(),msg.getRound());
             }
 
         });
@@ -260,5 +273,7 @@ public class Presenter {
         game.drawPlayer(id,toField);
     }
 
-
+    public void updateTicketCount(String type, int count){
+        game.updateCount(type,count);
+    }
 }

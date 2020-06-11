@@ -5,7 +5,8 @@ public class UpdatePlayersPosition extends BaseMessage {
     private int toField;
     private int lobbyId;
 
-    public UpdatePlayersPosition(){}
+    public UpdatePlayersPosition() {
+    }
 
     public UpdatePlayersPosition(int playerId, int toField, int lobbyId) {
         this.playerId = playerId;
