@@ -1,20 +1,38 @@
 package com.example.scotlandyard.Client.Messages;
 
+/**
+ * Message-Class for Client-Server-communication. Server asks Clients for their
+ * next turn.
+ */
 public class AskPlayerForTurn extends BaseMessage {
+    //Player ID
     private int id;
+    //Turn-Message
     private String text;
+    //Lobby ID
     private int lobbyID;
 
+    /**
+     * Constructor where the information gets assigned.
+     *
+     * @param id      Player ID
+     * @param text    Turn-Message
+     * @param lobbyID Lobby ID
+     */
     public AskPlayerForTurn(int id, String text, int lobbyID) {
         this.id = id;
         this.text = text;
         this.lobbyID = lobbyID;
     }
 
+    /**
+     * Empty constructor.
+     */
     public AskPlayerForTurn() {
 
     }
 
+    //Getter and Setter
     public int getId() {
         return id;
     }
@@ -39,6 +57,7 @@ public class AskPlayerForTurn extends BaseMessage {
         this.lobbyID = lobbyID;
     }
 
+    //Override of toString-Method.
     @Override
     public String toString() {
         return text;

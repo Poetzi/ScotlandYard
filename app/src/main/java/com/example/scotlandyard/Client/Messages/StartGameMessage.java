@@ -1,6 +1,5 @@
 package com.example.scotlandyard.Client.Messages;
 
-
 public class StartGameMessage extends BaseMessage {
     private String text;
 
