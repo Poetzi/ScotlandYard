@@ -1,14 +1,32 @@
 package com.example.scotlandyard.Client.Messages;
 
+/**
+ * Message-Class for Client-Server-communication. Updates the ticket count.
+ */
 public class UpdateTicketCount extends BaseMessage {
+    //Count
     private int count;
+    //Type
     private String type;
+    //Player ID
     private int playerId;
+    //Lobby ID
     private int lobbyId;
 
+    /**
+     * Empty constructor
+     */
     public UpdateTicketCount() {
     }
 
+    /**
+     * Constructor for UpdateTicketCount
+     *
+     * @param count    Count
+     * @param type     Type
+     * @param playerId Player ID
+     * @param lobbyId  Lobby ID
+     */
     public UpdateTicketCount(int count, String type, int playerId, int lobbyId) {
         this.count = count;
         this.type = type;
@@ -16,6 +34,7 @@ public class UpdateTicketCount extends BaseMessage {
         this.lobbyId = lobbyId;
     }
 
+    //Getter and Setter
     public int getCount() {
         return count;
     }
