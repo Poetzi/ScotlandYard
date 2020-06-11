@@ -2,27 +2,41 @@ package com.example.scotlandyard.Client.Messages;
 
 
 /**
- * Eine Klasse um einen String zu versenden z.B: für die Chatfunktion
+ * Message-Class for Client-Server-communication. Message class for the Chat
  */
 public class TextMessage extends BaseMessage {
+    //Text
+    private String text;
+    //Lobby ID
+    private int lobbyID;
 
+    /**
+     * Empty constructor
+     */
     public TextMessage() {
     }
 
-
+    /**
+     * Constructor for TextMessage
+     *
+     * @param text Chat-Message
+     */
     public TextMessage(String text) {
         this.text = text;
     }
 
+    /**
+     * Constructor for TextMessage
+     *
+     * @param text    Chat-Message
+     * @param lobbyID Lobby ID
+     */
     public TextMessage(String text, int lobbyID) {
         this.text = text;
         this.lobbyID = lobbyID;
     }
 
-    private String text;
-    private int lobbyID;
-
-
+    //Getter and Setter
     public String getText() {
         return text;
     }
@@ -39,6 +53,7 @@ public class TextMessage extends BaseMessage {
         this.lobbyID = lobbyID;
     }
 
+    //toString method is overwritten
     @Override
     public String toString() {
         return text;
