@@ -153,23 +153,6 @@ public class gameActivity extends AppCompatActivity {
 
 
 
-        while (check) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        setCheck(true);
-
-        if (confirm) {
-            playerPostion.setField(toField);
-           // player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-            Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void useBus() {
@@ -190,22 +173,6 @@ public class gameActivity extends AppCompatActivity {
 
 
 
-        while (check) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        setCheck(true);
-
-        if (confirm) {
-            playerPostion.setField(toField);
-           // player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-           // Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void useUbahn() {
@@ -225,23 +192,6 @@ public class gameActivity extends AppCompatActivity {
         }).start();
 
 
-
-        while (check) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        setCheck(true);
-
-        if (confirm) {
-            playerPostion.setField(toField);
-         //   player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-            Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
-        }
     }
 
 
