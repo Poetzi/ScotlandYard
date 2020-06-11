@@ -241,4 +241,15 @@ public class gameActivity extends AppCompatActivity {
             startActivity(intent);
         }).start();
     }
+
+
+    public void askPlayerforTurn()
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Bitte einen Zug angeben";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
 }

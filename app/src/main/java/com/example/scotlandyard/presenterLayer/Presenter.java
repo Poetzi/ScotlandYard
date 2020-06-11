@@ -106,12 +106,8 @@ public class Presenter {
             if (nachrichtVomServer instanceof AskPlayerForTurn) {
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
                 Log.d("Server:", message.getText());
-                if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
-                    game.setCheck(false);
-                    game.setConfirm(false);
-                    if (message.getText().equalsIgnoreCase("yes"))
-                        game.setConfirm(true);
-                }
+
+                game.askPlayerforTurn();
             }
 
             if (nachrichtVomServer instanceof SendLobbyID) {
