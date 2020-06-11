@@ -59,12 +59,9 @@ public class Main {
                 if (nachrichtvomClient instanceof TextMessage) {
                     TextMessage message = (TextMessage) nachrichtvomClient;
                     System.out.println(message.toString());
-                    if (message.getText().contains("DONE")){
-                        game.startGame();
-                    }else {
-                        // Server sendet die Nachricht an alle Clients weiter
-                        server.broadcastMessage(message);
-                    }
+
+                    // Server sendet die Nachricht an alle Clients weiter
+                    server.broadcastMessage(message);
                 }
 
                 if (nachrichtvomClient instanceof TurnMessage) {
@@ -101,11 +98,13 @@ public class Main {
                     // Die Anzahl der Spieler die bereit sind wird erhöht
                     game.getLobby().setPlayerReady(game.getLobby().getPlayerReady()+1);
                     System.out.println("Ein Spieler ist bereit");
+                    System.out.println("Spieler bereit: "+game.getLobby().getPlayerReady());
 
                     if (game.getLobby().getPlayerReady()==2)
                     {
-                        game.getLobby().setAllReady(true);
                         System.out.println("Spiel beginnt!!");
+                        game.getLobby().setAllReady(true);
+
                     }
                 }
 

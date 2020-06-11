@@ -174,16 +174,18 @@ public class Presenter {
                 updatePositionOfPlayerOnMap(msg.getPlayerId(), msg.getToField());
             }
 
-            if (nachrichtVomServer instanceof UpdateTicketCount) {
-                UpdateTicketCount msg = (UpdateTicketCount) nachrichtVomServer;
-                Log.d("TICKET", "type:" + msg.getType() + " count:" + msg.getCount());
-                updateTicketCount(msg.getType(), msg.getCount());
+            if (nachrichtVomServer instanceof UpdateTicketCount){
+                UpdateTicketCount msg=(UpdateTicketCount)nachrichtVomServer;
+                Log.d("TICKET","type:"+msg.getType()+" count:"+msg.getCount());
+                updateTicketCount(msg.getType(),msg.getCount());
             }
 
-            if (nachrichtVomServer instanceof TravellogMessage) {
-                TravellogMessage msg = (TravellogMessage) nachrichtVomServer;
-                updateTravellogMenu(msg.getTravelLog(), msg.getRound());
+            /*if (nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage msg=(TravellogMessage)nachrichtVomServer;
+                updateTravellogMenu(msg.getTravelLog(),msg.getRound());
             }
+
+             */
 
         });
 
@@ -266,13 +268,14 @@ public class Presenter {
         log.setText(newlog);
     }
 
+
     /**
      * Method for updating the Travel-log
      *
-     * @param travelLog Travel-log
-     * @param round     Round
+     * //@param travelLog Travel-log
+     * //@param round     Round
      */
-    public void updateTravellogMenu(TravelLog travelLog, int round) {
+    /*public void updateTravellogMenu(TravelLog travelLog, int round) {
         //Ticket gets assigned to a String variable
         String transport = travelLog.getTicket();
         //Round ist checked for cheating condition
@@ -282,34 +285,9 @@ public class Presenter {
             travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
         }
     }
-
-    /**
-     * Method for updating the Player position on the map
-     *
-     * @param id      Player ID
-     * @param toField toField
      */
-    public void updatePositionOfPlayerOnMap(int id, int toField) {
-        while (game == null) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        game.drawPlayer(id, toField);
-    }
 
-    /**
-     * Method for updating the ticket count
-     *
-     * @param type  Type
-     * @param count Count
-     */
-    public void updateTicketCount(String type, int count) {
-        //Count is updated
-        game.updateCount(type, count);
-    }
+
 
     //Getter and Setter
     public User getUser() {
@@ -358,5 +336,28 @@ public class Presenter {
 
     public void setLobbyID(int lobbyID) {
         this.lobbyID = lobbyID;
+    }
+
+    /**
+     * Method for updating the Player position on the map
+     *
+     * @param id      Player ID
+     * @param toField toField
+     */
+    public void updatePositionOfPlayerOnMap(int id, int toField)
+    {
+        while(game == null)
+        {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        game.drawPlayer(id,toField);
+    }
+
+    public void updateTicketCount(String type, int count){
+        game.updateCount(type,count);
     }
 }
