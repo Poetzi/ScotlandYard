@@ -60,7 +60,7 @@ public class playerView extends View {
         }
     }
 
-    public void drawSinglePlayer(int playerId, int toField){
+    public void drawSinglePlayer(int playerId, int toField, ArrayList<Points>points){
         int x = 0,y = 0;
         for (int i = 0; i <points.size() ; i++) {
             if(toField == points.get(i).getField()){

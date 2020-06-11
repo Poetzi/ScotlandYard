@@ -15,6 +15,7 @@ import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
+import com.example.scotlandyard.Client.Messages.UpdateTicketCount;
 import com.example.scotlandyard.Client.Messages.UsernameMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.TravelLog;
@@ -74,6 +75,8 @@ public class Presenter {
             client.registerClass(SendLobbyID.class);
             client.registerClass(SendPlayerIDtoClient.class);
             client.registerClass(ReadyMessage.class);
+            client.registerClass(UpdateTicketCount.class);
+            client.registerClass(TravelLog.class);
 
 
             registerCallback();
@@ -136,6 +139,17 @@ public class Presenter {
                 updatePositionOfPlayerOnMap(msg.getPlayerId(),msg.getToField());
 
 
+            }
+
+            if (nachrichtVomServer instanceof UpdateTicketCount){
+                UpdateTicketCount msg=(UpdateTicketCount)nachrichtVomServer;
+                Log.d("TICKET","type:"+msg.getType()+" count:"+msg.getCount());
+                updateTicketCount(msg.getType(),msg.getCount());
+            }
+
+            if (nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage msg=(TravellogMessage)nachrichtVomServer;
+                updateTravellogMenu(msg.getTravelLog(),msg.getRound());
             }
 
         });
@@ -218,7 +232,7 @@ public class Presenter {
 
     public void updateTravellogMenu(TravelLog travelLog, int round) {
         String transport = travelLog.getTicket();
-        if (round == 3 || round == 8 || round == 13 || round == 18 || travelLog.isCaughtCheating()) {
+        if (round == 2 || round == 7 || round == 12 || round == 17 || travelLog.isCaughtCheating()) {
             travellogMenu.add(Menu.NONE, round, Menu.NONE, transport + ", Position:" + round);
         } else {
             travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
@@ -254,5 +268,9 @@ public class Presenter {
     public void updatePositionOfPlayerOnMap(int id, int toField)
     {
         game.drawPlayer(id,toField);
+    }
+
+    public void updateTicketCount(String type, int count){
+        game.updateCount(type,count);
     }
 }
