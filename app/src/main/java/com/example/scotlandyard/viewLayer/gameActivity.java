@@ -29,6 +29,7 @@ import com.google.android.material.navigation.NavigationView;
  * Class for running the Game
  */
 public class gameActivity extends AppCompatActivity {
+
     //Buttons are assigned
     private Button taxi, bus, ubahn, blackTicket, doubleMove, cheatBtn;
     //mapView is assigned
