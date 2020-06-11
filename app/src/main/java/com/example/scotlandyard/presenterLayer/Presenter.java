@@ -17,7 +17,7 @@ import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
 import com.example.scotlandyard.Client.Messages.UsernameMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
-import com.example.scotlandyard.modelLayer.players.TravelLog;
+import com.example.scotlandyard.modelLayer.TravelLog;
 import com.example.scotlandyard.viewLayer.User;
 import com.example.scotlandyard.viewLayer.gameActivity;
 
