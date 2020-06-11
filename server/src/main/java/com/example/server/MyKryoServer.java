@@ -1,6 +1,5 @@
 package com.example.server;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -10,12 +9,10 @@ import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.SendLobbyID;
 import com.example.server.messages.SendPlayerIDtoClient;
-import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UsernameMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class MyKryoServer {

@@ -10,7 +10,6 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.scotlandyard.R;
-import com.example.scotlandyard.viewLayer.mapView;
 
 import java.util.ArrayList;
 

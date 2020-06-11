@@ -1,7 +1,5 @@
 package com.example.server.messages;
 
-import com.example.server.lobby.interfaces.Lobby;
-
 public class AskPlayerForTurn extends BaseMessage {
     private int id;
     private String text;

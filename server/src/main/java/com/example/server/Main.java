@@ -1,13 +1,7 @@
 package com.example.server;
 
 import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
-import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
-import com.example.server.lobby.implementation.ID;
-import com.example.server.lobby.implementation.LobbyImpl;
-import com.example.server.lobby.interfaces.Lobby;
-
 import com.example.server.messages.AskPlayerForTurn;
-
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.ReadyMessage;
 import com.example.server.messages.SendLobbyID;

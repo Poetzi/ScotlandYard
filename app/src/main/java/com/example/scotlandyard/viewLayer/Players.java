@@ -1,6 +1,5 @@
 package com.example.scotlandyard.viewLayer;
 
-import com.example.scotlandyard.modelLayer.players.interfaces.Player;
 
 public class Players {
 
