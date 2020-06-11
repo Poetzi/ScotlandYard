@@ -12,9 +12,11 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.scotlandyard.Client.Messages.TurnMessage;
@@ -33,6 +35,9 @@ public class gameActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
     private TurnMessage msg;
 
+
+
+
     public void setCheck(boolean check) {
         this.check = check;
     }
@@ -48,6 +53,7 @@ public class gameActivity extends AppCompatActivity {
     private Sensor accelerometer;
     private ShakeDetector shakeDetector;
     private Button cheatBtn;
+    private TextView cheatTicketCount;
 
     private DrawerLayout drawerLayout;
 
@@ -76,6 +82,9 @@ public class gameActivity extends AppCompatActivity {
             }).start();
         });
 
+        cheatTicketCount=findViewById(R.id.txtview_cheat);
+        cheatTicketCount.setVisibility(View.INVISIBLE);
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -86,8 +95,10 @@ public class gameActivity extends AppCompatActivity {
         shakeDetector.setOnShakeListener(count -> {
             if (cheatBtn.getVisibility() == View.INVISIBLE) {
                 cheatBtn.setVisibility(View.VISIBLE);
+                cheatTicketCount.setVisibility(View.VISIBLE);
             } else {
                 cheatBtn.setVisibility(View.INVISIBLE);
+                cheatTicketCount.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -102,33 +113,17 @@ public class gameActivity extends AppCompatActivity {
         Menu menu = nav.getMenu();
         presenter.setTravellogMenu(menu);
 
-        //Beispielwerte
-        TravelLog travelLog;
-        travelLog = new TravelLog(1, "Bus", false);
-        presenter.updateTravellogMenu(travelLog, 1);
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendMessagetoServer("DONE");
 
-        travelLog = new TravelLog(2, "U-Bahn", false);
-        presenter.updateTravellogMenu(travelLog, 2);
-
-        travelLog = new TravelLog(3, "Taxi", false);
-        presenter.updateTravellogMenu(travelLog, 3);
-
-
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            TravelLog tl = new TravelLog(1, "Taxi", false);
-            presenter.updateTravellogMenu(tl, 4);
-
-            tl = new TravelLog(2, "Bus", false);
-            tl.setCaughtCheating(true);
-            presenter.updateTravellogMenu(tl, 5);
-        }, 20000);
-
+        }).start();
 
     }
 
+
     public void drawPlayer(int playerId, int toField){
-        player.drawSinglePlayer(playerId,toField);
+        player.drawSinglePlayer(playerId,toField,map.getPoints());
     }
 
 
@@ -246,7 +241,67 @@ public class gameActivity extends AppCompatActivity {
         CharSequence text = "Bitte einen Zug angeben";
         int duration = Toast.LENGTH_SHORT;
 
+        Looper.prepare();
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    public void updateCount(String type, int count){
+        String c=String.valueOf(count);
+        TextView v;
+        switch(type){
+            case "Taxi":
+                v=findViewById(R.id.txtview_taxi);
+                v.setText(c);
+                if (count==0){
+                    Button b=findViewById(R.id.taxi);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
+                break;
+            case "Bus":
+                v=findViewById(R.id.txtview_bus);
+                v.setText(c);
+                if (count==0){
+                    Button b=findViewById(R.id.bus);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
+                break;
+            case "U-Bahn":
+                v=findViewById(R.id.txtview_metro);
+                v.setText(c);
+                if (count==0){
+                    Button b=findViewById(R.id.ubahn);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
+                break;
+            case "Black":
+                v=findViewById(R.id.txtview_black);
+                v.setText(c);
+                if (count==0){
+                    Button b=findViewById(R.id.blackTicket);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
+                break;
+            case "DoubleMove":
+                v=findViewById(R.id.txtview_double);
+                v.setText(c);
+                if (count==0){
+                    Button b=findViewById(R.id.doubleMove);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
+                break;
+            case "Cheat":
+                cheatTicketCount.setText(c);
+                if (count==0){
+                    cheatBtn.setBackgroundColor(0xff888888);
+                    cheatBtn.setClickable(false);
+                }
+                break;
+        }
     }
 }

@@ -12,6 +12,12 @@ public class UpdatePlayersPosition extends BaseMessage {
     private int lobbyId;
 
     /**
+     * Empty constructor
+     */
+    public UpdatePlayersPosition() {
+    }
+
+    /**
      * Constructor for UpdatePlayersPosition.
      *
      * @param playerId Player ID

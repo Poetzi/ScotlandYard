@@ -8,6 +8,7 @@ import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
+import com.example.server.messages.UpdateTicketCount;
 
 import java.util.ArrayList;
 
@@ -87,11 +88,6 @@ public class LobbyImpl implements Lobby {
 
         while (waitForPlayersTurn[playerId]) {
             // Wait for TurnMessage from Player
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
 
         System.out.println("Player Id " + playerId);
@@ -113,6 +109,13 @@ public class LobbyImpl implements Lobby {
         for (ID id : players) {
             id.name.sendTCP(travellogMessage);
         }
+    }
+
+    @Override
+    public void updateTicketCount(int playerId, int count, String type){
+        UpdateTicketCount ticketCount=new UpdateTicketCount(count, type, playerId, lobbyID);
+        players.get(playerId).name.sendTCP(ticketCount);
+        System.out.println("Ticketcount wurde geschickt.");
     }
 
     @Override

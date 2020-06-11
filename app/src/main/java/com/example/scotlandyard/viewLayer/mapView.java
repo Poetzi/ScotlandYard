@@ -82,12 +82,107 @@ public class mapView extends View {
 
     public mapView(Context context) {
         super(context);
+        //adding points to the list
+        points.add(new Points(251,518,R.drawable.fieldsnew,"Field1",1));
+        points.add(new Points(186,286,R.drawable.fieldsnew,"Field2",2));
+        points.add(new Points(109,459,R.drawable.fieldsnew,"Field3",3));
+        //points.add(new Points(182,282,R.drawable.fieldsnew,"Field4",4));
+        points.add(new Points(47,623,R.drawable.fieldsnew,"Field5",5));
+        points.add(new Points(465,439,R.drawable.fieldsnew,"Field6",6));
+        points.add(new Points(328,339,R.drawable.fieldsnew,"Field7",7));
+        points.add(new Points(403,155,R.drawable.fieldsnew,"Field8",8));
+        points.add(new Points(542,259,R.drawable.fieldsnew,"Field9",9));
+        points.add(new Points(590,168,R.drawable.fieldsnew,"Field10",10));
+        points.add(new Points(736,265,R.drawable.fieldsnew,"Field11",11));
+        points.add(new Points(171,703,R.drawable.fieldsnew,"Field12",12));
+        points.add(new Points(382,600,R.drawable.fieldsnew,"Field13",13));
+        points.add(new Points(596,535,R.drawable.fieldsnew,"Field14",14));
+        points.add(new Points(502,700,R.drawable.fieldsnew,"Field15",15));
+        points.add(new Points(394,873,R.drawable.fieldsnew,"Field16",16));
+        // points.add(new Points(85,907,R.drawable.fieldsnew,"Field17",17));
+        points.add(new Points(525,973,R.drawable.fieldsnew,"Field18",18));
+        points.add(new Points(643,793,R.drawable.fieldsnew,"Field19",19));
+        points.add(new Points(731,639,R.drawable.fieldsnew,"Field20",20));
+        points.add(new Points(830,473,R.drawable.fieldsnew,"Field21",21));
+        points.add(new Points(886,368,R.drawable.fieldsnew,"Field22",22));
+        points.add(new Points(1072,312,R.drawable.fieldsnew,"Field23",23));
+        points.add(new Points(991,433,R.drawable.fieldsnew,"Field24",24));
+        points.add(new Points(695,374,R.drawable.fieldsnew,"Field25",25));
+        points.add(new Points(903,757,R.drawable.fieldsnew,"Field26",26));
+        points.add(new Points(800,918,R.drawable.fieldsnew,"Field27",27));
+        points.add(new Points(1023,836,R.drawable.fieldsnew,"Field28",28));
+        points.add(new Points(1122,695,R.drawable.fieldsnew,"Field29",29));
+        points.add(new Points(1195,582,R.drawable.fieldsnew,"Field30",30));
+        points.add(new Points(1285,442,R.drawable.fieldsnew,"Field31",31));
+        points.add(new Points(969,245,R.drawable.fieldsnew,"Field32",32));
+        points.add(new Points(798,153,R.drawable.fieldsnew,"Field33",33));
+        points.add(new Points(997,604,R.drawable.fieldsnew,"Field34",34));
+        points.add(new Points(1426,477,R.drawable.fieldsnew,"Field35",35));
+        points.add(new Points(1396,653,R.drawable.fieldsnew,"Field36",36));
+        points.add(new Points(1268,815,R.drawable.fieldsnew,"Field37",37));
+        points.add(new Points(1467,883,R.drawable.fieldsnew,"Field38",38));
+        points.add(new Points(1667,933,R.drawable.fieldsnew,"Field39",39));
+        points.add(new Points(1682,727,R.drawable.fieldsnew,"Field40",40));
+        points.add(new Points(1699,505,R.drawable.fieldsnew,"Field41",41));
+        points.add(new Points(1727,185,R.drawable.fieldsnew,"Field42",42));
+        points.add(new Points(1504,149,R.drawable.fieldsnew,"Field43",43));
+        points.add(new Points(1163,362,R.drawable.fieldsnew,"Field44",44));
+        points.add(new Points(1077,494,R.drawable.fieldsnew,"Field45",45));
+
+        Points.allPoints = points;
     }
 
     //Needed for relative Layout
     public mapView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        //adding points to the list
+        points.add(new Points(251,518,R.drawable.fieldsnew,"Field1",1));
+        points.add(new Points(186,286,R.drawable.fieldsnew,"Field2",2));
+        points.add(new Points(109,459,R.drawable.fieldsnew,"Field3",3));
+        //points.add(new Points(182,282,R.drawable.fieldsnew,"Field4",4));
+        points.add(new Points(47,623,R.drawable.fieldsnew,"Field5",5));
+        points.add(new Points(465,439,R.drawable.fieldsnew,"Field6",6));
+        points.add(new Points(328,339,R.drawable.fieldsnew,"Field7",7));
+        points.add(new Points(403,155,R.drawable.fieldsnew,"Field8",8));
+        points.add(new Points(542,259,R.drawable.fieldsnew,"Field9",9));
+        points.add(new Points(590,168,R.drawable.fieldsnew,"Field10",10));
+        points.add(new Points(736,265,R.drawable.fieldsnew,"Field11",11));
+        points.add(new Points(171,703,R.drawable.fieldsnew,"Field12",12));
+        points.add(new Points(382,600,R.drawable.fieldsnew,"Field13",13));
+        points.add(new Points(596,535,R.drawable.fieldsnew,"Field14",14));
+        points.add(new Points(502,700,R.drawable.fieldsnew,"Field15",15));
+        points.add(new Points(394,873,R.drawable.fieldsnew,"Field16",16));
+        // points.add(new Points(85,907,R.drawable.fieldsnew,"Field17",17));
+        points.add(new Points(525,973,R.drawable.fieldsnew,"Field18",18));
+        points.add(new Points(643,793,R.drawable.fieldsnew,"Field19",19));
+        points.add(new Points(731,639,R.drawable.fieldsnew,"Field20",20));
+        points.add(new Points(830,473,R.drawable.fieldsnew,"Field21",21));
+        points.add(new Points(886,368,R.drawable.fieldsnew,"Field22",22));
+        points.add(new Points(1072,312,R.drawable.fieldsnew,"Field23",23));
+        points.add(new Points(991,433,R.drawable.fieldsnew,"Field24",24));
+        points.add(new Points(695,374,R.drawable.fieldsnew,"Field25",25));
+        points.add(new Points(903,757,R.drawable.fieldsnew,"Field26",26));
+        points.add(new Points(800,918,R.drawable.fieldsnew,"Field27",27));
+        points.add(new Points(1023,836,R.drawable.fieldsnew,"Field28",28));
+        points.add(new Points(1122,695,R.drawable.fieldsnew,"Field29",29));
+        points.add(new Points(1195,582,R.drawable.fieldsnew,"Field30",30));
+        points.add(new Points(1285,442,R.drawable.fieldsnew,"Field31",31));
+        points.add(new Points(969,245,R.drawable.fieldsnew,"Field32",32));
+        points.add(new Points(798,153,R.drawable.fieldsnew,"Field33",33));
+        points.add(new Points(997,604,R.drawable.fieldsnew,"Field34",34));
+        points.add(new Points(1426,477,R.drawable.fieldsnew,"Field35",35));
+        points.add(new Points(1396,653,R.drawable.fieldsnew,"Field36",36));
+        points.add(new Points(1268,815,R.drawable.fieldsnew,"Field37",37));
+        points.add(new Points(1467,883,R.drawable.fieldsnew,"Field38",38));
+        points.add(new Points(1667,933,R.drawable.fieldsnew,"Field39",39));
+        points.add(new Points(1682,727,R.drawable.fieldsnew,"Field40",40));
+        points.add(new Points(1699,505,R.drawable.fieldsnew,"Field41",41));
+        points.add(new Points(1727,185,R.drawable.fieldsnew,"Field42",42));
+        points.add(new Points(1504,149,R.drawable.fieldsnew,"Field43",43));
+        points.add(new Points(1163,362,R.drawable.fieldsnew,"Field44",44));
+        points.add(new Points(1077,494,R.drawable.fieldsnew,"Field45",45));
 
+        Points.allPoints = points;
     }
 
 
@@ -149,57 +244,6 @@ public class mapView extends View {
         canvas.drawBitmap(f44, 1163 - imgOffset,  362 - imgOffset,null);
         canvas.drawBitmap(f45,  1077 - imgOffset,  494 - imgOffset,null);
 
-
-
-
-        //adding points to the list
-        points.add(new Points(251,518,R.drawable.fieldsnew,"Field1",1));
-        points.add(new Points(186,286,R.drawable.fieldsnew,"Field2",2));
-        points.add(new Points(109,459,R.drawable.fieldsnew,"Field3",3));
-        //points.add(new Points(182,282,R.drawable.fieldsnew,"Field4",4));
-        points.add(new Points(47,623,R.drawable.fieldsnew,"Field5",5));
-        points.add(new Points(465,439,R.drawable.fieldsnew,"Field6",6));
-        points.add(new Points(328,339,R.drawable.fieldsnew,"Field7",7));
-        points.add(new Points(403,155,R.drawable.fieldsnew,"Field8",8));
-        points.add(new Points(542,259,R.drawable.fieldsnew,"Field9",9));
-        points.add(new Points(590,168,R.drawable.fieldsnew,"Field10",10));
-        points.add(new Points(736,265,R.drawable.fieldsnew,"Field11",11));
-        points.add(new Points(171,703,R.drawable.fieldsnew,"Field12",12));
-        points.add(new Points(382,600,R.drawable.fieldsnew,"Field13",13));
-        points.add(new Points(596,535,R.drawable.fieldsnew,"Field14",14));
-        points.add(new Points(502,700,R.drawable.fieldsnew,"Field15",15));
-        points.add(new Points(394,873,R.drawable.fieldsnew,"Field16",16));
-       // points.add(new Points(85,907,R.drawable.fieldsnew,"Field17",17));
-        points.add(new Points(525,973,R.drawable.fieldsnew,"Field18",18));
-        points.add(new Points(643,793,R.drawable.fieldsnew,"Field19",19));
-        points.add(new Points(731,639,R.drawable.fieldsnew,"Field20",20));
-        points.add(new Points(830,473,R.drawable.fieldsnew,"Field21",21));
-        points.add(new Points(886,368,R.drawable.fieldsnew,"Field22",22));
-        points.add(new Points(1072,312,R.drawable.fieldsnew,"Field23",23));
-        points.add(new Points(991,433,R.drawable.fieldsnew,"Field24",24));
-        points.add(new Points(695,374,R.drawable.fieldsnew,"Field25",25));
-        points.add(new Points(903,757,R.drawable.fieldsnew,"Field26",26));
-        points.add(new Points(800,918,R.drawable.fieldsnew,"Field27",27));
-        points.add(new Points(1023,836,R.drawable.fieldsnew,"Field28",28));
-        points.add(new Points(1122,695,R.drawable.fieldsnew,"Field29",29));
-        points.add(new Points(1195,582,R.drawable.fieldsnew,"Field30",30));
-        points.add(new Points(1285,442,R.drawable.fieldsnew,"Field31",31));
-        points.add(new Points(969,245,R.drawable.fieldsnew,"Field32",32));
-        points.add(new Points(798,153,R.drawable.fieldsnew,"Field33",33));
-        points.add(new Points(997,604,R.drawable.fieldsnew,"Field34",34));
-        points.add(new Points(1426,477,R.drawable.fieldsnew,"Field35",35));
-        points.add(new Points(1396,653,R.drawable.fieldsnew,"Field36",36));
-        points.add(new Points(1268,815,R.drawable.fieldsnew,"Field37",37));
-        points.add(new Points(1467,883,R.drawable.fieldsnew,"Field38",38));
-        points.add(new Points(1667,933,R.drawable.fieldsnew,"Field39",39));
-        points.add(new Points(1682,727,R.drawable.fieldsnew,"Field40",40));
-        points.add(new Points(1699,505,R.drawable.fieldsnew,"Field41",41));
-        points.add(new Points(1727,185,R.drawable.fieldsnew,"Field42",42));
-        points.add(new Points(1504,149,R.drawable.fieldsnew,"Field43",43));
-        points.add(new Points(1163,362,R.drawable.fieldsnew,"Field44",44));
-        points.add(new Points(1077,494,R.drawable.fieldsnew,"Field45",45));
-
-       Points.allPoints = points;
     }
 
     //Getting coordinates from img
@@ -362,6 +406,10 @@ public class mapView extends View {
 
         }
         return false;
+    }
+
+    public ArrayList<Points> getPoints(){
+        return points;
     }
 
 }

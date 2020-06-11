@@ -15,6 +15,7 @@ import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
+import com.example.scotlandyard.Client.Messages.UpdateTicketCount;
 import com.example.scotlandyard.Client.Messages.UsernameMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.TravelLog;
@@ -93,6 +94,8 @@ public class Presenter {
             client.registerClass(SendLobbyID.class);
             client.registerClass(SendPlayerIDtoClient.class);
             client.registerClass(ReadyMessage.class);
+            client.registerClass(UpdateTicketCount.class);
+            client.registerClass(TravelLog.class);
 
             //Calls registerCallback() to initialize the Callback-function of the Kryo-Client
             registerCallback();
@@ -134,13 +137,9 @@ public class Presenter {
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
                 //Message is displayed by the Client
                 Log.d("Server:", message.getText());
-                //Boolean is sent by String and gets checked. Sets bool-values for Player-turns and checks if a player has moved.
-                if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
-                    game.setCheck(false);
-                    game.setConfirm(false);
-                    if (message.getText().equalsIgnoreCase("yes"))
-                        game.setConfirm(true);
-                }
+
+                // Spieler wird nach einem Zug gefragt
+                game.askPlayerforTurn();
             }
 
             if (nachrichtVomServer instanceof SendLobbyID) {
@@ -174,6 +173,18 @@ public class Presenter {
                 // Updates the position of a player on the map
                 updatePositionOfPlayerOnMap(msg.getPlayerId(), msg.getToField());
             }
+
+            if (nachrichtVomServer instanceof UpdateTicketCount){
+                UpdateTicketCount msg=(UpdateTicketCount)nachrichtVomServer;
+                Log.d("TICKET","type:"+msg.getType()+" count:"+msg.getCount());
+                updateTicketCount(msg.getType(),msg.getCount());
+            }
+
+            if (nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage msg=(TravellogMessage)nachrichtVomServer;
+                updateTravellogMenu(msg.getTravelLog(),msg.getRound());
+            }
+
         });
     }
 

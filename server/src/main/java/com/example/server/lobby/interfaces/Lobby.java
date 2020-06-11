@@ -39,6 +39,8 @@ public interface Lobby {
 
     void updateTravellogToAllClients(TravelLog travelLog, int round);
 
+    void updateTicketCount(int playerId, int count, String type);
+
     public boolean isAllReady();
 
     public void setAllReady(boolean allReady);
