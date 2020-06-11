@@ -7,6 +7,7 @@ import com.example.scotlandyard.modelLayer.TravelLog;
  * Message-Class for Client-Server-communication. Travel-log is send to the server.
  */
 public class TravellogMessage extends BaseMessage {
+    //Travel-log
     private TravelLog travelLog;
     //Round-number
     private int round;
@@ -27,13 +28,13 @@ public class TravellogMessage extends BaseMessage {
      * @param round     Round-number
      * @param lobbyID   Lobby ID
      */
-    public TravellogMessage(TravelLog travelLog, int round, int lobbyID)
-     {
+    public TravellogMessage(TravelLog travelLog, int round, int lobbyID) {
         this.travelLog = travelLog;
         this.round = round;
         this.lobbyID = lobbyID;
     }
 
+    //Getter and Setter
     public TravelLog getTravelLog() {
         return travelLog;
     }
