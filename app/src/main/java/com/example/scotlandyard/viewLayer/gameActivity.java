@@ -113,11 +113,7 @@ public class gameActivity extends AppCompatActivity {
         Menu menu = nav.getMenu();
         presenter.setTravellogMenu(menu);
 
-        new Thread(() -> {
-            // Nachricht wird an den Server geschickt
-            presenter.sendMessagetoServer("DONE");
 
-        }).start();
 
     }
 

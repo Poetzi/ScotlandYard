@@ -180,10 +180,12 @@ public class Presenter {
                 updateTicketCount(msg.getType(),msg.getCount());
             }
 
-            if (nachrichtVomServer instanceof TravellogMessage){
+            /*if (nachrichtVomServer instanceof TravellogMessage){
                 TravellogMessage msg=(TravellogMessage)nachrichtVomServer;
                 updateTravellogMenu(msg.getTravelLog(),msg.getRound());
             }
+
+             */
 
         });
 
@@ -266,13 +268,14 @@ public class Presenter {
         log.setText(newlog);
     }
 
+
     /**
      * Method for updating the Travel-log
      *
-     * @param travelLog Travel-log
-     * @param round     Round
+     * //@param travelLog Travel-log
+     * //@param round     Round
      */
-    public void updateTravellogMenu(TravelLog travelLog, int round) {
+    /*public void updateTravellogMenu(TravelLog travelLog, int round) {
         //Ticket gets assigned to a String variable
         String transport = travelLog.getTicket();
         //Round ist checked for cheating condition
@@ -282,6 +285,7 @@ public class Presenter {
             travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
         }
     }
+     */
 
 
 
