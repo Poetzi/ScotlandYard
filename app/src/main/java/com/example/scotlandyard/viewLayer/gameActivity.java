@@ -127,12 +127,6 @@ public class gameActivity extends AppCompatActivity {
         int toField = map.touchedPoint.getField();
 
         TurnMessage msg = new TurnMessage(0, toField, 0, "taxi");
-        Thread t = new Thread() {
-            public void run() {
-                presenter.sendTurn(msg);
-
-            }
-        };
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
@@ -147,12 +141,7 @@ public class gameActivity extends AppCompatActivity {
         int toField = map.touchedPoint.getField();
 
         TurnMessage msg = new TurnMessage(0, toField, 0, "bus");
-        Thread t = new Thread() {
-            public void run() {
-                presenter.sendTurn(msg);
 
-            }
-        };
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
@@ -167,12 +156,7 @@ public class gameActivity extends AppCompatActivity {
         int toField = map.touchedPoint.getField();
 
         TurnMessage msg = new TurnMessage(0, toField, 0, "ubahn");
-        Thread t = new Thread() {
-            public void run() {
-                presenter.sendTurn(msg);
 
-            }
-        };
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);

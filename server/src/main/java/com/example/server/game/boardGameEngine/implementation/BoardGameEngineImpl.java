@@ -176,16 +176,22 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void startGame() {
 
+        setupNewGame();
+        System.out.println("Game Setup finished");
+
         // toDo send initial position of the players to clients
         gameBoard.setPositionOfPlayer(0, 2);
         gameBoard.setPositionOfPlayer(1, 21);
 
         lobby.updatePlayerPositionsToAllClients(0, 2);
         lobby.updatePlayerPositionsToAllClients(1, 21);
+        System.out.println("Initial Position von P0 und P1 gesendet");
 
+        /*
         //Test ob Travellog an Client geschickt wird
         TravelLog log=new TravelLog(2,"Taxi",false);
         lobby.updateTravellogToAllClients(log,actualRound);
+         */
 
 
         // Aktuelle Runde wird auf 0 gesetzt
@@ -193,6 +199,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
         // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
         for (int i = 0; i < maxRounds; i++) {
+            System.out.println("Runde "+i+ "wird gestartet");
             playOneRound();
 
 
@@ -217,6 +224,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             lobby.updateTicketCount(p.getId(),p.getDoubleMoveTickets(),"DoubleMove");
             lobby.updateTicketCount(p.getId(),p.getCheatTickets(),"Cheat");
              */
+
+            System.out.println("Spieler "+p.getId()+p.getName()+" ist am Zug");
             drawForPlayer(p);
         }
     }
@@ -231,6 +240,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
             // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
             while (drawValide == false) {
+
+                System.out.println("Server wartet auf einen gültigen Zug von "+player.getId()+player.getName());
                 /*
                    Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                    und die Position zu der er ziehen möchte
@@ -270,7 +281,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
          */
             if (drawValide) {
                 gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
-
+                System.out.println("Der Zug von Spieler "+player.getId()+player.getName()+" ist gültig position wird gesetzt");
                 /*
                     Die Position an die anderen Spieler clients weitergeben
                  */
