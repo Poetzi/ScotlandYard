@@ -43,4 +43,11 @@ public interface Lobby {
 
     void updateTicketCount(int playerId, int count, String type);
 
+    public boolean isAllReady();
+
+    public void setAllReady(boolean allReady);
+
+    public int getPlayerReady();
+
+    public void setPlayerReady(int playerReady);
 }

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.ReadyMessage;
 import com.example.scotlandyard.Client.Messages.SendLobbyID;
 import com.example.scotlandyard.Client.Messages.SendPlayerIDtoClient;
 import com.example.scotlandyard.Client.Messages.SendRoleMessage;
@@ -73,6 +74,7 @@ public class Presenter {
             client.registerClass(SendRoleMessage.class);
             client.registerClass(SendLobbyID.class);
             client.registerClass(SendPlayerIDtoClient.class);
+            client.registerClass(ReadyMessage.class);
             client.registerClass(UpdateTicketCount.class);
             client.registerClass(TravelLog.class);
 
@@ -107,12 +109,8 @@ public class Presenter {
             if (nachrichtVomServer instanceof AskPlayerForTurn) {
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
                 Log.d("Server:", message.getText());
-                if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
-                    game.setCheck(false);
-                    game.setConfirm(false);
-                    if (message.getText().equalsIgnoreCase("yes"))
-                        game.setConfirm(true);
-                }
+
+                game.askPlayerforTurn();
             }
 
             if (nachrichtVomServer instanceof SendLobbyID) {
@@ -167,6 +165,12 @@ public class Presenter {
     public void sendTurn(TurnMessage message) {
         TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard());
         client.sendMessage(msg);
+    }
+
+    public void sendReady() {
+        ReadyMessage message = new ReadyMessage();
+        client.sendMessage(message);
+
     }
 
     public void sendRole() {

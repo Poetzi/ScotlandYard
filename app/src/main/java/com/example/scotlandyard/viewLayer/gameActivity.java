@@ -65,7 +65,7 @@ public class gameActivity extends AppCompatActivity {
         ubahn = findViewById(R.id.ubahn);
         blackTicket = findViewById(R.id.blackTicket);
         doubleMove = findViewById(R.id.doubleMove);
-        map =findViewById(R.id.mapView);
+        map = findViewById(R.id.mapView);
         player = findViewById(R.id.playerView);
         presenter.setGame(this);
         player.addPlayers();
@@ -143,23 +143,6 @@ public class gameActivity extends AppCompatActivity {
 
 
 
-        while (check) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        setCheck(true);
-
-        if (confirm) {
-            playerPostion.setField(toField);
-           // player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-            Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void useBus() {
@@ -180,22 +163,6 @@ public class gameActivity extends AppCompatActivity {
 
 
 
-        while (check) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        setCheck(true);
-
-        if (confirm) {
-            playerPostion.setField(toField);
-           // player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-           // Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void useUbahn() {
@@ -215,23 +182,6 @@ public class gameActivity extends AppCompatActivity {
         }).start();
 
 
-
-        while (check) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        setCheck(true);
-
-        if (confirm) {
-            playerPostion.setField(toField);
-         //   player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-            Toast.makeText(getApplicationContext(), "YESSSS", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Illegal move", Toast.LENGTH_SHORT).show();
-        }
     }
 
 
@@ -280,6 +230,17 @@ public class gameActivity extends AppCompatActivity {
             Intent intent = new Intent(this, Chat.class);
             startActivity(intent);
         }).start();
+    }
+
+
+    public void askPlayerforTurn()
+    {
+        Context context = getApplicationContext();
+        CharSequence text = "Bitte einen Zug angeben";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     public void updateCount(String type, int count){
