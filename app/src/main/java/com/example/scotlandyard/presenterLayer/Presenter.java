@@ -253,6 +253,12 @@ public class Presenter {
 
     public void updatePositionOfPlayerOnMap(int id, int toField)
     {
+        while(game == null)
+        {
+            // wait
+        }
         game.drawPlayer(id,toField);
     }
+
+
 }

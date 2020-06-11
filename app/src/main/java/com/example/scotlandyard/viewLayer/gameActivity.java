@@ -33,6 +33,9 @@ public class gameActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
     private TurnMessage msg;
 
+
+
+
     public void setCheck(boolean check) {
         this.check = check;
     }
@@ -126,6 +129,7 @@ public class gameActivity extends AppCompatActivity {
 
 
     }
+
 
     public void drawPlayer(int playerId, int toField){
         player.drawSinglePlayer(playerId,toField);

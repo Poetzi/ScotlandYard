@@ -23,10 +23,12 @@ public class playerView extends View {
 
     public playerView(Context context) {
         super(context);
+        points = Points.allPoints;
     }
 
     public playerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        points = Points.allPoints;
     }
 
     @Override

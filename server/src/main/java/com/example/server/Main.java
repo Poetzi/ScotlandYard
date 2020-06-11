@@ -88,6 +88,7 @@ public class Main {
                 {
                     // Die Anzahl der Spieler die bereit sind wird erhöht
                     game.getLobby().setPlayerReady(game.getLobby().getPlayerReady()+1);
+                    System.out.println("Ein Spieler ist bereit");
 
                     if (game.getLobby().getPlayerReady()==2)
                     {
