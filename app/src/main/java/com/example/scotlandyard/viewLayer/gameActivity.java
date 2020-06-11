@@ -134,11 +134,6 @@ public class gameActivity extends AppCompatActivity {
         //Send the Travel-log to the presenter
         presenter.setTravellogMenu(menu);
 
-        new Thread(() -> {
-            // Nachricht wird an den Server geschickt
-            presenter.sendMessagetoServer("DONE");
-
-        }).start();
     }
 
     /**

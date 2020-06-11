@@ -12,6 +12,7 @@ public class AskPlayerForTurn extends BaseMessage {
     //Lobby ID
     private int lobbyID;
 
+
     /**
      * Constructor where the information gets assigned.
      *

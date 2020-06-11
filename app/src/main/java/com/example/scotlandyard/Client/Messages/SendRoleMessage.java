@@ -13,6 +13,10 @@ public class SendRoleMessage extends BaseMessage {
     //Lobby-ID
     private int lobbyId;
 
+    public SendRoleMessage() {
+
+    }
+
     //Getter and Setter
     public int getLobbyId() {
         return lobbyId;

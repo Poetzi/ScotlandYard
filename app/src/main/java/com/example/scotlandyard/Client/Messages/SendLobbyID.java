@@ -7,6 +7,10 @@ public class SendLobbyID extends BaseMessage {
     //Lobby-ID
     private int lobbyID;
 
+    public SendLobbyID() {
+
+    }
+
     //Getter and Setter
     public int getLobbyID() {
         return lobbyID;

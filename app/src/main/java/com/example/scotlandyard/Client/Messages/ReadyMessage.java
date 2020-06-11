@@ -7,6 +7,9 @@ public class ReadyMessage extends BaseMessage {
     //Ready-Message
     private String text;
 
+    public ReadyMessage(){
+
+    }
     //Getter and Setter
     public String getText() {
         return text;

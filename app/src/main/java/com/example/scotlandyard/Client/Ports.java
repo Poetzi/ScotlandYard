@@ -6,4 +6,5 @@ package com.example.scotlandyard.Client;
 public class Ports {
     //TCP-Port
     public static final int TCP = 53215;
+    public static final int UDP = 54777;
 }

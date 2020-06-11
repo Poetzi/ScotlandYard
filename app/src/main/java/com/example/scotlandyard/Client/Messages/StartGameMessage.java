@@ -3,6 +3,9 @@ package com.example.scotlandyard.Client.Messages;
 public class StartGameMessage extends BaseMessage {
     private String text;
 
+    public StartGameMessage(){
+
+    }
     public String getText() {
         return text;
     }

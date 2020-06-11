@@ -7,6 +7,10 @@ public class SendPlayerIDtoClient extends BaseMessage {
     //Player-ID
     private int id;
 
+    public SendPlayerIDtoClient() {
+
+    }
+
     //Getter and Setter
     public int getId() {
         return id;
