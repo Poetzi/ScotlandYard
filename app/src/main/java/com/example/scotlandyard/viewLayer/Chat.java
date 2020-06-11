@@ -10,16 +10,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.scotlandyard.R;
 import com.example.scotlandyard.presenterLayer.Presenter;
 
+/**
+ * Class for the Chat function
+ */
 public class Chat extends AppCompatActivity {
-
+    //Presenter is assigned to variable
     private Presenter presenter = Presenter.getInstance();
+    //Chat history display
     private TextView chatVerlaufTextView;
+    //Message to send
     private TextView nachrichtenTextView;
 
-
+    /**
+     * onCreate method to set up the Chat Activity
+     *
+     * @param savedInstanceState savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
@@ -33,6 +41,11 @@ public class Chat extends AppCompatActivity {
         presenter.setLog(chatVerlaufTextView);
     }
 
+    /**
+     * Method for sendin a message to the server
+     *
+     * @param view View
+     */
     public void sendMessage(View view) {
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
