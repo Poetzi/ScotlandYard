@@ -16,7 +16,7 @@ public class ReadyCheck extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_username);
+        setContentView(R.layout.activity_confirm);
     }
 
     public void goToGameActivity(View view) {

@@ -98,6 +98,7 @@ public class Main {
                     if (game.getLobby().getPlayerReady()==2)
                     {
                         game.getLobby().setAllReady(true);
+                        System.out.println("Spiel beginnt!!");
                     }
                 }
 

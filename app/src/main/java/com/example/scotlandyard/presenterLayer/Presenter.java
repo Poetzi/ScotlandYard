@@ -107,6 +107,7 @@ public class Presenter {
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
                 Log.d("Server:", message.getText());
 
+                // Spieler wird nach einem Zug gefragt
                 game.askPlayerforTurn();
             }
 

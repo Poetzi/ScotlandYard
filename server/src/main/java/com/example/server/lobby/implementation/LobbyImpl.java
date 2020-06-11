@@ -94,11 +94,6 @@ public class LobbyImpl implements Lobby {
 
         while (waitForPlayersTurn[playerId]) {
             // Wait for TurnMessage from Player
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
 
         System.out.println("Player Id " + playerId);

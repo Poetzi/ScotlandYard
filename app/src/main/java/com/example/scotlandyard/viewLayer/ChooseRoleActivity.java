@@ -24,6 +24,13 @@ public class ChooseRoleActivity extends AppCompatActivity {
         Intent intent = new Intent(this, playActivity.class);
         // MrX setzen
         presenter.setRole("MISTERX");
+        new Thread(() -> {
+
+            // die Rolle wird dem Server übergeben
+            presenter.sendRole();
+
+
+        }).start();
         startActivity(intent);
     }
 
@@ -31,6 +38,13 @@ public class ChooseRoleActivity extends AppCompatActivity {
         Intent intent = new Intent(this, playActivity.class);
         // Detektiv setzen
         presenter.setRole("DETEKTIV");
+        new Thread(() -> {
+
+            // die Rolle wird dem Server übergeben
+            presenter.sendRole();
+
+
+        }).start();
 
         startActivity(intent);
     }

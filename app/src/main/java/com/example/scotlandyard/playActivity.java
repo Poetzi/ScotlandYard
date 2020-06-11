@@ -27,13 +27,7 @@ public class playActivity extends AppCompatActivity {
 
 
     public void goToGameActivity(View view) {
-        new Thread(() -> {
 
-            // die Rolle wird dem Server übergeben
-            presenter.sendRole();
-
-
-        }).start();
 
         //Intent wird gestartet um durch Knopfdruck auf Chat-Seite zu gelangen
         Intent intent = new Intent(this, ReadyCheck.class);
