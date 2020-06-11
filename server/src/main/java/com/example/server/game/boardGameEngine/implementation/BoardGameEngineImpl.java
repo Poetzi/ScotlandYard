@@ -365,6 +365,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                ob der Zug gültig ist.
                Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
             */
+            if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
+            {
+                drawValide = true;
+            }
 
         }
 
@@ -464,6 +468,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                ob der Zug gültig ist.
                Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
             */
+            if (gameBoard.checkDraw(player.getId(),fieldToGo,card))
+            {
+                drawValide = true;
+            }
 
         }
 
