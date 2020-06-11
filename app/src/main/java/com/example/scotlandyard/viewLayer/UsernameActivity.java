@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.scotlandyard.R;
-import com.example.scotlandyard.playActivity;
 import com.example.scotlandyard.presenterLayer.Presenter;
 
 public class UsernameActivity extends AppCompatActivity {

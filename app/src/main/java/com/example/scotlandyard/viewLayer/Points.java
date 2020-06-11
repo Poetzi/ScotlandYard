@@ -1,9 +1,5 @@
 package com.example.scotlandyard.viewLayer;
 
-import android.graphics.Point;
-
-import com.example.scotlandyard.R;
-
 import java.util.ArrayList;
 
 public class Points {

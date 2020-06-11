@@ -1,7 +1,6 @@
 package com.example.server.game.boardGameEngine.interfaces;
 
 import com.example.server.game.players.interfaces.Player;
-import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.interfaces.Lobby;
 
 public interface BoardGameEngine {
