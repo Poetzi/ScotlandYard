@@ -29,7 +29,7 @@ public class UsernameActivity extends AppCompatActivity {
         new Thread(() -> {
 
             //Server wird gestartet.
-            presenter.connectToServer("143.205.187.59");
+            presenter.connectToServer("143.205.186.57");
             // Username wird dem Server übergeben
 
             presenter.sendUsername();

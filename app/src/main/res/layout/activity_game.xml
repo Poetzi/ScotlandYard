@@ -48,67 +48,67 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></com.example.scotlandyard.viewLayer.playerView>
 
-        <Button
-        <TextView
-            android:id="@+id/txtview_taxi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/taxi"
-            app:layout_constraintStart_toStartOf="@+id/taxi"
-            app:layout_constraintTop_toBottomOf="@+id/taxi" />
+    <TextView
+        android:id="@+id/txtview_taxi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/taxi"
+        app:layout_constraintStart_toStartOf="@+id/taxi"
+        app:layout_constraintTop_toBottomOf="@+id/taxi" />
 
-        <TextView
-            android:id="@+id/txtview_bus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/bus"
-            app:layout_constraintStart_toStartOf="@+id/bus"
-            app:layout_constraintTop_toBottomOf="@+id/bus" />
+    <TextView
+        android:id="@+id/txtview_bus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/bus"
+        app:layout_constraintStart_toStartOf="@+id/bus"
+        app:layout_constraintTop_toBottomOf="@+id/bus" />
 
-        <TextView
-            android:id="@+id/txtview_black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/blackTicket"
-            app:layout_constraintStart_toStartOf="@+id/blackTicket"
-            app:layout_constraintTop_toBottomOf="@+id/blackTicket" />
+    <TextView
+        android:id="@+id/txtview_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/blackTicket"
+        app:layout_constraintStart_toStartOf="@+id/blackTicket"
+        app:layout_constraintTop_toBottomOf="@+id/blackTicket" />
 
-        <TextView
-            android:id="@+id/txtview_metro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/ubahn"
-            app:layout_constraintHorizontal_bias="0.466"
-            app:layout_constraintStart_toStartOf="@+id/ubahn"
-            app:layout_constraintTop_toBottomOf="@+id/ubahn" />
+    <TextView
+        android:id="@+id/txtview_metro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/ubahn"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="@+id/ubahn"
+        app:layout_constraintTop_toBottomOf="@+id/ubahn" />
 
-        <TextView
-            android:id="@+id/txtview_double"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/doubleMove"
-            app:layout_constraintStart_toStartOf="@+id/doubleMove"
-            app:layout_constraintTop_toBottomOf="@+id/doubleMove" />
+    <TextView
+        android:id="@+id/txtview_double"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/doubleMove"
+        app:layout_constraintStart_toStartOf="@+id/doubleMove"
+        app:layout_constraintTop_toBottomOf="@+id/doubleMove" />
+
 
         <Button
         android:id="@+id/doubleMove"
