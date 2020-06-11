@@ -49,7 +49,6 @@ public class TravelLog {
         this.hasCheated = hasCheated;
     }
 
-
     public boolean isCaughtCheating() {
         return caughtCheating;
     }
