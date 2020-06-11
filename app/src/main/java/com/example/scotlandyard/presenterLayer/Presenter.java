@@ -17,7 +17,7 @@ import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
 import com.example.scotlandyard.Client.Messages.UsernameMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
-import com.example.scotlandyard.modelLayer.players.TravelLog;
+import com.example.scotlandyard.modelLayer.TravelLog;
 import com.example.scotlandyard.viewLayer.User;
 import com.example.scotlandyard.viewLayer.gameActivity;
 
@@ -106,8 +106,12 @@ public class Presenter {
             if (nachrichtVomServer instanceof AskPlayerForTurn) {
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
                 Log.d("Server:", message.getText());
-
-                game.askPlayerforTurn();
+                if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
+                    game.setCheck(false);
+                    game.setConfirm(false);
+                    if (message.getText().equalsIgnoreCase("yes"))
+                        game.setConfirm(true);
+                }
             }
 
             if (nachrichtVomServer instanceof SendLobbyID) {
@@ -155,6 +159,7 @@ public class Presenter {
 
     public void sendReady() {
         ReadyMessage message = new ReadyMessage();
+
         client.sendMessage(message);
 
     }
