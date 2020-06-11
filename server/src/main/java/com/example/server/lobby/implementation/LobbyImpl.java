@@ -25,6 +25,10 @@ public class LobbyImpl implements Lobby {
     private boolean isOpen = true;
     public int playerCount = 0;
 
+    private boolean allReady;
+    private int playerReady = 0;
+
+
     private BoardGameEngine game = BoardGameEngineImpl.getInstance();
 
     // ToDo
@@ -147,5 +151,29 @@ public class LobbyImpl implements Lobby {
     @Override
     public void setGame(BoardGameEngine game) {
         this.game = game;
+    }
+
+    @Override
+    public boolean isAllReady() {
+        return allReady;
+    }
+
+    @Override
+    public void setAllReady(boolean allReady) {
+        this.allReady = allReady;
+        if (allReady == true)
+        {
+            game.startGame();
+        }
+    }
+
+    @Override
+    public int getPlayerReady() {
+        return playerReady;
+    }
+
+    @Override
+    public void setPlayerReady(int playerReady) {
+        this.playerReady = playerReady;
     }
 }

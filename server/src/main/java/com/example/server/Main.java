@@ -9,6 +9,7 @@ import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
 
 import com.example.server.messages.BaseMessage;
+import com.example.server.messages.ReadyMessage;
 import com.example.server.messages.SendLobbyID;
 import com.example.server.messages.SendPlayerIDtoClient;
 import com.example.server.messages.SendRoleMessage;
@@ -22,7 +23,13 @@ import com.example.server.messages.UsernameMessage;
 import java.io.IOException;
 
 public class Main {
+
+
+
     public static void main(String[] args) {
+
+
+
         MyKryoServer server = new MyKryoServer();
         BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
         try {
@@ -39,6 +46,7 @@ public class Main {
             server.registerClass(SendRoleMessage.class);
             server.registerClass(SendLobbyID.class);
             server.registerClass(SendPlayerIDtoClient.class);
+            server.registerClass(ReadyMessage.class);
 
 
             // Die Callbacks werden hier registriert,
@@ -80,6 +88,17 @@ public class Main {
                         System.out.println("Spieler "+ msg.getName()+" ist ein Detektiv und wurde erstellt");
                     }
 
+                }
+
+                if(nachrichtvomClient instanceof ReadyMessage)
+                {
+                    // Die Anzahl der Spieler die bereit sind wird erhöht
+                    game.getLobby().setPlayerReady(game.getLobby().getPlayerReady()+1);
+
+                    if (game.getLobby().getPlayerReady()==2)
+                    {
+                        game.getLobby().setAllReady(true);
+                    }
                 }
 
 

@@ -41,4 +41,11 @@ public interface Lobby {
 
     void updateTravellogToAllClients(TravelLog travelLog, int round);
 
+    public boolean isAllReady();
+
+    public void setAllReady(boolean allReady);
+
+    public int getPlayerReady();
+
+    public void setPlayerReady(int playerReady);
 }
