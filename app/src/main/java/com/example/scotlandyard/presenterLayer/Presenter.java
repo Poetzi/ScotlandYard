@@ -157,6 +157,12 @@ public class Presenter {
         client.sendMessage(msg);
     }
 
+    public void sendReady() {
+        ReadyMessage message = new ReadyMessage();
+        client.sendMessage(message);
+
+    }
+
     public void sendRole() {
         SendRoleMessage message = new SendRoleMessage();
         message.setText(role);
