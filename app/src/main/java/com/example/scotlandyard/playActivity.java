@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.example.scotlandyard.viewLayer.Chat;
 import com.example.scotlandyard.viewLayer.ReadyCheck;
-import com.example.scotlandyard.viewLayer.gameActivity;
 
 public class playActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
@@ -27,13 +26,7 @@ public class playActivity extends AppCompatActivity {
 
 
     public void goToGameActivity(View view) {
-        new Thread(() -> {
 
-            // die Rolle wird dem Server übergeben
-            presenter.sendRole();
-
-
-        }).start();
 
         //Intent wird gestartet um durch Knopfdruck auf Chat-Seite zu gelangen
         Intent intent = new Intent(this, ReadyCheck.class);

@@ -1,4 +1,4 @@
-package com.example.scotlandyard.modelLayer.players;
+package com.example.scotlandyard.modelLayer;
 
 public class TravelLog {
 

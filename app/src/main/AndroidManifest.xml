@@ -26,6 +26,11 @@
         <activity
             android:name=".viewLayer.UsernameActivity"
             tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".viewLayer.ReadyCheck"
+            tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name=".viewLayer.MainActivity"
             android:screenOrientation="landscape"

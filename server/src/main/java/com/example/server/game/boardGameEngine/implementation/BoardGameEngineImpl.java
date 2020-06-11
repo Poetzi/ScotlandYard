@@ -8,16 +8,13 @@ import com.example.server.game.players.interfaces.MrX;
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.game.gameBoard.implementation.GameBoardImpl;
 import com.example.server.game.gameBoard.interfaces.GameBoard;
-import com.example.server.game.players.implementation.PlayerImpl;
+import com.example.server.game.players.implementation.DetectiveImpl;
+import com.example.server.game.players.implementation.MrXImpl;
 import com.example.server.game.players.interfaces.Player;
 import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.TurnMessage;
-//import com.example.server.messages.TurnMessage;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class BoardGameEngineImpl implements BoardGameEngine {
 
@@ -180,16 +177,15 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     public void startGame() {
 
         // toDo send initial position of the players to clients
-        gameBoard.setPositionOfPlayer(0,2);
+        gameBoard.setPositionOfPlayer(0, 2);
         gameBoard.setPositionOfPlayer(1, 21);
 
-        lobby.updatePlayerPositionsToAllClients(0,2);
-        lobby.updatePlayerPositionsToAllClients(1,21);
+        lobby.updatePlayerPositionsToAllClients(0, 2);
+        lobby.updatePlayerPositionsToAllClients(1, 21);
 
         //Test ob Travellog an Client geschickt wird
         TravelLog log=new TravelLog(2,"Taxi",false);
         lobby.updateTravellogToAllClients(log,actualRound);
-
 
 
         // Aktuelle Runde wird auf 0 gesetzt

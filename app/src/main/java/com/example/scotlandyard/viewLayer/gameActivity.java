@@ -20,9 +20,7 @@ import android.widget.Toast;
 
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.R;
-import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImpl;
-import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
-import com.example.scotlandyard.modelLayer.players.TravelLog;
+import com.example.scotlandyard.modelLayer.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.google.android.material.navigation.NavigationView;
 
@@ -30,7 +28,6 @@ import com.google.android.material.navigation.NavigationView;
 public class gameActivity extends AppCompatActivity {
 
     private Button taxi, bus, ubahn, blackTicket, doubleMove;
-    private GameBoard gameBoard = new GameBoardImpl();
     private mapView map;
     private playerView player;
     private Points playerPostion;

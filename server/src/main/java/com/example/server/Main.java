@@ -8,7 +8,6 @@ import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 
 import com.example.server.messages.AskPlayerForTurn;
-
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.ReadyMessage;
 import com.example.server.messages.SendLobbyID;
@@ -94,8 +93,7 @@ public class Main {
                         game.addDetektiv(msg.getName(), msg.getPlayerId());
                         System.out.println("Spieler "+ msg.getName()+" ist ein Detektiv und wurde erstellt");
                     }
-                    System.out.println(game);
-                    game.setupNewGame();
+
                 }
 
                 if(nachrichtvomClient instanceof ReadyMessage)
@@ -106,6 +104,7 @@ public class Main {
                     if (game.getLobby().getPlayerReady()==2)
                     {
                         game.getLobby().setAllReady(true);
+                        System.out.println("Spiel beginnt!!");
                     }
                 }
 

@@ -1,7 +1,7 @@
 package com.example.scotlandyard.Client.Messages;
 
 
-import com.example.scotlandyard.modelLayer.players.TravelLog;
+import com.example.scotlandyard.modelLayer.TravelLog;
 
 public class TravellogMessage extends BaseMessage {
     private TravelLog travelLog;

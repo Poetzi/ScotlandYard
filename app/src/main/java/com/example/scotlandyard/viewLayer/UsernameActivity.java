@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.scotlandyard.R;
-import com.example.scotlandyard.playActivity;
 import com.example.scotlandyard.presenterLayer.Presenter;
 
 public class UsernameActivity extends AppCompatActivity {
@@ -31,9 +30,7 @@ public class UsernameActivity extends AppCompatActivity {
             //Server wird gestartet.
             presenter.connectToServer("143.205.186.57");
             // Username wird dem Server übergeben
-
             presenter.sendUsername();
-            // die Rolle wird dem Server übergeben
 
 
         }).start();
