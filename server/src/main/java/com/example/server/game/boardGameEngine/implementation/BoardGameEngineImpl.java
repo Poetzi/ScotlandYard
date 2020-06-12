@@ -247,6 +247,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
             while (drawValide == false) {
 
+                lobby.askPlayerforTurn(player.getId());
+
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -372,7 +374,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                und die Position zu der er ziehen möchte
             */
-            turnMessage = lobby.askPlayerforTurn(player.getId());
+            lobby.askPlayerforTurn(player.getId());
+            turnMessage = turns[player.getId()];
             card = turnMessage.getCard();
             fieldToGo = turnMessage.getToField();
 
@@ -429,7 +432,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                und die Position zu der er ziehen möchte
             */
-            turnMessage = lobby.askPlayerforTurn(player.getId());
+            lobby.askPlayerforTurn(player.getId());
+
+            turnMessage = turns[player.getId()];
             card = turnMessage.getCard();
             fieldToGo = turnMessage.getToField();
 
@@ -475,7 +480,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                und die Position zu der er ziehen möchte
             */
-            turnMessage = lobby.askPlayerforTurn(player.getId());
+            lobby.askPlayerforTurn(player.getId());
+            turnMessage = turns[player.getId()];
             card = turnMessage.getCard();
             fieldToGo = turnMessage.getToField();
 
