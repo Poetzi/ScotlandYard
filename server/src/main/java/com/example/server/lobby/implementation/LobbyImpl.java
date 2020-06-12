@@ -77,11 +77,20 @@ public class LobbyImpl implements Lobby {
     }
 
     @Override
-    public void askPlayerforTurn(int playerId) {
-
-
+    public TurnMessage askPlayerforTurn(int playerId) {
         AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId, "gib bitte einen Zug an", lobbyID);
         players.get(playerId).name.sendTCP(askPlayerForTurn);
+        waitForPlayersTurn[playerId] = true;
+        while(waitForPlayersTurn[playerId]){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        waitForPlayersTurn[playerId] = true;
+        System.out.println("took");
+        return returnTurnMessage[playerId];
     }
 
 
@@ -125,8 +134,9 @@ public class LobbyImpl implements Lobby {
 
     @Override
     public void setReturnTurnMessage(TurnMessage turnMessage, int playerId) {
-        returnTurnMessage[playerId] = turnMessage;
+        System.out.println(turnMessage.getCard()+"Setttting");
         waitForPlayersTurn[playerId] = false;
+        returnTurnMessage[playerId] = turnMessage;
     }
 
     @Override

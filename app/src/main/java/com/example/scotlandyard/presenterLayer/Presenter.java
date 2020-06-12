@@ -47,7 +47,7 @@ public class Presenter {
     //Connection-bool
     private boolean verbunden = false;
     //Player ID
-    private int playerID;
+    private int playerID=0;
     //Game-Activity
     private gameActivity game;
     //Travel-log
@@ -218,6 +218,7 @@ public class Presenter {
 
         //Message gets initialized
         TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard());
+        Log.d("Client","playerID "+playerID+" tofield "+message.getToField()+" Card;"+msg.getCard());
         //Message is sent to the Server
         client.sendMessage(msg);
     }

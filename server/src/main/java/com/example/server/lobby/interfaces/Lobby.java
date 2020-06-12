@@ -19,7 +19,7 @@ public interface Lobby {
 
     boolean isLobbyOpen();
 
-    void askPlayerforTurn(int playerId);
+    TurnMessage askPlayerforTurn(int playerId);
 
     void updatePlayerPositionsToAllClients(int playerId, int toField);
 

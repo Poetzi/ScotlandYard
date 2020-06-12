@@ -19,7 +19,7 @@ import com.example.server.messages.TurnMessage;
 public class BoardGameEngineImpl implements BoardGameEngine {
 
     private Player[] players = new Player[2];
-    private TurnMessage[] turns = new TurnMessage[2];
+    //private TurnMessage[] turns = new TurnMessage[2];
     private int numberOfPlayers = 0;
     private int maxRounds = 24;
     private int actualRound;
@@ -44,10 +44,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     }
 
     private void setupTurns() {
-        for (int i = 0; i < turns.length; i++) {
+       /* for (int i = 0; i < turns.length; i++) {
             turns[i] = new TurnMessage(0, 0, 0, "Bus");
         }
-        System.out.println("Turns Setup erfolgreich");
+        System.out.println("Turns Setup erfolgreich");*/
     }
 
     @Override
@@ -66,10 +66,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void setupNewGame() {
 
-        for (TurnMessage t : turns) {
+       /* for (TurnMessage t : turns) {
             t = new TurnMessage(0, 0, 0, "Bus");
         }
-
+*/
         gameBoard.addFieldWithTransition(2, 3, "taxi");
         gameBoard.addFieldWithTransition(2, 7, "bus");
         gameBoard.addFieldWithTransition(2, 7, "ubahn");
@@ -190,7 +190,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void startGame() {
 
-        setupTurns();
+      //  setupTurns();
 
 
         setupNewGame();
@@ -201,7 +201,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         gameBoard.setPositionOfPlayer(1, 21);
 
         lobby.updatePlayerPositionsToAllClients(0, 2);
-        lobby.updatePlayerPositionsToAllClients(1, 21);
+        lobby.updatePlayerPositionsToAllClients(1, 3);
         System.out.println("Initial Position von P0 und P1 gesendet");
 
         /*
@@ -221,9 +221,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
 
             // Wenn die Detektive gewonnen haben wird der Spielablauf beendet
-            if (checkWinningCondition()) {
-                break;
-            }
+            //if (checkWinningCondition()) {
+           //     break;
+          //  }
 
             // Die aktuelle Runde wird erhöht
             actualRound++;
@@ -234,49 +234,44 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public void playOneRound() {
-        for (Player p : players) {
-            /*lobby.updateTicketCount(p.getId(),p.getTaxiTickets(),"Taxi");
+      /*  for (Player p : players) {
+            lobby.updateTicketCount(p.getId(),p.getTaxiTickets(),"Taxi");
             lobby.updateTicketCount(p.getId(),p.getBusTickets(),"Bus");
             lobby.updateTicketCount(p.getId(),p.getUndergroundTickets(),"U-Bahn");
             lobby.updateTicketCount(p.getId(),p.getBlackTickets(),"Black");
             lobby.updateTicketCount(p.getId(),p.getDoubleMoveTickets(),"DoubleMove");
             lobby.updateTicketCount(p.getId(),p.getCheatTickets(),"Cheat");
-             */
 
+        }*/
+        for (Player p : players){
             System.out.println("Spieler " + p.getId() + p.getName() + " ist am Zug");
             drawForPlayer(p);
-
         }
     }
 
     @Override
     public void drawForPlayer(Player player) {
-        if ((player instanceof Detective && !((Detective) player).isInactive()) || player instanceof MrX) {
+      //  if ((player instanceof Detective && !((Detective) player).isInactive()) || player instanceof MrX) {
             String card = "Bus";    // Beispielwert
             int fieldToGo = 0;
             boolean drawValide = false;
             TurnMessage turnMessage;
 
-
             // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
             while (drawValide == false) {
+                System.out.println("INSIDE DRAW");
 
-                lobby.askPlayerforTurn(player.getId());
-
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
                 System.out.println("Server wartet auf einen gültigen Zug von " + player.getId() + player.getName());
                 /*
                    Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                    und die Position zu der er ziehen möchte
                 */
-                turnMessage = turns[player.getId()];
-                card = turnMessage.getCard();
-                fieldToGo = turnMessage.getToField();
+                turnMessage = lobby.askPlayerforTurn(player.getId());
+                if(turnMessage != null) {
+                    card = turnMessage.getCard();
+                    fieldToGo = turnMessage.getToField();
+                }
 
                 /*
                    Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
@@ -292,7 +287,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         /*
             Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
          */
-            Transition toRemove = new TransitionImpl();
+           /* Transition toRemove = new TransitionImpl();
             toRemove.setName(card);
             player.removeTransitionFromAvailable(toRemove);
             if (card.equals("cheat")) {
@@ -305,7 +300,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                 doubleMove(player);
             } else {
                 oneMove(card, fieldToGo, player);
-            }
+            }*/
         /*
             Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
             und an die anderen Spieler Clients weitergegeben
@@ -316,12 +311,13 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                 /*
                     Die Position an die anderen Spieler clients weitergeben
                  */
-                if (player.getId() != mrXId)
+                //if (player.getId() != mrXId)
                     lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
             }
-        } else {
+       /* }
+        else {
             ((Detective) player).setInactive(false);
-        }
+        }*/
     }
 
 
@@ -392,10 +388,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            lobby.askPlayerforTurn(player.getId());
-            turnMessage = turns[player.getId()];
-            card = turnMessage.getCard();
-            fieldToGo = turnMessage.getToField();
+           // lobby.askPlayerforTurn(player.getId());
+          //  turnMessage = turns[player.getId()];
+           // card = turnMessage.getCard();
+           // fieldToGo = turnMessage.getToField();
 
             /*
                Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
@@ -454,11 +450,11 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            lobby.askPlayerforTurn(player.getId());
+           // lobby.askPlayerforTurn(player.getId());
 
-            turnMessage = turns[player.getId()];
-            card = turnMessage.getCard();
-            fieldToGo = turnMessage.getToField();
+           // turnMessage = turns[player.getId()];
+          //  card = turnMessage.getCard();
+          //  fieldToGo = turnMessage.getToField();
 
             /*
                Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
@@ -507,10 +503,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            lobby.askPlayerforTurn(player.getId());
-            turnMessage = turns[player.getId()];
-            card = turnMessage.getCard();
-            fieldToGo = turnMessage.getToField();
+           // lobby.askPlayerforTurn(player.getId());
+           // turnMessage = turns[player.getId()];
+           // card = turnMessage.getCard();
+          //  fieldToGo = turnMessage.getToField();
 
             /*
                Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
@@ -545,7 +541,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         player.setCurrentPosition(fieldToGo);
     }
 
-    @Override
+ /*   @Override
     public TurnMessage[] getTurns() {
         return turns;
     }
@@ -553,5 +549,5 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void setTurns(TurnMessage turn, int id) {
         turns[id] = turn;
-    }
+    }*/
 }

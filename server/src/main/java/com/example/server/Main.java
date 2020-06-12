@@ -1,11 +1,7 @@
 package com.example.server;
 
 import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
-import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.game.players.TravelLog;
-import com.example.server.lobby.implementation.ID;
-import com.example.server.lobby.implementation.LobbyImpl;
-import com.example.server.lobby.interfaces.Lobby;
 
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.BaseMessage;
@@ -52,7 +48,6 @@ public class Main {
             server.registerClass(UpdateTicketCount.class);
             server.registerClass(TravelLog.class);
 
-
             // Die Callbacks werden hier registriert,
             server.registerCallback(nachrichtvomClient -> {
                 // hier wird dan definiert was passieren soll,
@@ -73,7 +68,8 @@ public class Main {
                             + turn.getToField() + " with " + turn.getCard());
 
                     // Der Zug wird an die Lobby weitergegeben
-                    game.setTurns(turn, turn.getPlayerId());
+                    //game.setTurns(turn, turn.getPlayerId());
+                    MyKryoServer.getLobby().get(turn.getLobbyId()).setReturnTurnMessage(turn, turn.getPlayerId());
 
                 }
 

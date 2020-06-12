@@ -49,6 +49,8 @@ public class GameBoardImpl implements GameBoard {
             if (transitions.get(i).getToField() == toField && transitions.get(i).getFromField() == playersPositions[playerID]
                     && transitions.get(i).getName().equalsIgnoreCase(card)) {
                 System.out.println("Gameboard True");
+                System.out.println("Player "+playerID+" position " + playersPositions[playerID] + " card:" + card + " togo:" + toField);
+
                 return true;
             }
         }
@@ -57,7 +59,7 @@ public class GameBoardImpl implements GameBoard {
             System.out.println("Gameboard True");
             return true;
         }*/
-        System.out.println("player position " + playersPositions[playerID] + " card:" + card + " togo:" + toField);
+        System.out.println("Player "+playerID+" position " + playersPositions[playerID] + " card:" + card + " togo:" + toField);
         System.out.println("Gameboard False");
 
         return false;

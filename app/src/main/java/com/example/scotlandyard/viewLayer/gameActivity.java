@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -156,7 +155,6 @@ public class gameActivity extends AppCompatActivity {
 
         //TurnMessage is created
         TurnMessage msg = new TurnMessage(0, toField, 0, "taxi");
-
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
@@ -277,9 +275,8 @@ public class gameActivity extends AppCompatActivity {
         CharSequence text = "Bitte einen Zug angeben";
         int duration = Toast.LENGTH_SHORT;
 
-        Looper.prepare();
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+
+        System.out.println(text);
     }
 
     /**
