@@ -19,6 +19,7 @@ import com.example.server.messages.TurnMessage;
 public class BoardGameEngineImpl implements BoardGameEngine {
 
     private Player[] players = new Player[2];
+    private TurnMessage[] turns = new TurnMessage[2];
     private int numberOfPlayers = 0;
     private int maxRounds = 24;
     private int actualRound;
@@ -28,6 +29,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     private int mrXId;
     // Singleton
     private static BoardGameEngineImpl boardGameEngine;
+
+
 
     // private Konstruktor
     private BoardGameEngineImpl() {
@@ -175,17 +178,17 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public void startGame() {
+        new Thread(() -> {
+            setupNewGame();
+            System.out.println("Game Setup finished");
 
-        setupNewGame();
-        System.out.println("Game Setup finished");
+            // toDo send initial position of the players to clients
+            gameBoard.setPositionOfPlayer(0, 2);
+            gameBoard.setPositionOfPlayer(1, 21);
 
-        // toDo send initial position of the players to clients
-        gameBoard.setPositionOfPlayer(0, 2);
-        gameBoard.setPositionOfPlayer(1, 21);
-
-        lobby.updatePlayerPositionsToAllClients(0, 2);
-        lobby.updatePlayerPositionsToAllClients(1, 21);
-        System.out.println("Initial Position von P0 und P1 gesendet");
+            lobby.updatePlayerPositionsToAllClients(0, 2);
+            lobby.updatePlayerPositionsToAllClients(1, 21);
+            System.out.println("Initial Position von P0 und P1 gesendet");
 
         /*
         //Test ob Travellog an Client geschickt wird
@@ -194,23 +197,26 @@ public class BoardGameEngineImpl implements BoardGameEngine {
          */
 
 
-        // Aktuelle Runde wird auf 0 gesetzt
-        actualRound = 0;
+            // Aktuelle Runde wird auf 0 gesetzt
+            actualRound = 0;
 
-        // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
-        for (int i = 0; i < maxRounds; i++) {
-            System.out.println("Runde "+i+ "wird gestartet");
-            playOneRound();
+            // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
+            for (int i = 0; i < maxRounds; i++) {
+                System.out.println("Runde "+i+ "wird gestartet");
+                playOneRound();
 
 
-            // Wenn die Detektive gewonnen haben wird der Spielablauf beendet
-            if (checkWinningCondition()) {
-                break;
+                // Wenn die Detektive gewonnen haben wird der Spielablauf beendet
+                if (checkWinningCondition()) {
+                    break;
+                }
+
+                // Die aktuelle Runde wird erhöht
+                actualRound++;
             }
+        }).start();
 
-            // Die aktuelle Runde wird erhöht
-            actualRound++;
-        }
+
 
     }
 
@@ -241,12 +247,18 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
             while (drawValide == false) {
 
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 System.out.println("Server wartet auf einen gültigen Zug von "+player.getId()+player.getName());
                 /*
                    Der Server holt sich vom Spieler Client die Karte die er einsetzen will
                    und die Position zu der er ziehen möchte
                 */
-                turnMessage = lobby.askPlayerforTurn(player.getId());
+                turnMessage = turns[player.getId()];
                 card = turnMessage.getCard();
                 fieldToGo = turnMessage.getToField();
 
@@ -499,5 +511,15 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
         }
         player.setCurrentPosition(fieldToGo);
+    }
+
+    @Override
+    public TurnMessage[] getTurns() {
+        return turns;
+    }
+
+    @Override
+    public void setTurns(TurnMessage turn, int id) {
+        turns[id] = turn;
     }
 }

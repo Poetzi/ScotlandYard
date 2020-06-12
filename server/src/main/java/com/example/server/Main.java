@@ -73,7 +73,7 @@ public class Main {
                             + turn.getToField() + " with " + turn.getCard());
 
                     // Der Zug wird an die Lobby weitergegeben
-                    MyKryoServer.getLobby().get(turn.getLobbyId()).setReturnTurnMessage(turn, turn.getPlayerId());
+                    game.setTurns(turn, turn.getPlayerId());
 
                 }
 
