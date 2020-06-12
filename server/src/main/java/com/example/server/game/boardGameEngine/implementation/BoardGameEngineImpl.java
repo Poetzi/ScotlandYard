@@ -46,8 +46,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     private void setupTurns ()
     {
-        for (TurnMessage t:turns) {
-            t = new TurnMessage(0,0,0,"Bus");
+        for (int i = 0; i<turns.length; i++) {
+            turns[i] = new TurnMessage(0,0,0,"Bus");
         }
         System.out.println("Turns Setup erfolgreich");
     }
