@@ -1,11 +1,8 @@
-package com.example.scotlandyard.Client.Messages;
+package com.example.server.messages;
 
-public class StartGameMessage extends BaseMessage {
+public class ReadyMessage extends BaseMessage {
     private String text;
 
-    public StartGameMessage(){
-
-    }
     public String getText() {
         return text;
     }

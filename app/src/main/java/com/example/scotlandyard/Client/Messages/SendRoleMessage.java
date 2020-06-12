@@ -1,14 +1,23 @@
 package com.example.scotlandyard.Client.Messages;
 
+/**
+ * Message-Class for Client-Server-communication. Client sends the picked role to the server.
+ */
 public class SendRoleMessage extends BaseMessage {
+    //Role-Message
     private String text;
-
+    //Player ID
     private int playerId;
-
+    //Player name
     private String name;
-
+    //Lobby-ID
     private int lobbyId;
 
+    public SendRoleMessage() {
+
+    }
+
+    //Getter and Setter
     public int getLobbyId() {
         return lobbyId;
     }

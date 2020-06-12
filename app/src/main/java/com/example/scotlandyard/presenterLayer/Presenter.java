@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.ReadyMessage;
 import com.example.scotlandyard.Client.Messages.SendLobbyID;
 import com.example.scotlandyard.Client.Messages.SendPlayerIDtoClient;
 import com.example.scotlandyard.Client.Messages.SendRoleMessage;
@@ -14,51 +15,71 @@ import com.example.scotlandyard.Client.Messages.TextMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
+import com.example.scotlandyard.Client.Messages.UpdateTicketCount;
 import com.example.scotlandyard.Client.Messages.UsernameMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
-import com.example.scotlandyard.modelLayer.players.TravelLog;
+import com.example.scotlandyard.modelLayer.TravelLog;
 import com.example.scotlandyard.viewLayer.User;
 import com.example.scotlandyard.viewLayer.gameActivity;
 
 import java.io.IOException;
 
+/**
+ * Mediator class for communicating between Android-Activities and the Kryo-Client.
+ * Implemented as Singleton-Pattern
+ */
 public class Presenter {
 
     // Singleton
     private static Presenter presenter;
-
+    //Kryo-Client
     private MyKryoClient client;
-    // Logik z.B: Spielelogik
+    //User
     private User user;
-
+    //Role
     private String role;
-
+    //Lobby-ID
     private int lobbyID;
-
+    //Username
     private String username;
-
+    //Log-TextView
     private TextView log;
-
+    //Connection-bool
     private boolean verbunden = false;
-
+    //Player ID
     private int playerID;
-
+    //Game-Activity
     private gameActivity game;
+    //Travel-log
     private Menu travellogMenu;
 
-    // private Konstruktor
+    /**
+     * Private Constructor for Singleton Pattern
+     */
     private Presenter() {
+        //New client is created
         client = new MyKryoClient();
     }
 
-    // Singleton wird zurückgegeben
+    /**
+     * Singleton is returned
+     *
+     * @return Presenter-Singleton
+     */
     public static synchronized Presenter getInstance() {
+        //If presenter is not yet initialized, create a new one.
         if (Presenter.presenter == null) {
             Presenter.presenter = new Presenter();
         }
+        //If the presenter is already initialized, return the presenter.
         return Presenter.presenter;
     }
 
+    /**
+     * Method for registering Message-Classes
+     *
+     * @param hostname IPv4-address
+     */
     public void connectToServer(String hostname) {
         if (verbunden == false) {
             client.registerClass(BaseMessage.class);
@@ -72,10 +93,13 @@ public class Presenter {
             client.registerClass(SendRoleMessage.class);
             client.registerClass(SendLobbyID.class);
             client.registerClass(SendPlayerIDtoClient.class);
+            client.registerClass(ReadyMessage.class);
+            client.registerClass(UpdateTicketCount.class);
+            client.registerClass(TravelLog.class);
 
-
+            //Calls registerCallback() to initialize the Callback-function of the Kryo-Client
             registerCallback();
-
+            //Client connects to server and checks for errors
             try {
                 client.connect(hostname);
             } catch (IOException e) {
@@ -85,7 +109,7 @@ public class Presenter {
         }
     }
 
-
+    //Getter and Setter
     public String getUsername() {
         return username;
     }
@@ -94,103 +118,201 @@ public class Presenter {
         this.username = username;
     }
 
+    /**
+     * Method for registering Callbacks from server
+     */
     private void registerCallback() {
+        //Call for register Callback method from the Kryo-Client
         client.registerCallback(nachrichtVomServer -> {
+            //Instanceof is used to differentiate between the Message-classes
             if (nachrichtVomServer instanceof TextMessage) {
+                //Base-Message is casted to child class
                 TextMessage message = (TextMessage) nachrichtVomServer;
+                //Log is updated for the Chat
                 updateLog(message.toString());
             }
 
             if (nachrichtVomServer instanceof AskPlayerForTurn) {
+                //Base-Message is casted to child class
                 AskPlayerForTurn message = (AskPlayerForTurn) nachrichtVomServer;
+                //Message is displayed by the Client
                 Log.d("Server:", message.getText());
-                if (message.getText().equalsIgnoreCase("yes") || message.getText().equalsIgnoreCase("no")) {
-                    game.setCheck(false);
-                    game.setConfirm(false);
-                    if (message.getText().equalsIgnoreCase("yes"))
-                        game.setConfirm(true);
-                }
+
+                // Spieler wird nach einem Zug gefragt
+                game.askPlayerforTurn();
             }
 
             if (nachrichtVomServer instanceof SendLobbyID) {
+                //Base-Message is casted to child class
                 SendLobbyID message = (SendLobbyID) nachrichtVomServer;
+                //Lobby-ID is set
                 setLobbyID(message.getLobbyID());
             }
 
             if (nachrichtVomServer instanceof UpdatePlayersPosition) {
+                //Base-Message is casted to child class
                 UpdatePlayersPosition updatePlayersPosition = (UpdatePlayersPosition) nachrichtVomServer;
+                //Client displays the current Players position
                 Log.d("Server:", "PlayersPosition: " + updatePlayersPosition.getPlayerId() + " ToField: " + updatePlayersPosition.getToField()
                         + " LobbyID: " + updatePlayersPosition.getLobbyId());
 
             }
 
             if (nachrichtVomServer instanceof SendPlayerIDtoClient) {
+                //Base-Message is casted to child class
                 SendPlayerIDtoClient sendPlayerIDtoClient = (SendPlayerIDtoClient) nachrichtVomServer;
+                //Client displays the current Player ID
                 Log.d("Server:", "PlayerID: " + sendPlayerIDtoClient.getId());
+                //Server sets the Player ID of the Client
                 this.playerID = sendPlayerIDtoClient.getId();
             }
 
-            if (nachrichtVomServer instanceof UpdatePlayersPosition){
+            if (nachrichtVomServer instanceof UpdatePlayersPosition) {
 
+                Log.d("Client: ", "Die Position eines Spielers auf dder Map soll upgedatet werden");
+
+                //Base-Message is casted to child class
+                UpdatePlayersPosition msg = (UpdatePlayersPosition) nachrichtVomServer;
                 // Updates the position of a player on the map
-                UpdatePlayersPosition msg =(UpdatePlayersPosition)nachrichtVomServer;
-                updatePositionOfPlayerOnMap(msg.getPlayerId(),msg.getToField());
+                updatePositionOfPlayerOnMap(msg.getPlayerId(), msg.getToField());
             }
+
+            if (nachrichtVomServer instanceof UpdateTicketCount){
+                UpdateTicketCount msg=(UpdateTicketCount)nachrichtVomServer;
+                Log.d("TICKET","type:"+msg.getType()+" count:"+msg.getCount());
+                updateTicketCount(msg.getType(),msg.getCount());
+            }
+
+            /*if (nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage msg=(TravellogMessage)nachrichtVomServer;
+                updateTravellogMenu(msg.getTravelLog(),msg.getRound());
+            }
+
+             */
 
         });
 
 
     }
 
+    /**
+     * Method for sending a Textmessage to the server for the Chat
+     *
+     * @param text Chat-Message
+     */
     public void sendMessagetoServer(String text) {
+        //Message ist refactored with the players username
         TextMessage message = new TextMessage(username + ": " + text);
+        //Message gets send to the server
         client.sendMessage(message);
-        // updateLog(message.getText());
+
     }
 
+    /**
+     * Method for sending a turnMessage to the Server
+     *
+     * @param message Turn-Message
+     */
     public void sendTurn(TurnMessage message) {
-        TurnMessage msg = new TurnMessage(user.getId(), message.getToField(), 0, message.getCard());
+        Log.d("Client: ", "Ein Zug wurde an den Server geschickt");
+
+        //Message gets initialized
+        TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard());
+        //Message is sent to the Server
         client.sendMessage(msg);
     }
 
+    /**
+     * Method for sending a readyMessage
+     */
+    public void sendReady() {
+        //Ready-Message is initialized
+        ReadyMessage message = new ReadyMessage();
+        //Message is sent to the server
+        client.sendMessage(message);
+    }
+
+    /**
+     * Method for sending a sendRole Message
+     */
     public void sendRole() {
+        Log.d("Client: ", "Die Rolle des Spielers wurde an den Server geschickt");
+
+        //SendRoleMessage is initialized
         SendRoleMessage message = new SendRoleMessage();
         message.setText(role);
         message.setPlayerId(playerID);
         message.setName(getUsername());
         message.setLobbyId(getLobbyID());
+        //Message is sent to the Server
         client.sendMessage(message);
 
     }
 
+    /**
+     * Method for sending the Username
+     */
     public void sendUsername() {
+        //Message is initialized
         UsernameMessage msg = new UsernameMessage(username);
+        //Message is sent to the server
         client.sendMessage(msg);
     }
 
+    /**
+     * Method for updating the log for the Chat
+     *
+     * @param text Chat-Message
+     */
+    public void updateLog(String text) {
+
+        while (log == null)
+        {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //Previous String is added to the prev variable
+        String prev = log.getText().toString();
+        //Current Chat-Message is added to the toAdd variable
+        String toAdd = text;
+        //The two Strings get concatenated
+        String newlog = prev + toAdd + "\n";
+        //The log gets refreshed
+        log.setText(newlog);
+    }
+
+
+    /**
+     * Method for updating the Travel-log
+     *
+     * //@param travelLog Travel-log
+     * //@param round     Round
+     */
+    /*public void updateTravellogMenu(TravelLog travelLog, int round) {
+        //Ticket gets assigned to a String variable
+        String transport = travelLog.getTicket();
+        //Round ist checked for cheating condition
+        if (round == 3 || round == 8 || round == 13 || round == 18 || travelLog.isCaughtCheating()) {
+            travellogMenu.add(Menu.NONE, round, Menu.NONE, transport + ", Position:" + round);
+        } else {
+            travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
+        }
+    }
+     */
+
+
+
+    //Getter and Setter
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void updateLog(String text) {
-        String prev = log.getText().toString();
-        String toAdd = text;
-        String newlog = prev + toAdd + "\n";
-        log.setText(newlog);
-
-        /*list.add(text);
-        if (list.size() == 15) {
-            list.remove(0);
-        }
-        String toAdd = "";
-        for (int i = 0; i < list.size(); i++) {
-            toAdd += list.get(i) + "\n";
-        }
-        log.setText(toAdd);*/
     }
 
     public TextView getLog() {
@@ -208,17 +330,6 @@ public class Presenter {
     public void setGame(gameActivity game) {
         this.game = game;
     }
-
-    public void updateTravellogMenu(TravelLog travelLog, int round) {
-        String transport = travelLog.getTicket();
-        if (round == 3 || round == 8 || round == 13 || round == 18 || travelLog.isCaughtCheating()) {
-            travellogMenu.add(Menu.NONE, round, Menu.NONE, transport + ", Position:" + round);
-        } else {
-            travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
-        }
-    }
-
-
 
     public Menu getTravellogMenu() {
         return travellogMenu;
@@ -244,8 +355,28 @@ public class Presenter {
         this.lobbyID = lobbyID;
     }
 
+    /**
+     * Method for updating the Player position on the map
+     *
+     * @param id      Player ID
+     * @param toField toField
+     */
     public void updatePositionOfPlayerOnMap(int id, int toField)
     {
-        // toDo change the position of a player on the player View
+        while(game == null)
+        {
+            Log.d("Client:", "Warte auf Instanz von gameActivity");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d("Client:", "Spieler wird gezeichnet");
+        game.drawPlayer(id,toField);
+    }
+
+    public void updateTicketCount(String type, int count){
+        game.updateCount(type,count);
     }
 }

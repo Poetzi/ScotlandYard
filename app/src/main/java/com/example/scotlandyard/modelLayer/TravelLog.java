@@ -1,4 +1,4 @@
-package com.example.scotlandyard.modelLayer.players;
+package com.example.scotlandyard.modelLayer;
 
 public class TravelLog {
 
@@ -7,6 +7,8 @@ public class TravelLog {
     private String ticketType;
     private boolean isDoubleMove;
     private boolean caughtCheating;
+
+    public TravelLog(){}
 
     public TravelLog(int position, String ticket, boolean isDoubleMove) {
         this.position = position;
@@ -46,7 +48,6 @@ public class TravelLog {
     public void setHasCheated(boolean hasCheated) {
         this.hasCheated = hasCheated;
     }
-
 
     public boolean isCaughtCheating() {
         return caughtCheating;

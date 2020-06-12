@@ -1,21 +1,20 @@
 package com.example.server;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
+import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.lobby.implementation.ID;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.SendLobbyID;
 import com.example.server.messages.SendPlayerIDtoClient;
-import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UsernameMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class MyKryoServer {
@@ -44,8 +43,18 @@ public class MyKryoServer {
      * @throws IOException
      */
     public void start() throws IOException {
-        server.start();
-        server.bind(Ports.TCP);
+        new Thread(() -> {
+
+            server.start();
+            try {
+                server.bind(Ports.TCP);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+
+
 
         // Serverlistener wird hinzugefügt
         server.addListener(new Listener() {
@@ -114,6 +123,9 @@ public class MyKryoServer {
                         messagePlayerId.setId(id.id);
                         connection.sendTCP((messagePlayerId));
                         System.out.println("Server sendet PlayerId " + messagePlayerId.getId() + " an Client");
+
+                        BoardGameEngineImpl game=BoardGameEngineImpl.getInstance();
+                        game.setLobby(lobby);
                     }
 
 

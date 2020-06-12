@@ -2,13 +2,14 @@ package com.example.server;
 
 import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
+import com.example.server.game.players.TravelLog;
 import com.example.server.lobby.implementation.ID;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 
 import com.example.server.messages.AskPlayerForTurn;
-
 import com.example.server.messages.BaseMessage;
+import com.example.server.messages.ReadyMessage;
 import com.example.server.messages.SendLobbyID;
 import com.example.server.messages.SendPlayerIDtoClient;
 import com.example.server.messages.SendRoleMessage;
@@ -17,12 +18,20 @@ import com.example.server.messages.TextMessage;
 import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
+import com.example.server.messages.UpdateTicketCount;
 import com.example.server.messages.UsernameMessage;
 
 import java.io.IOException;
 
 public class Main {
+
+
+
     public static void main(String[] args) {
+
+
+
+
         MyKryoServer server = new MyKryoServer();
         BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
         try {
@@ -39,6 +48,9 @@ public class Main {
             server.registerClass(SendRoleMessage.class);
             server.registerClass(SendLobbyID.class);
             server.registerClass(SendPlayerIDtoClient.class);
+            server.registerClass(ReadyMessage.class);
+            server.registerClass(UpdateTicketCount.class);
+            server.registerClass(TravelLog.class);
 
 
             // Die Callbacks werden hier registriert,
@@ -61,7 +73,7 @@ public class Main {
                             + turn.getToField() + " with " + turn.getCard());
 
                     // Der Zug wird an die Lobby weitergegeben
-                    MyKryoServer.getLobby().get(turn.getLobbyId()).setReturnTurnMessage(turn, turn.getPlayerId());
+                    game.setTurns(turn, turn.getPlayerId());
 
                 }
 
@@ -80,6 +92,21 @@ public class Main {
                         System.out.println("Spieler "+ msg.getName()+" ist ein Detektiv und wurde erstellt");
                     }
 
+                }
+
+                if(nachrichtvomClient instanceof ReadyMessage)
+                {
+                    // Die Anzahl der Spieler die bereit sind wird erhöht
+                    game.getLobby().setPlayerReady(game.getLobby().getPlayerReady()+1);
+                    System.out.println("Ein Spieler ist bereit");
+                    System.out.println("Spieler bereit: "+game.getLobby().getPlayerReady());
+
+                    if (game.getLobby().getPlayerReady()==2)
+                    {
+                        System.out.println("Spiel beginnt!!");
+                        game.getLobby().setAllReady(true);
+
+                    }
                 }
 
 

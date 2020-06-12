@@ -14,8 +14,8 @@ public class LobbyStart implements Runnable {
     public void run() {
         BoardGameEngineImpl boardgame = BoardGameEngineImpl.getInstance();
         boardgame.setLobby(lobby);
-        boardgame.setupNewGame();
-        boardgame.startGame();
+        //boardgame.setupNewGame();
+
 
     }
 }

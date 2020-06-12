@@ -1,8 +1,8 @@
 package com.example.server.game.boardGameEngine.interfaces;
 
 import com.example.server.game.players.interfaces.Player;
-import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.interfaces.Lobby;
+import com.example.server.messages.TurnMessage;
 
 public interface BoardGameEngine {
 
@@ -57,5 +57,9 @@ public interface BoardGameEngine {
     Lobby getLobby();
 
     void setLobby(Lobby lobby);
+
+    public TurnMessage[] getTurns();
+
+    public void setTurns(TurnMessage turn, int id);
 
 }
