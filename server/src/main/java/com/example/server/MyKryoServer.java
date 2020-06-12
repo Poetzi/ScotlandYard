@@ -46,6 +46,7 @@ public class MyKryoServer {
         server.start();
         server.bind(Ports.TCP);
 
+
         // Serverlistener wird hinzugefügt
         server.addListener(new Listener() {
 

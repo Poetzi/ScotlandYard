@@ -168,6 +168,9 @@ public class Presenter {
             }
 
             if (nachrichtVomServer instanceof UpdatePlayersPosition) {
+
+                Log.d("Client: ", "Die Position eines Spielers auf dder Map soll upgedatet werden");
+
                 //Base-Message is casted to child class
                 UpdatePlayersPosition msg = (UpdatePlayersPosition) nachrichtVomServer;
                 // Updates the position of a player on the map
@@ -211,6 +214,8 @@ public class Presenter {
      * @param message Turn-Message
      */
     public void sendTurn(TurnMessage message) {
+        Log.d("Client: ", "Ein Zug wurde an den Server geschickt")
+
         //Message gets initialized
         TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard());
         //Message is sent to the Server
@@ -231,6 +236,8 @@ public class Presenter {
      * Method for sending a sendRole Message
      */
     public void sendRole() {
+        Log.d("Client: ", "Die Rolle des Spielers wurde an den Server geschickt");
+
         //SendRoleMessage is initialized
         SendRoleMessage message = new SendRoleMessage();
         message.setText(role);
@@ -258,6 +265,16 @@ public class Presenter {
      * @param text Chat-Message
      */
     public void updateLog(String text) {
+
+        while (log == null)
+        {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
         //Previous String is added to the prev variable
         String prev = log.getText().toString();
         //Current Chat-Message is added to the toAdd variable
@@ -348,12 +365,14 @@ public class Presenter {
     {
         while(game == null)
         {
+            Log.d("Client:", "Warte auf Instanz von gameActivity");
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        Log.d("Client:", "Spieler wird gezeichnet");
         game.drawPlayer(id,toField);
     }
 

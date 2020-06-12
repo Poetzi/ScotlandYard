@@ -79,6 +79,7 @@ public class LobbyImpl implements Lobby {
     @Override
     public TurnMessage askPlayerforTurn(int playerId) {
 
+
         AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId, "gib bitte einen Zug an", lobbyID);
         players.get(playerId).name.sendTCP(askPlayerForTurn);
 
@@ -86,11 +87,15 @@ public class LobbyImpl implements Lobby {
         // Also es wird auf einen Zug des Spielers gewartet
         waitForPlayersTurn[playerId] = true;
 
-        while (waitForPlayersTurn[playerId]) {
-            // Wait for TurnMessage from Player
-        }
+
+            while (waitForPlayersTurn[playerId]) {
+                // Wait for TurnMessage from Player
+
+
+            }
 
         System.out.println("Player Id " + playerId);
+
         return returnTurnMessage[playerId];
     }
 
