@@ -43,8 +43,17 @@ public class MyKryoServer {
      * @throws IOException
      */
     public void start() throws IOException {
-        server.start();
-        server.bind(Ports.TCP);
+        new Thread(() -> {
+
+            server.start();
+            try {
+                server.bind(Ports.TCP);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+
 
 
         // Serverlistener wird hinzugefügt

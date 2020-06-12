@@ -31,6 +31,7 @@ public class Main {
 
 
 
+
         MyKryoServer server = new MyKryoServer();
         BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
         try {
