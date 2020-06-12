@@ -59,6 +59,11 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public void setupNewGame() {
+
+        for (TurnMessage t:turns) {
+            t = new TurnMessage(0,0,0,"bus");
+        }
+
         gameBoard.addFieldWithTransition(2, 3, "taxi");
         gameBoard.addFieldWithTransition(2, 7, "bus");
         gameBoard.addFieldWithTransition(2, 7, "ubahn");
