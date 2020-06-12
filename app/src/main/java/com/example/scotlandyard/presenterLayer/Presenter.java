@@ -214,7 +214,7 @@ public class Presenter {
      * @param message Turn-Message
      */
     public void sendTurn(TurnMessage message) {
-        Log.d("Client: ", "Ein Zug wurde an den Server geschickt")
+        Log.d("Client: ", "Ein Zug wurde an den Server geschickt");
 
         //Message gets initialized
         TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard());
