@@ -88,11 +88,14 @@ public class LobbyImpl implements Lobby {
         waitForPlayersTurn[playerId] = true;
 
 
-            while (waitForPlayersTurn[playerId]) {
-                // Wait for TurnMessage from Player
-
-
+        while (waitForPlayersTurn[playerId]) {
+            // Wait for TurnMessage from Player
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+        }
 
         System.out.println("Player Id " + playerId);
 
@@ -117,8 +120,8 @@ public class LobbyImpl implements Lobby {
     }
 
     @Override
-    public void updateTicketCount(int playerId, int count, String type){
-        UpdateTicketCount ticketCount=new UpdateTicketCount(count, type, playerId, lobbyID);
+    public void updateTicketCount(int playerId, int count, String type) {
+        UpdateTicketCount ticketCount = new UpdateTicketCount(count, type, playerId, lobbyID);
         players.get(playerId).name.sendTCP(ticketCount);
         System.out.println("Ticketcount wurde geschickt.");
     }
@@ -162,8 +165,7 @@ public class LobbyImpl implements Lobby {
     @Override
     public void setAllReady(boolean allReady) {
         this.allReady = allReady;
-        if (allReady == true)
-        {
+        if (allReady == true) {
             game.startGame();
         }
     }
