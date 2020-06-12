@@ -194,7 +194,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
         setupTurns();
 
-        new Thread(() -> {
+
             setupNewGame();
             System.out.println("Game Setup finished");
 
@@ -230,7 +230,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                 // Die aktuelle Runde wird erhöht
                 actualRound++;
             }
-        }).start();
+
 
 
 
