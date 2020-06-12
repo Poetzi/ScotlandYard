@@ -77,29 +77,11 @@ public class LobbyImpl implements Lobby {
     }
 
     @Override
-    public TurnMessage askPlayerforTurn(int playerId) {
+    public void askPlayerforTurn(int playerId) {
 
 
         AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId, "gib bitte einen Zug an", lobbyID);
         players.get(playerId).name.sendTCP(askPlayerForTurn);
-
-        // Hier wird der boolean für diesen Spieler auf true gesetzt
-        // Also es wird auf einen Zug des Spielers gewartet
-        waitForPlayersTurn[playerId] = true;
-
-
-        while (waitForPlayersTurn[playerId]) {
-            // Wait for TurnMessage from Player
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        System.out.println("Player Id " + playerId);
-
-        return returnTurnMessage[playerId];
     }
 
 
