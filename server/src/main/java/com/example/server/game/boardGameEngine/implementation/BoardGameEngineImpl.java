@@ -44,6 +44,14 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         return BoardGameEngineImpl.boardGameEngine;
     }
 
+    private void setupTurns ()
+    {
+        for (TurnMessage t:turns) {
+            t = new TurnMessage(0,0,0,"Bus");
+        }
+        System.out.println("Turns Setup erfolgreich");
+    }
+
     @Override
     public void addDetektiv(String name, int id) {
         players[id] = new DetectiveImpl(name, id);
@@ -61,7 +69,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     public void setupNewGame() {
 
         for (TurnMessage t:turns) {
-            t = new TurnMessage(0,0,0,"bus");
+            t = new TurnMessage(0,0,0,"Bus");
         }
 
         gameBoard.addFieldWithTransition(2, 3, "taxi");
@@ -183,6 +191,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     @Override
     public void startGame() {
+
+        setupTurns();
+
         new Thread(() -> {
             setupNewGame();
             System.out.println("Game Setup finished");
@@ -248,6 +259,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             int fieldToGo = 0;
             boolean drawValide = false;
             TurnMessage turnMessage;
+
 
             // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
             while (drawValide == false) {
