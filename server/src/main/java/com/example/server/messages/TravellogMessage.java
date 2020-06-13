@@ -7,12 +7,13 @@ public class TravellogMessage extends BaseMessage {
     private int round;
     private int lobbyID;
 
-    public TravellogMessage(){}
+    public TravellogMessage() {
+    }
 
-    public TravellogMessage(TravelLog travelLog, int round, int lobbyID){
-        this.travelLog=travelLog;
-        this.round=round;
-        this.lobbyID=lobbyID;
+    public TravellogMessage(TravelLog travelLog, int round, int lobbyID) {
+        this.travelLog = travelLog;
+        this.round = round;
+        this.lobbyID = lobbyID;
     }
 
     public TravelLog getTravelLog() {

@@ -8,10 +8,12 @@ public class TravelLog {
     private boolean isDoubleMove;
     private boolean caughtCheating;
 
-    public TravelLog(int position, String ticket, boolean isDoubleMove){
-        this.position=position;
-        this.ticketType=ticket;
-        this.isDoubleMove=isDoubleMove;
+    public TravelLog(){}
+
+    public TravelLog(int position, String ticket, boolean isDoubleMove) {
+        this.position = position;
+        this.ticketType = ticket;
+        this.isDoubleMove = isDoubleMove;
     }
 
 
@@ -19,8 +21,8 @@ public class TravelLog {
         this.ticketType = ticketType;
     }
 
-    public void setPosition(int position){
-        this.position=position;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public boolean isDoubleMove() {
@@ -31,11 +33,11 @@ public class TravelLog {
         this.isDoubleMove = doubleMove;
     }
 
-    public int getPosition(){
+    public int getPosition() {
         return position;
     }
 
-    public String getTicket(){
+    public String getTicket() {
         return ticketType;
     }
 

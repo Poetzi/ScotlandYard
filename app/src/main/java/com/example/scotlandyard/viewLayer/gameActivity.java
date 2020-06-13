@@ -1,56 +1,74 @@
 package com.example.scotlandyard.viewLayer;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.R;
-import com.example.scotlandyard.modelLayer.gameBoard.implementation.GameBoardImpl;
-import com.example.scotlandyard.modelLayer.gameBoard.interfaces.GameBoard;
-import com.example.scotlandyard.modelLayer.players.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.*;
 import com.google.android.material.navigation.NavigationView;
 
+/**
+ * Class for running the Game
+ */
 public class gameActivity extends AppCompatActivity {
 
-    private Button taxi, bus, ubahn, blackTicket, doubleMove;
-    private GameBoard gameBoard = new GameBoardImpl();
+    //Buttons are assigned
+    private Button taxi, bus, ubahn, blackTicket, doubleMove, cheatBtn;
+    //mapView is assigned
     private mapView map;
+    //playerView is assigned
     private playerView player;
+    //Player position is assigned
     private Points playerPostion;
+    //Presenter is assigned
     private Presenter presenter = Presenter.getInstance();
+    //TurnMessage is assigned
     private TurnMessage msg;
-    private User user = new User("test");
-    public boolean check = true;
-    public String confirm = "no";
-
+    //check is assigned
+    private boolean check = true;
+    //confirm is assigned
+    private boolean confirm = false;
+    //Sensor Manager is assigned
     private SensorManager sensorManager;
+    //Sensor is assigned
     private Sensor accelerometer;
+    //ShakeDetector is assigned
     private ShakeDetector shakeDetector;
-    private Button cheatBtn;
-
+    //TextView is assigned
+    private TextView cheatTicketCount;
+    //DrawerLayout is assigned
     private DrawerLayout drawerLayout;
+    //NavigationView is assigned
+    private NavigationView nav;
+    //Menu is assigned
+    private Menu menu;
 
+    /**
+     * onCreate Method to start up the Game
+     *
+     * @param savedInstanceState savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //ContentView is set up
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        //Variables are initialized
         taxi = findViewById(R.id.taxi);
         bus = findViewById(R.id.bus);
         ubahn = findViewById(R.id.ubahn);
@@ -58,175 +76,131 @@ public class gameActivity extends AppCompatActivity {
         doubleMove = findViewById(R.id.doubleMove);
         map = findViewById(R.id.mapView);
         player = findViewById(R.id.playerView);
-        setUpFields();
+        cheatBtn = findViewById(R.id.btn_cheat);
+        cheatTicketCount = findViewById(R.id.txtview_cheat);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        nav = findViewById(R.id.nav_view);
 
-        cheatBtn=findViewById(R.id.btn_cheat);
+
+        //this Object is sent to the presenter
+        presenter.setGame(this);
+        //Players are added to the game
+        player.addPlayers();
+
+        //Cheat Button is set to invisible
         cheatBtn.setVisibility(View.INVISIBLE);
+        //Assigning a listener for the turn message to the cheat button
         cheatBtn.setOnClickListener(view -> {
-            msg = new TurnMessage(presenter.getUser().getId(),0,0,"cheat");
+            msg = new TurnMessage(presenter.getUser().getId(), 0, 0, "cheat");
             new Thread(() -> {
                 // Nachricht wird an den Server geschickt
                 presenter.sendTurn(msg);
 
             }).start();
         });
-
+        //Set cheatTicketCount to invisible
+        cheatTicketCount.setVisibility(View.INVISIBLE);
+        //initialize sensorManager
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        //check if the SensorManager is working correctly
         if (sensorManager != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        }else {
+        } else {
             throw new NullPointerException();
         }
+        //ShakeDetector is initialized
         shakeDetector = new ShakeDetector();
+        //Listener for cheatBtn and cheatTicketCount is assigned to the ShakeDetector
         shakeDetector.setOnShakeListener(count -> {
-            if (cheatBtn.getVisibility()==View.INVISIBLE){
+            //Check button conditions and set correct visibility
+            if (cheatBtn.getVisibility() == View.INVISIBLE) {
                 cheatBtn.setVisibility(View.VISIBLE);
-            }else {
+                cheatTicketCount.setVisibility(View.VISIBLE);
+            } else {
                 cheatBtn.setVisibility(View.INVISIBLE);
+                cheatTicketCount.setVisibility(View.INVISIBLE);
             }
         });
 
-        drawerLayout = findViewById(R.id.drawer_layout);
+        //Needed for Drawer-Layout. Needs a string for checking if it is open or closed.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+        //DrawerListener is added to the drawerLayout
         drawerLayout.addDrawerListener(toggle);
+        //Layout is synchronized and checked if it's open
         toggle.syncState();
-
-
-        NavigationView nav=findViewById(R.id.nav_view);
-
-        Menu menu=nav.getMenu();
+        //Manu gets initialized
+        menu = nav.getMenu();
+        //Send the Travel-log to the presenter
         presenter.setTravellogMenu(menu);
 
-        //Beispielwerte
-        TravelLog travelLog;
-        travelLog = new TravelLog(1,"Bus",false);
-        presenter.updateTravellogMenu(travelLog,1);
-
-        travelLog=new TravelLog(2,"U-Bahn",false);
-        presenter.updateTravellogMenu(travelLog,2);
-
-        travelLog=new TravelLog(3,"Taxi",false);
-        presenter.updateTravellogMenu(travelLog,3);
-
-
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            TravelLog tl=new TravelLog(1,"Taxi",false);
-            presenter.updateTravellogMenu(tl,4);
-
-            tl=new TravelLog(2,"Bus",false);
-            tl.setCaughtCheating(true);
-            presenter.updateTravellogMenu(tl,5);
-        }, 20000);
-
-
     }
 
-
-    public void setUpFields(){
-        user.setId(0);
-        presenter.setUser(user);
-        presenter.setGame(this);
-
-       /* gameBoard.addFieldWithTransition(1,2,"bus");
-        gameBoard.addFieldWithTransition(2,1,"bus");
-
-
-        gameBoard.addFieldWithTransition(2,3,"ubahn");
-        gameBoard.addFieldWithTransition(3,2,"ubahn");
-
-
-        gameBoard.addFieldWithTransition(3,1,"taxi");
-        gameBoard.addFieldWithTransition(1,3,"taxi");
-*/
-        //Initial position of player
-        playerPostion = new Points(186,286,0," ",1);
-        //player.drawPlayer(186,286);
+    /**
+     * Method for drawing a player
+     *
+     * @param playerId Player ID
+     * @param toField  toField
+     */
+    public void drawPlayer(int playerId, int toField) {
+        //player gets drawn
+        player.drawSinglePlayer(playerId, toField, map.getPoints());
     }
 
-    public void useTaxi(){
+    /**
+     * Method for using a taxi
+     */
+    public void useTaxi() {
+        //Touched point on the Map gets assigned to a variable
         int toField = map.touchedPoint.getField();
 
-        TurnMessage msg = new TurnMessage(0,toField,0,"taxi");
-        Thread t = new Thread(){
-            public void run(){
-                presenter.sendTurn(msg);
-
-            }
-        };
-      /*  new Thread(() -> {
-            // Nachricht wird an den Server geschickt
-            presenter.sendTurn(msg);
-
-        }).start();*/
-      t.start();
-        try {
-            t.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        while (check){
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        check = true;
-
-        if(confirm.equalsIgnoreCase("yes")){
-            playerPostion.setField(toField);
-            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-            Toast.makeText(getApplicationContext(),"YESSSS",Toast.LENGTH_SHORT).show();
-
-        }else {
-            Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void useBus(){
-        int positionOfPlayer = playerPostion.getField();
-        int toField = map.touchedPoint.getField();
-
-        TurnMessage msg = new TurnMessage(0,toField,0,"Bus");
+        //TurnMessage is created
+        TurnMessage msg = new TurnMessage(0, toField, 0, "taxi");
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
-
         }).start();
-
-        if(gameBoard.movePlayer(positionOfPlayer,toField,"bus")){
-            playerPostion.setField(toField);
-            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-        }else {
-            Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
-        }
     }
 
-    public void useUbahn(){
-        int positionOfPlayer = playerPostion.getField();
+    /**
+     * Method for using the bus
+     */
+    public void useBus() {
+        //Touched point on the Map gets assigned to a variable
         int toField = map.touchedPoint.getField();
 
-        TurnMessage msg = new TurnMessage(0,toField,0,"uBahn");
+        //TurnMessage is created
+        TurnMessage msg = new TurnMessage(0, toField, 0, "bus");
+
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
-
         }).start();
 
-        if(gameBoard.movePlayer(positionOfPlayer,toField,"ubahn")){
-            playerPostion.setField(toField);
-            player.drawPlayer(map.touchedPoint.getX(), map.touchedPoint.getY());
-        }else {
-            Toast.makeText(getApplicationContext(),"Illegal move",Toast.LENGTH_SHORT).show();
-        }
+
     }
 
+    /**
+     * Method for using the Ubahn
+     */
+    public void useUbahn() {
+        //Touched point on the Map gets assigned to a variable
+        int toField = map.touchedPoint.getField();
+        //TurnMessage is created
+        TurnMessage msg = new TurnMessage(0, toField, 0, "ubahn");
 
-    public void onClick(View v){
-        switch (v.getId()){
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
+        }).start();
+    }
+
+    /**
+     * Method to differentiate between the onClick-Events
+     *
+     * @param v View
+     */
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.taxi:
                 useTaxi();
                 break;
@@ -237,38 +211,146 @@ public class gameActivity extends AppCompatActivity {
                 useUbahn();
                 break;
             case R.id.blackTicket:
-                Toast.makeText(getApplicationContext(),"Black Ticket Pressed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Black Ticket Pressed", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.doubleMove:
-                Toast.makeText(getApplicationContext(),"Double Move Pressed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Double Move Pressed", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
+
+    /**
+     * Method for resuming the game
+     */
     @Override
     public void onResume() {
         super.onResume();
-        sensorManager.registerListener(shakeDetector, accelerometer,	SensorManager.SENSOR_DELAY_UI);
+        //sensorManager is registered on resume
+        sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
+    /**
+     * Method for pausing the game
+     */
     @Override
     public void onPause() {
+        //sensorManager is unregistered on pause
         sensorManager.unregisterListener(shakeDetector);
         super.onPause();
     }
 
+    /**
+     * Method for backPressed
+     */
     @Override
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+        //Check if drawerLayout is open
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
     }
 
-    public void chat(View view){
+    /**
+     * Method for starting the app-chat
+     *
+     * @param view View
+     */
+    public void chat(View view) {
         new Thread(() -> {
+            //Setting up the new view
             Intent intent = new Intent(this, Chat.class);
+            //Change to the new view
             startActivity(intent);
         }).start();
+    }
+
+
+    /**
+     * Method for asking Players for their turn
+     */
+    public void askPlayerforTurn() {
+        Context context = getApplicationContext();
+        CharSequence text = "Bitte einen Zug angeben";
+        int duration = Toast.LENGTH_SHORT;
+
+
+        System.out.println(text);
+    }
+
+    /**
+     * Method for updating the count
+     *
+     * @param type  Type
+     * @param count Count
+     */
+    public void updateCount(String type, int count) {
+        String c = String.valueOf(count);
+        TextView v;
+        //Type of Ticket is checked
+        switch (type) {
+            case "Taxi":
+                v = findViewById(R.id.txtview_taxi);
+                v.setText(c);
+                if (count == 0) {
+                    Button b = findViewById(R.id.taxi);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
+                break;
+            case "Bus":
+                v = findViewById(R.id.txtview_bus);
+                v.setText(c);
+                if (count == 0) {
+                    Button b = findViewById(R.id.bus);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
+                break;
+            case "U-Bahn":
+                v = findViewById(R.id.txtview_metro);
+                v.setText(c);
+                if (count == 0) {
+                    Button b = findViewById(R.id.ubahn);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
+                break;
+            case "Black":
+                v = findViewById(R.id.txtview_black);
+                v.setText(c);
+                if (count == 0) {
+                    Button b = findViewById(R.id.blackTicket);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
+                break;
+            case "DoubleMove":
+                v = findViewById(R.id.txtview_double);
+                v.setText(c);
+                if (count == 0) {
+                    Button b = findViewById(R.id.doubleMove);
+                    b.setBackgroundColor(0xff888888);
+                    b.setClickable(false);
+                }
+                break;
+            case "Cheat":
+                cheatTicketCount.setText(c);
+                if (count == 0) {
+                    cheatBtn.setBackgroundColor(0xff888888);
+                    cheatBtn.setClickable(false);
+                }
+                break;
+        }
+    }
+
+    //Getter and Setter
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
     }
 }

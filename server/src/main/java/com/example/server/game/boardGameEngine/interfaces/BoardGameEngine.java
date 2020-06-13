@@ -1,15 +1,24 @@
 package com.example.server.game.boardGameEngine.interfaces;
 
 import com.example.server.game.players.interfaces.Player;
-import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.interfaces.Lobby;
+import com.example.server.messages.TurnMessage;
 
 public interface BoardGameEngine {
 
-    /*
-     * Methode, um einen neuen Spieler hinzuzufügen
+    /**
+     * Methode um einen MrX Spieler hinzuzufügen
+     * @param name
+     * @param id
      */
-    void addPlayer(String name, int field);
+    public void addMrX(String name ,int id);
+
+    /**
+     * Methode um einen Detektiv hinzuzufügen
+     * @param name
+     * @param id
+     */
+    public void addDetektiv(String name ,int id);
 
     /*
      * Einstellungen für ein neues Spiel werden hier festgelegt, wie den Spielern
@@ -43,5 +52,12 @@ public interface BoardGameEngine {
     void initLobby(Lobby lobby);
 
     boolean checkIfMrXCheated();
+
+
+    Lobby getLobby();
+
+    void setLobby(Lobby lobby);
+
+
 
 }

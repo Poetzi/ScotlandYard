@@ -1,17 +1,36 @@
 package com.example.scotlandyard.Client.Messages;
 
+/**
+ * Message-Class for Client-Server-communication. Server sends the Players an update for the positions.
+ */
 public class UpdatePlayersPosition extends BaseMessage {
+    //Player ID
     private int playerId;
+    //toField
     private int toField;
+    //Lobby ID
     private int lobbyId;
 
+    /**
+     * Empty constructor
+     */
+    public UpdatePlayersPosition() {
+    }
+
+    /**
+     * Constructor for UpdatePlayersPosition.
+     *
+     * @param playerId Player ID
+     * @param toField  toField
+     * @param lobbyId  Lobby ID
+     */
     public UpdatePlayersPosition(int playerId, int toField, int lobbyId) {
         this.playerId = playerId;
         this.toField = toField;
         this.lobbyId = lobbyId;
     }
 
-
+    //Getter and Setter
     public int getPlayerId() {
         return playerId;
     }

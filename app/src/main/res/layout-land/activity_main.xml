@@ -7,10 +7,10 @@
     android:background="#1C2D70"
     android:backgroundTint="#154FB3"
     android:backgroundTintMode="add"
-    tools:context=".MainActivity">
+    tools:context=".viewLayer.MainActivity">
 
     <Button
-        android:id="@+id/playButton"
+        android:id="@+id/detektiveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
@@ -30,7 +30,7 @@
         android:layout_marginTop="27dp"
         android:layout_marginBottom="3dp"
         android:contentDescription="@string/logo"
-        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        app:layout_constraintBottom_toTopOf="@+id/detektiveButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

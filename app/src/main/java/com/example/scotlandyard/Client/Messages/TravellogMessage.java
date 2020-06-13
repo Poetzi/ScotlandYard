@@ -1,31 +1,40 @@
 package com.example.scotlandyard.Client.Messages;
 
 
-import com.example.scotlandyard.modelLayer.players.TravelLog;
+import com.example.scotlandyard.modelLayer.TravelLog;
 
+/**
+ * Message-Class for Client-Server-communication. Travel-log is send to the server.
+ */
 public class TravellogMessage extends BaseMessage {
-    private int playerID;
+    //Travel-log
     private TravelLog travelLog;
+    //Round-number
     private int round;
+    //Lobby-ID
     private int lobbyID;
 
-    public TravellogMessage(){}
-
-    public TravellogMessage(int id, TravelLog travelLog, int round, int lobbyID){
-        this.playerID=id;
-        this.travelLog=travelLog;
-        this.round=round;
-        this.lobbyID=lobbyID;
+    /**
+     * Empty constructor.
+     */
+    public TravellogMessage() {
     }
 
-    public int getPlayerID() {
-        return playerID;
+
+    /**
+     * Constructor for Travel-log message
+     *
+     * @param travelLog Travel-log
+     * @param round     Round-number
+     * @param lobbyID   Lobby ID
+     */
+    public TravellogMessage(TravelLog travelLog, int round, int lobbyID) {
+        this.travelLog = travelLog;
+        this.round = round;
+        this.lobbyID = lobbyID;
     }
 
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
-    }
-
+    //Getter and Setter
     public TravelLog getTravelLog() {
         return travelLog;
     }
