@@ -44,6 +44,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="2x Move" />
 
+                <TextView
+                    android:id="@+id/txtview_double"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/design_default_color_background"
+                    app:layout_constraintEnd_toEndOf="@+id/doubleMove"
+                    app:layout_constraintStart_toStartOf="@+id/doubleMove"
+                    app:layout_constraintTop_toBottomOf="@+id/doubleMove" />
+
                 <Button
                     android:id="@+id/bus"
                     android:layout_width="wrap_content"
@@ -56,6 +66,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Bus" />
 
+                <TextView
+                    android:id="@+id/txtview_bus"
+                    android:layout_width="55dp"
+                    android:layout_height="19dp"
+                    android:text="TextView"
+                    android:textColor="@color/design_default_color_background"
+                    app:layout_constraintEnd_toEndOf="@+id/bus"
+                    app:layout_constraintStart_toStartOf="@+id/bus"
+                    app:layout_constraintTop_toBottomOf="@+id/bus" />
+
                 <Button
                     android:id="@+id/taxi"
                     android:layout_width="72dp"
@@ -67,6 +87,16 @@
                     app:layout_constraintEnd_toStartOf="@+id/bus"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Taxi" />
+
+                <TextView
+                    android:id="@+id/txtview_taxi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/design_default_color_background"
+                    app:layout_constraintEnd_toEndOf="@+id/taxi"
+                    app:layout_constraintStart_toStartOf="@+id/taxi"
+                    app:layout_constraintTop_toBottomOf="@+id/taxi" />
 
                 <Button
                     android:id="@+id/blackTicket"
@@ -82,6 +112,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Black Ticket" />
 
+                <TextView
+                    android:id="@+id/txtview_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/design_default_color_background"
+                    app:layout_constraintEnd_toEndOf="@+id/blackTicket"
+                    app:layout_constraintStart_toStartOf="@+id/blackTicket"
+                    app:layout_constraintTop_toBottomOf="@+id/blackTicket" />
+
                 <Button
                     android:id="@+id/ubahn"
                     android:layout_width="wrap_content"
@@ -93,6 +133,16 @@
                     app:layout_constraintEnd_toStartOf="@+id/blackTicket"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="U-Bahn" />
+
+                <TextView
+                    android:id="@+id/txtview_metro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/design_default_color_background"
+                    app:layout_constraintEnd_toEndOf="@+id/ubahn"
+                    app:layout_constraintStart_toStartOf="@+id/ubahn"
+                    app:layout_constraintTop_toBottomOf="@+id/ubahn" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -140,6 +190,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -157,6 +208,15 @@
             android:text="@string/cheat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/txtview_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_cheat"
+            app:layout_constraintStart_toEndOf="@+id/btn_cheat"
+            app:layout_constraintTop_toTopOf="@+id/btn_cheat" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"

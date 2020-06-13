@@ -143,7 +143,7 @@ public class gameActivity extends AppCompatActivity {
      */
     public void drawPlayer(int playerId, int toField) {
         //player gets drawn
-        player.drawSinglePlayer(playerId, toField, map.getPoints());
+        player.drawSinglePlayer(playerId, toField);
     }
 
     /**

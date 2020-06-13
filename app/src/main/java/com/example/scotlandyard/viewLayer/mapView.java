@@ -48,22 +48,6 @@ public class mapView extends View {
 
     public mapView(Context context) {
         super(context);
-    }
-
-    //Needed for relative Layout
-    public mapView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-
-    }
-
-
-    @SuppressLint("DrawAllocation")
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        player = canvas;
-     //   printLines(canvas);
-
         //Map image dimensions
         float height=791;
         float width=1678;
@@ -106,6 +90,64 @@ public class mapView extends View {
                 e.printStackTrace();
             }
         }
+        Points.allPoints=points;
+    }
+
+    //Needed for relative Layout
+    public mapView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        //Map image dimensions
+        float height=791;
+        float width=1678;
+
+        float density=getResources().getDisplayMetrics().density;
+        //scale factor specifies how much the display is larger than the map image
+        float widthScale=getResources().getDisplayMetrics().widthPixels/width;
+        float heightScale=(getResources().getDisplayMetrics().heightPixels-55*density)/height;
+
+        String delimiter = ";";
+        InputStream inputStream = getResources().openRawResource(R.raw.points);
+        InputStreamReader inputreader = new InputStreamReader(inputStream);
+        BufferedReader buffreader = new BufferedReader(inputreader);
+        String line;
+        String[] tempArr;
+
+        try {
+            while (( line = buffreader.readLine()) != null) {
+                tempArr = line.split(delimiter);
+
+                int resID = getContext().getResources().getIdentifier("field" + tempArr[2], "drawable", getContext().getApplicationInfo().packageName);
+                //Log.d("MAP", "resID:" + resID + " " + getContext().getApplicationInfo().packageName);
+                if (resID != 0) {
+                    f = BitmapFactory.decodeResource(getContext().getResources(), resID);
+                } else {
+                    resID=R.drawable.field1;
+                    f = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.field1);
+                }
+
+                imgOffset=f.getWidth()/2;
+                points.add(new Points((int) (Integer.valueOf(tempArr[0])*widthScale), (int) (Integer.valueOf(tempArr[1])*heightScale),resID,"Field"+tempArr[2],Integer.valueOf(tempArr[2])));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                buffreader.close();
+                inputreader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Points.allPoints=points;
+    }
+
+
+    @SuppressLint("DrawAllocation")
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        player = canvas;
+
         //draw lines
         printLines(canvas);
         //draw points
@@ -325,6 +367,10 @@ public class mapView extends View {
 
         }
         return false;
+    }
+
+    public ArrayList<Points> getPoints(){
+        return points;
     }
 
 }
