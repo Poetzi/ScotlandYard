@@ -258,11 +258,7 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             TurnMessage turnMessage;
             turnMessage = lobby.askPlayerforTurn(player.getId());
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
             if (drawValide == false) {
                 System.out.println("INSIDE DRAW");
