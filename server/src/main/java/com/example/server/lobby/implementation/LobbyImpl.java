@@ -38,6 +38,10 @@ public class LobbyImpl  {
     }
 
 
+    public void addPlayertoGame(ID id){
+        players.add(id);
+        playerCount++;
+    }
 
     public void updatePlayerPositionsToAllClients(int playerId, int toField) {
         UpdatePlayersPosition playersPosition = new UpdatePlayersPosition(playerId, toField, lobbyID);
@@ -87,9 +91,11 @@ public class LobbyImpl  {
     }
 
 
+    public boolean isLobbyOpen() {
+        return isOpen;
+    }
 
-
-
-
-
+    public int getPlayerCount() {
+        return  playerCount;
+    }
 }

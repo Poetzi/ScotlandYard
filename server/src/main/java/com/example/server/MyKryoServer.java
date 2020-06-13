@@ -21,7 +21,7 @@ public class MyKryoServer {
     //Server Objekt
     private Server server;
     private Callback<BaseMessage> messageCallback;
-    public static ArrayList<Lobby> lobbys = new ArrayList<Lobby>();
+    public static ArrayList<LobbyImpl> lobbys = new ArrayList<LobbyImpl>();
 
     public MyKryoServer() {
         server = new Server();
@@ -82,7 +82,7 @@ public class MyKryoServer {
                     System.out.println("User " + name + " ist beigetreten");
                     ID id = new ID(connection, name);
                     boolean lobbyFound = false;
-                    for (Lobby lobby : lobbys) {
+                    for (LobbyImpl lobby : lobbys) {
                         if (lobby.isLobbyOpen()) {
                             id.id = lobby.getPlayerCount();
                             lobby.addPlayertoGame(id);
@@ -153,11 +153,11 @@ public class MyKryoServer {
     }
 
 
-    public static ArrayList<Lobby> getLobby() {
+    public static ArrayList<LobbyImpl> getLobby() {
         return lobbys;
     }
 
-    public static void setLobby(ArrayList<Lobby> lobby) {
+    public static void setLobby(ArrayList<LobbyImpl> lobby) {
         MyKryoServer.lobbys = lobby;
     }
 
