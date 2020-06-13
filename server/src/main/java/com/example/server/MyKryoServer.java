@@ -21,7 +21,7 @@ public class MyKryoServer {
     //Server Objekt
     private Server server;
     private Callback<BaseMessage> messageCallback;
-    public static ArrayList<LobbyImpl> lobbys = new ArrayList<LobbyImpl>();
+    public static LobbyImpl lobby = new LobbyImpl();
 
     public MyKryoServer() {
         server = new Server();
@@ -81,41 +81,8 @@ public class MyKryoServer {
                     String name = ((UsernameMessage) object).getUsername();
                     System.out.println("User " + name + " ist beigetreten");
                     ID id = new ID(connection, name);
-                    boolean lobbyFound = false;
-                    for (LobbyImpl lobby : lobbys) {
-                        if (lobby.isLobbyOpen()) {
-                            id.id = lobby.getPlayerCount();
-                            lobby.addPlayertoGame(id);
-                            lobbyFound = true;
+                    lobby.addPlayertoGame(id);
 
-                            // Sende LobbyId an Client
-                            int lobbyId = lobby.getLobbyID();
-                            SendLobbyID messageLobbyID = new SendLobbyID();
-                            messageLobbyID.setLobbyID(lobbyId);
-                            connection.sendTCP(messageLobbyID);
-                            System.out.println("Server sendet Lobby ID " + messageLobbyID.getLobbyID() + " an Client");
-
-                            // Sende PlayerId an Client
-                            SendPlayerIDtoClient messagePlayerId = new SendPlayerIDtoClient();
-                            messagePlayerId.setId(id.id);
-                            connection.sendTCP((messagePlayerId));
-                            System.out.println("Server sendet PlayerId " + messagePlayerId.getId() + " an Client");
-
-                            break;
-                        }
-                    }
-                    if (!lobbyFound) {
-                        System.out.println("lobby created");
-                        LobbyImpl lobby = new LobbyImpl();
-
-
-
-                        // Sende LobbyId an Client
-                        int lobbyId = lobby.getLobbyID();
-                        SendLobbyID messageLobbyID = new SendLobbyID();
-                        messageLobbyID.setLobbyID(lobbyId);
-                        connection.sendTCP(messageLobbyID);
-                        System.out.println("Server sendet Lobby ID " + messageLobbyID.getLobbyID() + " an Client");
 
                         // Sende PlayerId an Client
                         SendPlayerIDtoClient messagePlayerId = new SendPlayerIDtoClient();
@@ -130,7 +97,7 @@ public class MyKryoServer {
 
                 }
             }
-        });
+        );
     }
 
     /**
@@ -153,12 +120,12 @@ public class MyKryoServer {
     }
 
 
-    public static ArrayList<LobbyImpl> getLobby() {
-        return lobbys;
+    public static LobbyImpl getLobby() {
+        return lobby;
     }
 
-    public static void setLobby(ArrayList<LobbyImpl> lobby) {
-        MyKryoServer.lobbys = lobby;
+    public static void setLobby(LobbyImpl lobby) {
+        MyKryoServer.lobby = lobby;
     }
 
 
