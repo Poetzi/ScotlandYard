@@ -18,6 +18,7 @@ import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.TurnMessage;
+import com.example.server.messages.UpdatePlayersPosition;
 
 public class BoardGameEngineImpl {
 
@@ -194,11 +195,11 @@ public class BoardGameEngineImpl {
         gameBoard.setPositionOfPlayer(0, 2);
         gameBoard.setPositionOfPlayer(1, 21);
 
-        lobby.updatePlayerPositionsToAllClients(0, 2);
-        lobby.updatePlayerPositionsToAllClients(1, 3);
+
+
+        updatePositionOffaPlayer(0,2);
+        updatePositionOffaPlayer(1,21);
         System.out.println("Initial Position von P0 und P1 gesendet");
-
-
     }
 
     public boolean checkDraw(TurnMessage msg)
@@ -221,7 +222,20 @@ public class BoardGameEngineImpl {
         AskPlayerForTurn msg = new AskPlayerForTurn();
         msg.setId(1);
         msg.setText("Bitte einen Zug angeben");
+        con1.sendTCP(msg);
+    }
+
+    public void updatePositionOffaPlayer(int pId, int toField)
+    {
+        gameBoard.setPositionOfPlayer(pId,toField);
+
+
+        UpdatePlayersPosition msg = new UpdatePlayersPosition();
+        msg.setPlayerId(pId);
+        msg.setToField(toField);
+
         con0.sendTCP(msg);
+        con1.sendTCP(msg);
     }
 
 
@@ -271,5 +285,13 @@ public class BoardGameEngineImpl {
 
     public void setCon1(Connection con1) {
         this.con1 = con1;
+    }
+
+    public GameBoard getGameBoard() {
+        return gameBoard;
+    }
+
+    public void setGameBoard(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
     }
 }

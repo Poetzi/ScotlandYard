@@ -75,7 +75,7 @@ public class Main {
                         if (game.checkDraw(turn))
                         {
                             System.out.println("Player 0 guter Zug");
-                            game.getLobby().updatePlayerPositionsToAllClients(0,turn.getToField());
+                            game.updatePositionOffaPlayer(0,turn.getToField());
                             System.out.println("frage Spieler 1 nach Zug");
                             game.askPlayer1forTurn();
                         }
@@ -91,7 +91,7 @@ public class Main {
                         if (game.checkDraw(turn))
                         {
                             System.out.println("Player 1 guter Zug");
-                            game.getLobby().updatePlayerPositionsToAllClients(1,turn.getToField());
+                            game.updatePositionOffaPlayer(1,turn.getToField());
                             System.out.println("frage Spieler 0 nach Zug");
                             game.askPlayer0forTurn();
                         }
