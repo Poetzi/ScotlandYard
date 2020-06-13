@@ -80,7 +80,7 @@ public class LobbyImpl implements Lobby {
     public TurnMessage askPlayerforTurn(int playerId) {
         AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId, "gib bitte einen Zug an", lobbyID);
         players.get(playerId).name.sendTCP(askPlayerForTurn);
-        waitForPlayersTurn[playerId] = true;
+        /*waitForPlayersTurn[playerId] = true;
         while(waitForPlayersTurn[playerId]){
             try {
                 Thread.sleep(1000);
@@ -89,7 +89,7 @@ public class LobbyImpl implements Lobby {
             }
         }
         waitForPlayersTurn[playerId] = true;
-        System.out.println("took");
+        System.out.println("took");*/
         return returnTurnMessage[playerId];
     }
 

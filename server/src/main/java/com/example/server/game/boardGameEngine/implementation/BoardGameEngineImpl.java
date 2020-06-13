@@ -256,9 +256,15 @@ public class BoardGameEngineImpl implements BoardGameEngine {
             int fieldToGo = 0;
             boolean drawValide = false;
             TurnMessage turnMessage;
+            turnMessage = lobby.askPlayerforTurn(player.getId());
 
-            // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
-            while (drawValide == false) {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
+            if (drawValide == false) {
                 System.out.println("INSIDE DRAW");
 
 
@@ -282,6 +288,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
                     drawValide = true;
                 }
 
+            }else{
+                System.out.println("Player ran out of time");
             }
 
         /*
