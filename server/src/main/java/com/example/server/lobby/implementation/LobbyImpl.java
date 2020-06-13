@@ -12,7 +12,7 @@ import com.example.server.messages.UpdateTicketCount;
 
 import java.util.ArrayList;
 
-public class LobbyImpl implements Lobby {
+public class LobbyImpl  {
 
 
     private ArrayList<ID> players = new ArrayList<ID>();
@@ -23,78 +23,22 @@ public class LobbyImpl implements Lobby {
     private int playerReady = 0;
 
 
-    private BoardGameEngine game = BoardGameEngineImpl.getInstance();
+    private BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
 
     // ToDo
     private int lobbyID = 1;
 
     // Speichert ob auf einen Zug für einen Spieler gewartet wird
-    private boolean[] waitForPlayersTurn = new boolean[6];
-    private TurnMessage[] returnTurnMessage = new TurnMessage[6];
 
 
-    @Override
-    public ArrayList<ID> getPlayers() {
-        return players;
-    }
-
-    public boolean wait = true;
-
-
-    @Override
-    public void addPlayertoGame(ID id) {
-        players.add(id);
-        playerCount++;
-        if (playerCount == 2)
-            startGame();// was 6
-    }
-
-    @Override
-    public int getPlayerCount() {
-        return playerCount;
-    }
-
-    @Override
-    public void startGame() {
-
-        Runnable runnable = new LobbyStart(this);
-
-        game.initLobby(this);
-
-        Thread t = new Thread(runnable);
-        t.start();
-
-    }
-
-    @Override
-    public void removePlayerfromGame(ID id) {
-        players.remove(id);
-    }
-
-    @Override
-    public boolean isLobbyOpen() {
-        return isOpen;
-    }
-
-    @Override
-    public TurnMessage askPlayerforTurn(int playerId) {
+    public void askPlayerforTurn(int playerId) {
         AskPlayerForTurn askPlayerForTurn = new AskPlayerForTurn(playerId, "gib bitte einen Zug an", lobbyID);
         players.get(playerId).name.sendTCP(askPlayerForTurn);
-        /*waitForPlayersTurn[playerId] = true;
-        while(waitForPlayersTurn[playerId]){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        waitForPlayersTurn[playerId] = true;
-        System.out.println("took");*/
-        return returnTurnMessage[playerId];
+
     }
 
 
-    @Override
+
     public void updatePlayerPositionsToAllClients(int playerId, int toField) {
         UpdatePlayersPosition playersPosition = new UpdatePlayersPosition(playerId, toField, lobbyID);
         for (ID p : players) {
@@ -102,7 +46,7 @@ public class LobbyImpl implements Lobby {
         }
     }
 
-    @Override
+
     public void updateTravellogToAllClients(TravelLog travelLog, int round) {
         TravellogMessage travellogMessage = new TravellogMessage(travelLog, round, lobbyID);
         for (ID id : players) {
@@ -110,65 +54,42 @@ public class LobbyImpl implements Lobby {
         }
     }
 
-    @Override
+
     public void updateTicketCount(int playerId, int count, String type) {
         UpdateTicketCount ticketCount = new UpdateTicketCount(count, type, playerId, lobbyID);
         players.get(playerId).name.sendTCP(ticketCount);
         System.out.println("Ticketcount wurde geschickt.");
     }
 
-    @Override
+
     public int getLobbyID() {
         return lobbyID;
     }
 
-    @Override
+
     public void setLobbyID(int lobbyID) {
         this.lobbyID = lobbyID;
     }
 
-    @Override
-    public TurnMessage[] getReturnTurnMessage() {
-        return returnTurnMessage;
-    }
 
-    @Override
-    public void setReturnTurnMessage(TurnMessage turnMessage, int playerId) {
-        System.out.println(turnMessage.getCard()+"Setttting");
-        waitForPlayersTurn[playerId] = false;
-        returnTurnMessage[playerId] = turnMessage;
-    }
 
-    @Override
-    public BoardGameEngine getGame() {
+
+    public BoardGameEngineImpl getGame() {
         return game;
     }
 
-    @Override
-    public void setGame(BoardGameEngine game) {
-        this.game = game;
-    }
 
-    @Override
+
+
+
     public boolean isAllReady() {
         return allReady;
     }
 
-    @Override
-    public void setAllReady(boolean allReady) {
-        this.allReady = allReady;
-        if (allReady == true) {
-            game.startGame();
-        }
-    }
 
-    @Override
-    public int getPlayerReady() {
-        return playerReady;
-    }
 
-    @Override
-    public void setPlayerReady(int playerReady) {
-        this.playerReady = playerReady;
-    }
+
+
+
+
 }

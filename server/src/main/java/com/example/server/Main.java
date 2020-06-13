@@ -28,6 +28,7 @@ public class Main {
 
 
 
+
         MyKryoServer server = new MyKryoServer();
         BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
         try {
@@ -69,7 +70,37 @@ public class Main {
 
                     // Der Zug wird an die Lobby weitergegeben
                     //game.setTurns(turn, turn.getPlayerId());
-                    MyKryoServer.getLobby().get(turn.getLobbyId()).setReturnTurnMessage(turn, turn.getPlayerId());
+                    if (turn.getPlayerId()== 0)
+                    {
+                        if (game.checkDraw(turn))
+                        {
+                            System.out.println("Player 0 guter Zug");
+                            game.getLobby().updatePlayerPositionsToAllClients(0,turn.getToField());
+                            System.out.println("frage Spieler 1 nach Zug");
+                            game.getLobby().askPlayerforTurn(1);
+                        }
+                        else
+                        {
+                            System.out.println("frage Spieler 0 nach Zug");
+                            game.getLobby().askPlayerforTurn(0);
+                        }
+                    }
+
+                    if (turn.getPlayerId()== 1)
+                    {
+                        if (game.checkDraw(turn))
+                        {
+                            System.out.println("Player 1 guter Zug");
+                            game.getLobby().updatePlayerPositionsToAllClients(1,turn.getToField());
+                            System.out.println("frage Spieler 0 nach Zug");
+                            game.getLobby().askPlayerforTurn(0);
+                        }
+                        else
+                        {
+                            System.out.println("frage Spieler 1 nach Zug");
+                            game.getLobby().askPlayerforTurn(1);
+                        }
+                    }
 
                 }
 
@@ -93,14 +124,21 @@ public class Main {
                 if(nachrichtvomClient instanceof ReadyMessage)
                 {
                     // Die Anzahl der Spieler die bereit sind wird erhöht
-                    game.getLobby().setPlayerReady(game.getLobby().getPlayerReady()+1);
+                    game.playerReady++;
                     System.out.println("Ein Spieler ist bereit");
-                    System.out.println("Spieler bereit: "+game.getLobby().getPlayerReady());
 
-                    if (game.getLobby().getPlayerReady()==2)
+
+                    if (game.playerReady==2)
                     {
                         System.out.println("Spiel beginnt!!");
-                        game.getLobby().setAllReady(true);
+                        game.setupNewGame();
+                        System.out.println("Setup Game");
+                        game.sendStartingPositions();
+                        System.out.println("sende Startpositionen");
+
+                        // Spieler 0 wird nach einem Zug gefragt
+                        System.out.println("Spieler 0 wird nach einem Zug gefragt");
+                        game.getLobby().askPlayerforTurn(0);
 
                     }
                 }

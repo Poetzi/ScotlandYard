@@ -106,10 +106,9 @@ public class MyKryoServer {
                     }
                     if (!lobbyFound) {
                         System.out.println("lobby created");
-                        Lobby lobby = new LobbyImpl();
-                        id.id = lobby.getPlayerCount();
-                        lobby.addPlayertoGame(id);
-                        lobbys.add(lobby);
+                        LobbyImpl lobby = new LobbyImpl();
+
+
 
                         // Sende LobbyId an Client
                         int lobbyId = lobby.getLobbyID();

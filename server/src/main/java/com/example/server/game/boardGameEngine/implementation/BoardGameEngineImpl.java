@@ -13,10 +13,11 @@ import com.example.server.game.players.implementation.MrXImpl;
 import com.example.server.game.players.interfaces.Player;
 import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
+import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.TurnMessage;
 
-public class BoardGameEngineImpl implements BoardGameEngine {
+public class BoardGameEngineImpl {
 
     private Player[] players = new Player[2];
     //private TurnMessage[] turns = new TurnMessage[2];
@@ -25,10 +26,12 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     private int actualRound;
     private GameBoard gameBoard = new GameBoardImpl();
     private int numberOfFields;
-    private Lobby lobby;
+    private LobbyImpl lobby;
     private int mrXId;
     // Singleton
     private static BoardGameEngineImpl boardGameEngine;
+
+    public int playerReady = 0;
 
 
     // private Konstruktor
@@ -43,33 +46,23 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         return BoardGameEngineImpl.boardGameEngine;
     }
 
-    private void setupTurns() {
-       /* for (int i = 0; i < turns.length; i++) {
-            turns[i] = new TurnMessage(0, 0, 0, "Bus");
-        }
-        System.out.println("Turns Setup erfolgreich");*/
-    }
 
-    @Override
     public void addDetektiv(String name, int id) {
         players[id] = new DetectiveImpl(name, id);
         numberOfPlayers++;
     }
 
-    @Override
+
     public void addMrX(String name, int id) {
         players[id] = new MrXImpl(name, id);
         mrXId = id;
         numberOfPlayers++;
     }
 
-    @Override
+
     public void setupNewGame() {
 
-       /* for (TurnMessage t : turns) {
-            t = new TurnMessage(0, 0, 0, "Bus");
-        }
-*/
+
         gameBoard.addFieldWithTransition(2, 3, "taxi");
         gameBoard.addFieldWithTransition(2, 7, "bus");
         gameBoard.addFieldWithTransition(2, 7, "ubahn");
@@ -187,14 +180,9 @@ public class BoardGameEngineImpl implements BoardGameEngine {
 
     }
 
-    @Override
-    public void startGame() {
 
-      //  setupTurns();
+    public void sendStartingPositions() {
 
-
-        setupNewGame();
-        System.out.println("Game Setup finished");
 
         // toDo send initial position of the players to clients
         gameBoard.setPositionOfPlayer(0, 2);
@@ -204,128 +192,16 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         lobby.updatePlayerPositionsToAllClients(1, 3);
         System.out.println("Initial Position von P0 und P1 gesendet");
 
-        /*
-        //Test ob Travellog an Client geschickt wird
-        TravelLog log=new TravelLog(2,"Taxi",false);
-        lobby.updateTravellogToAllClients(log,actualRound);
-         */
-
-
-        // Aktuelle Runde wird auf 0 gesetzt
-        actualRound = 0;
-
-        // Runden werden solange ausgeführt bis die Maximale Rundenanzahl erreicht ist
-        for (int i = 0; i < maxRounds; i++) {
-            System.out.println("Runde " + i + "wird gestartet");
-            playOneRound();
-
-
-            // Wenn die Detektive gewonnen haben wird der Spielablauf beendet
-            //if (checkWinningCondition()) {
-           //     break;
-          //  }
-
-            // Die aktuelle Runde wird erhöht
-            actualRound++;
-        }
-
 
     }
 
-    @Override
-    public void playOneRound() {
-      /*  for (Player p : players) {
-            lobby.updateTicketCount(p.getId(),p.getTaxiTickets(),"Taxi");
-            lobby.updateTicketCount(p.getId(),p.getBusTickets(),"Bus");
-            lobby.updateTicketCount(p.getId(),p.getUndergroundTickets(),"U-Bahn");
-            lobby.updateTicketCount(p.getId(),p.getBlackTickets(),"Black");
-            lobby.updateTicketCount(p.getId(),p.getDoubleMoveTickets(),"DoubleMove");
-            lobby.updateTicketCount(p.getId(),p.getCheatTickets(),"Cheat");
+    public boolean checkDraw(TurnMessage msg)
+    {
+        return gameBoard.checkDraw(msg.getPlayerId(),msg.getToField(),msg.getCard());
 
-        }*/
-        for (Player p : players){
-            System.out.println("Spieler " + p.getId() + p.getName() + " ist am Zug");
-            drawForPlayer(p);
-        }
-    }
-
-    @Override
-    public void drawForPlayer(Player player) {
-      //  if ((player instanceof Detective && !((Detective) player).isInactive()) || player instanceof MrX) {
-            String card = "Bus";    // Beispielwert
-            int fieldToGo = 0;
-            boolean drawValide = false;
-            TurnMessage turnMessage;
-            turnMessage = lobby.askPlayerforTurn(player.getId());
-
-
-        // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
-            if (drawValide == false) {
-                System.out.println("INSIDE DRAW");
-
-
-                System.out.println("Server wartet auf einen gültigen Zug von " + player.getId() + player.getName());
-                /*
-                   Der Server holt sich vom Spieler Client die Karte die er einsetzen will
-                   und die Position zu der er ziehen möchte
-                */
-                turnMessage = lobby.askPlayerforTurn(player.getId());
-                if(turnMessage != null) {
-                    card = turnMessage.getCard();
-                    fieldToGo = turnMessage.getToField();
-                }
-
-                /*
-                   Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
-                   ob der Zug gültig ist.
-                   Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
-                */
-                if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
-                    drawValide = true;
-                }
-
-            }else{
-                System.out.println("Player ran out of time");
-            }
-
-        /*
-            Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
-         */
-           /* Transition toRemove = new TransitionImpl();
-            toRemove.setName(card);
-            player.removeTransitionFromAvailable(toRemove);
-            if (card.equals("cheat")) {
-                if (player instanceof MrX) {
-                    cheatMoveMrX(player);
-                } else {
-                    cheatMoveDetective(player);
-                }
-            } else if (card.equals("doubleMove") && player instanceof MrX) {
-                doubleMove(player);
-            } else {
-                oneMove(card, fieldToGo, player);
-            }*/
-        /*
-            Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
-            und an die anderen Spieler Clients weitergegeben
-         */
-            if (drawValide) {
-                gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
-                System.out.println("Der Zug von Spieler " + player.getId() + player.getName() + " ist gültig position wird gesetzt");
-                /*
-                    Die Position an die anderen Spieler clients weitergeben
-                 */
-                //if (player.getId() != mrXId)
-                    lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
-            }
-       /* }
-        else {
-            ((Detective) player).setInactive(false);
-        }*/
     }
 
 
-    @Override
     public boolean checkWinningCondition() {
         int misterX = mrXId;
 
@@ -345,213 +221,18 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     }
 
 
-    public void initLobby(Lobby lobby) {
+    public void initLobby(LobbyImpl lobby) {
         this.lobby = lobby;
     }
 
-    @Override
-    public boolean checkIfMrXCheated() {
-        return false;
-    }
 
-    public Lobby getLobby() {
+    public LobbyImpl getLobby() {
         return lobby;
     }
 
-    public void setLobby(Lobby lobby) {
+    public void setLobby(LobbyImpl lobby) {
         this.lobby = lobby;
     }
 
-    public void oneMove(String card, int fieldToGo, Player player) {
-        if (player instanceof Detective) {
-            ((Detective) player).validateTicket(card);
-            player.setCurrentPosition(fieldToGo);
-        } else {
-            ((MrX) player).validateTicket(actualRound, card, fieldToGo);
-            player.setCurrentPosition(fieldToGo);
-            lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
-        }
 
-    }
-
-    public void doubleMove(Player player) {
-
-        String card = "Bus";    // Beispielwert
-        int fieldToGo = 0;
-        boolean drawValide = false;
-        TurnMessage turnMessage;
-
-        // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
-        while (drawValide == false) {
-            /*
-               Der Server holt sich vom Spieler Client die Karte die er einsetzen will
-               und die Position zu der er ziehen möchte
-            */
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-           // lobby.askPlayerforTurn(player.getId());
-          //  turnMessage = turns[player.getId()];
-           // card = turnMessage.getCard();
-           // fieldToGo = turnMessage.getToField();
-
-            /*
-               Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
-               ob der Zug gültig ist.
-               Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
-            */
-            if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
-                drawValide = true;
-            }
-
-        }
-
-        /*
-            Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
-         */
-        Transition toRemove = new TransitionImpl();
-        toRemove.setName(card);
-        player.removeTransitionFromAvailable(toRemove);
-        ((MrX) player).validateDoubleMoveTicket(actualRound, card, fieldToGo);
-
-        /*
-            Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
-            und an die anderen Spieler Clients weitergegeben
-         */
-        if (drawValide) {
-            gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
-        }
-
-        actualRound++;
-        drawForPlayer(player);
-    }
-
-    public void cheatMoveDetective(Player player) {
-        if (checkIfMrXCheated()) {
-            ((MrX) players[mrXId]).setCaughtCheating(true, actualRound);
-            drawForPlayer(player);
-        } else {
-            ((Detective) player).setInactive(true);
-        }
-    }
-
-    public void cheatMoveMrX(Player player) {
-        String card = "Bus";    // Beispielwert
-        int fieldToGo = 0;
-        boolean drawValide = false;
-        TurnMessage turnMessage;
-
-        // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
-        while (drawValide == false) {
-            /*
-               Der Server holt sich vom Spieler Client die Karte die er einsetzen will
-               und die Position zu der er ziehen möchte
-            */
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-           // lobby.askPlayerforTurn(player.getId());
-
-           // turnMessage = turns[player.getId()];
-          //  card = turnMessage.getCard();
-          //  fieldToGo = turnMessage.getToField();
-
-            /*
-               Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
-               ob der Zug gültig ist.
-               Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
-            */
-
-        }
-
-        /*
-            Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
-         */
-        Transition toRemove = new TransitionImpl();
-        toRemove.setName(card);
-        player.removeTransitionFromAvailable(toRemove);
-
-        /*
-            Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
-            und an die anderen Spieler Clients weitergegeben
-         */
-        if (drawValide) {
-            gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
-
-            /*
-                Die Position an die anderen Spieler clients weitergeben
-             */
-            lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
-        }
-        ((MrX) player).validateTicket(actualRound, card, fieldToGo);
-        ((MrX) player).setHasCheated(actualRound);
-        lobby.updateTravellogToAllClients(((MrX) player).getTravelLog(actualRound), actualRound);
-
-        //Zweiter geschummelter Zug
-        card = "Bus";    // Beispielwert
-        fieldToGo = 0;
-        drawValide = false;
-
-        // Schleife wird solange ausgeführt bis en gültiger Zug vom Spieler kommt
-        while (drawValide == false) {
-            /*
-               Der Server holt sich vom Spieler Client die Karte die er einsetzen will
-               und die Position zu der er ziehen möchte
-            */
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-           // lobby.askPlayerforTurn(player.getId());
-           // turnMessage = turns[player.getId()];
-           // card = turnMessage.getCard();
-          //  fieldToGo = turnMessage.getToField();
-
-            /*
-               Die Daten vom Zug des Spielers werden weitergegeben an das Gameboard wo überprüft wird,
-               ob der Zug gültig ist.
-               Wenn der Zug nicht gültig ist wird ein neuer Zug vom Spieler abgefragt.
-            */
-            if (gameBoard.checkDraw(player.getId(), fieldToGo, card)) {
-                drawValide = true;
-            }
-
-        }
-
-        /*
-            Dem Spieler muss die verwendete Karte noch aus seinen verfügbaren Karten entfernt werden
-         */
-        toRemove = new TransitionImpl();
-        toRemove.setName(card);
-        player.removeTransitionFromAvailable(toRemove);
-
-        /*
-            Wenn der Zug gültig ist, wird die Positon des Spielers auf dem Gameboard gesetzt
-            und an die anderen Spieler Clients weitergegeben
-         */
-        if (drawValide) {
-            gameBoard.setPositionOfPlayer(player.getId(), fieldToGo);
-
-            /*
-                Die Position an die anderen Spieler clients weitergeben
-             */
-            lobby.updatePlayerPositionsToAllClients(player.getId(), fieldToGo);
-        }
-        player.setCurrentPosition(fieldToGo);
-    }
-
- /*   @Override
-    public TurnMessage[] getTurns() {
-        return turns;
-    }
-
-    @Override
-    public void setTurns(TurnMessage turn, int id) {
-        turns[id] = turn;
-    }*/
 }
