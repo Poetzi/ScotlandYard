@@ -19,6 +19,8 @@ public class LobbyImpl  {
     private boolean isOpen = true;
     public int playerCount = 0;
 
+
+
     private boolean allReady;
     private int playerReady = 0;
 

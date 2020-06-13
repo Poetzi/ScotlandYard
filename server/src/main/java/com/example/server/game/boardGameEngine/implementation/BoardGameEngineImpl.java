@@ -1,5 +1,6 @@
 package com.example.server.game.boardGameEngine.implementation;
 
+import com.esotericsoftware.kryonet.Connection;
 import com.example.server.game.players.TravelLog;
 import com.example.server.game.players.implementation.DetectiveImpl;
 import com.example.server.game.players.implementation.MrXImpl;
@@ -15,6 +16,7 @@ import com.example.server.game.transitions.implementation.TransitionImpl;
 import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
+import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.TurnMessage;
 
 public class BoardGameEngineImpl {
@@ -28,6 +30,10 @@ public class BoardGameEngineImpl {
     private int numberOfFields;
     private LobbyImpl lobby;
     private int mrXId;
+
+    private Connection con0;
+    private Connection con1;
+
     // Singleton
     private static BoardGameEngineImpl boardGameEngine;
 
@@ -202,6 +208,23 @@ public class BoardGameEngineImpl {
     }
 
 
+    public void askPlayer0forTurn()
+    {
+        AskPlayerForTurn msg = new AskPlayerForTurn();
+        msg.setId(0);
+        msg.setText("Bitte einen Zug angeben");
+        con0.sendTCP(msg);
+    }
+
+    public void askPlayer1forTurn()
+    {
+        AskPlayerForTurn msg = new AskPlayerForTurn();
+        msg.setId(1);
+        msg.setText("Bitte einen Zug angeben");
+        con0.sendTCP(msg);
+    }
+
+
     public boolean checkWinningCondition() {
         int misterX = mrXId;
 
@@ -234,5 +257,19 @@ public class BoardGameEngineImpl {
         this.lobby = lobby;
     }
 
+    public Connection getCon0() {
+        return con0;
+    }
 
+    public void setCon0(Connection con0) {
+        this.con0 = con0;
+    }
+
+    public Connection getCon1() {
+        return con1;
+    }
+
+    public void setCon1(Connection con1) {
+        this.con1 = con1;
+    }
 }

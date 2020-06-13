@@ -142,12 +142,7 @@ public class Presenter {
                 game.askPlayerforTurn();
             }
 
-            if (nachrichtVomServer instanceof SendLobbyID) {
-                //Base-Message is casted to child class
-                SendLobbyID message = (SendLobbyID) nachrichtVomServer;
-                //Lobby-ID is set
-                setLobbyID(message.getLobbyID());
-            }
+
 
             if (nachrichtVomServer instanceof UpdatePlayersPosition) {
                 //Base-Message is casted to child class
@@ -158,14 +153,7 @@ public class Presenter {
 
             }
 
-            if (nachrichtVomServer instanceof SendPlayerIDtoClient) {
-                //Base-Message is casted to child class
-                SendPlayerIDtoClient sendPlayerIDtoClient = (SendPlayerIDtoClient) nachrichtVomServer;
-                //Client displays the current Player ID
-                Log.d("Server:", "PlayerID: " + sendPlayerIDtoClient.getId());
-                //Server sets the Player ID of the Client
-                this.playerID = sendPlayerIDtoClient.getId();
-            }
+
 
             if (nachrichtVomServer instanceof UpdatePlayersPosition) {
 
@@ -183,12 +171,7 @@ public class Presenter {
                 updateTicketCount(msg.getType(),msg.getCount());
             }
 
-            /*if (nachrichtVomServer instanceof TravellogMessage){
-                TravellogMessage msg=(TravellogMessage)nachrichtVomServer;
-                updateTravellogMenu(msg.getTravelLog(),msg.getRound());
-            }
 
-             */
 
         });
 
@@ -255,7 +238,7 @@ public class Presenter {
      */
     public void sendUsername() {
         //Message is initialized
-        UsernameMessage msg = new UsernameMessage(username);
+        UsernameMessage msg = new UsernameMessage(username,playerID);
         //Message is sent to the server
         client.sendMessage(msg);
     }
@@ -287,23 +270,7 @@ public class Presenter {
     }
 
 
-    /**
-     * Method for updating the Travel-log
-     *
-     * //@param travelLog Travel-log
-     * //@param round     Round
-     */
-    /*public void updateTravellogMenu(TravelLog travelLog, int round) {
-        //Ticket gets assigned to a String variable
-        String transport = travelLog.getTicket();
-        //Round ist checked for cheating condition
-        if (round == 3 || round == 8 || round == 13 || round == 18 || travelLog.isCaughtCheating()) {
-            travellogMenu.add(Menu.NONE, round, Menu.NONE, transport + ", Position:" + round);
-        } else {
-            travellogMenu.add(Menu.NONE, round, Menu.NONE, transport);
-        }
-    }
-     */
+
 
 
 
@@ -379,5 +346,9 @@ public class Presenter {
 
     public void updateTicketCount(String type, int count){
         game.updateCount(type,count);
+    }
+
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
     }
 }

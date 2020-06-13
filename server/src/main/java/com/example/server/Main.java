@@ -77,12 +77,12 @@ public class Main {
                             System.out.println("Player 0 guter Zug");
                             game.getLobby().updatePlayerPositionsToAllClients(0,turn.getToField());
                             System.out.println("frage Spieler 1 nach Zug");
-                            game.getLobby().askPlayerforTurn(1);
+                            game.askPlayer1forTurn();
                         }
                         else
                         {
                             System.out.println("frage Spieler 0 nach Zug");
-                            game.getLobby().askPlayerforTurn(0);
+                            game.askPlayer0forTurn();
                         }
                     }
 
@@ -93,12 +93,12 @@ public class Main {
                             System.out.println("Player 1 guter Zug");
                             game.getLobby().updatePlayerPositionsToAllClients(1,turn.getToField());
                             System.out.println("frage Spieler 0 nach Zug");
-                            game.getLobby().askPlayerforTurn(0);
+                            game.askPlayer0forTurn();
                         }
                         else
                         {
                             System.out.println("frage Spieler 1 nach Zug");
-                            game.getLobby().askPlayerforTurn(1);
+                            game.askPlayer1forTurn();
                         }
                     }
 
@@ -138,7 +138,7 @@ public class Main {
 
                         // Spieler 0 wird nach einem Zug gefragt
                         System.out.println("Spieler 0 wird nach einem Zug gefragt");
-                        game.getLobby().askPlayerforTurn(0);
+                        game.askPlayer0forTurn();
 
                     }
                 }
