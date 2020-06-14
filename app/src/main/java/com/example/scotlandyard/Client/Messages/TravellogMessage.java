@@ -11,8 +11,7 @@ public class TravellogMessage extends BaseMessage {
     private TravelLog travelLog;
     //Round-number
     private int round;
-    //Lobby-ID
-    private int lobbyID;
+
 
     /**
      * Empty constructor.
@@ -26,12 +25,11 @@ public class TravellogMessage extends BaseMessage {
      *
      * @param travelLog Travel-log
      * @param round     Round-number
-     * @param lobbyID   Lobby ID
      */
-    public TravellogMessage(TravelLog travelLog, int round, int lobbyID) {
+    public TravellogMessage(TravelLog travelLog, int round) {
         this.travelLog = travelLog;
         this.round = round;
-        this.lobbyID = lobbyID;
+
     }
 
     //Getter and Setter
@@ -51,11 +49,4 @@ public class TravellogMessage extends BaseMessage {
         this.round = round;
     }
 
-    public int getLobbyID() {
-        return lobbyID;
-    }
-
-    public void setLobbyID(int lobbyID) {
-        this.lobbyID = lobbyID;
-    }
 }

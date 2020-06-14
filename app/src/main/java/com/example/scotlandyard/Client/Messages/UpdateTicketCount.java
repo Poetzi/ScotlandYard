@@ -10,8 +10,6 @@ public class UpdateTicketCount extends BaseMessage {
     private String type;
     //Player ID
     private int playerId;
-    //Lobby ID
-    private int lobbyId;
 
     /**
      * Empty constructor
@@ -27,11 +25,10 @@ public class UpdateTicketCount extends BaseMessage {
      * @param playerId Player ID
      * @param lobbyId  Lobby ID
      */
-    public UpdateTicketCount(int count, String type, int playerId, int lobbyId) {
+    public UpdateTicketCount(int count, String type, int playerId) {
         this.count = count;
         this.type = type;
         this.playerId = playerId;
-        this.lobbyId = lobbyId;
     }
 
     //Getter and Setter
@@ -59,11 +56,4 @@ public class UpdateTicketCount extends BaseMessage {
         this.playerId = playerId;
     }
 
-    public int getLobbyId() {
-        return lobbyId;
-    }
-
-    public void setLobbyId(int lobbyId) {
-        this.lobbyId = lobbyId;
-    }
 }

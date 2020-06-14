@@ -54,7 +54,7 @@ public class LobbyImpl  {
 
 
     public void updateTravellogToAllClients(TravelLog travelLog, int round) {
-        TravellogMessage travellogMessage = new TravellogMessage(travelLog, round, lobbyID);
+        TravellogMessage travellogMessage = new TravellogMessage(travelLog, round);
         for (ID id : players) {
             id.name.sendTCP(travellogMessage);
         }
@@ -62,7 +62,7 @@ public class LobbyImpl  {
 
 
     public void updateTicketCount(int playerId, int count, String type) {
-        UpdateTicketCount ticketCount = new UpdateTicketCount(count, type, playerId, lobbyID);
+        UpdateTicketCount ticketCount = new UpdateTicketCount(count, type, playerId);
         players.get(playerId).name.sendTCP(ticketCount);
         System.out.println("Ticketcount wurde geschickt.");
     }

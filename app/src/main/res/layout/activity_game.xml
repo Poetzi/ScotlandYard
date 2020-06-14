@@ -11,133 +11,212 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="779dp"
-            android:layout_height="453dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/proto" />
-
-        <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="796dp"
-        android:layout_height="478dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/finalmap"
-            android:contentDescription="TODO" />
-
-        <com.example.scotlandyard.viewLayer.mapView
-            android:id="@+id/mapView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/proto" />
+
+                <Button
+                    android:id="@+id/doubleMove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#28BF06"
+                    android:onClick="onClick"
+                    android:text="@string/_2x_move"
+                    app:layout_constraintEnd_toStartOf="@+id/textView3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2x Move" />
+
+                <TextView
+                    android:id="@+id/txtview_double"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/design_default_color_background"
+                    app:layout_constraintEnd_toEndOf="@+id/doubleMove"
+                    app:layout_constraintStart_toStartOf="@+id/doubleMove"
+                    app:layout_constraintTop_toBottomOf="@+id/doubleMove" />
+
+                <Button
+                    android:id="@+id/bus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="#0656C5"
+                    android:onClick="onClick"
+                    android:text="@string/bus"
+                    app:layout_constraintEnd_toStartOf="@+id/ubahn"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Bus" />
+
+                <TextView
+                    android:id="@+id/txtview_bus"
+                    android:layout_width="55dp"
+                    android:layout_height="19dp"
+                    android:text="TextView"
+                    android:textColor="@color/design_default_color_background"
+                    app:layout_constraintEnd_toEndOf="@+id/bus"
+                    app:layout_constraintStart_toStartOf="@+id/bus"
+                    app:layout_constraintTop_toBottomOf="@+id/bus" />
+
+                <Button
+                    android:id="@+id/taxi"
+                    android:layout_width="72dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="#FFEB3B"
+                    android:onClick="onClick"
+                    android:text="@string/taxi"
+                    app:layout_constraintEnd_toStartOf="@+id/bus"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Taxi" />
+
+                <TextView
+                    android:id="@+id/txtview_taxi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/design_default_color_background"
+                    app:layout_constraintEnd_toEndOf="@+id/taxi"
+                    app:layout_constraintStart_toStartOf="@+id/taxi"
+                    app:layout_constraintTop_toBottomOf="@+id/taxi" />
+
+                <Button
+                    android:id="@+id/blackTicket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="#040404"
+                    android:backgroundTint="#000000"
+                    android:onClick="onClick"
+                    android:text="@string/black_ticket"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toStartOf="@+id/doubleMove"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Black Ticket" />
+
+                <TextView
+                    android:id="@+id/txtview_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/design_default_color_background"
+                    app:layout_constraintEnd_toEndOf="@+id/blackTicket"
+                    app:layout_constraintStart_toStartOf="@+id/blackTicket"
+                    app:layout_constraintTop_toBottomOf="@+id/blackTicket" />
+
+                <Button
+                    android:id="@+id/ubahn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="#E4082A"
+                    android:onClick="onClick"
+                    android:text="@string/u_bahn"
+                    app:layout_constraintEnd_toStartOf="@+id/blackTicket"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="U-Bahn" />
+
+                <TextView
+                    android:id="@+id/txtview_metro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textColor="@color/design_default_color_background"
+                    app:layout_constraintEnd_toEndOf="@+id/ubahn"
+                    app:layout_constraintStart_toStartOf="@+id/ubahn"
+                    app:layout_constraintTop_toBottomOf="@+id/ubahn" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="24dp"
+                    android:text="Scotland Yard"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/cl">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/finalmap" />
+
+                <com.example.scotlandyard.viewLayer.mapView
+                    android:id="@+id/mapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.example.scotlandyard.viewLayer.playerView
+                    android:id="@+id/playerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/cheat"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></com.example.scotlandyard.viewLayer.mapView>
-
-        <com.example.scotlandyard.viewLayer.playerView
-            android:id="@+id/playerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></com.example.scotlandyard.viewLayer.playerView>
-
-    <TextView
-        android:id="@+id/txtview_taxi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/taxi"
-        app:layout_constraintStart_toStartOf="@+id/taxi"
-        app:layout_constraintTop_toBottomOf="@+id/taxi" />
-
-    <TextView
-        android:id="@+id/txtview_bus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/bus"
-        app:layout_constraintStart_toStartOf="@+id/bus"
-        app:layout_constraintTop_toBottomOf="@+id/bus" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-        android:id="@+id/txtview_metro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/ubahn"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="@+id/ubahn"
-        app:layout_constraintTop_toBottomOf="@+id/ubahn" />
-
-
-        <Button
-            android:id="@+id/bus"
-            android:layout_width="72dp"
-            android:layout_height="43dp"
-            android:layout_marginEnd="15dp"
-            android:background="#0656C5"
-            android:onClick="onClick"
-            android:text="@string/bus"
-            app:layout_constraintEnd_toStartOf="@+id/ubahn"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Bus" />
-
-        <Button
-            android:id="@+id/taxi"
-            android:layout_width="72dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="256dp"
-            android:layout_marginEnd="24dp"
-            android:background="#FFEB3B"
-            android:onClick="onClick"
-            android:text="@string/taxi"
-            app:layout_constraintEnd_toStartOf="@+id/bus"
-            app:layout_constraintHorizontal_bias="0.926"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Taxi" />
-
-        <Button
-            android:id="@+id/ubahn"
-            android:layout_width="72dp"
-            android:layout_height="43dp"
-            android:layout_marginEnd="350dp"
-            android:background="#E4082A"
-            android:onClick="onClick"
-            android:text="@string/u_bahn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="U-Bahn" />
-
-        <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
-        android:text="Scotland Yard"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/txtview_cheat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_cheat"
+            app:layout_constraintStart_toEndOf="@+id/btn_cheat"
+            app:layout_constraintTop_toTopOf="@+id/btn_cheat" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -145,14 +224,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            android:onClick="chat"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
             android:contentDescription="@string/chat"
+            android:onClick="chat"
             android:src="@android:drawable/sym_action_chat"
-            app:layout_constraintBottom_toBottomOf="@+id/mapView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

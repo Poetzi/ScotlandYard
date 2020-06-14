@@ -5,15 +5,15 @@ import com.example.server.game.players.TravelLog;
 public class TravellogMessage extends BaseMessage {
     private TravelLog travelLog;
     private int round;
-    private int lobbyID;
+
 
     public TravellogMessage() {
     }
 
-    public TravellogMessage(TravelLog travelLog, int round, int lobbyID) {
+    public TravellogMessage(TravelLog travelLog, int round) {
         this.travelLog = travelLog;
         this.round = round;
-        this.lobbyID = lobbyID;
+
     }
 
     public TravelLog getTravelLog() {
@@ -32,11 +32,4 @@ public class TravellogMessage extends BaseMessage {
         this.round = round;
     }
 
-    public int getLobbyID() {
-        return lobbyID;
-    }
-
-    public void setLobbyID(int lobbyID) {
-        this.lobbyID = lobbyID;
-    }
 }

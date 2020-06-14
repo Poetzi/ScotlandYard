@@ -1,11 +1,15 @@
 package com.example.scotlandyard.viewLayer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.modelLayer.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.google.android.material.navigation.NavigationView;
 
@@ -28,8 +33,26 @@ public class gameActivity extends AppCompatActivity {
     private playerView player;
     //Presenter is assigned
     private Presenter presenter = Presenter.getInstance();
+    //TurnMessage is assigned
+    private TurnMessage msg;
+    //check is assigned
+    private boolean check = true;
+    //confirm is assigned
+    private boolean confirm = false;
+    //Sensor Manager is assigned
+    private SensorManager sensorManager;
+    //Sensor is assigned
+    private Sensor accelerometer;
+    //ShakeDetector is assigned
+    private ShakeDetector shakeDetector;
+    //TextView is assigned
+    private TextView cheatTicketCount;
     //DrawerLayout is assigned
     private DrawerLayout drawerLayout;
+    //NavigationView is assigned
+    private NavigationView nav;
+    //Menu is assigned
+    private Menu menu;
 
     /**
      * onCreate Method to start up the Game
@@ -46,8 +69,7 @@ public class gameActivity extends AppCompatActivity {
         player = findViewById(R.id.playerView);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-        //NavigationView is assigned
-        NavigationView nav = findViewById(R.id.nav_view);
+        nav = findViewById(R.id.nav_view);
 
 
         //this Object is sent to the presenter
@@ -62,8 +84,7 @@ public class gameActivity extends AppCompatActivity {
         //Layout is synchronized and checked if it's open
         toggle.syncState();
         //Manu gets initialized
-        //Menu is assigned
-        Menu menu = nav.getMenu();
+        menu = nav.getMenu();
         //Send the Travel-log to the presenter
         presenter.setTravellogMenu(menu);
 
@@ -77,7 +98,7 @@ public class gameActivity extends AppCompatActivity {
      */
     public void drawPlayer(int playerId, int toField) {
         //player gets drawn
-        player.drawSinglePlayer(playerId, toField, map.getPoints());
+        player.drawSinglePlayer(playerId, toField);
     }
 
     /**
@@ -144,7 +165,25 @@ public class gameActivity extends AppCompatActivity {
             case R.id.ubahn:
                 useUbahn();
                 break;
+            case R.id.blackTicket:
+                useBlackTicket();
+                break;
+            case R.id.doubleMove:
+                Toast.makeText(getApplicationContext(), "Double Move Pressed", Toast.LENGTH_SHORT).show();
+                break;
         }
+    }
+
+    private void useBlackTicket() {
+        //Touched point on the Map gets assigned to a variable
+        int toField = map.touchedPoint.getField();
+        //TurnMessage is created
+        TurnMessage msg = new TurnMessage(0, toField, 0, "black");
+
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
+        }).start();
     }
 
 
@@ -206,37 +245,80 @@ public class gameActivity extends AppCompatActivity {
      * @param count Count
      */
     public void updateCount(String type, int count) {
-        String c = String.valueOf(count);
-        TextView v;
-        //Type of Ticket is checked
-        switch (type) {
-            case "Taxi":
-                v = findViewById(R.id.txtview_taxi);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.taxi);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-            case "Bus":
-                v = findViewById(R.id.txtview_bus);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.bus);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-            case "U-Bahn":
-                v = findViewById(R.id.txtview_metro);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.ubahn);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-        }
+        runOnUiThread(() -> {
+            String c = String.valueOf(count);
+            TextView v;
+            //Type of Ticket is checked
+            switch (type) {
+                case "Taxi":
+                    v = findViewById(R.id.txtview_taxi);
+                    v.setText(c);
+                    if (count == 0) {
+                        Button b = findViewById(R.id.taxi);
+                        b.setBackgroundColor(0xff888888);
+                        b.setClickable(false);
+                    }
+                    break;
+                case "Bus":
+                    v = findViewById(R.id.txtview_bus);
+                    v.setText(c);
+                    if (count == 0) {
+                        Button b = findViewById(R.id.bus);
+                        b.setBackgroundColor(0xff888888);
+                        b.setClickable(false);
+                    }
+                    break;
+                case "U-Bahn":
+                    v = findViewById(R.id.txtview_metro);
+                    v.setText(c);
+                    if (count == 0) {
+                        Button b = findViewById(R.id.ubahn);
+                        b.setBackgroundColor(0xff888888);
+                        b.setClickable(false);
+                    }
+                    break;
+                case "Black":
+                    v = findViewById(R.id.txtview_black);
+                    v.setText(c);
+                    if (count == 0) {
+                        Button b = findViewById(R.id.blackTicket);
+                        b.setBackgroundColor(0xff888888);
+                        b.setClickable(false);
+                    }
+                    break;
+                case "DoubleMove":
+                    v = findViewById(R.id.txtview_double);
+                    v.setText(c);
+                    if (count == 0) {
+                        Button b = findViewById(R.id.doubleMove);
+                        b.setBackgroundColor(0xff888888);
+                        b.setClickable(false);
+                    }
+                    break;
+                case "Cheat":
+                    break;
+            }
+        });
+
+    }
+
+    //Getter and Setter
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
+    }
+
+    public void addTravellogEntry(TravelLog log, int round){
+        runOnUiThread(() -> {
+            if (round==2 || round==7 || round==12 || round==17) {
+                menu.add(round, 0, 0, log.getTicket()+", Position: "+log.getPosition());
+            }else {
+                menu.add(round, 0, 0, log.getTicket());
+            }
+        });
+
     }
 }

@@ -15,9 +15,7 @@ import java.util.ArrayList;
 
 public class playerView extends View {
     Bitmap player = BitmapFactory.decodeResource(getResources(), R.drawable.player);
-    int x = -100;
-    int y = -100;
-    int imgOffset = 0;
+    int imgOffset = player.getWidth()/2;
     ArrayList<Players> players = new ArrayList<>();
     ArrayList<Points> points = Points.allPoints;
 
@@ -62,7 +60,7 @@ public class playerView extends View {
         }
     }
 
-    public void drawSinglePlayer(int playerId, int toField, ArrayList<Points>points){
+    public void drawSinglePlayer(int playerId, int toField){
         int x = 0,y = 0;
         for (int i = 0; i <points.size() ; i++) {
             if(toField == points.get(i).getField()){

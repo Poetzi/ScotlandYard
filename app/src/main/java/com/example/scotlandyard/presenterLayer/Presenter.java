@@ -171,6 +171,10 @@ public class Presenter {
                 updateTicketCount(msg.getType(),msg.getCount());
             }
 
+            if(nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage travellogMessage=(TravellogMessage)nachrichtVomServer;
+                updateTravellog(travellogMessage.getTravelLog(),travellogMessage.getRound());
+            }
 
 
         });
@@ -350,5 +354,9 @@ public class Presenter {
 
     public void setPlayerID(int playerID) {
         this.playerID = playerID;
+    }
+
+    public void updateTravellog(TravelLog log, int round){
+        game.addTravellogEntry(log, round);
     }
 }
