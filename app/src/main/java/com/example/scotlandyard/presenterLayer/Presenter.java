@@ -210,7 +210,7 @@ public class Presenter {
 
         //Message gets initialized
         TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard());
-        Log.d("Clienttttttttttttttttt","playerID "+playerID+" tofield "+message.getToField()+" Card;"+msg.getCard());
+        Log.d("Client","playerID "+playerID+" tofield "+message.getToField()+" Card;"+msg.getCard());
         //Message is sent to the Server
         client.sendMessage(msg);
     }

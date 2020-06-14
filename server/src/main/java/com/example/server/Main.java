@@ -145,12 +145,11 @@ public class Main {
                                 game.setNextTurnforPlayer0();
                                 game.askPlayer0forTurn();
 
-                                System.out.println("ACTUAL ROUND"+game.getActualRound());
 
                                 // Erhöhe die aktuelle Runde
                                 game.plus1ActualRound();
-                                System.out.println("ACTUAL ROUND CHANGED"+game.getActualRound());
-                                
+                                game.askPlayer0forTurn();
+                                game.askPlayer1forTurn();
                             }
                             else
                             {
