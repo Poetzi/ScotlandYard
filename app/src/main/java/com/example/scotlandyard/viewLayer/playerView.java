@@ -43,19 +43,8 @@ public class playerView extends View {
             }
             if(players.get(i).getPlayerId() == 1){
                 canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
-            }if(players.get(i).getPlayerId() == 2){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
-            }
-            if(players.get(i).getPlayerId() == 3){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
-            }if(players.get(i).getPlayerId() == 4){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
-            }
-            if(players.get(i).getPlayerId() == 5){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
         }
-
     }
 
     public void addPlayers(){
