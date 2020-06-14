@@ -43,5 +43,4 @@ public class UsernameMessage extends BaseMessage {
         this.username = username;
     }
 
-
 }
