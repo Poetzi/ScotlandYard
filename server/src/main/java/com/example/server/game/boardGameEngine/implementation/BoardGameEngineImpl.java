@@ -28,7 +28,7 @@ public class BoardGameEngineImpl {
     //private TurnMessage[] turns = new TurnMessage[2];
     private int numberOfPlayers = 0;
     private int maxRounds = 24;
-    private int actualRound;
+    private int actualRound=0;
     private GameBoard gameBoard = new GameBoardImpl();
     private int numberOfFields;
     private LobbyImpl lobby;
@@ -247,7 +247,151 @@ public class BoardGameEngineImpl {
         gameBoard.addFieldWithTransition(23,38,"ubahn");
         gameBoard.addFieldWithTransition(38,23,"ubahn");
 
+        //Black Ticket Transitions
+        gameBoard.addFieldWithTransition(1,2,"black");
+        gameBoard.addFieldWithTransition(2,1,"black");
+        gameBoard.addFieldWithTransition(1,3,"black");
+        gameBoard.addFieldWithTransition(3,1,"black");
+        gameBoard.addFieldWithTransition(3,4,"black");
+        gameBoard.addFieldWithTransition(4,3,"black");
+        gameBoard.addFieldWithTransition(1,5,"black");
+        gameBoard.addFieldWithTransition(5,1,"black");
+        gameBoard.addFieldWithTransition(3,7,"black");
+        gameBoard.addFieldWithTransition(7,3,"black");
+        gameBoard.addFieldWithTransition(4,8,"black");
+        gameBoard.addFieldWithTransition(8,4,"black");
+        gameBoard.addFieldWithTransition(6,5,"black");
+        gameBoard.addFieldWithTransition(5,6,"black");
+        gameBoard.addFieldWithTransition(5,7,"black");
+        gameBoard.addFieldWithTransition(7,5,"black");
+        gameBoard.addFieldWithTransition(7,8,"black");
+        gameBoard.addFieldWithTransition(8,7,"black");
+        gameBoard.addFieldWithTransition(5,11,"black");
+        gameBoard.addFieldWithTransition(11,5,"black");
+        gameBoard.addFieldWithTransition(8,9,"black");
+        gameBoard.addFieldWithTransition(9,8,"black");
+        gameBoard.addFieldWithTransition(1,2,"black");
+        gameBoard.addFieldWithTransition(1,2,"black");
+        gameBoard.addFieldWithTransition(11,17,"black");
+        gameBoard.addFieldWithTransition(9,20,"black");
+        gameBoard.addFieldWithTransition(20,9,"black");
+        gameBoard.addFieldWithTransition(20,21,"black");
+        gameBoard.addFieldWithTransition(17,18,"black");
+        gameBoard.addFieldWithTransition(18,17,"black");
+        gameBoard.addFieldWithTransition(15,25,"black");
+        gameBoard.addFieldWithTransition(14,26,"black");
+        gameBoard.addFieldWithTransition(25,24,"black");
+        gameBoard.addFieldWithTransition(24,25,"black");
+        gameBoard.addFieldWithTransition(24,18,"black");
+        gameBoard.addFieldWithTransition(18,24,"black");
+        gameBoard.addFieldWithTransition(18,19,"black");
+        gameBoard.addFieldWithTransition(19,18,"black");
+        gameBoard.addFieldWithTransition(19,21,"black");
+        gameBoard.addFieldWithTransition(21,19,"black");
+        gameBoard.addFieldWithTransition(26,27,"black");
+        gameBoard.addFieldWithTransition(27,26,"black");
+        gameBoard.addFieldWithTransition(25,32,"black");
+        gameBoard.addFieldWithTransition(32,25,"black");
+        gameBoard.addFieldWithTransition(19,22,"black");
+        gameBoard.addFieldWithTransition(22,19,"black");
+        gameBoard.addFieldWithTransition(33,23,"black");
+        gameBoard.addFieldWithTransition(23,33,"black");
+        gameBoard.addFieldWithTransition(29,30,"black");
+        gameBoard.addFieldWithTransition(30,29,"black");
+        gameBoard.addFieldWithTransition(28,29,"black");
+        gameBoard.addFieldWithTransition(29,28,"black");
+        gameBoard.addFieldWithTransition(29,41,"black");
+        gameBoard.addFieldWithTransition(41,29,"black");
+        gameBoard.addFieldWithTransition(30,31,"black");
+        gameBoard.addFieldWithTransition(31,30,"black");
+        gameBoard.addFieldWithTransition(41,31,"black");
+        gameBoard.addFieldWithTransition(31,41,"black");
+        gameBoard.addFieldWithTransition(34,35,"black");
+        gameBoard.addFieldWithTransition(35,34,"black");
+        gameBoard.addFieldWithTransition(35,36,"black");
+        gameBoard.addFieldWithTransition(36,35,"black");
+        gameBoard.addFieldWithTransition(41,42,"black");
+        gameBoard.addFieldWithTransition(42,41,"black");
+        gameBoard.addFieldWithTransition(31,40,"black");
+        gameBoard.addFieldWithTransition(40,31,"black");
+        gameBoard.addFieldWithTransition(34,39,"black");
+        gameBoard.addFieldWithTransition(39,34,"black");
+        gameBoard.addFieldWithTransition(36,37,"black");
+        gameBoard.addFieldWithTransition(37,36,"black");
+        gameBoard.addFieldWithTransition(42,40,"black");
+        gameBoard.addFieldWithTransition(40,42,"black");
+        gameBoard.addFieldWithTransition(40,39,"black");
+        gameBoard.addFieldWithTransition(39,40,"black");
+        gameBoard.addFieldWithTransition(38,37,"black");
+        gameBoard.addFieldWithTransition(37,38,"black");
+        gameBoard.addFieldWithTransition(42,46,"black");
+        gameBoard.addFieldWithTransition(46,42,"black");
+        gameBoard.addFieldWithTransition(40,45,"black");
+        gameBoard.addFieldWithTransition(45,40,"black");
+        gameBoard.addFieldWithTransition(39,43,"black");
+        gameBoard.addFieldWithTransition(43,39,"black");
+        gameBoard.addFieldWithTransition(43,44,"black");
+        gameBoard.addFieldWithTransition(44,43,"black");
+        gameBoard.addFieldWithTransition(46,45,"black");
+        gameBoard.addFieldWithTransition(45,46,"black");
+        gameBoard.addFieldWithTransition(45,44,"black");
+        gameBoard.addFieldWithTransition(44,45,"black");
 
+        gameBoard.addFieldWithTransition(2,12,"black");
+        gameBoard.addFieldWithTransition(12,2,"black");
+        gameBoard.addFieldWithTransition(1,11,"black");
+        gameBoard.addFieldWithTransition(11,1,"black");
+        gameBoard.addFieldWithTransition(7,10,"black");
+        gameBoard.addFieldWithTransition(10,7,"black");
+        gameBoard.addFieldWithTransition(10,19,"black");
+        gameBoard.addFieldWithTransition(19,10,"black");
+        gameBoard.addFieldWithTransition(13,15,"black");
+        gameBoard.addFieldWithTransition(15,13,"black");
+        gameBoard.addFieldWithTransition(18,23,"black");
+        gameBoard.addFieldWithTransition(23,18,"black");
+        gameBoard.addFieldWithTransition(27,30,"black");
+        gameBoard.addFieldWithTransition(30,27,"black");
+        gameBoard.addFieldWithTransition(32,34,"black");
+        gameBoard.addFieldWithTransition(34,32,"black");
+        gameBoard.addFieldWithTransition(13,12,"black");
+        gameBoard.addFieldWithTransition(12,13,"black");
+        gameBoard.addFieldWithTransition(12,11,"black");
+        gameBoard.addFieldWithTransition(11,12,"black");
+        gameBoard.addFieldWithTransition(11,10,"black");
+        gameBoard.addFieldWithTransition(10,11,"black");
+        gameBoard.addFieldWithTransition(10,9,"black");
+        gameBoard.addFieldWithTransition(9,10,"black");
+        gameBoard.addFieldWithTransition(26,24,"black");
+        gameBoard.addFieldWithTransition(24,26,"black");
+        gameBoard.addFieldWithTransition(28,27,"black");
+        gameBoard.addFieldWithTransition(27,28,"black");
+        gameBoard.addFieldWithTransition(27,32,"black");
+        gameBoard.addFieldWithTransition(32,27,"black");
+        gameBoard.addFieldWithTransition(32,33,"black");
+        gameBoard.addFieldWithTransition(33,32,"black");
+        gameBoard.addFieldWithTransition(23,22,"black");
+        gameBoard.addFieldWithTransition(22,23,"black");
+        gameBoard.addFieldWithTransition(31,34,"black");
+        gameBoard.addFieldWithTransition(34,31,"black");
+        gameBoard.addFieldWithTransition(39,38,"black");
+        gameBoard.addFieldWithTransition(38,39,"black");
+
+        gameBoard.addFieldWithTransition(2,16,"black");
+        gameBoard.addFieldWithTransition(16,2,"black");
+        gameBoard.addFieldWithTransition(16,33,"black");
+        gameBoard.addFieldWithTransition(33,16,"black");
+        gameBoard.addFieldWithTransition(33,38,"black");
+        gameBoard.addFieldWithTransition(38,33,"black");
+        gameBoard.addFieldWithTransition(19,16,"black");
+        gameBoard.addFieldWithTransition(16,19,"black");
+        gameBoard.addFieldWithTransition(14,16,"black");
+        gameBoard.addFieldWithTransition(16,14,"black");
+        gameBoard.addFieldWithTransition(22,33,"black");
+        gameBoard.addFieldWithTransition(33,22,"black");
+        gameBoard.addFieldWithTransition(33,28,"black");
+        gameBoard.addFieldWithTransition(28,33,"black");
+        gameBoard.addFieldWithTransition(23,38,"black");
+        gameBoard.addFieldWithTransition(38,23,"black");
     }
 
 
@@ -370,13 +514,13 @@ public class BoardGameEngineImpl {
                 ((Detective)player).validateTicket(card);
             }
         }else {
-            if (!card.equals("cheat") || !card.equals("black") || !card.equals("double")){
+            if (!card.equals("cheat") || !card.equals("double")){
                 ((MrX)player).validateTicket(actualRound,card,toField);
                 TravellogMessage travellogMessage=new TravellogMessage(((MrX)player).getTravelLog(actualRound),actualRound);
 
                 con0.sendTCP(travellogMessage);
                 con1.sendTCP(travellogMessage);
-
+                actualRound++;
             }
         }
         player.setCurrentPosition(toField);

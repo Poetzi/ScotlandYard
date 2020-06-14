@@ -212,12 +212,24 @@ public class gameActivity extends AppCompatActivity {
                 useUbahn();
                 break;
             case R.id.blackTicket:
-                Toast.makeText(getApplicationContext(), "Black Ticket Pressed", Toast.LENGTH_SHORT).show();
+                useBlackTicket();
                 break;
             case R.id.doubleMove:
                 Toast.makeText(getApplicationContext(), "Double Move Pressed", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    private void useBlackTicket() {
+        //Touched point on the Map gets assigned to a variable
+        int toField = map.touchedPoint.getField();
+        //TurnMessage is created
+        TurnMessage msg = new TurnMessage(0, toField, 0, "black");
+
+        new Thread(() -> {
+            // Nachricht wird an den Server geschickt
+            presenter.sendTurn(msg);
+        }).start();
     }
 
 
