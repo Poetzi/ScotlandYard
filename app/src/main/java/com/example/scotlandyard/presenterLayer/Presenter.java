@@ -171,6 +171,10 @@ public class Presenter {
                 updateTicketCount(msg.getType(),msg.getCount());
             }
 
+            if(nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage travellogMessage=(TravellogMessage)nachrichtVomServer;
+                updateTravellog(travellogMessage.getTravelLog(),travellogMessage.getRound());
+            }
 
 
         });
@@ -345,10 +349,24 @@ public class Presenter {
     }
 
     public void updateTicketCount(String type, int count){
+
+        while(game == null)
+        {
+            Log.d("Client:", "Warte auf Instanz von gameActivity");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         game.updateCount(type,count);
     }
 
     public void setPlayerID(int playerID) {
         this.playerID = playerID;
+    }
+
+    public void updateTravellog(TravelLog log, int round){
+        game.addTravellogEntry(log, round);
     }
 }

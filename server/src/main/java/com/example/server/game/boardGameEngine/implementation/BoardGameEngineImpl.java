@@ -17,8 +17,10 @@ import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
+import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
+import com.example.server.messages.UpdateTicketCount;
 
 public class BoardGameEngineImpl {
 
@@ -263,6 +265,11 @@ public class BoardGameEngineImpl {
         System.out.println("Initial Position von P0 und P1 gesendet");
     }
 
+    public void sendStartingTicketCount(){
+        updateTicketCount(0);
+        updateTicketCount(1);
+    }
+
     public boolean checkDraw(TurnMessage msg)
     {
         return gameBoard.checkDraw(msg.getPlayerId(),msg.getToField(),msg.getCard());
@@ -354,5 +361,70 @@ public class BoardGameEngineImpl {
 
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
+    }
+
+    public void validateTicket(int playerId, String card,int toField){
+        Player player=players[playerId];
+        if (player instanceof Detective){
+            if (!((Detective)player).isInactive()){
+                ((Detective)player).validateTicket(card);
+            }
+        }else {
+            if (!card.equals("cheat") || !card.equals("black") || !card.equals("double")){
+                ((MrX)player).validateTicket(actualRound,card,toField);
+                TravellogMessage travellogMessage=new TravellogMessage(((MrX)player).getTravelLog(actualRound),actualRound);
+
+                con0.sendTCP(travellogMessage);
+                con1.sendTCP(travellogMessage);
+
+            }
+        }
+        player.setCurrentPosition(toField);
+        updateTicketCount(playerId);
+    }
+
+    public void updateTicketCount(int playerId){
+        Player player=players[playerId];
+        UpdateTicketCount ticketCount=new UpdateTicketCount(player.getTaxiTickets(),"Taxi",playerId);
+        if (playerId==0){
+            con0.sendTCP(ticketCount);
+        }else {
+            con1.sendTCP(ticketCount);
+        }
+
+        ticketCount=new UpdateTicketCount(player.getBusTickets(),"Bus",playerId);
+        if (playerId==0){
+            con0.sendTCP(ticketCount);
+        }else {
+            con1.sendTCP(ticketCount);
+        }
+
+        ticketCount=new UpdateTicketCount(player.getUndergroundTickets(),"U-Bahn",playerId);
+        if (playerId==0){
+            con0.sendTCP(ticketCount);
+        }else {
+            con1.sendTCP(ticketCount);
+        }
+
+        ticketCount=new UpdateTicketCount(player.getBlackTickets(),"Black",playerId);
+        if (playerId==0){
+            con0.sendTCP(ticketCount);
+        }else {
+            con1.sendTCP(ticketCount);
+        }
+
+        ticketCount=new UpdateTicketCount(player.getDoubleMoveTickets(),"DoubleMove",playerId);
+        if (playerId==0){
+            con0.sendTCP(ticketCount);
+        }else {
+            con1.sendTCP(ticketCount);
+        }
+
+        ticketCount=new UpdateTicketCount(player.getCheatTickets(),"Cheat",playerId);
+        if (playerId==0){
+            con0.sendTCP(ticketCount);
+        }else {
+            con1.sendTCP(ticketCount);
+        }
     }
 }

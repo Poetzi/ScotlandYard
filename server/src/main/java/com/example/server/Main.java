@@ -3,6 +3,7 @@ package com.example.server;
 import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
 import com.example.server.game.players.TravelLog;
 
+import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.BaseMessage;
 import com.example.server.messages.ReadyMessage;
@@ -76,6 +77,7 @@ public class Main {
                         {
                             System.out.println("Player 0 guter Zug");
                             game.updatePositionOffaPlayer(0,turn.getToField());
+                            game.validateTicket(turn.getPlayerId(),turn.getCard(),turn.getToField());
                             System.out.println("frage Spieler 1 nach Zug");
                             game.askPlayer1forTurn();
                         }
@@ -93,6 +95,7 @@ public class Main {
                             System.out.println("Player 1 guter Zug");
                             game.updatePositionOffaPlayer(1,turn.getToField());
                             System.out.println("frage Spieler 0 nach Zug");
+                            game.validateTicket(turn.getPlayerId(),turn.getCard(),turn.getToField());
                             game.askPlayer0forTurn();
                         }
                         else
@@ -135,6 +138,8 @@ public class Main {
                         System.out.println("Setup Game");
                         game.sendStartingPositions();
                         System.out.println("sende Startpositionen");
+                        game.sendStartingTicketCount();
+                        System.out.println("Sende Ticketanzahl");
 
                         // Spieler 0 wird nach einem Zug gefragt
                         System.out.println("Spieler 0 wird nach einem Zug gefragt");

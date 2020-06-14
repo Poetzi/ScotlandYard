@@ -4,16 +4,14 @@ public class UpdateTicketCount extends BaseMessage {
     private int count;
     private String type;
     private int playerId;
-    private int lobbyId;
 
     public UpdateTicketCount() {
     }
 
-    public UpdateTicketCount(int count, String type, int playerId, int lobbyId) {
+    public UpdateTicketCount(int count, String type, int playerId) {
         this.count = count;
         this.type = type;
         this.playerId = playerId;
-        this.lobbyId = lobbyId;
     }
 
     public int getCount() {
@@ -40,11 +38,4 @@ public class UpdateTicketCount extends BaseMessage {
         this.playerId = playerId;
     }
 
-    public int getLobbyId() {
-        return lobbyId;
-    }
-
-    public void setLobbyId(int lobbyId) {
-        this.lobbyId = lobbyId;
-    }
 }

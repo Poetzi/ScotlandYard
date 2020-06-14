@@ -27,12 +27,12 @@ public class MrXImpl extends PlayerImpl implements MrX {
 
     @Override
     public TravelLog getTravelLog(int round) {
-        return travelLog[round - 1];
+        return travelLog[round];
     }
 
     @Override
     public void setTravelLog(TravelLog travelLog, int round) {
-        this.travelLog[round - 1] = travelLog;
+        this.travelLog[round] = travelLog;
     }
 
     /**
@@ -86,7 +86,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
      * @param round Zu welcher Runde geschummelt wurde.
      */
     public void setHasCheated(int round) {
-        travelLog[round - 1].setHasCheated(true);
+        travelLog[round].setHasCheated(true);
     }
 
     /**
@@ -96,7 +96,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
      * @return Boolean Wert (true = Mr. X hat in dieser Runde geschummelt).
      */
     public boolean getHasCheatedInRound(int round) {
-        return travelLog[round - 1].isHasCheated();
+        return travelLog[round].isHasCheated();
     }
 
     /**
@@ -110,7 +110,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
     @Override
     public void setPositionOfRound(int position, String ticket, int round, boolean isDoubleMove) {
         TravelLog log = new TravelLog(position, ticket, isDoubleMove);
-        travelLog[round - 1] = log;
+        travelLog[round] = log;
     }
 
     /**
@@ -121,7 +121,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
      */
     @Override
     public int getPositionOfRound(int round) {
-        return travelLog[round - 1].getPosition();
+        return travelLog[round].getPosition();
     }
 
     /**
@@ -132,7 +132,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
      */
     @Override
     public String getTicketOfRound(int round) {
-        return travelLog[round - 1].getTicket();
+        return travelLog[round].getTicket();
     }
 
     /**
@@ -143,7 +143,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
      */
     @Override
     public boolean isDoubleMoveAtRound(int round) {
-        return travelLog[round - 1].isDoubleMove();
+        return travelLog[round].isDoubleMove();
     }
 
     @Override
@@ -182,7 +182,7 @@ public class MrXImpl extends PlayerImpl implements MrX {
     public void setCaughtCheating(boolean caughtCheating, int round) {
         this.caughtCheating = caughtCheating;
         visibleFor=3;
-        travelLog[round - 1].setCaughtCheating(caughtCheating);
+        travelLog[round].setCaughtCheating(caughtCheating);
     }
 
     public int getVisibleFor() {

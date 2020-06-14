@@ -18,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.modelLayer.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.google.android.material.navigation.NavigationView;
 
@@ -286,63 +287,66 @@ public class gameActivity extends AppCompatActivity {
      * @param count Count
      */
     public void updateCount(String type, int count) {
-        String c = String.valueOf(count);
-        TextView v;
-        //Type of Ticket is checked
-        switch (type) {
-            case "Taxi":
-                v = findViewById(R.id.txtview_taxi);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.taxi);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-            case "Bus":
-                v = findViewById(R.id.txtview_bus);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.bus);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-            case "U-Bahn":
-                v = findViewById(R.id.txtview_metro);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.ubahn);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-            case "Black":
-                v = findViewById(R.id.txtview_black);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.blackTicket);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-            case "DoubleMove":
-                v = findViewById(R.id.txtview_double);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.doubleMove);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-            case "Cheat":
-                cheatTicketCount.setText(c);
-                if (count == 0) {
-                    cheatBtn.setBackgroundColor(0xff888888);
-                    cheatBtn.setClickable(false);
-                }
-                break;
-        }
+        runOnUiThread(() -> {
+            String c = String.valueOf(count);
+            TextView v;
+            //Type of Ticket is checked
+            switch (type) {
+                case "Taxi":
+                    v = findViewById(R.id.txtview_taxi);
+                    v.setText(c);
+                    if (count == 0) {
+                        Button b = findViewById(R.id.taxi);
+                        b.setBackgroundColor(0xff888888);
+                        b.setClickable(false);
+                    }
+                    break;
+                case "Bus":
+                    v = findViewById(R.id.txtview_bus);
+                    v.setText(c);
+                    if (count == 0) {
+                        Button b = findViewById(R.id.bus);
+                        b.setBackgroundColor(0xff888888);
+                        b.setClickable(false);
+                    }
+                    break;
+                case "U-Bahn":
+                    v = findViewById(R.id.txtview_metro);
+                    v.setText(c);
+                    if (count == 0) {
+                        Button b = findViewById(R.id.ubahn);
+                        b.setBackgroundColor(0xff888888);
+                        b.setClickable(false);
+                    }
+                    break;
+                case "Black":
+                    v = findViewById(R.id.txtview_black);
+                    v.setText(c);
+                    if (count == 0) {
+                        Button b = findViewById(R.id.blackTicket);
+                        b.setBackgroundColor(0xff888888);
+                        b.setClickable(false);
+                    }
+                    break;
+                case "DoubleMove":
+                    v = findViewById(R.id.txtview_double);
+                    v.setText(c);
+                    if (count == 0) {
+                        Button b = findViewById(R.id.doubleMove);
+                        b.setBackgroundColor(0xff888888);
+                        b.setClickable(false);
+                    }
+                    break;
+                case "Cheat":
+                    cheatTicketCount.setText(c);
+                    if (count == 0) {
+                        cheatBtn.setBackgroundColor(0xff888888);
+                        cheatBtn.setClickable(false);
+                    }
+                    break;
+            }
+        });
+
     }
 
     //Getter and Setter
@@ -352,5 +356,16 @@ public class gameActivity extends AppCompatActivity {
 
     public void setConfirm(boolean confirm) {
         this.confirm = confirm;
+    }
+
+    public void addTravellogEntry(TravelLog log, int round){
+        runOnUiThread(() -> {
+            if (round==2 || round==7 || round==12 || round==17) {
+                menu.add(round, 0, 0, log.getTicket()+", Position: "+log.getPosition());
+            }else {
+                menu.add(round, 0, 0, log.getTicket());
+            }
+        });
+
     }
 }
