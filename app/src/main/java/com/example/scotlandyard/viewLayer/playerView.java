@@ -17,7 +17,7 @@ public class playerView extends View {
     Bitmap player = BitmapFactory.decodeResource(getResources(), R.drawable.player);
     int x = -100;
     int y = -100;
-    int imgOffset = 20;
+    int imgOffset = 0;
     ArrayList<Players> players = new ArrayList<>();
     ArrayList<Points> points = Points.allPoints;
 
@@ -40,26 +40,25 @@ public class playerView extends View {
                 canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 1){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }if(players.get(i).getPlayerId() == 2){
                 canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 3){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }if(players.get(i).getPlayerId() == 4){
                 canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 5){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
         }
 
     }
 
     public void addPlayers(){
-        for (int i = 0; i < 6 ; i++) {
-            players.add(new Players(0,0,i,0));
-        }
+            players.add(new Players(0,0,0,0));
+        players.add(new Players(10,10,1,0));
     }
 
     public void drawSinglePlayer(int playerId, int toField, ArrayList<Points>points){
@@ -71,8 +70,8 @@ public class playerView extends View {
                 break;
             }
         }
-        players.get(playerId).setX(x);
-        players.get(playerId).setY(y);
+        players.get(playerId).setX(1396);
+        players.get(playerId).setY(653);
         players.get(playerId).setPosition(toField);
         invalidate();
     }
