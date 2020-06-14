@@ -80,7 +80,7 @@ public class Main {
                             {
                                 System.out.println("Player 0 guter Zug");
                                 game.updatePositionOffaPlayer(0,turn.getToField());
-
+                                game.validateTicket(turn.getPlayerId(),turn.getCard(),turn.getToField());
 
                                 System.out.println("frage Spieler 1 nach Zug");
                                 // Spieler 1 ist an der Reihe
@@ -105,6 +105,7 @@ public class Main {
                             {
                                 System.out.println("Player 1 guter Zug");
                                 game.updatePositionOffaPlayer(1,turn.getToField());
+                                game.validateTicket(turn.getPlayerId(),turn.getCard(),turn.getToField());
 
                                 // Überprüfe ob wer gewonnen hat
                                 game.checkWinningCondition();

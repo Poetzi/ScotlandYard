@@ -577,7 +577,6 @@ public class BoardGameEngineImpl {
 
                 con0.sendTCP(travellogMessage);
                 con1.sendTCP(travellogMessage);
-                actualRound++;
             }
         }
         player.setCurrentPosition(toField);

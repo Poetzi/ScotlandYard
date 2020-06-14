@@ -193,8 +193,6 @@ public class gameActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        //sensorManager is registered on resume
-        sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     /**
@@ -202,8 +200,6 @@ public class gameActivity extends AppCompatActivity {
      */
     @Override
     public void onPause() {
-        //sensorManager is unregistered on pause
-        sensorManager.unregisterListener(shakeDetector);
         super.onPause();
     }
 
@@ -300,11 +296,6 @@ public class gameActivity extends AppCompatActivity {
                     }
                     break;
                 case "Cheat":
-                    cheatTicketCount.setText(c);
-                    if (count == 0) {
-                        cheatBtn.setBackgroundColor(0xff888888);
-                        cheatBtn.setClickable(false);
-                    }
                     break;
             }
         });
