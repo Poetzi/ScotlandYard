@@ -243,13 +243,9 @@ public class BoardGameEngineImpl {
         msg.setPlayerId(pId);
         msg.setToField(toField);
         ToastMessage toast = new ToastMessage(pId, pId+ " ist mit " +card + " gefahren!");
-        if(pId == 0){
-            con1.sendTCP(toast);
-        }
-        else{
-            con0.sendTCP(toast);
-        }
 
+        con1.sendTCP(toast);
+        con0.sendTCP(toast);
         con0.sendTCP(msg);
         con1.sendTCP(msg);
     }
