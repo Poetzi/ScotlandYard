@@ -18,8 +18,11 @@ import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.ToastMessage;
+import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
+
+import java.util.ArrayList;
 
 public class BoardGameEngineImpl {
 
@@ -262,6 +265,18 @@ public class BoardGameEngineImpl {
         msg.setToField(toField);
         con0.sendTCP(msg);
         con1.sendTCP(msg);
+    }
+
+    public void sendTravelLog(ArrayList<TravelLog> travelLogs){
+        ArrayList<TravelLog> travelLogs1 = travelLogs;
+
+        for (int i = 0; i <travelLogs.size() ; i++) {
+            TravellogMessage travellogMessage = new TravellogMessage(travelLogs1.get(i),getActualRound(),1);
+            con0.sendTCP(travellogMessage);
+            con1.sendTCP(travellogMessage);
+
+        }
+
     }
 
     public void checkWinningCondition() {

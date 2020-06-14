@@ -179,7 +179,10 @@ public class Presenter {
                 Log.d("TICKET","type:"+msg.getType()+" count:"+msg.getCount());
                 updateTicketCount(msg.getType(),msg.getCount());
             }
-
+            if(nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage travellogMessage=(TravellogMessage)nachrichtVomServer;
+                updateTravellog(travellogMessage.getTravelLog(),travellogMessage.getRound());
+            }
 
 
         });
@@ -279,7 +282,9 @@ public class Presenter {
     }
 
 
-
+    public void updateTravellog(TravelLog log, int round){
+        game.addTravellogEntry(log, round);
+    }
 
 
 

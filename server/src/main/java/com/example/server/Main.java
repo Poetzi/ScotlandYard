@@ -19,6 +19,7 @@ import com.example.server.messages.UpdateTicketCount;
 import com.example.server.messages.UsernameMessage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -32,7 +33,7 @@ public class Main {
 
         MyKryoServer server = new MyKryoServer();
         BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
-
+        ArrayList<TravelLog> travelLogs = new ArrayList<>();
         try {
             // Registrieren der Messageklassen zur Kommunikation
             // zwischen Server und Client
@@ -77,7 +78,11 @@ public class Main {
                     {
                         // Wenn Spieler 0 dran ist
                         if(game.isPlayer0Turn())
-                        {
+                        {   travelLogs.add(new TravelLog(turn.getToField(),turn.getCard(),false));
+                            int round = game.getActualRound();
+                            if((round == 0 || round == 3 || round == 7 || round ==12)){
+                                game.sendTravelLog(travelLogs);
+                            }
                             if (game.checkDraw(turn))
                             {
                                 System.out.println("Player 0 guter Zug");

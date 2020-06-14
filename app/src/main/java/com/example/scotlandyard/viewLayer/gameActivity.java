@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.modelLayer.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.google.android.material.navigation.NavigationView;
 
@@ -31,6 +32,7 @@ public class gameActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
     //DrawerLayout is assigned
     private DrawerLayout drawerLayout;
+    private Menu menu;
 
     private int round;
 
@@ -66,7 +68,7 @@ public class gameActivity extends AppCompatActivity {
         toggle.syncState();
         //Manu gets initialized
         //Menu is assigned
-        Menu menu = nav.getMenu();
+        menu = nav.getMenu();
         //Send the Travel-log to the presenter
         presenter.setTravellogMenu(menu);
 
@@ -263,5 +265,14 @@ public class gameActivity extends AppCompatActivity {
 
     public void setRound(int round) {
         this.round = round;
+    }
+
+    public void addTravellogEntry(TravelLog log, int round){
+        runOnUiThread(() -> {
+            
+                menu.add(round, 0, 0, log.getTicket()+", Position: "+log.getPosition());
+
+        });
+
     }
 }
