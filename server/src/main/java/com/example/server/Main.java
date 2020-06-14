@@ -66,7 +66,7 @@ public class Main {
                     TurnMessage turn = (TurnMessage) nachrichtvomClient;
 
                     // Zug wird am Server ausgegeben
-                    System.out.println("Looby: " + turn.getLobbyId() + " Spieler " + turn.getPlayerId() + " to Field "
+                    System.out.println("Looby: " + game.getActualRound() + " Spieler " + turn.getPlayerId() + " to Field "
                             + turn.getToField() + " with " + turn.getCard());
 
                     // Der Zug wird an die Lobby weitergegeben
@@ -81,6 +81,22 @@ public class Main {
                                 System.out.println("Player 0 guter Zug");
                                 game.updatePositionOffaPlayer(0,turn.getToField());
                                 game.validateTicket(turn.getPlayerId(),turn.getCard(),turn.getToField());
+
+                                // Überprüfe ob wer gewonnen hat
+                                game.checkWinningCondition();
+                                if(game.isP0won())
+                                {
+                                    System.out.println("MrX 0 hat gewonnen");
+                                    game.setActualRound(game.getMaxRounds());
+                                    return;
+                                }
+                                else if(game.isP1won())
+                                {
+                                    System.out.println("Detektiv 1 hat gewonnen");
+                                    game.setActualRound(game.getMaxRounds());
+                                    return;
+                                }
+
 
                                 System.out.println("frage Spieler 1 nach Zug");
                                 // Spieler 1 ist an der Reihe
@@ -121,6 +137,7 @@ public class Main {
                                     game.setActualRound(game.getMaxRounds());
                                     return;
                                 }
+
 
                                 System.out.println("frage Spieler 0 nach Zug");
                                 // Spieler 0 ist an der Reihe
