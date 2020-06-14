@@ -251,12 +251,12 @@ public class BoardGameEngineImpl {
         if(gameBoard.getPositionOfPlayer(0) == gameBoard.getPositionOfPlayer(1))
         {
             // Detektive hat gewonnen
-            p1won = true;
+            setP1won(true);
         }
         if (actualRound == maxRounds)
         {
             // MrX hat gewonnen
-            p0won = true;
+            setP0won(true);
         }
     }
 
@@ -350,5 +350,13 @@ public class BoardGameEngineImpl {
 
     public int getMaxRounds() {
         return maxRounds;
+    }
+
+    public void setP0won(boolean p0won) {
+        this.p0won = p0won;
+    }
+
+    public void setP1won(boolean p1won) {
+        this.p1won = p1won;
     }
 }
