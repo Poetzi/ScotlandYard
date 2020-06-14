@@ -12,6 +12,7 @@ import com.example.scotlandyard.Client.Messages.SendPlayerIDtoClient;
 import com.example.scotlandyard.Client.Messages.SendRoleMessage;
 import com.example.scotlandyard.Client.Messages.StartGameMessage;
 import com.example.scotlandyard.Client.Messages.TextMessage;
+import com.example.scotlandyard.Client.Messages.ToastMessage;
 import com.example.scotlandyard.Client.Messages.TravellogMessage;
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
@@ -96,6 +97,7 @@ public class Presenter {
             client.registerClass(ReadyMessage.class);
             client.registerClass(UpdateTicketCount.class);
             client.registerClass(TravelLog.class);
+            client.registerClass(ToastMessage.class);
 
             //Calls registerCallback() to initialize the Callback-function of the Kryo-Client
             registerCallback();
@@ -142,6 +144,10 @@ public class Presenter {
                 game.askPlayerforTurn();
             }
 
+            if(nachrichtVomServer instanceof ToastMessage){
+                ToastMessage message = (ToastMessage) nachrichtVomServer;
+                game.toast(message.getMsg());
+            }
 
 
             if (nachrichtVomServer instanceof UpdatePlayersPosition) {
