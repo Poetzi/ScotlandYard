@@ -142,6 +142,8 @@ public class Presenter {
 
                 // Spieler wird nach einem Zug gefragt
                 game.askPlayerforTurn();
+                game.setRound(message.getRound());
+
             }
 
             if(nachrichtVomServer instanceof ToastMessage){

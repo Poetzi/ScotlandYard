@@ -32,6 +32,8 @@ public class gameActivity extends AppCompatActivity {
     //DrawerLayout is assigned
     private DrawerLayout drawerLayout;
 
+    private int round;
+
     /**
      * onCreate Method to start up the Game
      *
@@ -78,7 +80,7 @@ public class gameActivity extends AppCompatActivity {
      */
     public void drawPlayer(int playerId, int toField) {
         //player gets drawn
-        player.drawSinglePlayer(playerId, toField, map.getPoints());
+        player.drawSinglePlayer(playerId, toField, map.getPoints(), round);
     }
 
     /**
@@ -253,5 +255,13 @@ public class gameActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
 }

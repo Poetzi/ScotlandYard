@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class playerView extends View {
     Bitmap player = BitmapFactory.decodeResource(getResources(), R.drawable.detective);
     Bitmap Mrx = BitmapFactory.decodeResource(getResources(), R.drawable.mrx);
+   private int round;
 
     int x = -100;
     int y = -100;
@@ -38,7 +39,7 @@ public class playerView extends View {
         super.onDraw(canvas);
 
         for (int i = 0; i < players.size() ; i++) {
-            if(players.get(i).getPlayerId() == 0){
+            if((players.get(i).getPlayerId() == 0) && (round == 0 || round == 3 || round == 7 || round ==12)){
                 canvas.drawBitmap(Mrx, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 1){
@@ -53,8 +54,9 @@ public class playerView extends View {
         }
     }
 
-    public void drawSinglePlayer(int playerId, int toField, ArrayList<Points>points){
+    public void drawSinglePlayer(int playerId, int toField, ArrayList<Points>points, int round){
         int x = 0,y = 0;
+        this.round = round;
         for (int i = 0; i <points.size() ; i++) {
             if(toField == points.get(i).getField()){
                 x = points.get(i).getX();

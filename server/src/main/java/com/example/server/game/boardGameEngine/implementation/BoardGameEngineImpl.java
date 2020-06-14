@@ -221,6 +221,7 @@ public class BoardGameEngineImpl {
     public void askPlayer0forTurn()
     {
         AskPlayerForTurn msg = new AskPlayerForTurn();
+        msg.setRound(getActualRound());
         msg.setId(0);
         msg.setText("Bitte einen Zug angeben");
         con0.sendTCP(msg);
@@ -229,6 +230,7 @@ public class BoardGameEngineImpl {
     public void askPlayer1forTurn()
     {
         AskPlayerForTurn msg = new AskPlayerForTurn();
+        msg.setRound(getActualRound());
         msg.setId(1);
         msg.setText("Bitte einen Zug angeben");
         con1.sendTCP(msg);
