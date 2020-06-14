@@ -71,7 +71,7 @@ public class Main {
 
                     // Der Zug wird an die Lobby weitergegeben
                     //game.setTurns(turn, turn.getPlayerId());
-                    if (turn.getPlayerId()== 0)
+                    if (turn.getPlayerId()== 0 && game.getActualRound() <= game.getMaxRounds())
                     {
                         // Wenn Spieler 0 dran ist
                         if(game.isPlayer0Turn())
@@ -106,10 +106,27 @@ public class Main {
                                 System.out.println("Player 1 guter Zug");
                                 game.updatePositionOffaPlayer(1,turn.getToField());
 
+                                // Überprüfe ob wer gewonnen hat
+                                game.checkWinningCondition();
+                                if(game.isP0won())
+                                {
+                                    System.out.println("MrX 0 hat gewonnen");
+                                    game.setActualRound(game.getMaxRounds());
+                                    return;
+                                }
+                                else if(game.isP1won())
+                                {
+                                    System.out.println("Detektiv 1 hat gewonnen");
+                                    game.setActualRound(game.getMaxRounds());
+                                    return;
+                                }
+
                                 System.out.println("frage Spieler 0 nach Zug");
                                 // Spieler 0 ist an der Reihe
                                 game.setNextTurnforPlayer0();
                                 game.askPlayer0forTurn();
+
+
 
                                 // Erhöhe die aktuelle Runde
                                 game.plus1ActualRound();

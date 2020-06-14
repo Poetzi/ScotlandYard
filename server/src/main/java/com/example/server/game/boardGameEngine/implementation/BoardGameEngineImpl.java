@@ -35,9 +35,13 @@ public class BoardGameEngineImpl {
     private boolean player0Turn = false;
     private boolean player1Turn = false;
 
-
+    // MrX
     private Connection con0;
+    // Detektiv
     private Connection con1;
+
+    private boolean p0won = false;
+    private boolean p1won = false;
 
     // Singleton
     private static BoardGameEngineImpl boardGameEngine;
@@ -243,22 +247,17 @@ public class BoardGameEngineImpl {
     }
 
 
-    public boolean checkWinningCondition() {
-        int misterX = mrXId;
-
-        if (maxRounds == actualRound) {
-            System.out.println("Mister X won");
-            return false;
+    public void checkWinningCondition() {
+        if(gameBoard.getPositionOfPlayer(0) == gameBoard.getPositionOfPlayer(1))
+        {
+            // Detektive hat gewonnen
+            p1won = true;
         }
-
-        for (int i = 0; i < numberOfPlayers; i++) {
-            /*if(players.get(misterX) == players.get(i).currentPosition){ //Missing field from Player CLass
-                System.out.println("Mister X lost");
-                return true;
-            }
-             */
+        if (actualRound == maxRounds)
+        {
+            // MrX hat gewonnen
+            p0won = true;
         }
-        return false;
     }
 
 
@@ -341,4 +340,15 @@ public class BoardGameEngineImpl {
     }
 
 
+    public boolean isP0won() {
+        return p0won;
+    }
+
+    public boolean isP1won() {
+        return p1won;
+    }
+
+    public int getMaxRounds() {
+        return maxRounds;
+    }
 }
