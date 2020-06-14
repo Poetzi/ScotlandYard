@@ -87,36 +87,37 @@
 
 
         <Button
-        android:id="@+id/bus"
-        android:layout_width="72dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="24dp"
-        android:background="#0656C5"
-        android:onClick="onClick"
-        android:text="@string/bus"
-        app:layout_constraintEnd_toStartOf="@+id/ubahn"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Bus" />
+            android:id="@+id/bus"
+            android:layout_width="72dp"
+            android:layout_height="43dp"
+            android:layout_marginEnd="15dp"
+            android:background="#0656C5"
+            android:onClick="onClick"
+            android:text="@string/bus"
+            app:layout_constraintEnd_toStartOf="@+id/ubahn"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Bus" />
 
-    <Button
-        android:id="@+id/taxi"
-        android:layout_width="72dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="24dp"
-        android:background="#FFEB3B"
-        android:onClick="onClick"
-        android:text="@string/taxi"
-        app:layout_constraintEnd_toStartOf="@+id/bus"
-        app:layout_constraintHorizontal_bias="0.926"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Taxi" />
+        <Button
+            android:id="@+id/taxi"
+            android:layout_width="72dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="256dp"
+            android:layout_marginEnd="24dp"
+            android:background="#FFEB3B"
+            android:onClick="onClick"
+            android:text="@string/taxi"
+            app:layout_constraintEnd_toStartOf="@+id/bus"
+            app:layout_constraintHorizontal_bias="0.926"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Taxi" />
 
         <Button
             android:id="@+id/ubahn"
             android:layout_width="72dp"
             android:layout_height="43dp"
-            android:layout_marginEnd="432dp"
+            android:layout_marginEnd="350dp"
             android:background="#E4082A"
             android:onClick="onClick"
             android:text="@string/u_bahn"
