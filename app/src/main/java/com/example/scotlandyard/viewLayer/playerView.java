@@ -17,7 +17,7 @@ public class playerView extends View {
     Bitmap player = BitmapFactory.decodeResource(getResources(), R.drawable.player);
     int x = -100;
     int y = -100;
-    int imgOffset = 20;
+    int imgOffset = 0;
     ArrayList<Players> players = new ArrayList<>();
     ArrayList<Points> points = Points.allPoints;
 
@@ -40,17 +40,17 @@ public class playerView extends View {
                 canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 1){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }if(players.get(i).getPlayerId() == 2){
                 canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 3){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }if(players.get(i).getPlayerId() == 4){
                 canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 5){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
         }
 
@@ -67,7 +67,7 @@ public class playerView extends View {
         for (int i = 0; i <points.size() ; i++) {
             if(toField == points.get(i).getField()){
                 x = points.get(i).getX();
-                y = points.get(i).getX();
+                y = points.get(i).getY();
                 break;
             }
         }
