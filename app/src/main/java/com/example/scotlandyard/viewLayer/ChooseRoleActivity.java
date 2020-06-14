@@ -40,6 +40,11 @@ public class ChooseRoleActivity extends AppCompatActivity {
         new Thread(() -> {
 
             // die Rolle wird dem Server übergeben
+
+            presenter.setPlayerID(0);
+
+            presenter.sendUsername();
+
             presenter.sendRole();
 
 
@@ -61,6 +66,11 @@ public class ChooseRoleActivity extends AppCompatActivity {
         new Thread(() -> {
 
             // die Rolle wird dem Server übergeben
+
+            presenter.setPlayerID(1);
+
+            presenter.sendUsername();
+
             presenter.sendRole();
 
         }).start();

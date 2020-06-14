@@ -1,16 +1,11 @@
 package com.example.scotlandyard.viewLayer;
 
-import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,36 +22,14 @@ import com.google.android.material.navigation.NavigationView;
  */
 public class gameActivity extends AppCompatActivity {
 
-    //Buttons are assigned
-    private Button taxi, bus, ubahn, blackTicket, doubleMove, cheatBtn;
     //mapView is assigned
     private mapView map;
     //playerView is assigned
     private playerView player;
-    //Player position is assigned
-    private Points playerPostion;
     //Presenter is assigned
     private Presenter presenter = Presenter.getInstance();
-    //TurnMessage is assigned
-    private TurnMessage msg;
-    //check is assigned
-    private boolean check = true;
-    //confirm is assigned
-    private boolean confirm = false;
-    //Sensor Manager is assigned
-    private SensorManager sensorManager;
-    //Sensor is assigned
-    private Sensor accelerometer;
-    //ShakeDetector is assigned
-    private ShakeDetector shakeDetector;
-    //TextView is assigned
-    private TextView cheatTicketCount;
     //DrawerLayout is assigned
     private DrawerLayout drawerLayout;
-    //NavigationView is assigned
-    private NavigationView nav;
-    //Menu is assigned
-    private Menu menu;
 
     /**
      * onCreate Method to start up the Game
@@ -69,59 +42,18 @@ public class gameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        //Variables are initialized
-        taxi = findViewById(R.id.taxi);
-        bus = findViewById(R.id.bus);
-        ubahn = findViewById(R.id.ubahn);
-        blackTicket = findViewById(R.id.blackTicket);
-        doubleMove = findViewById(R.id.doubleMove);
         map = findViewById(R.id.mapView);
         player = findViewById(R.id.playerView);
-        cheatBtn = findViewById(R.id.btn_cheat);
-        cheatTicketCount = findViewById(R.id.txtview_cheat);
+
         drawerLayout = findViewById(R.id.drawer_layout);
-        nav = findViewById(R.id.nav_view);
+        //NavigationView is assigned
+        NavigationView nav = findViewById(R.id.nav_view);
 
 
         //this Object is sent to the presenter
         presenter.setGame(this);
         //Players are added to the game
         player.addPlayers();
-
-        //Cheat Button is set to invisible
-        cheatBtn.setVisibility(View.INVISIBLE);
-        //Assigning a listener for the turn message to the cheat button
-        cheatBtn.setOnClickListener(view -> {
-            msg = new TurnMessage(presenter.getUser().getId(), 0, 0, "cheat");
-            new Thread(() -> {
-                // Nachricht wird an den Server geschickt
-                presenter.sendTurn(msg);
-
-            }).start();
-        });
-        //Set cheatTicketCount to invisible
-        cheatTicketCount.setVisibility(View.INVISIBLE);
-        //initialize sensorManager
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        //check if the SensorManager is working correctly
-        if (sensorManager != null) {
-            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        } else {
-            throw new NullPointerException();
-        }
-        //ShakeDetector is initialized
-        shakeDetector = new ShakeDetector();
-        //Listener for cheatBtn and cheatTicketCount is assigned to the ShakeDetector
-        shakeDetector.setOnShakeListener(count -> {
-            //Check button conditions and set correct visibility
-            if (cheatBtn.getVisibility() == View.INVISIBLE) {
-                cheatBtn.setVisibility(View.VISIBLE);
-                cheatTicketCount.setVisibility(View.VISIBLE);
-            } else {
-                cheatBtn.setVisibility(View.INVISIBLE);
-                cheatTicketCount.setVisibility(View.INVISIBLE);
-            }
-        });
 
         //Needed for Drawer-Layout. Needs a string for checking if it is open or closed.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -130,7 +62,8 @@ public class gameActivity extends AppCompatActivity {
         //Layout is synchronized and checked if it's open
         toggle.syncState();
         //Manu gets initialized
-        menu = nav.getMenu();
+        //Menu is assigned
+        Menu menu = nav.getMenu();
         //Send the Travel-log to the presenter
         presenter.setTravellogMenu(menu);
 
@@ -156,7 +89,6 @@ public class gameActivity extends AppCompatActivity {
 
         //TurnMessage is created
         TurnMessage msg = new TurnMessage(0, toField, 0, "taxi");
-
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
@@ -212,12 +144,6 @@ public class gameActivity extends AppCompatActivity {
             case R.id.ubahn:
                 useUbahn();
                 break;
-            case R.id.blackTicket:
-                Toast.makeText(getApplicationContext(), "Black Ticket Pressed", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.doubleMove:
-                Toast.makeText(getApplicationContext(), "Double Move Pressed", Toast.LENGTH_SHORT).show();
-                break;
         }
     }
 
@@ -228,8 +154,6 @@ public class gameActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        //sensorManager is registered on resume
-        sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     /**
@@ -237,8 +161,6 @@ public class gameActivity extends AppCompatActivity {
      */
     @Override
     public void onPause() {
-        //sensorManager is unregistered on pause
-        sensorManager.unregisterListener(shakeDetector);
         super.onPause();
     }
 
@@ -273,13 +195,8 @@ public class gameActivity extends AppCompatActivity {
      * Method for asking Players for their turn
      */
     public void askPlayerforTurn() {
-        Context context = getApplicationContext();
         CharSequence text = "Bitte einen Zug angeben";
-        int duration = Toast.LENGTH_SHORT;
-
-        Looper.prepare();
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+        System.out.println(text);
     }
 
     /**
@@ -320,40 +237,6 @@ public class gameActivity extends AppCompatActivity {
                     b.setClickable(false);
                 }
                 break;
-            case "Black":
-                v = findViewById(R.id.txtview_black);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.blackTicket);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-            case "DoubleMove":
-                v = findViewById(R.id.txtview_double);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.doubleMove);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-            case "Cheat":
-                cheatTicketCount.setText(c);
-                if (count == 0) {
-                    cheatBtn.setBackgroundColor(0xff888888);
-                    cheatBtn.setClickable(false);
-                }
-                break;
         }
-    }
-
-    //Getter and Setter
-    public void setCheck(boolean check) {
-        this.check = check;
-    }
-
-    public void setConfirm(boolean confirm) {
-        this.confirm = confirm;
     }
 }

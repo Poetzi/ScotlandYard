@@ -1,11 +1,7 @@
 package com.example.server;
 
 import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
-import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
 import com.example.server.game.players.TravelLog;
-import com.example.server.lobby.implementation.ID;
-import com.example.server.lobby.implementation.LobbyImpl;
-import com.example.server.lobby.interfaces.Lobby;
 
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.BaseMessage;
@@ -32,8 +28,10 @@ public class Main {
 
 
 
+
         MyKryoServer server = new MyKryoServer();
         BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
+
         try {
             // Registrieren der Messageklassen zur Kommunikation
             // zwischen Server und Client
@@ -52,7 +50,6 @@ public class Main {
             server.registerClass(UpdateTicketCount.class);
             server.registerClass(TravelLog.class);
 
-
             // Die Callbacks werden hier registriert,
             server.registerCallback(nachrichtvomClient -> {
                 // hier wird dan definiert was passieren soll,
@@ -69,11 +66,96 @@ public class Main {
                     TurnMessage turn = (TurnMessage) nachrichtvomClient;
 
                     // Zug wird am Server ausgegeben
-                    System.out.println("Looby: " + turn.getLobbyId() + " Spieler " + turn.getPlayerId() + " to Field "
+                    System.out.println("Looby: " + game.getActualRound() + " Spieler " + turn.getPlayerId() + " to Field "
                             + turn.getToField() + " with " + turn.getCard());
 
                     // Der Zug wird an die Lobby weitergegeben
-                    game.setTurns(turn, turn.getPlayerId());
+                    //game.setTurns(turn, turn.getPlayerId());
+                    if (turn.getPlayerId()== 0 && game.getActualRound() <= game.getMaxRounds())
+                    {
+                        // Wenn Spieler 0 dran ist
+                        if(game.isPlayer0Turn())
+                        {
+                            if (game.checkDraw(turn))
+                            {
+                                System.out.println("Player 0 guter Zug");
+                                game.updatePositionOffaPlayer(0,turn.getToField());
+
+
+                                // Überprüfe ob wer gewonnen hat
+                                game.checkWinningCondition();
+                                if(game.isP0won())
+                                {
+                                    System.out.println("MrX 0 hat gewonnen");
+                                    game.setActualRound(game.getMaxRounds());
+                                    return;
+                                }
+                                else if(game.isP1won())
+                                {
+                                    System.out.println("Detektiv 1 hat gewonnen");
+                                    game.setActualRound(game.getMaxRounds());
+                                    return;
+                                }
+
+
+                                System.out.println("frage Spieler 1 nach Zug");
+                                // Spieler 1 ist an der Reihe
+                                game.setNextTurnforPlayer1();
+                                game.askPlayer1forTurn();
+                            }
+                            else
+                            {
+                                System.out.println("frage Spieler 0 nach Zug");
+                                game.askPlayer0forTurn();
+                            }
+                        }
+
+                    }
+
+                    if (turn.getPlayerId()== 1)
+                    {
+                        if (game.isPlayer1Turn())
+                        {
+                            // Wenn der Zug gültig ist
+                            if (game.checkDraw(turn))
+                            {
+                                System.out.println("Player 1 guter Zug");
+                                game.updatePositionOffaPlayer(1,turn.getToField());
+
+                                // Überprüfe ob wer gewonnen hat
+                                game.checkWinningCondition();
+                                if(game.isP0won())
+                                {
+                                    System.out.println("MrX 0 hat gewonnen");
+                                    game.setActualRound(game.getMaxRounds());
+                                    return;
+                                }
+                                else if(game.isP1won())
+                                {
+                                    System.out.println("Detektiv 1 hat gewonnen");
+                                    game.setActualRound(game.getMaxRounds());
+                                    return;
+                                }
+
+
+                                System.out.println("frage Spieler 0 nach Zug");
+                                // Spieler 0 ist an der Reihe
+                                game.setNextTurnforPlayer0();
+                                game.askPlayer0forTurn();
+
+
+
+                                // Erhöhe die aktuelle Runde
+                                game.plus1ActualRound();
+                            }
+                            else
+                            {
+                                System.out.println("frage Spieler 1 nach Zug");
+                                game.askPlayer1forTurn();
+                            }
+                        }
+
+                    }
 
                 }
 
@@ -97,15 +179,30 @@ public class Main {
                 if(nachrichtvomClient instanceof ReadyMessage)
                 {
                     // Die Anzahl der Spieler die bereit sind wird erhöht
-                    game.getLobby().setPlayerReady(game.getLobby().getPlayerReady()+1);
+                    game.playerReady++;
                     System.out.println("Ein Spieler ist bereit");
-                    System.out.println("Spieler bereit: "+game.getLobby().getPlayerReady());
 
-                    if (game.getLobby().getPlayerReady()==2)
+
+                    if (game.playerReady==2)
                     {
                         System.out.println("Spiel beginnt!!");
-                        game.getLobby().setAllReady(true);
+                        game.setupNewGame();
+                        System.out.println("Setup Game");
+                        game.sendStartingPositions();
+                        System.out.println("sende Startpositionen");
 
+                        game.setActualRound(0);
+                        System.out.println("Die Aktuelle Runde ist 0");
+
+
+
+                        // Spieler 0 wird nach einem Zug gefragt
+                        game.setNextTurnforPlayer0();
+                        if(game.isPlayer0Turn())
+                        {
+                            System.out.println("Spieler 0 wird nach einem Zug gefragt");
+                            game.askPlayer0forTurn();
+                        }
                     }
                 }
 

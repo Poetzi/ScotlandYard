@@ -42,8 +42,8 @@ public class MyKryoClient {
     public void connect(String host) throws IOException {
         //Client is started
         client.start();
-        client.setKeepAliveTCP(3000000);
-        client.setTimeout(3000000);
+        client.setKeepAliveTCP(100);
+        client.setTimeout(0);
         //Client connects with server
         client.connect(5000, host, com.example.scotlandyard.Client.Ports.TCP);
         //Client handles callback-messages from server with a listener.

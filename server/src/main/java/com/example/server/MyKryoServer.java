@@ -5,6 +5,8 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.example.server.game.boardGameEngine.implementation.BoardGameEngineImpl;
 import com.example.server.game.boardGameEngine.interfaces.BoardGameEngine;
+import com.example.server.game.gameBoard.implementation.GameBoardImpl;
+import com.example.server.game.gameBoard.interfaces.GameBoard;
 import com.example.server.lobby.implementation.ID;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
@@ -21,7 +23,7 @@ public class MyKryoServer {
     //Server Objekt
     private Server server;
     private Callback<BaseMessage> messageCallback;
-    public static ArrayList<Lobby> lobbys = new ArrayList<Lobby>();
+    public static ArrayList<LobbyImpl> lobbys = new ArrayList<LobbyImpl>();
 
     public MyKryoServer() {
         server = new Server();
@@ -80,52 +82,19 @@ public class MyKryoServer {
                 if (object instanceof UsernameMessage) {
                     String name = ((UsernameMessage) object).getUsername();
                     System.out.println("User " + name + " ist beigetreten");
-                    ID id = new ID(connection, name);
-                    boolean lobbyFound = false;
-                    for (Lobby lobby : lobbys) {
-                        if (lobby.isLobbyOpen()) {
-                            id.id = lobby.getPlayerCount();
-                            lobby.addPlayertoGame(id);
-                            lobbyFound = true;
 
-                            // Sende LobbyId an Client
-                            int lobbyId = lobby.getLobbyID();
-                            SendLobbyID messageLobbyID = new SendLobbyID();
-                            messageLobbyID.setLobbyID(lobbyId);
-                            connection.sendTCP(messageLobbyID);
-                            System.out.println("Server sendet Lobby ID " + messageLobbyID.getLobbyID() + " an Client");
+                    UsernameMessage msg = (UsernameMessage)object;
+                    BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
 
-                            // Sende PlayerId an Client
-                            SendPlayerIDtoClient messagePlayerId = new SendPlayerIDtoClient();
-                            messagePlayerId.setId(id.id);
-                            connection.sendTCP((messagePlayerId));
-                            System.out.println("Server sendet PlayerId " + messagePlayerId.getId() + " an Client");
-
-                            break;
-                        }
+                    if (msg.getPlayerId()==0)
+                    {
+                        game.setCon0(connection);
+                        System.out.println("Connection für Player 0 erstellt");
                     }
-                    if (!lobbyFound) {
-                        System.out.println("lobby created");
-                        Lobby lobby = new LobbyImpl();
-                        id.id = lobby.getPlayerCount();
-                        lobby.addPlayertoGame(id);
-                        lobbys.add(lobby);
-
-                        // Sende LobbyId an Client
-                        int lobbyId = lobby.getLobbyID();
-                        SendLobbyID messageLobbyID = new SendLobbyID();
-                        messageLobbyID.setLobbyID(lobbyId);
-                        connection.sendTCP(messageLobbyID);
-                        System.out.println("Server sendet Lobby ID " + messageLobbyID.getLobbyID() + " an Client");
-
-                        // Sende PlayerId an Client
-                        SendPlayerIDtoClient messagePlayerId = new SendPlayerIDtoClient();
-                        messagePlayerId.setId(id.id);
-                        connection.sendTCP((messagePlayerId));
-                        System.out.println("Server sendet PlayerId " + messagePlayerId.getId() + " an Client");
-
-                        BoardGameEngineImpl game=BoardGameEngineImpl.getInstance();
-                        game.setLobby(lobby);
+                    else if (msg.getPlayerId()==1)
+                    {
+                        game.setCon1(connection);
+                        System.out.println("Connection für Player 1 erstellt");
                     }
 
 
@@ -154,11 +123,11 @@ public class MyKryoServer {
     }
 
 
-    public static ArrayList<Lobby> getLobby() {
+    public static ArrayList<LobbyImpl> getLobby() {
         return lobbys;
     }
 
-    public static void setLobby(ArrayList<Lobby> lobby) {
+    public static void setLobby(ArrayList<LobbyImpl> lobby) {
         MyKryoServer.lobbys = lobby;
     }
 

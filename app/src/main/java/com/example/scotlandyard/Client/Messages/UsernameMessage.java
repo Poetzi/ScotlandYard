@@ -8,6 +8,8 @@ public class UsernameMessage extends BaseMessage {
     //Username
     private String username;
 
+    private int playerId;
+
     /**
      * Empty constructor
      */
@@ -19,8 +21,17 @@ public class UsernameMessage extends BaseMessage {
      *
      * @param username Username
      */
-    public UsernameMessage(String username) {
+    public UsernameMessage(String username, int playerId) {
         this.username = username;
+        this.playerId = playerId;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 
     //Getter and Setter

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class playerView extends View {
     Bitmap player = BitmapFactory.decodeResource(getResources(), R.drawable.player);
+    Bitmap Mrx = BitmapFactory.decodeResource(getResources(), R.drawable.mrx);
+
     int x = -100;
     int y = -100;
     int imgOffset = 20;
@@ -37,20 +39,20 @@ public class playerView extends View {
 
         for (int i = 0; i < players.size() ; i++) {
             if(players.get(i).getPlayerId() == 0){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
+                canvas.drawBitmap(Mrx, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 1){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }if(players.get(i).getPlayerId() == 2){
                 canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 3){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }if(players.get(i).getPlayerId() == 4){
                 canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 5){
-                canvas.drawBitmap(player, players.get(i).getX() - imgOffset+100, players.get(i).getY() - imgOffset, null);
+                canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
         }
 
@@ -67,7 +69,7 @@ public class playerView extends View {
         for (int i = 0; i <points.size() ; i++) {
             if(toField == points.get(i).getField()){
                 x = points.get(i).getX();
-                y = points.get(i).getX();
+                y = points.get(i).getY();
                 break;
             }
         }

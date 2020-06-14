@@ -58,8 +58,6 @@ public interface BoardGameEngine {
 
     void setLobby(Lobby lobby);
 
-    public TurnMessage[] getTurns();
 
-    public void setTurns(TurnMessage turn, int id);
 
 }
