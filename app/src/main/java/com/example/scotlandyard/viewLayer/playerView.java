@@ -14,7 +14,7 @@ import com.example.scotlandyard.R;
 import java.util.ArrayList;
 
 public class playerView extends View {
-    Bitmap player = BitmapFactory.decodeResource(getResources(), R.drawable.player);
+    Bitmap player = BitmapFactory.decodeResource(getResources(), R.drawable.detective);
     Bitmap Mrx = BitmapFactory.decodeResource(getResources(), R.drawable.mrx);
 
     int x = -100;
