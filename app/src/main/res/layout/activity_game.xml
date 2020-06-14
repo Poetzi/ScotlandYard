@@ -72,19 +72,7 @@
         app:layout_constraintStart_toStartOf="@+id/bus"
         app:layout_constraintTop_toBottomOf="@+id/bus" />
 
-    <TextView
-        android:id="@+id/txtview_black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/blackTicket"
-        app:layout_constraintStart_toStartOf="@+id/blackTicket"
-        app:layout_constraintTop_toBottomOf="@+id/blackTicket" />
-
-    <TextView
+        <TextView
         android:id="@+id/txtview_metro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,32 +85,8 @@
         app:layout_constraintStart_toStartOf="@+id/ubahn"
         app:layout_constraintTop_toBottomOf="@+id/ubahn" />
 
-    <TextView
-        android:id="@+id/txtview_double"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/doubleMove"
-        app:layout_constraintStart_toStartOf="@+id/doubleMove"
-        app:layout_constraintTop_toBottomOf="@+id/doubleMove" />
-
 
         <Button
-        android:id="@+id/doubleMove"
-        android:layout_width="72dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="20dp"
-        android:background="#28BF06"
-        android:onClick="onClick"
-        android:text="@string/_2x_move"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="2x Move" />
-
-    <Button
         android:id="@+id/bus"
         android:layout_width="72dp"
         android:layout_height="43dp"
@@ -148,33 +112,19 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Taxi" />
 
-    <Button
-        android:id="@+id/blackTicket"
-        android:layout_width="72dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="20dp"
-        android:background="#040404"
-        android:backgroundTint="#000000"
-        android:onClick="onClick"
-        android:text="@string/black_ticket"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/doubleMove"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Black Ticket" />
+        <Button
+            android:id="@+id/ubahn"
+            android:layout_width="72dp"
+            android:layout_height="43dp"
+            android:layout_marginEnd="432dp"
+            android:background="#E4082A"
+            android:onClick="onClick"
+            android:text="@string/u_bahn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="U-Bahn" />
 
-    <Button
-        android:id="@+id/ubahn"
-        android:layout_width="72dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="16dp"
-        android:background="#E4082A"
-        android:onClick="onClick"
-        android:text="@string/u_bahn"
-        app:layout_constraintEnd_toStartOf="@+id/blackTicket"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="U-Bahn" />
-
-    <TextView
+        <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -187,16 +137,6 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_cheat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="40dp"
-            android:text="@string/cheat"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -211,18 +151,6 @@
             android:src="@android:drawable/sym_action_chat"
             app:layout_constraintBottom_toBottomOf="@+id/mapView"
             app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/txtview_cheat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="TextView"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_cheat"
-            app:layout_constraintStart_toEndOf="@+id/btn_cheat"
-            app:layout_constraintTop_toTopOf="@+id/btn_cheat" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
