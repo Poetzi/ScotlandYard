@@ -130,7 +130,17 @@ public class gameActivity extends AppCompatActivity {
     }
 
     public void toast(String toast){
-        Toast.makeText(getApplicationContext(),toast,Toast.LENGTH_SHORT).show();
+
+        Thread thread = new Thread(){
+            public void run(){
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        };
+        thread.start();
     }
 
     /**
