@@ -298,24 +298,6 @@ public class gameActivity extends AppCompatActivity {
                     b.setClickable(false);
                 }
                 break;
-            case "Black":
-                v = findViewById(R.id.txtview_black);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.blackTicket);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
-            case "DoubleMove":
-                v = findViewById(R.id.txtview_double);
-                v.setText(c);
-                if (count == 0) {
-                    Button b = findViewById(R.id.doubleMove);
-                    b.setBackgroundColor(0xff888888);
-                    b.setClickable(false);
-                }
-                break;
             case "Cheat":
                 cheatTicketCount.setText(c);
                 if (count == 0) {
