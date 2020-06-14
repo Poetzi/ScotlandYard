@@ -46,8 +46,6 @@ public class gameActivity extends AppCompatActivity {
     private SensorManager sensorManager;
     //Sensor is assigned
     private Sensor accelerometer;
-    //ShakeDetector is assigned
-    private ShakeDetector shakeDetector;
     //TextView is assigned
     private TextView cheatTicketCount;
     //DrawerLayout is assigned
@@ -108,19 +106,6 @@ public class gameActivity extends AppCompatActivity {
         } else {
             throw new NullPointerException();
         }
-        //ShakeDetector is initialized
-        shakeDetector = new ShakeDetector();
-        //Listener for cheatBtn and cheatTicketCount is assigned to the ShakeDetector
-        shakeDetector.setOnShakeListener(count -> {
-            //Check button conditions and set correct visibility
-            if (cheatBtn.getVisibility() == View.INVISIBLE) {
-                cheatBtn.setVisibility(View.VISIBLE);
-                cheatTicketCount.setVisibility(View.VISIBLE);
-            } else {
-                cheatBtn.setVisibility(View.INVISIBLE);
-                cheatTicketCount.setVisibility(View.INVISIBLE);
-            }
-        });
 
         //Needed for Drawer-Layout. Needs a string for checking if it is open or closed.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -226,8 +211,6 @@ public class gameActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        //sensorManager is registered on resume
-        sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     /**
@@ -235,8 +218,6 @@ public class gameActivity extends AppCompatActivity {
      */
     @Override
     public void onPause() {
-        //sensorManager is unregistered on pause
-        sensorManager.unregisterListener(shakeDetector);
         super.onPause();
     }
 
