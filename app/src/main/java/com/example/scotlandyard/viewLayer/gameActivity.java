@@ -27,7 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 public class gameActivity extends AppCompatActivity {
 
     //Buttons are assigned
-    private Button taxi, bus, ubahn, blackTicket, doubleMove, cheatBtn;
+    private Button taxi, bus, ubahn;
     //mapView is assigned
     private mapView map;
     //playerView is assigned
@@ -70,12 +70,10 @@ public class gameActivity extends AppCompatActivity {
         taxi = findViewById(R.id.taxi);
         bus = findViewById(R.id.bus);
         ubahn = findViewById(R.id.ubahn);
-        blackTicket = findViewById(R.id.blackTicket);
-        doubleMove = findViewById(R.id.doubleMove);
+
         map = findViewById(R.id.mapView);
         player = findViewById(R.id.playerView);
-        cheatBtn = findViewById(R.id.btn_cheat);
-        cheatTicketCount = findViewById(R.id.txtview_cheat);
+
         drawerLayout = findViewById(R.id.drawer_layout);
         nav = findViewById(R.id.nav_view);
 
@@ -84,28 +82,6 @@ public class gameActivity extends AppCompatActivity {
         presenter.setGame(this);
         //Players are added to the game
         player.addPlayers();
-
-        //Cheat Button is set to invisible
-        cheatBtn.setVisibility(View.INVISIBLE);
-        //Assigning a listener for the turn message to the cheat button
-        cheatBtn.setOnClickListener(view -> {
-            msg = new TurnMessage(presenter.getUser().getId(), 0, 0, "cheat");
-            new Thread(() -> {
-                // Nachricht wird an den Server geschickt
-                presenter.sendTurn(msg);
-
-            }).start();
-        });
-        //Set cheatTicketCount to invisible
-        cheatTicketCount.setVisibility(View.INVISIBLE);
-        //initialize sensorManager
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        //check if the SensorManager is working correctly
-        if (sensorManager != null) {
-            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        } else {
-            throw new NullPointerException();
-        }
 
         //Needed for Drawer-Layout. Needs a string for checking if it is open or closed.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -194,12 +170,6 @@ public class gameActivity extends AppCompatActivity {
                 break;
             case R.id.ubahn:
                 useUbahn();
-                break;
-            case R.id.blackTicket:
-                Toast.makeText(getApplicationContext(), "Black Ticket Pressed", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.doubleMove:
-                Toast.makeText(getApplicationContext(), "Double Move Pressed", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -296,13 +266,6 @@ public class gameActivity extends AppCompatActivity {
                     Button b = findViewById(R.id.ubahn);
                     b.setBackgroundColor(0xff888888);
                     b.setClickable(false);
-                }
-                break;
-            case "Cheat":
-                cheatTicketCount.setText(c);
-                if (count == 0) {
-                    cheatBtn.setBackgroundColor(0xff888888);
-                    cheatBtn.setClickable(false);
                 }
                 break;
         }
