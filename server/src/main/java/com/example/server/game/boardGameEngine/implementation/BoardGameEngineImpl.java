@@ -34,8 +34,16 @@ public class BoardGameEngineImpl {
     private LobbyImpl lobby;
     private int mrXId;
 
+    private boolean player0Turn = false;
+    private boolean player1Turn = false;
+
+    // MrX
     private Connection con0;
+    // Detektiv
     private Connection con1;
+
+    private boolean p0won = false;
+    private boolean p1won = false;
 
     // Singleton
     private static BoardGameEngineImpl boardGameEngine;
@@ -451,22 +459,17 @@ public class BoardGameEngineImpl {
     }
 
 
-    public boolean checkWinningCondition() {
-        int misterX = mrXId;
-
-        if (maxRounds == actualRound) {
-            System.out.println("Mister X won");
-            return false;
+    public void checkWinningCondition() {
+        if(gameBoard.getPositionOfPlayer(0) == gameBoard.getPositionOfPlayer(1))
+        {
+            // Detektive hat gewonnen
+            p1won = true;
         }
-
-        for (int i = 0; i < numberOfPlayers; i++) {
-            /*if(players.get(misterX) == players.get(i).currentPosition){ //Missing field from Player CLass
-                System.out.println("Mister X lost");
-                return true;
-            }
-             */
+        if (actualRound == maxRounds)
+        {
+            // MrX hat gewonnen
+            p0won = true;
         }
-        return false;
     }
 
 
@@ -505,6 +508,60 @@ public class BoardGameEngineImpl {
 
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
+    }
+
+    public boolean isPlayer0Turn() {
+        return player0Turn;
+    }
+
+    public void setPlayer0Turn(boolean player0Turn) {
+        this.player0Turn = player0Turn;
+    }
+
+    public boolean isPlayer1Turn() {
+        return player1Turn;
+    }
+
+    public void setPlayer1Turn(boolean player1Turn) {
+        this.player1Turn = player1Turn;
+    }
+
+    public int getActualRound() {
+        return actualRound;
+    }
+
+    public void setActualRound(int actualRound) {
+        this.actualRound = actualRound;
+    }
+
+    public void plus1ActualRound()
+    {
+        actualRound++;
+    }
+
+    public void setNextTurnforPlayer0()
+    {
+        player0Turn = true;
+        player1Turn = false;
+    }
+
+    public void setNextTurnforPlayer1()
+    {
+        player1Turn = true;
+        player0Turn = false;
+    }
+
+
+    public boolean isP0won() {
+        return p0won;
+    }
+
+    public boolean isP1won() {
+        return p1won;
+    }
+
+    public int getMaxRounds() {
+        return maxRounds;
     }
 
     public void validateTicket(int playerId, String card,int toField){

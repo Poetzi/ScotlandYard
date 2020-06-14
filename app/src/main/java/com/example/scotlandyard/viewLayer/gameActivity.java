@@ -27,14 +27,10 @@ import com.google.android.material.navigation.NavigationView;
  */
 public class gameActivity extends AppCompatActivity {
 
-    //Buttons are assigned
-    private Button taxi, bus, ubahn, blackTicket, doubleMove, cheatBtn;
     //mapView is assigned
     private mapView map;
     //playerView is assigned
     private playerView player;
-    //Player position is assigned
-    private Points playerPostion;
     //Presenter is assigned
     private Presenter presenter = Presenter.getInstance();
     //TurnMessage is assigned
@@ -69,16 +65,9 @@ public class gameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        //Variables are initialized
-        taxi = findViewById(R.id.taxi);
-        bus = findViewById(R.id.bus);
-        ubahn = findViewById(R.id.ubahn);
-        blackTicket = findViewById(R.id.blackTicket);
-        doubleMove = findViewById(R.id.doubleMove);
         map = findViewById(R.id.mapView);
         player = findViewById(R.id.playerView);
-        cheatBtn = findViewById(R.id.btn_cheat);
-        cheatTicketCount = findViewById(R.id.txtview_cheat);
+
         drawerLayout = findViewById(R.id.drawer_layout);
         nav = findViewById(R.id.nav_view);
 
@@ -87,41 +76,6 @@ public class gameActivity extends AppCompatActivity {
         presenter.setGame(this);
         //Players are added to the game
         player.addPlayers();
-
-        //Cheat Button is set to invisible
-        cheatBtn.setVisibility(View.INVISIBLE);
-        //Assigning a listener for the turn message to the cheat button
-        cheatBtn.setOnClickListener(view -> {
-            msg = new TurnMessage(presenter.getUser().getId(), 0, 0, "cheat");
-            new Thread(() -> {
-                // Nachricht wird an den Server geschickt
-                presenter.sendTurn(msg);
-
-            }).start();
-        });
-        //Set cheatTicketCount to invisible
-        cheatTicketCount.setVisibility(View.INVISIBLE);
-        //initialize sensorManager
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        //check if the SensorManager is working correctly
-        if (sensorManager != null) {
-            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        } else {
-            throw new NullPointerException();
-        }
-        //ShakeDetector is initialized
-        shakeDetector = new ShakeDetector();
-        //Listener for cheatBtn and cheatTicketCount is assigned to the ShakeDetector
-        shakeDetector.setOnShakeListener(count -> {
-            //Check button conditions and set correct visibility
-            if (cheatBtn.getVisibility() == View.INVISIBLE) {
-                cheatBtn.setVisibility(View.VISIBLE);
-                cheatTicketCount.setVisibility(View.VISIBLE);
-            } else {
-                cheatBtn.setVisibility(View.INVISIBLE);
-                cheatTicketCount.setVisibility(View.INVISIBLE);
-            }
-        });
 
         //Needed for Drawer-Layout. Needs a string for checking if it is open or closed.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
@@ -284,11 +238,7 @@ public class gameActivity extends AppCompatActivity {
      * Method for asking Players for their turn
      */
     public void askPlayerforTurn() {
-        Context context = getApplicationContext();
         CharSequence text = "Bitte einen Zug angeben";
-        int duration = Toast.LENGTH_SHORT;
-
-
         System.out.println(text);
     }
 
