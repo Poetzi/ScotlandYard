@@ -349,16 +349,6 @@ public class Presenter {
     }
 
     public void updateTicketCount(String type, int count){
-
-        while(game == null)
-        {
-            Log.d("Client:", "Warte auf Instanz von gameActivity");
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
         game.updateCount(type,count);
     }
 
