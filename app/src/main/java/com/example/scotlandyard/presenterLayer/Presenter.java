@@ -142,6 +142,7 @@ public class Presenter {
 
                 // Spieler wird nach einem Zug gefragt
                 game.askPlayerforTurn();
+                Log.i("Clinet Turn: ","Round: "+message.getRound());
                 game.setRound(message.getRound());
 
             }
@@ -209,7 +210,7 @@ public class Presenter {
 
         //Message gets initialized
         TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard());
-        Log.d("Client","playerID "+playerID+" tofield "+message.getToField()+" Card;"+msg.getCard());
+        Log.d("Clienttttttttttttttttt","playerID "+playerID+" tofield "+message.getToField()+" Card;"+msg.getCard());
         //Message is sent to the Server
         client.sendMessage(msg);
     }
@@ -358,5 +359,9 @@ public class Presenter {
 
     public void setPlayerID(int playerID) {
         this.playerID = playerID;
+    }
+
+    public int getPlayerID() {
+        return playerID;
     }
 }

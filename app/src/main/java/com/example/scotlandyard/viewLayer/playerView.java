@@ -10,13 +10,15 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.presenterLayer.Presenter;
 
 import java.util.ArrayList;
 
 public class playerView extends View {
     Bitmap player = BitmapFactory.decodeResource(getResources(), R.drawable.detective);
     Bitmap Mrx = BitmapFactory.decodeResource(getResources(), R.drawable.mrx);
-   private int round;
+    private int round;
+    Presenter presenter = Presenter.getInstance();
 
     int x = -100;
     int y = -100;
@@ -41,15 +43,21 @@ public class playerView extends View {
         for (int i = 0; i < players.size() ; i++) {
             if((players.get(i).getPlayerId() == 0) && (round == 0 || round == 3 || round == 7 || round ==12)){
                 canvas.drawBitmap(Mrx, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
+            }else {
+                canvas.drawBitmap(Mrx, -100, -100, null);
+            }
+            if(presenter.getPlayerID() == 0){
+                canvas.drawBitmap(Mrx, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
             if(players.get(i).getPlayerId() == 1){
                 canvas.drawBitmap(player, players.get(i).getX() - imgOffset, players.get(i).getY() - imgOffset, null);
             }
         }
+
     }
 
     public void addPlayers(){
-        for (int i = 0; i < 6 ; i++) {
+        for (int i = 0; i < 2 ; i++) {
             players.add(new Players(0,0,i,0));
         }
     }
@@ -64,6 +72,7 @@ public class playerView extends View {
                 break;
             }
         }
+
         players.get(playerId).setX(x);
         players.get(playerId).setY(y);
         players.get(playerId).setPosition(toField);

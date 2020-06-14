@@ -100,7 +100,7 @@ public class Main {
                                 }
 
 
-                                System.out.println("frage Spieler 1 nach Zug");
+                               // System.out.println("frage Spieler 1 nach Zug");
                                 // Spieler 1 ist an der Reihe
                                 game.setNextTurnforPlayer1();
                                 game.askPlayer1forTurn();
@@ -121,7 +121,7 @@ public class Main {
                             // Wenn der Zug gültig ist
                             if (game.checkDraw(turn))
                             {
-                                System.out.println("Player 1 guter Zug");
+                               // System.out.println("Player 1 guter Zug");
                                 game.updatePositionOffaPlayer(1,turn.getToField(), turn.getCard());
 
                                 // Überprüfe ob wer gewonnen hat
@@ -140,15 +140,17 @@ public class Main {
                                 }
 
 
-                                System.out.println("frage Spieler 0 nach Zug");
+                               // System.out.println("frage Spieler 0 nach Zug");
                                 // Spieler 0 ist an der Reihe
                                 game.setNextTurnforPlayer0();
                                 game.askPlayer0forTurn();
 
-
+                                System.out.println("ACTUAL ROUND"+game.getActualRound());
 
                                 // Erhöhe die aktuelle Runde
                                 game.plus1ActualRound();
+                                System.out.println("ACTUAL ROUND CHANGED"+game.getActualRound());
+                                
                             }
                             else
                             {
