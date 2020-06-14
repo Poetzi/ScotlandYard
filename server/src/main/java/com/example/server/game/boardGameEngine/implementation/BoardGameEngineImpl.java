@@ -206,8 +206,8 @@ public class BoardGameEngineImpl {
 
 
 
-        updatePositionOffaPlayer(0,2, "Taxi");
-        updatePositionOffaPlayer(1,21, "Taxi");
+        setPositionOffaPlayer(0,2);
+        setPositionOffaPlayer(1,21);
         System.out.println("Initial Position von P0 und P1 gesendet");
     }
 
@@ -250,6 +250,17 @@ public class BoardGameEngineImpl {
         con1.sendTCP(msg);
     }
 
+    public void setPositionOffaPlayer(int pId, int toField)
+    {
+        gameBoard.setPositionOfPlayer(pId,toField);
+
+
+        UpdatePlayersPosition msg = new UpdatePlayersPosition();
+        msg.setPlayerId(pId);
+        msg.setToField(toField);
+        con0.sendTCP(msg);
+        con1.sendTCP(msg);
+    }
 
     public void checkWinningCondition() {
         if(gameBoard.getPositionOfPlayer(0) == gameBoard.getPositionOfPlayer(1))
