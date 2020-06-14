@@ -65,7 +65,7 @@ public class playerView extends View {
         for (int i = 0; i <points.size() ; i++) {
             if(toField == points.get(i).getField()){
                 x = points.get(i).getX();
-                y = points.get(i).getX();
+                y = points.get(i).getY();
                 break;
             }
         }
