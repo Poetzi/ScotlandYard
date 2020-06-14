@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -126,6 +127,10 @@ public class gameActivity extends AppCompatActivity {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
         }).start();
+    }
+
+    public void toast(String toast){
+        Toast.makeText(getApplicationContext(),toast,Toast.LENGTH_SHORT).show();
     }
 
     /**

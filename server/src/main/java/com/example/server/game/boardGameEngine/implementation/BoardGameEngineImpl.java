@@ -17,6 +17,7 @@ import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
+import com.example.server.messages.ToastMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
 
@@ -205,8 +206,8 @@ public class BoardGameEngineImpl {
 
 
 
-        updatePositionOffaPlayer(0,2);
-        updatePositionOffaPlayer(1,21);
+        updatePositionOffaPlayer(0,2, "Taxi");
+        updatePositionOffaPlayer(1,21, "Taxi");
         System.out.println("Initial Position von P0 und P1 gesendet");
     }
 
@@ -233,7 +234,7 @@ public class BoardGameEngineImpl {
         con1.sendTCP(msg);
     }
 
-    public void updatePositionOffaPlayer(int pId, int toField)
+    public void updatePositionOffaPlayer(int pId, int toField, String card)
     {
         gameBoard.setPositionOfPlayer(pId,toField);
 
@@ -241,6 +242,13 @@ public class BoardGameEngineImpl {
         UpdatePlayersPosition msg = new UpdatePlayersPosition();
         msg.setPlayerId(pId);
         msg.setToField(toField);
+        ToastMessage toast = new ToastMessage(pId, pId+ " ist mit " +card + " gefahren!");
+        if(pId == 0){
+            con1.sendTCP(toast);
+        }
+        else{
+            con0.sendTCP(toast);
+        }
 
         con0.sendTCP(msg);
         con1.sendTCP(msg);

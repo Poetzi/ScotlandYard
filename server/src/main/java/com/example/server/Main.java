@@ -11,6 +11,7 @@ import com.example.server.messages.SendPlayerIDtoClient;
 import com.example.server.messages.SendRoleMessage;
 import com.example.server.messages.StartGameMessage;
 import com.example.server.messages.TextMessage;
+import com.example.server.messages.ToastMessage;
 import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
@@ -49,6 +50,7 @@ public class Main {
             server.registerClass(ReadyMessage.class);
             server.registerClass(UpdateTicketCount.class);
             server.registerClass(TravelLog.class);
+            server.registerClass(ToastMessage.class);
 
             // Die Callbacks werden hier registriert,
             server.registerCallback(nachrichtvomClient -> {
@@ -79,7 +81,7 @@ public class Main {
                             if (game.checkDraw(turn))
                             {
                                 System.out.println("Player 0 guter Zug");
-                                game.updatePositionOffaPlayer(0,turn.getToField());
+                                game.updatePositionOffaPlayer(0,turn.getToField(), turn.getCard());
 
 
                                 // Überprüfe ob wer gewonnen hat
@@ -120,7 +122,7 @@ public class Main {
                             if (game.checkDraw(turn))
                             {
                                 System.out.println("Player 1 guter Zug");
-                                game.updatePositionOffaPlayer(1,turn.getToField());
+                                game.updatePositionOffaPlayer(1,turn.getToField(), turn.getCard());
 
                                 // Überprüfe ob wer gewonnen hat
                                 game.checkWinningCondition();
