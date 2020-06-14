@@ -31,6 +31,7 @@ public class Main {
 
         MyKryoServer server = new MyKryoServer();
         BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
+
         try {
             // Registrieren der Messageklassen zur Kommunikation
             // zwischen Server und Client
@@ -72,34 +73,54 @@ public class Main {
                     //game.setTurns(turn, turn.getPlayerId());
                     if (turn.getPlayerId()== 0)
                     {
-                        if (game.checkDraw(turn))
+                        // Wenn Spieler 0 dran ist
+                        if(game.isPlayer0Turn())
                         {
-                            System.out.println("Player 0 guter Zug");
-                            game.updatePositionOffaPlayer(0,turn.getToField());
-                            System.out.println("frage Spieler 1 nach Zug");
-                            game.askPlayer1forTurn();
+                            if (game.checkDraw(turn))
+                            {
+                                System.out.println("Player 0 guter Zug");
+                                game.updatePositionOffaPlayer(0,turn.getToField());
+
+
+                                System.out.println("frage Spieler 1 nach Zug");
+                                // Spieler 1 ist an der Reihe
+                                game.setNextTurnforPlayer1();
+                                game.askPlayer1forTurn();
+                            }
+                            else
+                            {
+                                System.out.println("frage Spieler 0 nach Zug");
+                                game.askPlayer0forTurn();
+                            }
                         }
-                        else
-                        {
-                            System.out.println("frage Spieler 0 nach Zug");
-                            game.askPlayer0forTurn();
-                        }
+
                     }
 
                     if (turn.getPlayerId()== 1)
                     {
-                        if (game.checkDraw(turn))
+                        if (game.isPlayer1Turn())
                         {
-                            System.out.println("Player 1 guter Zug");
-                            game.updatePositionOffaPlayer(1,turn.getToField());
-                            System.out.println("frage Spieler 0 nach Zug");
-                            game.askPlayer0forTurn();
+                            // Wenn der Zug gültig ist
+                            if (game.checkDraw(turn))
+                            {
+                                System.out.println("Player 1 guter Zug");
+                                game.updatePositionOffaPlayer(1,turn.getToField());
+
+                                System.out.println("frage Spieler 0 nach Zug");
+                                // Spieler 0 ist an der Reihe
+                                game.setNextTurnforPlayer0();
+                                game.askPlayer0forTurn();
+
+                                // Erhöhe die aktuelle Runde
+                                game.plus1ActualRound();
+                            }
+                            else
+                            {
+                                System.out.println("frage Spieler 1 nach Zug");
+                                game.askPlayer1forTurn();
+                            }
                         }
-                        else
-                        {
-                            System.out.println("frage Spieler 1 nach Zug");
-                            game.askPlayer1forTurn();
-                        }
+
                     }
 
                 }
@@ -136,10 +157,18 @@ public class Main {
                         game.sendStartingPositions();
                         System.out.println("sende Startpositionen");
 
-                        // Spieler 0 wird nach einem Zug gefragt
-                        System.out.println("Spieler 0 wird nach einem Zug gefragt");
-                        game.askPlayer0forTurn();
+                        game.setActualRound(0);
+                        System.out.println("Die Aktuelle Runde ist 0");
 
+
+
+                        // Spieler 0 wird nach einem Zug gefragt
+                        game.setNextTurnforPlayer0();
+                        if(game.isPlayer0Turn())
+                        {
+                            System.out.println("Spieler 0 wird nach einem Zug gefragt");
+                            game.askPlayer0forTurn();
+                        }
                     }
                 }
 

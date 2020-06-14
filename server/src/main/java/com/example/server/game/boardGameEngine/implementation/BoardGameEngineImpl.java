@@ -26,11 +26,15 @@ public class BoardGameEngineImpl {
     //private TurnMessage[] turns = new TurnMessage[2];
     private int numberOfPlayers = 0;
     private int maxRounds = 24;
-    private int actualRound;
+    private int actualRound = 0;
     private GameBoard gameBoard = new GameBoardImpl();
     private int numberOfFields;
     private LobbyImpl lobby;
     private int mrXId;
+
+    private boolean player0Turn = false;
+    private boolean player1Turn = false;
+
 
     private Connection con0;
     private Connection con1;
@@ -294,4 +298,47 @@ public class BoardGameEngineImpl {
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }
+
+    public boolean isPlayer0Turn() {
+        return player0Turn;
+    }
+
+    public void setPlayer0Turn(boolean player0Turn) {
+        this.player0Turn = player0Turn;
+    }
+
+    public boolean isPlayer1Turn() {
+        return player1Turn;
+    }
+
+    public void setPlayer1Turn(boolean player1Turn) {
+        this.player1Turn = player1Turn;
+    }
+
+    public int getActualRound() {
+        return actualRound;
+    }
+
+    public void setActualRound(int actualRound) {
+        this.actualRound = actualRound;
+    }
+
+    public void plus1ActualRound()
+    {
+        actualRound++;
+    }
+
+    public void setNextTurnforPlayer0()
+    {
+        player0Turn = true;
+        player1Turn = false;
+    }
+
+    public void setNextTurnforPlayer1()
+    {
+        player1Turn = true;
+        player0Turn = false;
+    }
+
+
 }
