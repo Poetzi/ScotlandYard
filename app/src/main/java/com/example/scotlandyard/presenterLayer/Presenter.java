@@ -268,7 +268,7 @@ public class Presenter {
         Log.d("Client: ", "Ein Zug wurde an den Server geschickt");
 
         //Message gets initialized
-        TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard());
+        TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard(),message.isCheat());
         Log.d("Client","playerID "+playerID+" tofield "+message.getToField()+" Card;"+msg.getCard());
         //Message is sent to the Server
         client.sendMessage(msg);

@@ -38,6 +38,7 @@ public class gameActivity extends AppCompatActivity {
     private int taxiTickets=11;
     private int busTickets=8;
     private int uBahnTickets=4;
+    private boolean cheat;
     /**
      * onCreate Method to start up the Game
      *
@@ -100,13 +101,13 @@ public class gameActivity extends AppCompatActivity {
 
 
         //TurnMessage is created
-        TurnMessage msg = new TurnMessage(0, toField, 0, "taxi");
+        TurnMessage msg = new TurnMessage(0, toField, 0, "taxi",isCheat());
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
         }).start();
 
-
+        setCheat(false);
 
     }
 
@@ -136,14 +137,18 @@ public class gameActivity extends AppCompatActivity {
         int toField = map.touchedPoint.getField();
 
         //TurnMessage is created
-        TurnMessage msg = new TurnMessage(0, toField, 0, "bus");
+        TurnMessage msg = new TurnMessage(0, toField, 0, "bus",isCheat());
 
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
         }).start();
 
+        setCheat(false);
+    }
 
+    public void turnCheatOn(View v){
+        setCheat(true);
     }
 
     /**
@@ -153,12 +158,13 @@ public class gameActivity extends AppCompatActivity {
         //Touched point on the Map gets assigned to a variable
         int toField = map.touchedPoint.getField();
         //TurnMessage is created
-        TurnMessage msg = new TurnMessage(0, toField, 0, "ubahn");
+        TurnMessage msg = new TurnMessage(0, toField, 0, "ubahn",isCheat());
 
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
         }).start();
+        setCheat(false);
     }
 
     public void toast(String toast){
@@ -349,4 +355,11 @@ public class gameActivity extends AppCompatActivity {
         this.uBahnTickets = uBahnTickets;
     }
 
+    public boolean isCheat() {
+        return cheat;
+    }
+
+    public void setCheat(boolean cheat) {
+        this.cheat = cheat;
+    }
 }

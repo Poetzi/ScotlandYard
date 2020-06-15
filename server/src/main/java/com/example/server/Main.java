@@ -136,14 +136,9 @@ public class Main {
                     {
                         if (game.isPlayer1Turn())
                         {
-                            // Wenn der Zug gültig ist
-                            if (game.checkDraw(turn))
-                            {
-                                game.correctDraw1(turn.getCard());
+                            if(turn.isCheat()){
                                 // System.out.println("Player 1 guter Zug");
                                 game.updatePositionOffaPlayer(1,turn.getToField(), turn.getCard());
-
-                                // Überprüfe ob wer gewonnen hat
                                 game.checkWinningCondition();
                                 if(game.isP0won())
                                 {
@@ -164,9 +159,6 @@ public class Main {
                                     return;
                                 }
 
-
-                               // System.out.println("frage Spieler 0 nach Zug");
-                                // Spieler 0 ist an der Reihe
                                 game.setNextTurnforPlayer0();
                                 game.askPlayer0forTurn();
 
@@ -175,12 +167,55 @@ public class Main {
                                 game.plus1ActualRound();
                                 game.askPlayer0forTurn();
                                 game.askPlayer1forTurn();
+
+                            }else {
+                                if (game.checkDraw(turn))
+                                {
+                                    game.correctDraw1(turn.getCard());
+                                    // System.out.println("Player 1 guter Zug");
+                                    game.updatePositionOffaPlayer(1,turn.getToField(), turn.getCard());
+
+                                    // Überprüfe ob wer gewonnen hat
+                                    game.checkWinningCondition();
+                                    if(game.isP0won())
+                                    {
+                                        System.out.println("MrX 0 hat gewonnen");
+                                        ToastMessage toast = new ToastMessage(0,"MrX hat gewonnen");
+                                        server.broadcastMessage(toast);
+                                        game.setActualRound(game.getMaxRounds());
+                                        return;
+                                    }
+                                    else if(game.isP1won())
+                                    {
+
+
+                                        System.out.println("Detektiv 1 hat gewonnen");
+                                        ToastMessage toast = new ToastMessage(1,"Detektiv hat gewonnen");
+                                        server.broadcastMessage(toast);
+                                        game.setActualRound(game.getMaxRounds());
+                                        return;
+                                    }
+
+
+                                    // System.out.println("frage Spieler 0 nach Zug");
+                                    // Spieler 0 ist an der Reihe
+                                    game.setNextTurnforPlayer0();
+                                    game.askPlayer0forTurn();
+
+
+                                    // Erhöhe die aktuelle Runde
+                                    game.plus1ActualRound();
+                                    game.askPlayer0forTurn();
+                                    game.askPlayer1forTurn();
+                                }
+                                else
+                                {
+                                    System.out.println("frage Spieler 1 nach Zug");
+                                    game.askPlayer1forTurn();
+                                }
                             }
-                            else
-                            {
-                                System.out.println("frage Spieler 1 nach Zug");
-                                game.askPlayer1forTurn();
-                            }
+                            // Wenn der Zug gültig ist
+
                         }
 
                     }
