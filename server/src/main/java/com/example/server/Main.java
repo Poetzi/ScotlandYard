@@ -98,12 +98,17 @@ public class Main {
                                 if(game.isP0won())
                                 {
                                     System.out.println("MrX 0 hat gewonnen");
+                                    ToastMessage toast = new ToastMessage(0,"MrX hat gewonnen");
+                                    server.broadcastMessage(toast);
+
                                     game.setActualRound(game.getMaxRounds());
                                     return;
                                 }
                                 else if(game.isP1won())
                                 {
                                     System.out.println("Detektiv 1 hat gewonnen");
+                                    ToastMessage toast = new ToastMessage(1,"Detektiv hat gewonnen");
+                                    server.broadcastMessage(toast);
                                     game.setActualRound(game.getMaxRounds());
                                     return;
                                 }
@@ -138,12 +143,18 @@ public class Main {
                                 if(game.isP0won())
                                 {
                                     System.out.println("MrX 0 hat gewonnen");
+                                    ToastMessage toast = new ToastMessage(0,"MrX hat gewonnen");
+                                    server.broadcastMessage(toast);
                                     game.setActualRound(game.getMaxRounds());
                                     return;
                                 }
                                 else if(game.isP1won())
                                 {
+
+
                                     System.out.println("Detektiv 1 hat gewonnen");
+                                    ToastMessage toast = new ToastMessage(1,"Detektiv hat gewonnen");
+                                    server.broadcastMessage(toast);
                                     game.setActualRound(game.getMaxRounds());
                                     return;
                                 }
