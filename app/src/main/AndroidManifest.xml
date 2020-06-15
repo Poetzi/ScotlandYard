@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewLayer.VictoryScreen"></activity>
+        <activity android:name=".viewLayer.LoserScreen"></activity>
+        <activity android:name=".viewLayer.VictoryScreen" />
         <activity android:name=".viewLayer.ChooseRoleActivity" />
         <activity android:name=".viewLayer.Chat" />
         <activity android:name=".playActivity" />

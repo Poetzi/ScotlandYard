@@ -24,6 +24,7 @@ import com.google.android.material.navigation.NavigationView;
  */
 public class gameActivity extends AppCompatActivity {
 
+
     //mapView is assigned
     private mapView map;
     //playerView is assigned
@@ -275,4 +276,16 @@ public class gameActivity extends AppCompatActivity {
         });
 
     }
+
+    public void setIntentLoser(){
+        Intent intent = new Intent(this, LoserScreen.class);
+        startActivity(intent);
+    }
+
+    public void setIntentWinner(){
+        Intent intent = new Intent(this, VictoryScreen.class);
+        startActivity(intent);
+    }
+
+
 }

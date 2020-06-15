@@ -187,6 +187,22 @@ public class Presenter {
                 TravellogMessage travellogMessage=(TravellogMessage)nachrichtVomServer;
                 updateTravellog(travellogMessage.getTravelLog(),travellogMessage.getRound());
             }
+            if(nachrichtVomServer instanceof WinnerMessage){
+                game.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.setIntentWinner();
+                    }
+                });
+            }
+            if (nachrichtVomServer instanceof LoserMessage){
+                game.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.setIntentLoser();
+                    }
+                });
+            }
 
 
         });
