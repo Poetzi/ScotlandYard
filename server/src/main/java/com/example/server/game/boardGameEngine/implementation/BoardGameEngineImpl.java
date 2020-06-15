@@ -17,10 +17,12 @@ import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
+import com.example.server.messages.LoserMessage;
 import com.example.server.messages.ToastMessage;
 import com.example.server.messages.TravellogMessage;
 import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
+import com.example.server.messages.WinnerMessage;
 
 import java.util.ArrayList;
 
@@ -382,11 +384,15 @@ public class BoardGameEngineImpl {
         {
             // Detektive hat gewonnen
             setP1won(true);
+            con1.sendTCP(new WinnerMessage());
+            con0.sendTCP(new LoserMessage());
         }
         if (actualRound == maxRounds)
         {
             // MrX hat gewonnen
             setP0won(true);
+            con0.sendTCP(new WinnerMessage());
+            con1.sendTCP(new LoserMessage());
         }
     }
 
