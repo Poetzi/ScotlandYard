@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.LoserMessage;
 import com.example.scotlandyard.Client.Messages.ReadyMessage;
 import com.example.scotlandyard.Client.Messages.SendLobbyID;
 import com.example.scotlandyard.Client.Messages.SendPlayerIDtoClient;
@@ -18,6 +19,7 @@ import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
 import com.example.scotlandyard.Client.Messages.UpdateTicketCount;
 import com.example.scotlandyard.Client.Messages.UsernameMessage;
+import com.example.scotlandyard.Client.Messages.WinnerMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.TravelLog;
 import com.example.scotlandyard.viewLayer.User;
@@ -98,6 +100,8 @@ public class Presenter {
             client.registerClass(UpdateTicketCount.class);
             client.registerClass(TravelLog.class);
             client.registerClass(ToastMessage.class);
+            client.registerClass(WinnerMessage.class);
+            client.registerClass(LoserMessage.class);
 
             //Calls registerCallback() to initialize the Callback-function of the Kryo-Client
             registerCallback();

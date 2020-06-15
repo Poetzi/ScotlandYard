@@ -5,6 +5,7 @@ import com.example.server.game.players.TravelLog;
 
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.BaseMessage;
+import com.example.server.messages.LoserMessage;
 import com.example.server.messages.ReadyMessage;
 import com.example.server.messages.SendLobbyID;
 import com.example.server.messages.SendPlayerIDtoClient;
@@ -17,6 +18,7 @@ import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
 import com.example.server.messages.UpdateTicketCount;
 import com.example.server.messages.UsernameMessage;
+import com.example.server.messages.WinnerMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,6 +54,8 @@ public class Main {
             server.registerClass(UpdateTicketCount.class);
             server.registerClass(TravelLog.class);
             server.registerClass(ToastMessage.class);
+            server.registerClass(WinnerMessage.class);
+            server.registerClass(LoserMessage.class);
 
             // Die Callbacks werden hier registriert,
             server.registerCallback(nachrichtvomClient -> {
