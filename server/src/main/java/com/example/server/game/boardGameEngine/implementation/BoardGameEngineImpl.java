@@ -104,6 +104,7 @@ public class BoardGameEngineImpl {
         gameBoard.addFieldWithTransition(12, 16, "bus");
 
         gameBoard.addFieldWithTransition(1, 7, "bus");
+        gameBoard.addFieldWithTransition(12, 7, "bus");
         gameBoard.addFieldWithTransition(1, 13, "taxi");
         gameBoard.addFieldWithTransition(1, 12, "bus");
 
@@ -380,9 +381,8 @@ public class BoardGameEngineImpl {
             TravellogMessage travellogMessage = new TravellogMessage(travelLogs1.get(i),getActualRound(),1);
             con0.sendTCP(travellogMessage);
             con1.sendTCP(travellogMessage);
-
         }
-
+        travelLogs1.clear();
     }
 
     public void checkWinningCondition() {
