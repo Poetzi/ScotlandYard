@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewLayer.ChooseRoleActivity"></activity>
+        <activity android:name=".viewLayer.VictoryScreen"></activity>
+        <activity android:name=".viewLayer.ChooseRoleActivity" />
         <activity android:name=".viewLayer.Chat" />
         <activity android:name=".playActivity" />
         <activity
@@ -26,11 +27,9 @@
         <activity
             android:name=".viewLayer.UsernameActivity"
             tools:ignore="LockedOrientationActivity" />
-
         <activity
             android:name=".viewLayer.ReadyCheck"
             tools:ignore="LockedOrientationActivity" />
-
         <activity
             android:name=".viewLayer.MainActivity"
             android:screenOrientation="landscape"
