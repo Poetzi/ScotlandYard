@@ -104,6 +104,7 @@ public class BoardGameEngineImpl {
         gameBoard.addFieldWithTransition(12, 16, "bus");
 
         gameBoard.addFieldWithTransition(1, 7, "bus");
+        gameBoard.addFieldWithTransition(12, 7, "bus");
         gameBoard.addFieldWithTransition(1, 13, "taxi");
         gameBoard.addFieldWithTransition(1, 12, "bus");
 
@@ -297,6 +298,12 @@ public class BoardGameEngineImpl {
         gameBoard.addFieldWithTransition(15, 18, "bus");
         gameBoard.addFieldWithTransition(15, 25, "bus");
 
+        gameBoard.addFieldWithTransition(14, 25, "taxi");
+        gameBoard.addFieldWithTransition(14, 25, "bus");
+        gameBoard.addFieldWithTransition(25, 9, "taxi");
+        gameBoard.addFieldWithTransition(25, 21, "taxi");
+        gameBoard.addFieldWithTransition(25, 11, "bus");
+
     }
 
 
@@ -374,9 +381,8 @@ public class BoardGameEngineImpl {
             TravellogMessage travellogMessage = new TravellogMessage(travelLogs1.get(i),getActualRound(),1);
             con0.sendTCP(travellogMessage);
             con1.sendTCP(travellogMessage);
-
         }
-
+        travelLogs1.clear();
     }
 
     public void checkWinningCondition() {

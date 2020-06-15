@@ -271,7 +271,7 @@ public class gameActivity extends AppCompatActivity {
     public void addTravellogEntry(TravelLog log, int round){
         runOnUiThread(() -> {
             
-                menu.add(round, 0, 0, "Ticket: " + log.getTicket());
+                menu.add(round, 0, 0, "Ticket: " + log.getTicket()+" Position: "+log.getPosition());
 
         });
 

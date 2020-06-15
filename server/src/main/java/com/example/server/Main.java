@@ -82,13 +82,14 @@ public class Main {
                     {
                         // Wenn Spieler 0 dran ist
                         if(game.isPlayer0Turn())
-                        {   travelLogs.add(new TravelLog(turn.getToField(),turn.getCard(),false));
-                            int round = game.getActualRound();
-                            if((round == 0 || round == 3 || round == 7 || round ==12)){
-                                game.sendTravelLog(travelLogs);
-                            }
+                        {
                             if (game.checkDraw(turn))
                             {
+                                travelLogs.add(new TravelLog(turn.getToField(),turn.getCard(),false));
+                                int round = game.getActualRound();
+                                if((round == 0 || round == 3 || round == 7 || round ==12)){
+                                    game.sendTravelLog(travelLogs);
+                                }
                                 System.out.println("Player 0 guter Zug");
                                 game.updatePositionOffaPlayer(0,turn.getToField(), turn.getCard());
 
