@@ -17,6 +17,7 @@ import com.example.server.game.transitions.interfaces.Transition;
 import com.example.server.lobby.implementation.LobbyImpl;
 import com.example.server.lobby.interfaces.Lobby;
 import com.example.server.messages.AskPlayerForTurn;
+import com.example.server.messages.CorrectDrawMessage;
 import com.example.server.messages.LoserMessage;
 import com.example.server.messages.ToastMessage;
 import com.example.server.messages.TravellogMessage;
@@ -290,7 +291,6 @@ public class BoardGameEngineImpl {
         gameBoard.addFieldWithTransition(2, 1, "bus");
         gameBoard.addFieldWithTransition(3, 13, "bus");
         gameBoard.addFieldWithTransition(1, 15, "bus");
-        gameBoard.addFieldWithTransition(1, 6, "bus");
         gameBoard.addFieldWithTransition(13, 3, "bus");
         gameBoard.addFieldWithTransition(13, 9, "bus");
         gameBoard.addFieldWithTransition(13, 14, "bus");
@@ -335,6 +335,19 @@ public class BoardGameEngineImpl {
         msg.setId(0);
         msg.setText("Bitte einen Zug angeben");
         con0.sendTCP(msg);
+    }
+
+    public void correctDraw0(String ticket){
+        CorrectDrawMessage msg = new CorrectDrawMessage();
+        msg.setTicket(ticket);
+        msg.setCheck(true);
+        con0.sendTCP(msg);
+    }
+    public void correctDraw1(String ticket){
+        CorrectDrawMessage msg = new CorrectDrawMessage();
+        msg.setTicket(ticket);
+        msg.setCheck(true);
+        con1.sendTCP(msg);
     }
 
     public void askPlayer1forTurn()

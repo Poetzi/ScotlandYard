@@ -5,6 +5,7 @@ import com.example.server.game.players.TravelLog;
 
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.BaseMessage;
+import com.example.server.messages.CorrectDrawMessage;
 import com.example.server.messages.LoserMessage;
 import com.example.server.messages.ReadyMessage;
 import com.example.server.messages.SendLobbyID;
@@ -56,6 +57,7 @@ public class Main {
             server.registerClass(ToastMessage.class);
             server.registerClass(WinnerMessage.class);
             server.registerClass(LoserMessage.class);
+            server.registerClass(CorrectDrawMessage.class);
 
             // Die Callbacks werden hier registriert,
             server.registerCallback(nachrichtvomClient -> {
@@ -85,6 +87,7 @@ public class Main {
                         {
                             if (game.checkDraw(turn))
                             {
+                                game.correctDraw0(turn.getCard());
                                 travelLogs.add(new TravelLog(turn.getToField(),turn.getCard(),false));
                                 int round = game.getActualRound();
                                 if((round == 0 || round == 3 || round == 7 || round ==12)){
@@ -136,7 +139,8 @@ public class Main {
                             // Wenn der Zug gültig ist
                             if (game.checkDraw(turn))
                             {
-                               // System.out.println("Player 1 guter Zug");
+                                game.correctDraw1(turn.getCard());
+                                // System.out.println("Player 1 guter Zug");
                                 game.updatePositionOffaPlayer(1,turn.getToField(), turn.getCard());
 
                                 // Überprüfe ob wer gewonnen hat

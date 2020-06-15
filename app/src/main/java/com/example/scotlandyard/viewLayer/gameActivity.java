@@ -34,9 +34,10 @@ public class gameActivity extends AppCompatActivity {
     //DrawerLayout is assigned
     private DrawerLayout drawerLayout;
     private Menu menu;
-
     private int round;
-
+    private int taxiTickets=11;
+    private int busTickets=8;
+    private int uBahnTickets=4;
     /**
      * onCreate Method to start up the Game
      *
@@ -73,6 +74,10 @@ public class gameActivity extends AppCompatActivity {
         //Send the Travel-log to the presenter
         presenter.setTravellogMenu(menu);
 
+        updateCount("taxi",taxiTickets);
+        updateCount("bus",busTickets);
+        updateCount("ubahn",uBahnTickets);
+
     }
 
     /**
@@ -93,12 +98,34 @@ public class gameActivity extends AppCompatActivity {
         //Touched point on the Map gets assigned to a variable
         int toField = map.touchedPoint.getField();
 
+
         //TurnMessage is created
         TurnMessage msg = new TurnMessage(0, toField, 0, "taxi");
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
         }).start();
+
+
+
+    }
+
+    public void reduceTicket(String type){
+
+        switch (type) {
+            case "taxi":
+                setTaxiTickets(taxiTickets-1);
+                updateCount(type,getTaxiTickets());
+                break;
+            case "bus":
+                setBusTickets(busTickets-1);
+                updateCount(type,getBusTickets());
+                break;
+            case "ubahn":
+                setuBahnTickets(uBahnTickets-1);
+                updateCount(type,getuBahnTickets());
+                break;
+        }
     }
 
     /**
@@ -229,29 +256,40 @@ public class gameActivity extends AppCompatActivity {
         String c = String.valueOf(count);
         TextView v;
         //Type of Ticket is checked
+
         switch (type) {
-            case "Taxi":
+            case "taxi":
                 v = findViewById(R.id.txtview_taxi);
-                v.setText(c);
+                if(presenter.getPlayerID() == 0){
+                    v.setText("");
+                }else {
+                    v.setText(c);
+                }
                 if (count == 0) {
                     Button b = findViewById(R.id.taxi);
                     b.setBackgroundColor(0xff888888);
                     b.setClickable(false);
                 }
                 break;
-            case "Bus":
+            case "bus":
                 v = findViewById(R.id.txtview_bus);
-                v.setText(c);
-                if (count == 0) {
+                if(presenter.getPlayerID() == 0){
+                    v.setText("");
+                }else {
+                    v.setText(c);
+                }                if (count == 0) {
                     Button b = findViewById(R.id.bus);
                     b.setBackgroundColor(0xff888888);
                     b.setClickable(false);
                 }
                 break;
-            case "U-Bahn":
+            case "ubahn":
                 v = findViewById(R.id.txtview_metro);
-                v.setText(c);
-                if (count == 0) {
+                if(presenter.getPlayerID() == 0){
+                    v.setText("");
+                }else {
+                    v.setText(c);
+                }                if (count == 0) {
                     Button b = findViewById(R.id.ubahn);
                     b.setBackgroundColor(0xff888888);
                     b.setClickable(false);
@@ -287,5 +325,28 @@ public class gameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public int getTaxiTickets() {
+        return taxiTickets;
+    }
+
+    public void setTaxiTickets(int taxiTickets) {
+        this.taxiTickets = taxiTickets;
+    }
+
+    public int getBusTickets() {
+        return busTickets;
+    }
+
+    public void setBusTickets(int busTickets) {
+        this.busTickets = busTickets;
+    }
+
+    public int getuBahnTickets() {
+        return uBahnTickets;
+    }
+
+    public void setuBahnTickets(int uBahnTickets) {
+        this.uBahnTickets = uBahnTickets;
+    }
 
 }

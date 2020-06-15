@@ -1,11 +1,14 @@
 package com.example.scotlandyard.presenterLayer;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.CorrectDrawMessage;
 import com.example.scotlandyard.Client.Messages.LoserMessage;
 import com.example.scotlandyard.Client.Messages.ReadyMessage;
 import com.example.scotlandyard.Client.Messages.SendLobbyID;
@@ -102,6 +105,7 @@ public class Presenter {
             client.registerClass(ToastMessage.class);
             client.registerClass(WinnerMessage.class);
             client.registerClass(LoserMessage.class);
+            client.registerClass(CorrectDrawMessage.class);
 
             //Calls registerCallback() to initialize the Callback-function of the Kryo-Client
             registerCallback();
@@ -153,7 +157,7 @@ public class Presenter {
 
             if(nachrichtVomServer instanceof ToastMessage){
                 ToastMessage message = (ToastMessage) nachrichtVomServer;
-                game.toast(message.getMsg());
+                //game.toast(message.getMsg());
             }
 
 
@@ -202,6 +206,38 @@ public class Presenter {
                         game.setIntentLoser();
                     }
                 });
+            }
+
+            if(nachrichtVomServer instanceof CorrectDrawMessage){
+                CorrectDrawMessage msg = (CorrectDrawMessage) nachrichtVomServer;
+                String ticket = msg.getTicket();
+
+                switch (ticket) {
+                    case "taxi":
+                        game.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                game.reduceTicket(ticket);
+                            }
+                        });
+                        break;
+                    case "bus":
+                        game.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                game.reduceTicket(ticket);
+                            }
+                        });
+                        break;
+                    case "ubahn":
+                        game.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                game.reduceTicket(ticket);
+                            }
+                        });
+                        break;
+                }
             }
 
 
