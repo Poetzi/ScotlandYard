@@ -31,7 +31,7 @@ public class BoardGameEngineImpl {
     private Player[] players = new Player[2];
     //private TurnMessage[] turns = new TurnMessage[2];
     private int numberOfPlayers = 0;
-    private int maxRounds = 24;
+    private int maxRounds = 5;
     private int actualRound = 0;
     private GameBoard gameBoard = new GameBoardImpl();
     private int numberOfFields;
