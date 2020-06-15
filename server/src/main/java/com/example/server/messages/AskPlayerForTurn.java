@@ -4,11 +4,13 @@ public class AskPlayerForTurn extends BaseMessage {
     private int id;
     private String text;
     private int lobbyID;
+    private int round;
 
     public AskPlayerForTurn(int id, String text, int lobbyID) {
         this.id = id;
         this.text = text;
         this.lobbyID = lobbyID;
+        this.round = 0;
     }
 
     public AskPlayerForTurn() {
@@ -42,5 +44,13 @@ public class AskPlayerForTurn extends BaseMessage {
     @Override
     public String toString() {
         return text;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
 }

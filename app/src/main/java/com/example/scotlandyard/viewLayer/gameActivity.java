@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.R;
+import com.example.scotlandyard.modelLayer.TravelLog;
 import com.example.scotlandyard.presenterLayer.Presenter;
 import com.google.android.material.navigation.NavigationView;
 
@@ -22,6 +23,7 @@ import com.google.android.material.navigation.NavigationView;
  * Class for running the Game
  */
 public class gameActivity extends AppCompatActivity {
+
 
     //mapView is assigned
     private mapView map;
@@ -31,6 +33,9 @@ public class gameActivity extends AppCompatActivity {
     private Presenter presenter = Presenter.getInstance();
     //DrawerLayout is assigned
     private DrawerLayout drawerLayout;
+    private Menu menu;
+
+    private int round;
 
     /**
      * onCreate Method to start up the Game
@@ -64,7 +69,7 @@ public class gameActivity extends AppCompatActivity {
         toggle.syncState();
         //Manu gets initialized
         //Menu is assigned
-        Menu menu = nav.getMenu();
+        menu = nav.getMenu();
         //Send the Travel-log to the presenter
         presenter.setTravellogMenu(menu);
 
@@ -78,7 +83,7 @@ public class gameActivity extends AppCompatActivity {
      */
     public void drawPlayer(int playerId, int toField) {
         //player gets drawn
-        player.drawSinglePlayer(playerId, toField, map.getPoints());
+        player.drawSinglePlayer(playerId, toField, map.getPoints(), round);
     }
 
     /**
@@ -254,4 +259,33 @@ public class gameActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
+
+    public void addTravellogEntry(TravelLog log, int round){
+        runOnUiThread(() -> {
+            
+                menu.add(round, 0, 0, "Ticket: " + log.getTicket());
+
+        });
+
+    }
+
+    public void setIntentLoser(){
+        Intent intent = new Intent(this, LoserScreen.class);
+        startActivity(intent);
+    }
+
+    public void setIntentWinner(){
+        Intent intent = new Intent(this, VictoryScreen.class);
+        startActivity(intent);
+    }
+
+
 }

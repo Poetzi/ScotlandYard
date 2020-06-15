@@ -11,6 +11,7 @@ public class AskPlayerForTurn extends BaseMessage {
     private String text;
     //Lobby ID
     private int lobbyID;
+    private int round;
 
 
     /**
@@ -62,5 +63,13 @@ public class AskPlayerForTurn extends BaseMessage {
     @Override
     public String toString() {
         return text;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
     }
 }

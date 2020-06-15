@@ -5,6 +5,7 @@ import com.example.server.game.players.TravelLog;
 
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.BaseMessage;
+import com.example.server.messages.LoserMessage;
 import com.example.server.messages.ReadyMessage;
 import com.example.server.messages.SendLobbyID;
 import com.example.server.messages.SendPlayerIDtoClient;
@@ -17,8 +18,10 @@ import com.example.server.messages.TurnMessage;
 import com.example.server.messages.UpdatePlayersPosition;
 import com.example.server.messages.UpdateTicketCount;
 import com.example.server.messages.UsernameMessage;
+import com.example.server.messages.WinnerMessage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -32,7 +35,7 @@ public class Main {
 
         MyKryoServer server = new MyKryoServer();
         BoardGameEngineImpl game = BoardGameEngineImpl.getInstance();
-
+        ArrayList<TravelLog> travelLogs = new ArrayList<>();
         try {
             // Registrieren der Messageklassen zur Kommunikation
             // zwischen Server und Client
@@ -51,6 +54,8 @@ public class Main {
             server.registerClass(UpdateTicketCount.class);
             server.registerClass(TravelLog.class);
             server.registerClass(ToastMessage.class);
+            server.registerClass(WinnerMessage.class);
+            server.registerClass(LoserMessage.class);
 
             // Die Callbacks werden hier registriert,
             server.registerCallback(nachrichtvomClient -> {
@@ -77,7 +82,11 @@ public class Main {
                     {
                         // Wenn Spieler 0 dran ist
                         if(game.isPlayer0Turn())
-                        {
+                        {   travelLogs.add(new TravelLog(turn.getToField(),turn.getCard(),false));
+                            int round = game.getActualRound();
+                            if((round == 0 || round == 3 || round == 7 || round ==12)){
+                                game.sendTravelLog(travelLogs);
+                            }
                             if (game.checkDraw(turn))
                             {
                                 System.out.println("Player 0 guter Zug");
@@ -105,7 +114,7 @@ public class Main {
                                 }
 
 
-                                System.out.println("frage Spieler 1 nach Zug");
+                               // System.out.println("frage Spieler 1 nach Zug");
                                 // Spieler 1 ist an der Reihe
                                 game.setNextTurnforPlayer1();
                                 game.askPlayer1forTurn();
@@ -126,7 +135,7 @@ public class Main {
                             // Wenn der Zug gültig ist
                             if (game.checkDraw(turn))
                             {
-                                System.out.println("Player 1 guter Zug");
+                               // System.out.println("Player 1 guter Zug");
                                 game.updatePositionOffaPlayer(1,turn.getToField(), turn.getCard());
 
                                 // Überprüfe ob wer gewonnen hat
@@ -151,15 +160,16 @@ public class Main {
                                 }
 
 
-                                System.out.println("frage Spieler 0 nach Zug");
+                               // System.out.println("frage Spieler 0 nach Zug");
                                 // Spieler 0 ist an der Reihe
                                 game.setNextTurnforPlayer0();
                                 game.askPlayer0forTurn();
 
 
-
                                 // Erhöhe die aktuelle Runde
                                 game.plus1ActualRound();
+                                game.askPlayer0forTurn();
+                                game.askPlayer1forTurn();
                             }
                             else
                             {

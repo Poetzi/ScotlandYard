@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.scotlandyard.Client.Messages.AskPlayerForTurn;
 import com.example.scotlandyard.Client.Messages.BaseMessage;
+import com.example.scotlandyard.Client.Messages.LoserMessage;
 import com.example.scotlandyard.Client.Messages.ReadyMessage;
 import com.example.scotlandyard.Client.Messages.SendLobbyID;
 import com.example.scotlandyard.Client.Messages.SendPlayerIDtoClient;
@@ -18,6 +19,7 @@ import com.example.scotlandyard.Client.Messages.TurnMessage;
 import com.example.scotlandyard.Client.Messages.UpdatePlayersPosition;
 import com.example.scotlandyard.Client.Messages.UpdateTicketCount;
 import com.example.scotlandyard.Client.Messages.UsernameMessage;
+import com.example.scotlandyard.Client.Messages.WinnerMessage;
 import com.example.scotlandyard.Client.MyKryoClient;
 import com.example.scotlandyard.modelLayer.TravelLog;
 import com.example.scotlandyard.viewLayer.User;
@@ -98,6 +100,8 @@ public class Presenter {
             client.registerClass(UpdateTicketCount.class);
             client.registerClass(TravelLog.class);
             client.registerClass(ToastMessage.class);
+            client.registerClass(WinnerMessage.class);
+            client.registerClass(LoserMessage.class);
 
             //Calls registerCallback() to initialize the Callback-function of the Kryo-Client
             registerCallback();
@@ -142,6 +146,9 @@ public class Presenter {
 
                 // Spieler wird nach einem Zug gefragt
                 game.askPlayerforTurn();
+                Log.i("Clinet Turn: ","Round: "+message.getRound());
+                game.setRound(message.getRound());
+
             }
 
             if(nachrichtVomServer instanceof ToastMessage){
@@ -176,7 +183,26 @@ public class Presenter {
                 Log.d("TICKET","type:"+msg.getType()+" count:"+msg.getCount());
                 updateTicketCount(msg.getType(),msg.getCount());
             }
-
+            if(nachrichtVomServer instanceof TravellogMessage){
+                TravellogMessage travellogMessage=(TravellogMessage)nachrichtVomServer;
+                updateTravellog(travellogMessage.getTravelLog(),travellogMessage.getRound());
+            }
+            if(nachrichtVomServer instanceof WinnerMessage){
+                game.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.setIntentWinner();
+                    }
+                });
+            }
+            if (nachrichtVomServer instanceof LoserMessage){
+                game.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.setIntentLoser();
+                    }
+                });
+            }
 
 
         });
@@ -276,7 +302,9 @@ public class Presenter {
     }
 
 
-
+    public void updateTravellog(TravelLog log, int round){
+        game.addTravellogEntry(log, round);
+    }
 
 
 
@@ -356,5 +384,9 @@ public class Presenter {
 
     public void setPlayerID(int playerID) {
         this.playerID = playerID;
+    }
+
+    public int getPlayerID() {
+        return playerID;
     }
 }

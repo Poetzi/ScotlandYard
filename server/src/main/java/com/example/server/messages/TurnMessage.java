@@ -6,6 +6,8 @@ public class TurnMessage extends BaseMessage {
     private int lobbyId;
     private String Card;
 
+
+
     public TurnMessage() {
     }
 
@@ -46,4 +48,6 @@ public class TurnMessage extends BaseMessage {
     public void setLobbyId(int lobbyId) {
         this.lobbyId = lobbyId;
     }
+
+
 }
