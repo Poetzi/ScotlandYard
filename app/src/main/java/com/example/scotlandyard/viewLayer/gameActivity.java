@@ -39,6 +39,7 @@ public class gameActivity extends AppCompatActivity {
     private int busTickets=8;
     private int uBahnTickets=4;
     private boolean cheat;
+    private int cheatCounter=0;
     /**
      * onCreate Method to start up the Game
      *
@@ -148,7 +149,11 @@ public class gameActivity extends AppCompatActivity {
     }
 
     public void turnCheatOn(View v){
-        setCheat(true);
+        if(cheatCounter ==  0){
+            setCheat(true);
+            setCheatCounter(1);
+            menu.clear();
+        }
     }
 
     /**
@@ -314,7 +319,6 @@ public class gameActivity extends AppCompatActivity {
 
     public void addTravellogEntry(TravelLog log, int round){
         runOnUiThread(() -> {
-            
                 menu.add(round, 0, 0, "Ticket: " + log.getTicket()+" Position: "+log.getPosition());
 
         });
@@ -361,5 +365,13 @@ public class gameActivity extends AppCompatActivity {
 
     public void setCheat(boolean cheat) {
         this.cheat = cheat;
+    }
+
+    public int getCheatCounter() {
+        return cheatCounter;
+    }
+
+    public void setCheatCounter(int cheatCounter) {
+        this.cheatCounter = cheatCounter;
     }
 }
