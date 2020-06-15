@@ -297,6 +297,12 @@ public class BoardGameEngineImpl {
         gameBoard.addFieldWithTransition(15, 18, "bus");
         gameBoard.addFieldWithTransition(15, 25, "bus");
 
+        gameBoard.addFieldWithTransition(14, 25, "taxi");
+        gameBoard.addFieldWithTransition(14, 25, "bus");
+        gameBoard.addFieldWithTransition(25, 9, "taxi");
+        gameBoard.addFieldWithTransition(25, 21, "taxi");
+        gameBoard.addFieldWithTransition(25, 11, "bus");
+
     }
 
 
