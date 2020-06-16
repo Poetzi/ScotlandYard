@@ -29,8 +29,7 @@ public class UsernameActivity extends AppCompatActivity {
         new Thread(() -> {
 
             //Server wird gestartet.
-            presenter.connectToServer("10.40.41.173");
-
+            presenter.connectToServer("192.168.1.148");
 
 
         }).start();

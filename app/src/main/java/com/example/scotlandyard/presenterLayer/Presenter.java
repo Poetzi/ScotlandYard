@@ -53,7 +53,7 @@ public class Presenter {
     //Connection-bool
     private boolean verbunden = false;
     //Player ID
-    private int playerID=0;
+    private int playerID = 0;
     //Game-Activity
     private gameActivity game;
     //Travel-log
@@ -150,12 +150,12 @@ public class Presenter {
 
                 // Spieler wird nach einem Zug gefragt
                 game.askPlayerforTurn();
-                Log.i("Clinet Turn: ","Round: "+message.getRound());
+                Log.i("Clinet Turn: ", "Round: " + message.getRound());
                 game.setRound(message.getRound());
 
             }
 
-            if(nachrichtVomServer instanceof ToastMessage){
+            if (nachrichtVomServer instanceof ToastMessage) {
                 ToastMessage message = (ToastMessage) nachrichtVomServer;
                 //game.toast(message.getMsg());
             }
@@ -171,7 +171,6 @@ public class Presenter {
             }
 
 
-
             if (nachrichtVomServer instanceof UpdatePlayersPosition) {
 
                 Log.d("Client: ", "Die Position eines Spielers auf dder Map soll upgedatet werden");
@@ -182,16 +181,16 @@ public class Presenter {
                 updatePositionOfPlayerOnMap(msg.getPlayerId(), msg.getToField());
             }
 
-            if (nachrichtVomServer instanceof UpdateTicketCount){
-                UpdateTicketCount msg=(UpdateTicketCount)nachrichtVomServer;
-                Log.d("TICKET","type:"+msg.getType()+" count:"+msg.getCount());
-                updateTicketCount(msg.getType(),msg.getCount());
+            if (nachrichtVomServer instanceof UpdateTicketCount) {
+                UpdateTicketCount msg = (UpdateTicketCount) nachrichtVomServer;
+                Log.d("TICKET", "type:" + msg.getType() + " count:" + msg.getCount());
+                updateTicketCount(msg.getType(), msg.getCount());
             }
-            if(nachrichtVomServer instanceof TravellogMessage){
-                TravellogMessage travellogMessage=(TravellogMessage)nachrichtVomServer;
-                updateTravellog(travellogMessage.getTravelLog(),travellogMessage.getRound());
+            if (nachrichtVomServer instanceof TravellogMessage) {
+                TravellogMessage travellogMessage = (TravellogMessage) nachrichtVomServer;
+                updateTravellog(travellogMessage.getTravelLog(), travellogMessage.getRound());
             }
-            if(nachrichtVomServer instanceof WinnerMessage){
+            if (nachrichtVomServer instanceof WinnerMessage) {
                 game.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -199,7 +198,7 @@ public class Presenter {
                     }
                 });
             }
-            if (nachrichtVomServer instanceof LoserMessage){
+            if (nachrichtVomServer instanceof LoserMessage) {
                 game.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -208,7 +207,7 @@ public class Presenter {
                 });
             }
 
-            if(nachrichtVomServer instanceof CorrectDrawMessage){
+            if (nachrichtVomServer instanceof CorrectDrawMessage) {
                 CorrectDrawMessage msg = (CorrectDrawMessage) nachrichtVomServer;
                 String ticket = msg.getTicket();
 
@@ -236,6 +235,8 @@ public class Presenter {
                                 game.reduceTicket(ticket);
                             }
                         });
+                        break;
+                    default:
                         break;
                 }
             }
@@ -268,8 +269,8 @@ public class Presenter {
         Log.d("Client: ", "Ein Zug wurde an den Server geschickt");
 
         //Message gets initialized
-        TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard(),message.isCheat());
-        Log.d("Client","playerID "+playerID+" tofield "+message.getToField()+" Card;"+msg.getCard());
+        TurnMessage msg = new TurnMessage(playerID, message.getToField(), 0, message.getCard(), message.isCheat());
+        Log.d("Client", "playerID " + playerID + " tofield " + message.getToField() + " Card;" + msg.getCard());
         //Message is sent to the Server
         client.sendMessage(msg);
     }
@@ -306,7 +307,7 @@ public class Presenter {
      */
     public void sendUsername() {
         //Message is initialized
-        UsernameMessage msg = new UsernameMessage(username,playerID);
+        UsernameMessage msg = new UsernameMessage(username, playerID);
         //Message is sent to the server
         client.sendMessage(msg);
     }
@@ -318,8 +319,7 @@ public class Presenter {
      */
     public void updateLog(String text) {
 
-        while (log == null)
-        {
+        while (log == null) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -338,10 +338,9 @@ public class Presenter {
     }
 
 
-    public void updateTravellog(TravelLog log, int round){
+    public void updateTravellog(TravelLog log, int round) {
         game.addTravellogEntry(log, round);
     }
-
 
 
     //Getter and Setter
@@ -399,10 +398,8 @@ public class Presenter {
      * @param id      Player ID
      * @param toField toField
      */
-    public void updatePositionOfPlayerOnMap(int id, int toField)
-    {
-        while(game == null)
-        {
+    public void updatePositionOfPlayerOnMap(int id, int toField) {
+        while (game == null) {
             Log.d("Client:", "Warte auf Instanz von gameActivity");
             try {
                 Thread.sleep(10);
@@ -411,11 +408,11 @@ public class Presenter {
             }
         }
         Log.d("Client:", "Spieler wird gezeichnet");
-        game.drawPlayer(id,toField);
+        game.drawPlayer(id, toField);
     }
 
-    public void updateTicketCount(String type, int count){
-        game.updateCount(type,count);
+    public void updateTicketCount(String type, int count) {
+        game.updateCount(type, count);
     }
 
     public void setPlayerID(int playerID) {

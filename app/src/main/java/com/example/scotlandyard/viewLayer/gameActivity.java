@@ -35,11 +35,12 @@ public class gameActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Menu menu;
     private int round;
-    private int taxiTickets=11;
-    private int busTickets=8;
-    private int uBahnTickets=4;
+    private int taxiTickets = 11;
+    private int busTickets = 8;
+    private int uBahnTickets = 4;
     private boolean cheat;
-    private int cheatCounter=0;
+    private int cheatCounter = 0;
+
     /**
      * onCreate Method to start up the Game
      *
@@ -76,9 +77,9 @@ public class gameActivity extends AppCompatActivity {
         //Send the Travel-log to the presenter
         presenter.setTravellogMenu(menu);
 
-        updateCount("taxi",taxiTickets);
-        updateCount("bus",busTickets);
-        updateCount("ubahn",uBahnTickets);
+        updateCount("taxi", taxiTickets);
+        updateCount("bus", busTickets);
+        updateCount("ubahn", uBahnTickets);
 
     }
 
@@ -102,7 +103,7 @@ public class gameActivity extends AppCompatActivity {
 
 
         //TurnMessage is created
-        TurnMessage msg = new TurnMessage(0, toField, 0, "taxi",isCheat());
+        TurnMessage msg = new TurnMessage(0, toField, 0, "taxi", isCheat());
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
             presenter.sendTurn(msg);
@@ -112,20 +113,22 @@ public class gameActivity extends AppCompatActivity {
 
     }
 
-    public void reduceTicket(String type){
+    public void reduceTicket(String type) {
 
         switch (type) {
             case "taxi":
-                setTaxiTickets(taxiTickets-1);
-                updateCount(type,getTaxiTickets());
+                setTaxiTickets(taxiTickets - 1);
+                updateCount(type, getTaxiTickets());
                 break;
             case "bus":
-                setBusTickets(busTickets-1);
-                updateCount(type,getBusTickets());
+                setBusTickets(busTickets - 1);
+                updateCount(type, getBusTickets());
                 break;
             case "ubahn":
-                setuBahnTickets(uBahnTickets-1);
-                updateCount(type,getuBahnTickets());
+                setuBahnTickets(uBahnTickets - 1);
+                updateCount(type, getuBahnTickets());
+                break;
+            default:
                 break;
         }
     }
@@ -138,7 +141,7 @@ public class gameActivity extends AppCompatActivity {
         int toField = map.touchedPoint.getField();
 
         //TurnMessage is created
-        TurnMessage msg = new TurnMessage(0, toField, 0, "bus",isCheat());
+        TurnMessage msg = new TurnMessage(0, toField, 0, "bus", isCheat());
 
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
@@ -148,8 +151,8 @@ public class gameActivity extends AppCompatActivity {
         setCheat(false);
     }
 
-    public void turnCheatOn(View v){
-        if(cheatCounter ==  0){
+    public void turnCheatOn(View v) {
+        if (cheatCounter == 0) {
             setCheat(true);
             setCheatCounter(1);
             menu.clear();
@@ -163,7 +166,7 @@ public class gameActivity extends AppCompatActivity {
         //Touched point on the Map gets assigned to a variable
         int toField = map.touchedPoint.getField();
         //TurnMessage is created
-        TurnMessage msg = new TurnMessage(0, toField, 0, "ubahn",isCheat());
+        TurnMessage msg = new TurnMessage(0, toField, 0, "ubahn", isCheat());
 
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
@@ -172,10 +175,10 @@ public class gameActivity extends AppCompatActivity {
         setCheat(false);
     }
 
-    public void toast(String toast){
+    public void toast(String toast) {
 
-        Thread thread = new Thread(){
-            public void run(){
+        Thread thread = new Thread() {
+            public void run() {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_LONG).show();
@@ -201,6 +204,8 @@ public class gameActivity extends AppCompatActivity {
                 break;
             case R.id.ubahn:
                 useUbahn();
+                break;
+            default:
                 break;
         }
     }
@@ -271,9 +276,9 @@ public class gameActivity extends AppCompatActivity {
         switch (type) {
             case "taxi":
                 v = findViewById(R.id.txtview_taxi);
-                if(presenter.getPlayerID() == 0){
+                if (presenter.getPlayerID() == 0) {
                     v.setText("");
-                }else {
+                } else {
                     v.setText(c);
                 }
                 if (count == 0) {
@@ -284,11 +289,12 @@ public class gameActivity extends AppCompatActivity {
                 break;
             case "bus":
                 v = findViewById(R.id.txtview_bus);
-                if(presenter.getPlayerID() == 0){
+                if (presenter.getPlayerID() == 0) {
                     v.setText("");
-                }else {
+                } else {
                     v.setText(c);
-                }                if (count == 0) {
+                }
+                if (count == 0) {
                     Button b = findViewById(R.id.bus);
                     b.setBackgroundColor(0xff888888);
                     b.setClickable(false);
@@ -296,15 +302,18 @@ public class gameActivity extends AppCompatActivity {
                 break;
             case "ubahn":
                 v = findViewById(R.id.txtview_metro);
-                if(presenter.getPlayerID() == 0){
+                if (presenter.getPlayerID() == 0) {
                     v.setText("");
-                }else {
+                } else {
                     v.setText(c);
-                }                if (count == 0) {
+                }
+                if (count == 0) {
                     Button b = findViewById(R.id.ubahn);
                     b.setBackgroundColor(0xff888888);
                     b.setClickable(false);
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -317,20 +326,20 @@ public class gameActivity extends AppCompatActivity {
         this.round = round;
     }
 
-    public void addTravellogEntry(TravelLog log, int round){
+    public void addTravellogEntry(TravelLog log, int round) {
         runOnUiThread(() -> {
-                menu.add(round, 0, 0, "Ticket: " + log.getTicket()+" Position: "+log.getPosition());
+            menu.add(round, 0, 0, "Ticket: " + log.getTicket() + " Position: " + log.getPosition());
 
         });
 
     }
 
-    public void setIntentLoser(){
+    public void setIntentLoser() {
         Intent intent = new Intent(this, LoserScreen.class);
         startActivity(intent);
     }
 
-    public void setIntentWinner(){
+    public void setIntentWinner() {
         Intent intent = new Intent(this, VictoryScreen.class);
         startActivity(intent);
     }
