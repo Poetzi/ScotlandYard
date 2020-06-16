@@ -40,6 +40,7 @@ public class gameActivity extends AppCompatActivity {
     private int uBahnTickets = 4;
     private boolean cheat;
     private int cheatCounter = 0;
+    private final String ubahn = "ubahn";
 
     /**
      * onCreate Method to start up the Game
@@ -79,7 +80,7 @@ public class gameActivity extends AppCompatActivity {
 
         updateCount("taxi", taxiTickets);
         updateCount("bus", busTickets);
-        updateCount("ubahn", uBahnTickets);
+        updateCount(ubahn, uBahnTickets);
 
     }
 
@@ -124,7 +125,7 @@ public class gameActivity extends AppCompatActivity {
                 setBusTickets(busTickets - 1);
                 updateCount(type, getBusTickets());
                 break;
-            case "ubahn":
+            case ubahn:
                 setuBahnTickets(uBahnTickets - 1);
                 updateCount(type, getuBahnTickets());
                 break;
@@ -166,7 +167,7 @@ public class gameActivity extends AppCompatActivity {
         //Touched point on the Map gets assigned to a variable
         int toField = map.touchedPoint.getField();
         //TurnMessage is created
-        TurnMessage msg = new TurnMessage(0, toField, 0, "ubahn", isCheat());
+        TurnMessage msg = new TurnMessage(0, toField, 0, ubahn, isCheat());
 
         new Thread(() -> {
             // Nachricht wird an den Server geschickt
@@ -300,7 +301,7 @@ public class gameActivity extends AppCompatActivity {
                     b.setClickable(false);
                 }
                 break;
-            case "ubahn":
+            case ubahn:
                 v = findViewById(R.id.txtview_metro);
                 if (presenter.getPlayerID() == 0) {
                     v.setText("");
