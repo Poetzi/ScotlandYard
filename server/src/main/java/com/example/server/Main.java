@@ -5,6 +5,7 @@ import com.example.server.game.players.TravelLog;
 
 import com.example.server.messages.AskPlayerForTurn;
 import com.example.server.messages.BaseMessage;
+import com.example.server.messages.CorrectDrawMessage;
 import com.example.server.messages.LoserMessage;
 import com.example.server.messages.ReadyMessage;
 import com.example.server.messages.SendLobbyID;
@@ -56,6 +57,7 @@ public class Main {
             server.registerClass(ToastMessage.class);
             server.registerClass(WinnerMessage.class);
             server.registerClass(LoserMessage.class);
+            server.registerClass(CorrectDrawMessage.class);
 
             // Die Callbacks werden hier registriert,
             server.registerCallback(nachrichtvomClient -> {
@@ -85,6 +87,7 @@ public class Main {
                         {
                             if (game.checkDraw(turn))
                             {
+                                game.correctDraw0(turn.getCard());
                                 travelLogs.add(new TravelLog(turn.getToField(),turn.getCard(),false));
                                 int round = game.getActualRound();
                                 if((round == 0 || round == 3 || round == 7 || round ==12)){
@@ -133,13 +136,9 @@ public class Main {
                     {
                         if (game.isPlayer1Turn())
                         {
-                            // Wenn der Zug gültig ist
-                            if (game.checkDraw(turn))
-                            {
-                               // System.out.println("Player 1 guter Zug");
+                            if(turn.isCheat()){
+                                // System.out.println("Player 1 guter Zug");
                                 game.updatePositionOffaPlayer(1,turn.getToField(), turn.getCard());
-
-                                // Überprüfe ob wer gewonnen hat
                                 game.checkWinningCondition();
                                 if(game.isP0won())
                                 {
@@ -160,9 +159,6 @@ public class Main {
                                     return;
                                 }
 
-
-                               // System.out.println("frage Spieler 0 nach Zug");
-                                // Spieler 0 ist an der Reihe
                                 game.setNextTurnforPlayer0();
                                 game.askPlayer0forTurn();
 
@@ -171,12 +167,55 @@ public class Main {
                                 game.plus1ActualRound();
                                 game.askPlayer0forTurn();
                                 game.askPlayer1forTurn();
+
+                            }else {
+                                if (game.checkDraw(turn))
+                                {
+                                    game.correctDraw1(turn.getCard());
+                                    // System.out.println("Player 1 guter Zug");
+                                    game.updatePositionOffaPlayer(1,turn.getToField(), turn.getCard());
+
+                                    // Überprüfe ob wer gewonnen hat
+                                    game.checkWinningCondition();
+                                    if(game.isP0won())
+                                    {
+                                        System.out.println("MrX 0 hat gewonnen");
+                                        ToastMessage toast = new ToastMessage(0,"MrX hat gewonnen");
+                                        server.broadcastMessage(toast);
+                                        game.setActualRound(game.getMaxRounds());
+                                        return;
+                                    }
+                                    else if(game.isP1won())
+                                    {
+
+
+                                        System.out.println("Detektiv 1 hat gewonnen");
+                                        ToastMessage toast = new ToastMessage(1,"Detektiv hat gewonnen");
+                                        server.broadcastMessage(toast);
+                                        game.setActualRound(game.getMaxRounds());
+                                        return;
+                                    }
+
+
+                                    // System.out.println("frage Spieler 0 nach Zug");
+                                    // Spieler 0 ist an der Reihe
+                                    game.setNextTurnforPlayer0();
+                                    game.askPlayer0forTurn();
+
+
+                                    // Erhöhe die aktuelle Runde
+                                    game.plus1ActualRound();
+                                    game.askPlayer0forTurn();
+                                    game.askPlayer1forTurn();
+                                }
+                                else
+                                {
+                                    System.out.println("frage Spieler 1 nach Zug");
+                                    game.askPlayer1forTurn();
+                                }
                             }
-                            else
-                            {
-                                System.out.println("frage Spieler 1 nach Zug");
-                                game.askPlayer1forTurn();
-                            }
+                            // Wenn der Zug gültig ist
+
                         }
 
                     }

@@ -5,16 +5,18 @@ public class TurnMessage extends BaseMessage {
     private int toField;
     private int lobbyId;
     private String Card;
+    private boolean cheat;
 
 
 
     public TurnMessage() {
     }
 
-    public TurnMessage(int playerId, int toField, int lobbyId, String card) {
+    public TurnMessage(int playerId, int toField, int lobbyId, String card,boolean cheat) {
         this.playerId = playerId;
         this.lobbyId = lobbyId;
         Card = card;
+        this.cheat = cheat;
     }
 
     public int getPlayerId() {
@@ -49,5 +51,11 @@ public class TurnMessage extends BaseMessage {
         this.lobbyId = lobbyId;
     }
 
+    public boolean isCheat() {
+        return cheat;
+    }
 
+    public void setCheat(boolean cheat) {
+        this.cheat = cheat;
+    }
 }

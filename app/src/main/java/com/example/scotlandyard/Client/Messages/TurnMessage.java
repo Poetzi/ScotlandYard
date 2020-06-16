@@ -13,6 +13,8 @@ public class TurnMessage extends BaseMessage {
     //Card
     private String Card;
 
+    private boolean cheat;
+
     /**
      * Empty constructor
      */
@@ -27,11 +29,12 @@ public class TurnMessage extends BaseMessage {
      * @param lobbyId  Lobby ID
      * @param card     Card
      */
-    public TurnMessage(int playerId, int toField, int lobbyId, String card) {
+    public TurnMessage(int playerId, int toField, int lobbyId, String card,boolean cheat) {
         this.playerId = playerId;
         this.toField = toField;
         this.lobbyId = lobbyId;
         Card = card;
+        this.cheat = cheat;
     }
 
     //Getter und Setter
@@ -65,5 +68,13 @@ public class TurnMessage extends BaseMessage {
 
     public void setLobbyId(int lobbyId) {
         this.lobbyId = lobbyId;
+    }
+
+    public boolean isCheat() {
+        return cheat;
+    }
+
+    public void setCheat(boolean cheat) {
+        this.cheat = cheat;
     }
 }

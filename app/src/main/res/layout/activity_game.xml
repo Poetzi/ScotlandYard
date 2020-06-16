@@ -48,42 +48,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></com.example.scotlandyard.viewLayer.playerView>
 
-    <TextView
-        android:id="@+id/txtview_taxi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/taxi"
-        app:layout_constraintStart_toStartOf="@+id/taxi"
-        app:layout_constraintTop_toBottomOf="@+id/taxi" />
-
-    <TextView
-        android:id="@+id/txtview_bus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/bus"
-        app:layout_constraintStart_toStartOf="@+id/bus"
-        app:layout_constraintTop_toBottomOf="@+id/bus" />
+        <TextView
+            android:id="@+id/txtview_taxi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/taxi"
+            app:layout_constraintStart_toStartOf="@+id/taxi"
+            app:layout_constraintTop_toBottomOf="@+id/taxi" />
 
         <TextView
-        android:id="@+id/txtview_metro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/ubahn"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="@+id/ubahn"
-        app:layout_constraintTop_toBottomOf="@+id/ubahn" />
+            android:id="@+id/txtview_bus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/bus"
+            app:layout_constraintStart_toStartOf="@+id/bus"
+            app:layout_constraintTop_toBottomOf="@+id/bus" />
+
+        <TextView
+            android:id="@+id/txtview_metro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/ubahn"
+            app:layout_constraintHorizontal_bias="0.466"
+            app:layout_constraintStart_toStartOf="@+id/ubahn"
+            app:layout_constraintTop_toBottomOf="@+id/ubahn" />
 
 
         <Button
@@ -124,6 +121,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="U-Bahn" />
+
+        <Button
+            android:id="@+id/cheatButton"
+            android:layout_width="98dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="244dp"
+            android:background="#521CB1"
+            android:onClick="turnCheatOn"
+            android:text="@string/cheat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/cheat" />
 
         <TextView
         android:id="@+id/textView3"
